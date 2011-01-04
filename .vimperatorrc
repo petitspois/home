@@ -6,7 +6,7 @@
 set runtimepath=$HOME/.vimperator
 source! $HOME/.vimperatorrc.local
 " 加载 runtimepath 定义路径下面的文件。将其他定义，独立出来，可以控制是否加载
-runt ab.vimp
+runt my.vimp
 colorscheme status
 
 "source! /home/king/.vimperator/colors/status.vimp
@@ -149,6 +149,87 @@ vnoremap <C-x> <C-v><C-x>
 
 " 让Greader/Gmail等键盘命令不受到影响
 autocmd LocationChange .* js modes.passAllKeys = /.*(mail\.google\.com|www\.google\.com\/reader).*/.test(buffer.URL)
+
+"}}}
+
+" [ 常用 URL 缩写 ]"{{{
+"""""""""""""""""""""""""""""""""""""""""""""
+" 命令行 模式 缩写，打出以下缩写之后，再加一个空格展开缩写！
+"cabbrev tn  tabnew
+"cabbrev to  tabopen
+cabbrev ..  http://localhost
+cabbrev cf  about:config
+
+cabbrev a   archlinux.org
+cabbrev ak  wiki.archlinux.org
+cabbrev aur aur.archlinux.org
+cabbrev bd  www.baidu.com
+cabbrev bg  www.bing.com
+cabbrev bt  www.torrentz.com
+cabbrev vc  www.verycd.com
+cabbrev ss  music.soso.com
+
+" Firefox 论坛
+cabbrev fm  g.mozest.com
+cabbrev ff  www.firefox.net.cn/forum/index.php
+" Plugin 插件
+cabbrev fp  https://addons.mozilla.org/zh-CN/firefox/
+cabbrev us  userscripts.org
+
+" [ Google ]"{{{
+"--------------------------------------------
+cabbrev g   www.google.com.hk
+cabbrev gc  https://www.google.com/accounts
+cabbrev gd  https://docs.google.com
+cabbrev ge  https://encrypted.google.com.hk
+cabbrev gf  www.google.com.hk/finance?hl=zh-CN&sourceid=cnhp
+cabbrev gi  images.google.com
+cabbrev gm  https://mail.google.com
+cabbrev gp  http://ditu.google.cn/maps?hl=zh-cn&tab=wl
+cabbrev gr  https://www.google.com/reader
+cabbrev gs  goosh.org
+cabbrev gt  translate.google.com/#en|zh-CN|
+cabbrev gv  video.google.com
+
+"cabbrev gd  www.google.com/dictionary
+" 中文 --> English
+cabbrev ce  http://www.google.com/dictionary?aq=f&langpair=zh-CN|en&q=&hl=en
+" English --> 中文
+cabbrev ec  http://www.google.com/dictionary?aq=f&langpair=en|zh-CN&q=&hl=en
+
+"}}}
+
+" linuxsir archlinux
+cabbrev al  bbs.archlinux.org
+cabbrev la  www.linuxsir.org/bbs/forum96.html
+cabbrev lh  lifehacker.com
+" linuxsir soft vim fvwm
+cabbrev ls  www.linuxsir.org/bbs/forum28.html
+" linuxsir Fedora
+cabbrev ls  www.linuxsir.org/bbs/forum28.html
+cabbrev lf  www.linuxsir.org/bbs/forum40.html
+cabbrev ly  linuxtoy.org
+
+cabbrev jh  jihuo.qq.com
+cabbrev tb  www.taobao.com
+
+" ubuntu fvwm
+cabbrev ud  forum.ubuntu.org.cn/viewforum.php?f=168
+cabbrev uu  forum.ubuntu.org.cn
+cabbrev yt  www.youtube.com
+cabbrev yk  www.youku.com
+cabbrev xm  www.xiami.com/music
+
+""cabbrev zw  zh.wikipedia.org
+cabbrev zw  http://zh.wikipedia.org/zh-cn/Wikipedia:首页
+" 互动百科，词条
+cabbrev hd  c.hudong.com
+
+" proxy 代理
+cabbrev ut  www.ubint.net
+cabbrev mg  https://www.megaproxy.com/freesurf
+
+
 
 "}}}
 

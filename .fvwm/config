@@ -31,6 +31,7 @@
 # TaskBar
 # 桌面 mount 图标
 # oss 声音 调节 button / command
+# Dock 图标 忽略重复打开一些程序：stardict / Pidgin / ...
 
 
 
@@ -837,15 +838,39 @@ AddtoFunc ClickButton C $*
 
 # }}}
 
+## [ Fullscreen simple ]# {{{
+##--------------------------------------------
+## From : xp.fvwm 无法恢复默认
+#DestroyFunc FuncFullScreen
+#AddtoFunc FuncFullScreen
+#+ I Current (State 0) Fullscreen-Stop
+#+ I TestRc Current (Maximizable) Fullscreen-Start
+#
+#DestroyFunc Fullscreen-Start
+#AddtoFunc Fullscreen-Start
+##+ I WindowStyle NoTitle,HandleWidth 0,FixedSize,FixedPosition
+#+ I WindowStyle NoTitle, !Borders, StaysOnTop, !Iconifiable, !Maximizable
+#+ I Current (!Maximized) Maximize
+#+ I ResizeMaximize 100 100
+#+ I State 0 true
+#
+#DestroyFunc Fullscreen-Stop
+#AddtoFunc Fullscreen-Stop
+#+ I DestroyWindowStyle
+#+ I State 0 false
+#+ I Maximize
+#
+## }}}
+
 # [ Fullscreen ]# {{{
 #############################################
 
 # FVWM-Crystal plugin: Fullscreen
 # Written by: Maciej Delmanowski <harnir@linux.net.pl>
-# 实现窗口最大化，去除 边框 / 标题栏
+# 实现窗口最大化，去除 边框 / 标题栏，[?]恢复时会莫名的拉长窗口高度
 
-DestroyFunc Fullscreen
-AddToFunc Fullscreen
+DestroyFunc FuncFullScreen
+AddToFunc FuncFullscreen
 + I Fullscreen-Stop
 + I Current (!Maximizable) Break
 + I TestRc (False) Fullscreen-Start
@@ -958,7 +983,7 @@ AddToFunc LowerTemp
 #
 ## }}}
 
-# [ Lock Screen 锁屏 ]
+# [ Lock Screen 锁屏 ]# {{{
 #--------------------------------------------
 # 锁屏 通过调用 xscreensaver 来实现
 # From : http://lcs.ios.ac.cn/~scwang/html/fvwm.html
@@ -966,7 +991,7 @@ DestroyFunc LockScreen
 AddToFunc LockScreen
 + I Exec sleep 5; xset dpms force off
 + I Exec exec xscreensaver-command -lock
-
+# }}}
 
 # }}}
 
@@ -1731,7 +1756,7 @@ DestroyMenu TitleMenu
 AddToMenu TitleMenu
 +  "Identify   "            Pick Module FvwmIdent
 +  "           "            Nop
-+  "Fullscreen "            Fullscreen
++  "Fullscreen "            FuncFullScreen
 +  "maximize   "            Maximize
 # 使用自定义 最小化函数 协同 Layer 提升
 +  "minimize   "            cusIconify
@@ -1845,66 +1870,63 @@ AddToMenu   DockMenu
 # [ Binding 快捷键 ]# {{{
 #############################################
 
-# (A)ny, (C)ontrol, (S)hift, (M)eta, (N)othing
-# 1-5, representing the X Modifiers mod1-mod5 (man xmodmap) 
+# [ 快捷键 定义格式 ]# {{{
+#--------------------------------------------
+# Key [按键?]   [作用域]   [控制按键]  [动作]
+# Key  X        Content    Modifier    Action
 
-# 特殊按键
-#Key Return A M ToggleTitle
-#Key ampersand   A       M       GoToDesk 0 0
-#Key eacute      A       M       GoToDesk 0 1
-#Key quotedbl    A       M       GoToDesk 0 2
-#Key apostrophe  A       M       GoToDesk 0 3
+# [ Modifier ]
+#--------------------------------------------
+# (4)Super, (C)ontrol, (S)hift, (M)eta, (N)othing
+# 1-5, representing the X Modifiers mod1-mod5 (man xmodmap)
+
+# [ Content ]
+#--------------------------------------------
+# A - anywhere
+# R - the root window
+# I - Icon
+# F - frame corners
+# S - frame sides
+# T - title bar
+# W - application window 
+# 0-9 - buttons
+# }}}
 
 # [ App Keyshot ]# {{{
 #############################################
-
-Key     D       A       M   Exec exec stardict
-Key     E       A       M   Exec exec pcmanfm            # Explore
-# Alt - F 文件菜单
-#Key     F       A       M   Exec exec 
-Key     G       A       M   Exec exec gvim
-Key     I       A       M   Exec exec pidgin         # IM
-Key     L       A       M   Exec exec leafpad
-Key     M       A       M   Exec exec mentohust
-Key     P       A       M   Exec exec mtpaint
-Key     R       A       M   Exec exec gmrun
-Key     S       A       M   Exec exec sonata
-Key     T       A       M   Exec exec tilda
-Key     U       A       M   Exec exec urxvt
-Key     W       A       M   Exec exec firefox
-Key     X       A       M   Exec exec rox
+Key     D       A       4   Exec exec stardict
+Key     E       A       4   Exec exec pcmanfm
+# Alt - F 文件菜单，Super - F 全屏
+Key     G       A       4   Exec exec gvim
+Key     I       A       4   Exec exec pidgin
+Key     L       A       4   Exec exec leafpad
+Key     M       A       4   Exec exec mentohust
+Key     P       A       4   Exec exec mtpaint
+Key     R       A       4   Exec exec gmrun
+Key     S       A       4   Exec exec sonata
+Key     T       A       4   Exec exec tilda
+Key     U       A       4   Exec exec urxvt
+Key     W       A       4   Exec exec firefox
+Key     X       A       4   Exec exec rox
 # 1 前面的顿号，<1> xev 查看 ` 的keycode，<2>在 xmodmap -pke 中查找对应的名称
-Key     grave   A       M   Exec exec xterm
-
+Key     grave   A       4   Exec exec xterm
 
 # snap 字体路径要包含在 xorg.conf 配置文件里面，否则无效
-Key     F1      A       M   Module FvwmConsole -terminal xterm
-Key     F2      A       M   Exec dmenu_run -fn "-*-snap-*-*-*-*-*-*-*-*-*-*-*-*"
-#Key     F2      A       M   Exec dmenu_run -b -fn -*-snap-*-*-*-*-*-*-*-*-*-*-*-*
-#Key     F2      A       M   None (*run) Exec dmenu_run || grun || fbrun || xfrun4
+Key     F1      A       4   Module FvwmConsole -terminal xterm
+Key     F2      A       4   Exec dmenu_run -fn "-*-snap-*-*-*-*-*-*-*-*-*-*-*-*"
+#Key     F2      A       4   Exec dmenu_run -b -fn -*-snap-*-*-*-*-*-*-*-*-*-*-*-*
+#Key     F2      A       4   None (*run) Exec dmenu_run || grun || fbrun || xfrun4
 
 # }}}
 
-# [ Other Key ]# {{{
+# [ Utility Key ]# {{{
 #############################################
 # 全屏 切换 函数调用
-Key     F       A       4   Fullscreen
+Key     F       A       4   FuncFullScreen
 # 显示桌面
 Key     D       A       4   ShowDesk
+# 刷新窗口
 Key     F5      A       SM  Pick RefreshWindow
-
-# 虚拟桌面切换
-Key     Left    A       CM  Scroll -100 +0
-Key     Right   A       CM  Scroll +100 +0
-#Key     Up      A       CM  Scroll +0 -100
-#Key     Down    A       CM  Scroll +0 +100
-
-# 虚拟桌面切换
-#Key     Right   A       CM  GotoPage +1p +0p
-#Key     Left    A       CM  GotoPage -1p -0p
-#Key     Up      A       CM  GotoPage +0p -1p
-#Key     Down    A       CM  GotoPage -0p +1p
-
 # Ctrl-Alt-BackSpace 弹出 Exit 对话框
 Key     BackSpace   A       CM  Module FvwmButtons FvwmQuit
 
@@ -1912,33 +1934,37 @@ Key     BackSpace   A       CM  Module FvwmButtons FvwmQuit
 Key     Print   A       A   Exec scrot -q 100 Key-%F_%H%M%S.png
 Key     Print   A       M   Exec scrot -q 100 -sb Key-%F_%H%M%S.png
 
-# Alt-Tab 菜单 
-# Root c c 菜单居中，与后面的 Options 选项之间不能使用逗号，分隔！！！
-# SelectOnRelease Alt_L 释放Alt键立即跳转到选中窗口，否则要再按一下回车/单击，默认使用 Alt_L
-# NoIcons 指的是 最小化的窗口，而非菜单项的图标
-Key     Tab     A       M   WindowList Root c c NoCurrentDeskTitle,NoGeometry,CurrentDesk,Icons,Sticky,OnTop,OnBottom,MaxLabelWidth 320,IconifiedAtEnd,SelectOnRelease Alt_L
-# Super-Tab 切换 窗口
-Key     Tab     A       4   Next (AcceptsFocus) focus
-Key     Tab     A       S4  Prev (AcceptsFocus) focus
+# 音量 增减
+Key     Up      A       M   Exec ossmix vol +10
+Key     Down    A       M   Exec ossmix vol -10
+key     Right   A       MS  Exec ossmix vol +5
+key     Left    A       MS  Exec ossmix vol -5
 
-# 当前桌面 聚焦窗 口切换
-#Key     Left    A       M   Prev (CurrentPage, AcceptsFocus, !Iconic) EWMHActivateWindowFunc
-#Key     Right   A       M   Next (CurrentPage, AcceptsFocus, !Iconic) EWMHActivateWindowFunc
 
-# Alt-Tab 切换窗口，调用 AltTab 函数
-#Key     Tab     A       M   AltTab
-#AddToFunc AltTab
-#+ I Next (AcceptsFocus CurrentDesk CurrentPage !Iconic) Focus
-#+ I Prev (AcceptsFocus CurrentDesk CurrentPage !Iconic) WarpToWindow 50 50
+
+# }}}
+
+# [ 桌面 / 窗口 切换 / 移动 ]# {{{
+#--------------------------------------------
+Key     Left    A       CM  Scroll -100 +0
+Key     Right   A       CM  Scroll +100 +0
+#Key     Up      A       CM  Scroll +0 -100
+#Key     Down    A       CM  Scroll +0 +100
 
 # Super - 1 / 2 / 3 切换桌面
 Key     1       A       4       GotoPage 0 0
 Key     2       A       4       GotoPage 1 0
 Key     3       A       4       GotoPage 2 0
-# Super- F1 / F2 / F3 窗口 发送 并 移动到其他桌面
+# Super- F1 / F2 / F3 窗口 发送 并 [移动到其他桌面]
 Key     F1      A       4       MovetoPage 0 0
 Key     F2      A       4       MovetoPage 1 0
 Key     F3      A       4       MovetoPage 2 0
+
+# 虚拟桌面切换
+#Key     Right   A       CM  GotoPage +1p +0p
+#Key     Left    A       CM  GotoPage -1p -0p
+#Key     Up      A       CM  GotoPage +0p -1p
+#Key     Down    A       CM  GotoPage -0p +1p
 
 # 关闭窗口
 Key     F4      A       M   ThisWindow (!Iconic, !Shaded) Close
@@ -1952,31 +1978,52 @@ Key     Down    A       SC  Current (CurrentPage, !Iconic) AnimatedMove keep w+7
 Key     Right   A       SC  Current (CurrentPage, !Iconic) AnimatedMove w+7 w+0
 Key     Left    A       SC  Current (CurrentPage, !Iconic) AnimatedMove w-7 w+0
 
-# 音量 增减
-Key     Up      A       M   Exec ossmix vol +10
-Key     Down    A       M   Exec ossmix vol -10
-key     Right   A       MS  Exec ossmix vol +5
-key     Left    A       MS  Exec ossmix vol -5
+# }}}
 
-#key     F6      A       N   FuncMoveCenter
-#
+# [ Alt-Tab 菜单切换聚集窗口 ]# {{{
+#--------------------------------------------
+# >>> Root c c 菜单居中，与后面的 Options 选项之间不能使用逗号，分隔！！！
+# SelectOnRelease Alt_L 释放Alt键立即跳转到选中窗口，否则要再按一下回车/单击，默认使用 Alt_L
+# NoIcons 指的是 最小化的窗口，而非菜单项的图标
+
+Key     Tab     A       M   WindowList Root c c NoCurrentDeskTitle,NoGeometry,CurrentDesk,Icons,Sticky,OnTop,OnBottom,MaxLabelWidth 320,IconifiedAtEnd,SelectOnRelease Alt_L
+
+# [ 函数式 ] Alt-Tab 切换窗口
+#Key     Tab     A       M   AltTab
+#AddToFunc AltTab
+#+ I Next (AcceptsFocus CurrentDesk CurrentPage !Iconic) Focus
+#+ I Prev (AcceptsFocus CurrentDesk CurrentPage !Iconic) WarpToWindow 50 50
+
+# Super-Tab 在虚拟桌面之间跳转切换 窗口
+Key     Tab     A       4   Next (AcceptsFocus) EWMHActivateWindowFunc
+Key     Tab     A       S4  Prev (AcceptsFocus) EWMHActivateWindowFunc
+
+# 当前桌面 聚焦窗 口切换
+#Key     Left    A       M   Prev (CurrentPage, AcceptsFocus, !Iconic) EWMHActivateWindowFunc
+#Key     Right   A       M   Next (CurrentPage, AcceptsFocus, !Iconic) EWMHActivateWindowFunc
+
+# }}}
+
+# [ temp ]# {{{
+#--------------------------------------------
 #Key     F11     A       M   Current Maximize    True    0   growdown
 #Key     F10     A       M   Current Maximize    True    0   growup
 #Key     F9      A       M   Current Maximize    True    growleft    0
 #Key     F12     A       M   Current Maximize    True    growright   0
-#
+
 #Key     F4      A       C   Module FvwmForm FvwmFormQuit
 #Key     Super_L A       A   Menu MenuFvwmRoot Rectangle +0+$[menupos] +0 +0
 #Key     Super_R A       A   Menu MenuFvwmRoot Rectangle +0+$[menupos] +0 +0
 #Key     Menu    A       A   Current (CurrentPage, !Iconic) Menu menu_WindowOps
 
+# }}}
 
 # }}}
 
-# [ Mouse ]# {{{
+# [ Mouse 鼠标 ]# {{{
 #############################################
 
-# [ 函数 ]# {{{
+# [ 函数式 ]# {{{
 #############################################
 
 ## 左键 窗口 关闭按钮
@@ -1994,7 +2041,6 @@ key     Left    A       MS  Exec ossmix vol -5
 #Mouse 1 W M MoveOrIconify
 #Mouse 1 I A MoveOrIconify
 #
-#E
 ## 鼠标滚轮 窗口上卷
 #Mouse 4 T A WinWindowShade True
 #Mouse 5 T A WinWindowShade False
@@ -2008,11 +2054,13 @@ Mouse   1   W   M   MoveFunc
 Mouse   1   FS  A   ResizeFunc
 # 调节窗口尺寸
 Mouse   3   W   M   ResizeFunc
+# 标题栏双击最大化
+Mouse   1   T   A   TitleMaximize
 
 
 # }}}
 
-# [ 非函数 ]# {{{
+# [ 命令式 ]# {{{
 ############################################
 
 # 将 Close / Iconify / Maximize 参数全部传递给 ClickButton 函数，防止点错按钮
@@ -2042,44 +2090,47 @@ Mouse   3   I   A   Move
 
 # }}}
 
+# [ Transset 窗口透明 ]# {{{
+#--------------------------------------------
+# 鼠标中建，在图标上点击，快速开关透明度
+Mouse   3   7   A   Exec transset-df -i $[w.id]
+# 鼠标指针停留在，标题栏 程序图标 上，通过滚轮即可调节透明度
+Mouse   4   7   A   Exec transset-df --inc 0.1 -i $[w.id]
+Mouse   5   7   A   Exec transset-df --dec 0.1 -i $[w.id]
+Mouse   4   W   M   Exec exec transset-df -p --inc 0.1
+Mouse   5   W   M   Exec exec transset-df --min 0.1 -p --dec 0.1
+# 快捷键
+key     Up  W   MS  Exec transset-df --inc 0.1 -i $[w.id]
+key     Down    W   MS  Exec transset-df --dec 0.1 -i $[w.id]
+# }}}
 
-# 默认 左键单击 出现 Buildin 菜单
+# [ 菜单 ]# {{{
+#--------------------------------------------
+# [左键] 取消默认 左键单击 Buildin 菜单
 Mouse   1   R   A   Nop
-# 主菜单
+# [右键] 主菜单
 Mouse   3   R   A   Menu MainMenu
-# 中键菜单
-#Mouse   2   R   A   WindowList NoCurrentDeskTitle,Sticky,Icons,OnBottom,OnTop,MaxLabelWidth 512,IconifiedAtEnd
+# [中建] 窗口列表菜单
 Mouse   2   R   A   WindowList NoCurrentDeskTitle
-
-# 标题栏双击最大化
-Mouse   1   T   A   TitleMaximize
+#Mouse   2  R  A  WindowList NoCurrentDeskTitle,Sticky,Icons,OnBottom,OnTop,MaxLabelWidth 512,IconifiedAtEnd
 
 # 窗口 标题 菜单
 Mouse   3   T   A   Menu TitleMenu
 Mouse   2   W   M   Menu TitleMenu
+# }}}
 
-# Transset 窗口透明，鼠标指针停留在，标题栏 程序图标 上面鼠标滚轮即可调节透明度
-Mouse   3   7   A   Exec transset-df -i $[w.id]
-Mouse   4   7   A   Exec transset-df --inc 0.1 -i $[w.id]
-Mouse   5   7   A   Exec transset-df --dec 0.1 -i $[w.id]
-
-Mouse   4   W   M   Exec exec transset-df -p --inc 0.1
-Mouse   5   W   M   Exec exec transset-df --min 0.1 -p --dec 0.1
-
-key Up      W   MS  Exec transset-df --inc 0.1 -i $[w.id]
-key Down    W   MS  Exec transset-df --dec 0.1 -i $[w.id]
-
-# 滚轮 桌面切换
+# [ 滚轮 桌面/窗口切换 ]# {{{
+#--------------------------------------------
 Mouse   4   R   N   Scroll -100 0
 Mouse   5   R   N   Scroll +100 0
 
+# 鼠标滚轮 + Ctrl 切换 窗口 焦点
+Mouse   4   R   C   None (Maximized, Raised, Focused, !Iconic) Prev (CurrentPage, AcceptsFocus, !Iconic) EWMHActivateWindowFunc
+Mouse   5   R   C   None (Maximized, Raised, Focused, !Iconic) Next (CurrentPage, AcceptsFocus, !Iconic) EWMHActivateWindowFunc
+
 # 鼠标滚轮 桌面切换 [?]
 #Mouse   4   R   A   GoToPage wrapx 1p 1
-
-# 鼠标滚轮 切换 窗口 焦点
-#Mouse   4   R   C   None (Maximized, Raised, Focused, !Iconic) Prev (CurrentPage, AcceptsFocus, !Iconic) EWMHActivateWindowFunc
-#Mouse   5   R   C   None (Maximized, Raised, Focused, !Iconic) Next (CurrentPage, AcceptsFocus, !Iconic) EWMHActivateWindowFunc
-
+# }}}
 
 # }}}
 
@@ -2101,6 +2152,7 @@ Stroke N258 0   R   N   Exec audacious
 
 
 
-# }}}
+
+
 
 

@@ -6,27 +6,56 @@
 
 # [ git 中忽略的文件 / 目录 ]
 #--------------------------------------------
+# 忽略所有(隐藏/普通)文件/目录
+#*
+# 忽略所有目录，注释后,显示普通目录，需要另外添加规则忽略普通目录
+#*/
 
-# 忽略所有文件/目录
-*
-*/
+# 忽略所有隐藏文件/目录
+.*
+# 忽略所有隐藏目录
+#.*/
 
+# [ 其他忽略 ]
+#--------------------------------------------
+
+# [ 忽略普通目录 ]# {{{
+#--------------------------------------------
+bs/
+cnf/
+Desktop/
+gfvwm/
+green_fvwm/
+me/
+public_html/
+python/
+script/
+sfvwm/
+svn/
+workspace/
+black.fvwm/
+dock.fvwm/
+l.fvwm/
+simple.fvwm/
+xp.fvwm/
+# }}}
+
+.config/
+.fvwm/
+.lftp/
+.ncmpcpp/
+.purple/
+.vimperator/my.vimp
+.vimperator/info/
+
+# [ 排除 ]# {{{
+#--------------------------------------------
+
+# [ 普通文件 ]
 #--------------------------------------------
 !README
 
-# 忽略所有隐藏目录
-.*/
-.vimperator/my.vimp
-
-#--------------------------------------------
-!.emacs.d/
-!.fvwm/
-!.vim/
-!.vimperator/
-
-# 忽略所有隐藏文件
-.*
-
+# [ 隐藏文件 ]
 #--------------------------------------------
 !.bashrc
 !.conkyrc
@@ -48,5 +77,23 @@
 !.zshrc
 
 
+
+# [ 目录 ]
+#--------------------------------------------
+#!.emacs.d/
+#!.fvwm/config
+#!.fvwm/fvwm.dock
+!.vimperator/
+!.fvwm/config
+!.aria2/
+!.purple/prefs.xml
+!.ssh/
+!.vim/
+!.config/fcitx/config
+!.lftp/rc
+!.ncmpcpp/config
+
+
+# }}}
 
 
