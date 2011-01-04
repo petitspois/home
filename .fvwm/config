@@ -1,0 +1,2106 @@
+# vim:set et ft=fvwm fdm=marker sw=4 sts=4 ts=4 nopaste :
+###############################
+# My.Fvwm.Theme
+# 2010.8.23
+# Fvwm-devel-2.5.30-1
+###############################
+
+# [ Refer 参考 ]# {{{
+#--------------------------------------------
+# FBG                           Fvwm Beginner Guide
+# Simple.fvwm       rusty       From : devientart.com
+# black.fvwm        Lethe       From : http://box-look.org/content/show.php/Lethe?content=91022
+# xp.fvwm           lastart     From : http://www.linuxsir.org/bbs/thread370167.html
+
+# Fvwmform 上 DidgeriDude 收集的 fvwm 主题资源
+# From : http://hi.baidu.com/goomw/blog/item/45d0a038d9ec7d22b9998fd8.html
+# sfvwm             Stonecrest
+# Dock.fvwm         Legout
+# green.fvwm        Lucky
+# lfvwm            L1quid
+# gfvwm             Gulivert
+
+# }}}
+
+# [ TODO 未解决 ]# {{{
+#############################################
+#
+# 截图 & FvwmForm
+# Run 选项
+# 多主题切换
+# TaskBar
+# 桌面 mount 图标
+# oss 声音 调节 button / command
+
+
+
+# >>> [ Game Over ]
+#--------------------------------------------
+# Dock
+# 最小化 缩略图
+# Icon 右键菜单，中键移动
+# UnIcon 最大化 之后 Shade 卷起窗口，展开
+
+
+
+## }}}
+
+# [ Env 环境变量 ]# {{{
+############################################
+
+SetEnv fvwm_home        $HOME/.fvwm
+#SetEnv fvwm_icon        $[fvwm_home]/icons
+SetEnv fvwm_image       $[fvwm_home]/images
+SetEnv fvwm_scrpt       $[fvwm_home]/scripts
+#SetEnv fvwm_wallpapers  $[fvwm_img]/wallpaper
+
+ImagePath   $[fvwm_image]:$[fvwm_image];.png:+:$[fvwm_image]/deco:+:$[fvwm_image]/icons:+:$[fvwm_image]/tmp:+:$[fvwm_image]/menu:+:$[fvwm_image]/app:+
+
+#ImagePath   $HOME/.fvwm/images:+:$HOME/.fvwm/images/deco:+:$HOME/.fvwm/icons:+:$HOME/.fvwm/images/menu:+:$HOME/.fvwm/images/tmp
+
+
+
+# }}}
+
+# [ Setting 全局设置 ]# {{{
+############################################
+# 关闭第三方窗口移动产生的闪烁
+BugOpts             FlickeringMoveWorkaround Off
+# 鼠标点击最大延迟时间，默认 150ms
+ClickTime           150
+# 键盘聚焦的窗口安装 installed colormap [?]
+#ColormapFocus      FollowsFocus
+# 虚拟桌面：横 3 / 竖 1
+# |   |   |   |
+DeskTopSize         3x1
+# GotoPage 1 0 移动到中间桌面
+# 桌面边界绑定函数，鼠标指针停留在EdgeThickness所设定的'pan frames'区域时触发事件/函数[Dock/widget]
+# 桌面左边界绑定 nop [无操作]
+EdgeCommand Left nop
+# 窗口拖曳/鼠标指针在边界处停留时间/延迟(ms)后切换到下一桌面,第二个参数[?]
+EdgeResistance      400 20
+# 鼠标指针停留在桌面边界外加些许移动后，当前桌面偏移的相对位置位置[百分比]，与鼠标中键在Pager上的滑动切换类似， 100 切换一整个桌面
+EdgeScroll          0 0
+# 边界'pan frames'区域宽度，用于接受/识别鼠标在边界处的事件(鼠标指针切换[EdgeScroll]/移动桌面尺寸和窗口拖曳桌面切换)
+EdgeThickness       1
+# 窗口最大化桌面边缘与窗口之间预留宽度,左/右/上预留1像素方便鼠标右键菜单，下 conky 显示空间
+EwmhBaseStruts      1 1 1 21
+# 窗口移动/调解大小时，窗口尺寸/位置 信息窗口是否显示[Never|Move|Resize|Always]
+HideGeometryWindow  Always
+# 忽略某些修饰符，忽略"Num Lock"修饰符
+IgnoreModifiers     L25
+# 鼠标指针移动的像素距离，区分 鼠标按键/鼠标拖曳，默认为 3
+MoveThreshold       3
+# 设置 为100 窗口移动时不出现九宫格[rubber-band]，unlimited / 负数 则去掉窗口移动时出现的九宫格
+OpaqueMoveSize      -1
+# 窗口移动时，毗邻边框粘着,0边界不吸附，！！！该选项已过时，被Style中类似选项替代
+SnapAttraction      0
+SnapGrid            1 1
+
+# }}}
+
+# [ Colorset 颜色 ]# {{{
+############################################
+# 0 = 默认 颜色
+# 1 = 非 活动／激活 窗口
+# 2 = 活动／激活 窗口
+# 3 = 非 激活 菜单选项 和 菜单 背景
+# 4 = 激活的菜单 选项
+# 5 = greyed out 菜单 选项 （only bg used）
+# 6 = module 的前景色与背景色
+# 7 = 高亮色
+
+#          白灰背景   透明
+#Colorset 0 bg #eaeaea,Transparent # Transparent 类似 RootTransparent 透明[?]
+Colorset 0 bg #eaeaea
+
+#          黑色 [ 字体 ]
+Colorset 1 fg #1e1e1e,bg #eaeaea,Transparent
+
+#          萤光 草绿   白灰
+#          用于菜单激活选项
+Colorset 2 fg #ee0000, bg #eaeaea
+
+# 用于 图标/Dock 透明背景背景，fg 作为 Pager 的分隔线
+Colorset 3 fg #eaeaea,bg #eaeaea,RootTransparent buffer, Tint white 20
+
+# FvwmPager
+Colorset 4 fg white, bg white, RootTransparent buffer, Tint white 5
+Colorset 5 fg white, bg white, RootTransparent buffer, Tint white 10
+# Pager 中非激活的窗口边框颜色为灰色
+Colorset 6 fg white, bg white, sh #aaaaaa ,hi #929292,RootTransparent buffer, Tint white 15
+# sh / hi 与 pager 中的 WindowColorsets 设置 当前激活的 Mini 窗口边框颜色:黄色
+Colorset 7 fg white, bg white, sh #fff900 ,hi #fff900,RootTransparent buffer, Tint white 40
+# ,Noshape # 忽略 MiniIcon [?]
+# Dock 背景色，完全透明色
+Colorset 8 fg white, fgsh #000000, bg #f6f6f6, sh #000000, hi #000000, \
+            RootTransparent, Noshape, Tint black 15, IconAlpha 100
+# AutoHide Xterm
+Colorset 9 fg #202427 , bg #202427, NoShape
+Colorset 10 fg grey, bg white, NoShape, RootTransparent,Tint white 0
+
+# For Dock 按钮聚焦 蓝色 背景
+Colorset 11 fg #48bfff,bg #48bfff,RootTransparent buffer, Tint white 10
+
+# }}}
+
+# [ Style 样式 ]# {{{
+############################################
+
+# [ Global Style ]# {{{
+#############################################
+Style * Colorset 0, HilightColorset 2
+Style * Font "Shadow=0 se:xft:microsoft yahei:size=9:antialias=True"
+
+# !!! 3D 边框 [ BorderStyle ] 仍然无法去掉[?]
+# BorderWidth，不支持支持鼠标移动到窗口角落，调解窗口尺寸
+#Style * !Handles,BorderWidth 4
+# HandleWidth，支持鼠标移动到窗口角落，调解窗口尺寸
+#Style * Handles,HandleWidth 1
+Style * HandleWidth 1
+Style * BorderColorset 0, HilightBorderColorset 0
+# 窗口Resize，ResizeOutline（默认）窗口边框，显示轮廓线/九宫格
+#             ResizeOpaque 窗口内容随尺寸变化的，会出现延迟，两者 互斥！
+Style * ResizeOutline
+
+# 新建窗口暂时获得焦点，可以默认使用GrabFocus，在 App style 中指定为FPGrabFocus
+Style * FPGrabFocus
+# 鼠标指针停留获得焦点，但是并不将窗口提升为当前活动窗口;鼠标单击，才将窗口提升为当前活动窗口
+Style * SloppyFocus, MouseFocusClickRaises
+
+# 左上角-->往下排列
+#Style * IconBox 64 128 -1600 -1
+Style * IconBox 16 128 -1600 -1
+# 右上角-->往下排列
+# Style * IconBox -64 -32 10 -1
+# 最小化图标的尺寸/位置，排列方向
+#Style * IconBox screen w -0 0 -1 -20,IconFill b l
+# 最小化图标的尺寸/位置，排列方向:左下角-->往右排列
+#Style * IconBox 32 -96 -1 32
+#Style * IconBox $[vp.width]x$[vp.height]+10+10, IconFill t l, IconBackgroundPadding 0, IconBackgroundRelief 0
+
+# 图标浮雕 3D 边框宽度，默认为2，[-50-50]，负数，按下3D风格[?]
+Style * IconBackgroundRelief 0
+# 图标浮雕 3D 边框与图片之间的填充距离，默认为2，[0-50]
+Style * IconBackgroundPadding 0
+# 图标粘着，在每个桌面都可见;不显示图标标题栏
+Style * StickyIcon, !IconTitle
+# 不使用系统的默认的图标关联，使用 MiniIcon 定义的图标连接，默认是EwmhNoMiniIconOverride，使用系统图标
+#Style * EwmhMiniIconOverride
+
+# 临时窗口标题栏（另存为），和使用的标题栏样式
+Style * DecorateTransient, UseDecor ImageTitle
+#Style * DecorateTransient, UseDecor VectorDecor
+# Sticky 后标题栏不出现条文装饰
+Style * !StickyStippledTitle
+# 相同的窗口标题栏，添加编号区分
+Style * IndexedWindowName
+
+# 窗口收缩动画/延迟时间
+Style * WindowShadeSteps 0
+
+# 新窗口的摆放位置：居中
+#Style * PositionPlacement Center
+# 默认：（智能摆放，尽量不覆盖其他窗口，若无空间则阶梯式摆放）
+Style * TileCascadePlacement
+
+# }}}
+
+# [ App Style 程序样式 ]# {{{
+#############################################
+
+# 系统 程序 默认的图标
+# 单个 * 设置 默认图标，两个 * 使所有窗口 都是用 指定图标
+#Style * EWMHMiniIconOverride, IconOverride, Icon default.48.png, MiniIcon default.48.png
+Style ** EWMHMiniIconOverride,IconOverride,Icon blue.48.png,MiniIcon blue.48.png
+
+# 与 FvwmIdent 里面的 Resource 栏有关，注意大小写！！！
+Style FvwmConsole       Icon terminal.48.png            ,MiniIcon terminal.48.png
+Style chromium          Icon chromium.48.png            ,MiniIcon chromium.48.png
+Style emacs             Icon emacs.48.png               ,MiniIcon emacs.48.png
+Style Navigator         Icon firefox.white.48.png       ,MiniIcon firefox.orange.48.png
+Style galculator        Icon calculator.48.png          ,MiniIcon calculator.48.png
+Style gcolor2           Icon start.48.png               ,MiniIcon stardict.48.png
+Style Gimp              Icon gimp.48.png                ,MiniIcon gimp.48.png
+Style gmrun             Icon run.48.png                 ,MiniIcon run.48.png
+Style leafpad           Icon text.48.png                ,MiniIcon leaf.48.png
+Style mtpaint           Icon paint.48.png               ,MiniIcon paint.48.png
+Style ROX-Filer         Icon folder.blue.48.png         ,MiniIcon folder.blue.48.png
+Style Pidgin            Icon pidgin.48.png              ,MiniIcon pidgin.48.png
+Style pcmanfm           Icon file.manager.48.png        ,MiniIcon file.manager.48.png
+Style stardict          Icon stardict.48.png            ,MiniIcon stardict.48.png
+Style tilda             Icon tilda.48.png               ,MiniIcon tilda.48.png
+Style urxvt             Icon urxvt.48.png               ,MiniIcon urxvt.48.png
+Style xterm             Icon xterm.48.png               ,MiniIcon xterm.48.png
+Style sonata            Icon tape.48.png                ,MiniIcon tape.48.png
+Style VirtualBox        Icon virtualbox.48.png          ,MiniIcon virtualbox.48.png
+Style xarchiver         Icon archive.48.png             ,MiniIcon archive.48.png
+#Style ROX-Filer         Icon Aquave.green.png         ,MiniIcon Aquave.green.png
+Style Download          Icon rtorrent.48.png            ,MiniIcon rtorrent.48.png
+
+
+# 参数： NoTitle, !Borders, NoHandles[Resize角], WindowListHit/WindowListSkip[是/否WindowList菜单中出现]
+Style MPlayer           !Title, Sticky, !WindowListSkip
+Style stalonetray       !Title, !Borders,Sticky,WindowListSkip 
+#Style conky            !Title, !Borders,Sticky,WindowListSkip,StaysOnTop
+# 取出Sticky 标题栏横条纹
+#Style tilda            Sticky,!StickyStippledTitle,!WindowListSkip
+# multiget 下载状态窗口
+Style drop              !Title, !Borders
+#Style chromium          !Title, !Borders
+
+# Firefox 下载对话框 样式，取消自动聚焦
+#Style Downloads        GrabFocusOff,FPReleaseFocus,!FPGrabFocus,FPOverrideGrabFocus,NeverFocus
+Style Download        !FPGrabFocus,NeverFocus
+# OverrideGrabFocus GrabFocus 样式 的聚焦窗口，在新建窗口出现时，焦点保持，并不会转移到新窗口
+
+# IconOverride 可以使程序最小化时覆盖默认图标，使用自定义图标
+#Style "Firefox-bin"    Icon myfirefox.png, IconOverride,NoActiveIconOverride
+
+
+## 可以 将 默认的Focus 方式设置为 GrabFocus，对 Rox / gmrun 等指定 FPGrabFocus ，可以防止 Firefox 的 Download 每次弹出聚焦
+#Style "ROX-Filer" FPGrabFocus, FPGrabFocusTransient Icon 32x32/home.png, MiniIcon 32x32/home.png, IconOverride, EWMHMiniIconOverride,
+
+#Style "Firefox-bin" Icon 32x32/firefox.png, MiniIcon 32x32/firefox.png, EWMHMiniIconOverride, StartsOnPage 0 1 0, SkipMapping
+## 指定程序在特定的桌面打开，并且不立即跳转到相应桌面，而是等相关窗口完成绘制之后再进行操作[?]
+##StartsOnPage 0 1 0, SkipMapping
+##桌面号/桌面X/桌面Y
+
+# }}}
+
+# [ WindowList ]# {{{
+#############################################
+# WindowList 选项 iterm 字符串格式定义位于：按键绑定 "Binding " 处
+# ItemFormat 为：Desk（Layer）：x-geometry
+
+# WindowList与Menu使用不同的字体时，WindowList会使用 3D 样式，使用下面的命令使其应用默认
+#DestroyMenuStyle WindowList
+
+MenuStyle WindowList Font "Shadow=0 se:xft:microsoft yahei:size=9:antialias=True"
+MenuStyle WindowList ItemFormat "%15|%2.5i%2.5l%0.5r%15|%"
+# 菜单上下的空白缩进
+MenuStyle WindowList VerticalMargins 12 12
+MenuStyle WindowList MenuColorset 0, ActiveColorset 2
+# ActiveFore 使菜单选项被选中时颜色高亮工作，参数为颜色num，若省略则使用ActiveColoset指定的
+MenuStyle WindowList ActiveFore
+MenuStyle WindowList BorderWidth 0,Hilight3DOff
+
+# }}}
+
+
+
+
+# }}}
+
+# [ Title 标题 ]# {{{
+#############################################
+#
+# +--------------------------------------------------------+
+# | X  #  _  []                                            |
+# +--------------------------------------------------------+
+# | 1  3  5  7  9                            0  8  6  4  2 |
+#
+# TitleStyle      [ 标题样式 ]
+# ButtonStyle     [ 按钮样式 ]
+# BorderStyle     [ 边框样式 ]
+
+# [ Vector 向量按钮 ]# {{{
+#############################################
+
+# From L1quid Fvwm Theme
+
+#DestroyDecor VectorDecor
+#AddToDecor   VectorDecor
+#
+#+ TitleStyle Height 18 -- flat
+## 标题栏文字左对齐
+#+ TitleStyle LeftJustified -- flat
+#+ TitleStyle Active Colorset 0 -- flat
+#+ TitleStyle Inactive Colorset 0 -- Flat
+#
+## 关闭   叉号 X
+#+ ButtonStyle  1 Inactive Vector 4 40x40@3 60x60@3 60x40@4 40x60@3 -- Flat
+#+ ButtonStyle  1 Active   Vector 4 40x40@3 60x60@3 60x40@4 40x60@3 -- Flat
+#+ ButtonStyle  1 AllUp    Vector 4 40x40@3 60x60@3 60x40@4 40x60@3 -- Flat
+#
+## 最大化 井号 #
+#+ ButtonStyle  3 Inactive Vector 7 40x40@3 40x60@3 60x60@3 60x40@3 40x40@3 40x45@3 60x45@3 -- Flat
+#+ ButtonStyle  3 Active   Vector 7 40x40@3 40x60@3 60x60@3 60x40@3 40x40@3 40x45@3 60x45@3 -- Flat
+#+ ButtonStyle  3 AllUp    Vector 7 40x40@3 40x60@3 60x60@3 60x40@3 40x40@3 40x45@3 60x45@3 -- Flat
+#
+## 最小化 减号 -
+#+ ButtonStyle  5 Inactive Vector 5 40x60@3 60x60@3 60x55@3 40x55@3 40x60@3 -- Flat
+#+ ButtonStyle  5 Active   Vector 5 40x60@3 60x60@3 60x55@3 40x55@3 40x60@3 -- Flat
+#+ ButtonStyle  5 AllUp    Vector 5 40x60@3 60x60@3 60x55@3 40x55@3 40x60@3 -- Flat
+#
+#+ ButtonStyle 7 Active (MiniIcon) Inactive (MiniIcon)
+#
+#+ ButtonStyle All -- Flat UseTitleStyle
+#+ BorderStyle -- flat
+
+# }}}
+
+# [ Pixmap 图片按钮 ]# {{{
+#############################################
+
+DestroyDecor recreate ImageTitle
+AddToDecor   ImageTitle
+
+# 标题栏高度：18 px
++ TitleStyle Height 18 -- Flat
+# 标题栏文字左对齐
++ TitleStyle LeftJustified -- Flat
++ TitleStyle Active Colorset 0 -- Flat
++ TitleStyle Inactive Colorset 0 -- Flat
+
+# 关闭按钮
++ ButtonStyle 1 ActiveUp   (Pixmap b.w.r.close.png -- Flat) \
+     ActiveDown (Pixmap g.r.close.png -- Flat) \
+     Inactive   (Pixmap inac.png -- Flat)
+# 最大化按钮
++ ButtonStyle 3 ActiveUp   (Pixmap b.w.max.png -- Flat) \
+     ActiveDown (Pixmap g.max.png -- Flat) \
+     Inactive   (Pixmap inac.png -- Flat)
+# 最小化按钮
++ ButtonStyle 5 ActiveUp   (Pixmap b.w.min.r.png -- Flat) \
+     ActiveDown (Pixmap g.min.r.png -- Flat) \
+     Inactive   (Pixmap inac.r.png -- Flat)
+
+# 窗口图标
++ ButtonStyle 7 Active (MiniIcon) Inactive (MiniIcon)
+
+## 窗口按钮 样式：UseTitleStyle 优先使用title样式于button样式
++ ButtonStyle All -- Flat UseTitleStyle
+
+# 窗口边框 样式
++ BorderStyle -- Flat
+
+#############################################
+##+ TitleStyle  -- Flat
+##+ BorderStyle Simple -- NoInset Flat
+##+ BorderStyle Simple -- !HiddenHandles NoInset
+##+ BorderStyle -- HiddenHandles NoInset
+
+# }}}
+
+# }}}
+
+# [ Function 函数 ]# {{{
+############################################
+
+# [ >>> 函数 格式 ]# {{{
+#############################################
+# DestroyFunc FuncName
+# AddToFunc   FuncName
+# + C [ 鼠标单击执行 Click       ]
+# + D [ 鼠标双击执行 Double      ]
+# + H [ 鼠标按住执行 Hold        ]
+# + I [ 立即马上执行 Immediately ]
+# + M [ 鼠标移动执行 Motion      ]
+#############################################
+# }}}
+
+# [ Init 初始 ]# {{{
+#############################################
+# 函数InitFunction则在FVWM被首次初始化并在函数StartFunction运行之后运行
+
+# 在 Start 之后执行，[?] restart 之后 Start / Init 哪个会再执行
+# Start 只在进入时执行，restart 后仅执行 Init
+# 在重启 fvwm 时不再次执行相关命令 Test (!Restart) 或用 pgrep xxx|| xxx
+
+# Init 只在 开机时执行一次
+DestroyFunc InitFunction
+AddToFunc   InitFunction
+# 建立 Thumbnail 存放缩略图的目录
++ I Exec exec mkdir /tmp/thumb
+# 阴影效果对比明显，无窗口/菜单渐隐
++ I Test (Init) Exec exec xcompmgr -l -5 -t -5 -r 5 -o 0.60 -c
++ I Test (Init) Exec exec feh --bg-scale /home/king/me/wall/pixel.png
++ I Test (Init) Exec exec conky &
++ I Test (Init) Exec exec stalonetray &
+# 会每次覆盖播放列表
+#+ I Test (Init) Exec exec mpd --create-db &
++ I Test (Init) Exec exec mpd &
+
+# 含有窗口渐隐
+#+ I Exec exec xcompmgr -c -t-5 -l-5 -r4.2 -o.52 -C -f -F &
+#+ I Exec sleep 3 && conky -c $[FVWM_USERDIR]/ownfiles/conkyrc
+#+ I Exec tint -c $[FVWM_USERDIR]/ownfiles/tintrc_black
+#+ I Exec exec mpd &
+#+ I Exec stalonetray -w -t --geometry 90x28+945-2 --respect-icon-hints --max-width 90
+#+ I Exec trayer --align right --transparent true --height 27 --alpha 120 --tint black --widthtype request --heighttype request --SetDockType true --SetPartialStrut false --expand true
+#+ I Exec scim -d
+
+# }}}
+
+# [ Start 开始 ]# {{{
+#############################################
+
+DestroyFunc StartFunction
+AddToFunc StartFunction
++ I Module FvwmButtons
+# DeThumbnail 在每次取消最小化时自动调用
++ I Module FvwmEvent
+# GotoPage 1 0 移动到中间桌面
++ I GotoPage 1 0
+#+ I Module FvwmPager
+#+ I Module FvwmCommandS
+#+ I Module FvwmTaskbar
+#+ I Module FvwmIconMan
+#+ I Module FvwmAnimate
+#+ I Module FvwmButtons DockButtons
+#+ I Module FvwmButtons -g 60x30+1610+5 FvwmClock
+#+ I Module FvwmButtons -g 100x30+0-1015 FvwmMPD
+#+ I Module FvwmButtons -g 100x50-3+3 mpdControl
+#+ I Module FvwmButtons Panel
+# 如果开启，会在桌面显示，与 FvwmButtons 里面 Swallow 的 Pager 重复显示
+#+ I Module FvwmProxy
+
+
+# From : xp.dock 背景终端：嵌入桌面[?]
+#+ I Test (Init) Exec exec 'xterm +sb -geometry 1024x768+0+0 -title "backgroundxterm:DISPLAY=$DISPLAY" -e screen'
+
+# 在重启fvwm后还能使用 Thumbnail 缩略图标
+#AddToFunc StartFunction I Test (Restart) All (Iconic) \
+#Test (f $[FVWM_USERDIR]/icon.tmp.$[w.id].png) WindowStyle IconOverride, Icon $[FVWM_USERDIR]/icon.tmp.$[w.id].png
+
+#+ I Test (Init) Module FvwmBanner
+#+ I Test (Init) SendToModule Panel ChangeButton desk Title "unan"
+#+ I Test (Restart) All (Iconic) Test (f $[FVWM_USERDIR]/images/tmp/icon.tmp*) WindowStyle IconOverride, Icon $[FVWM_USERDIR]/images/tmp/icon.tmp*
+#+ I Test (Restart) All (Iconic) Test (f $[FVWM_USERDIR]/icon.tmp.$[w.id].png) WindowStyle IconOverride, Icon $[FVWM_USERDIR]/icon.tmp.$[w.id].png
+#+ I Test (Quit) Exec rm $[FVWM_USERDIR]/icon.tmp.*
+#+ I Exec fvwm-root --retain-pixmap --no-color-limit /root/Downloads/Wallpapers/left.png
+
+## [ suse ]# {{{
+##############################################
+#AddToFunc StartFunction
+#+ I Test (Init) Module FvwmBanner
+#+ I Test (Init) Exec exec xterm -ls -geometry +150+85
+#+ I Test (Init) Exec exec xli -onroot -fillscreen -border black /usr/share/wallpapers/default-1600x1200.jpg
+#+ I Test (Restart) Exec exec xli -onroot -fillscreen -border black /usr/share/wallpapers/default-1600x1200.jpg
+#+ I Module FvwmButtons
+# }}}
+
+
+# }}}
+
+# [ Restart 重启 ]# {{{
+#############################################
+# 函数RestartFunction则在FVWM重新启动后并在StartFunction运行后运行
+
+DestroyFunc RestartFunction
+AddToFunc   RestartFunction
+#+ I Module FvwmCommandS
++ I All (Iconic) ReThumbnail
+
+
+# }}}
+
+# [ Exit 退出 ]# {{{
+#############################################
+
+DestroyFunc ExitFunction
+AddToFunc ExitFunction
+# 检查一下忘了删除的缩略图
+#+ I Exec rm $[FVWM_USERDIR]/images/tmp/icon.tmp*
+#+ I Test (!ToRestart) Exec exec rm -f $[HOME]/.fvwm/icon.tmp.*
++ I Exec sync
+#+ I Exec killall stalonetray
+#+ I Exec killall trayer
+#+ I Exec killall conky
+
+# }}}
+
+# [ 窗口 操作 函数 ]# {{{
+#############################################
+
+# [ 普通窗口操作 ]# {{{
+#--------------------------------------------
+
+# 窗口大小调节 / 移动
+AddToFunc ResizeFunc "M" Resize
+AddToFunc MoveFunc   "M" Move
+
+# 窗口 关闭 / Kill
+DestroyFunc DeleteOrDestroy
+AddToFunc   DeleteOrDestroy
++ H Nop
++ M Nop
++ C Delete
++ D Destroy
+
+# 最小化 / 上卷
+DestroyFunc IconifyOrShade
+AddToFunc   IconifyOrShade
++ C Iconify
+# 双击 窗口 上卷
+#+ D WindowShade
+
+# 最大化
+DestroyFunc WinMaximize
+AddToFunc   WinMaximize
++ H Nop
++ M Nop
++ C Maximize $0 $1
+
+# 最大化按钮
+#DestroyFunc MaximizeButton
+#AddToFunc MaximizeButton
+#+ C Maximize
+#+ D Maximize ewmhiwa True
+#+ M Nop
+
+# 图标化 移动
+DestroyFunc MoveOrIconify
+AddToFunc   MoveOrIconify
++ M Move
++ D Iconify
+
+# 取消上卷
+DestroyFunc WinWindowShade
+AddToFunc   WinWindowShade
++ D WindowShade $0
+
+# 标题栏
+DestroyFunc TitleMaximize
+AddToFunc TitleMaximize
++ I Raise
+# 双击标题栏最大化窗口
++ D Maximize
++ M Move
+
+# FvwmIconMan 任务栏
+AddToFunc TaskBarFocus
++ I Iconify off
++ I Raise
++ I Focus
+
+# }}}
+
+# [ Custom WindowFunction ]# {{{
+#--------------------------------------------
+# Maximize 最大化 / Iconify 最小化 / Move 移动 操作 
+
+#DestroyFunc cFlipFocus
+#AddToFunc cFlipFocus
+#+ I FlipFocus $*
+#+ I MoveToPage $[page.nx] $[page.ny]
+
+# [ Custom Iconify ]# {{{
+#--------------------------------------------
+
+DestroyFunc cusIconify
+AddToFunc   cusIconify
+# 如果不想自定义最小化函数调用 缩略图 注释下面两行
+#+ I Test (EnvIsSet Icon-$[w.id]) DeThumbnail
+#+ I TestRc ThisWindow (!Iconic) Thumbnail
++ I Pick (!Iconic) SetEnv layer-$[w.id] $[w.layer]
++ I Iconify $*
++ I Pick (Iconic) Layer 0 2
++ I TestRc PipeRead `echo Layer 0 \$[layer-$[w.id]];echo UnsetEnv layer-$[w.id]`
+
+DestroyFunc IconifyAndRearrange
+AddToFunc IconifyAndRearrange
++ I All (Iconic) Layer 0 4
++ I cusIconify
++ I Pick (Iconic) Break
++ I WindowShade False
++ I All (CurrentPage Iconic) PlaceAgain Icon
+
+DestroyFunc IconifyOff
+AddToFunc IconifyOff
++ I Pick (Iconic) IconifyAndRearrange
+#+ I Pick cFlipFocus NoWarp
++ I Pick FlipFocus
++ I Pick Raise
++ I WindowShade False
+
+# }}}
+
+# [ Custom Move Maximize ]# {{{
+#--------------------------------------------
+# 函数依赖 ：cMove --> CustomMaximize --> SetPos
+DestroyFunc cMove
+AddtoFunc cMove
++ I Pick (FixedPosition) Break
++ I Pick (Maximized) CustomMaximize
++ I TestRc (Break) WarpToWindow 50 12p
++ I Move
+
+# 自定义 最大化
+DestroyFunc CustomMaximize
+AddToFunc   CustomMaximize
++ I ThisWindow (Iconic) IconifyAndRearrange
++ I ThisWindow (Shaded) WindowShade
++ I TestRc (Match) Break 1
++ I ThisWindow (Maximized) PipeRead\
+	"echo DestroyWindowStyle;\
+	echo UpdateStyles;\
+	echo ResizeMove frame \\$\\[w-$[w.id]\\]p \\$\\[h-$[w.id]\\]p\
+					 \\$\\[x-$[w.id]\\]p \\$\\[y-$[w.id]\\]p"
++ I TestRc (Match) Break 1
++ I ThisWindow SetPos
++ I Maximize $*
++ I WindowStyle FixedSize
+
+DestroyFunc SetPos
+AddToFunc SetPos
++ I SetEnv w-$[w.id] $[w.width]
++ I SetEnv h-$[w.id] $[w.height]
++ I SetEnv x-$[w.id] $[w.x]
++ I SetEnv y-$[w.id] $[w.y]
+
+# }}}
+
+# [ Custom Kill ]# {{{
+#--------------------------------------------
+#DestroyFunc Kill
+#AddtoFunc Kill
+#+ I Pick Piperead "id=\"`xprop -id $[w.id]|sed -n '/_NET_WM_PID/s/.*\ //p;/WM_CLIENT_MACHINE/s/.*\ //p'`\";\
+#[ \"$${id%\\\"$$HOSTNAME\\\"}\" != \"$${id}\" ]\
+#&& [ \"$${id%\\\"$$HOSTNAME\\\"}\" != \"\" ]\
+#&& info=`ps -p $${id%%\\\"*} -o pid,cmd|tail -n 1`\
+#&& kill $${id%%\\\"*}\
+#&& echo $${info} $[w.id] killed>&2\
+#||(echo Destroy && echo No PID found $[w.id] Destroyed >&2)"
+
+# }}}
+
+# }}}
+
+# 改变默认WindowListFunc，聚焦新窗口时，鼠标位置不会指在最左边的关闭按钮，鼠标位置 保持不变
+DestroyFunc WindowListFunc
+AddToFunc WindowListFunc
+# 取消窗口卷起状态
++ I WindowShade False
+# 取消窗口图标化
+#+ I Iconify off
++ I cusIconify off
++ I Raise
++ I FlipFocus
+#+ I cFlipFocus NoWarp
+
+# >>> 单击标题栏按钮，单击事件：点击响应，如果发现点错按钮，按住鼠标不放，移开即可
+DestroyFunc ClickButton
+AddtoFunc ClickButton C $*
+
+#############################################################
+
+# 放在独立的文件里面，可以方便重载 [?]
+#DestroyFunc reloadButtons
+#AddToFunc   reloadButtons
+#+ I All (FvwmButtons) Close
+#+ I read Buttons
+#+ I Module FvwmButtons
+
+
+
+
+
+
+# }}}
+
+# }}}
+
+# [ Advanced 高级 ]# {{{
+#############################################
+
+# [ ImageMagic 缩略图 ]# {{{
+##############################################
+
+## From : FBG 重启 FVWM，最小化图标都将恢复原值
+#DestroyFunc ReThumbnail
+#AddToFunc   ReThumbnail
+#+ I Iconify
+#+ I Thumbnail
+
+# [ FBG Thumbnail ]# {{{
+#--------------------------------------------
+# From : Simple.fvwm
+# 比较老的转换，要先用 xorg 的 xwd 截屏之后再用 convert 进行转换，而未使用 import
+#DestroyFunc Thumbnail
+#AddToFunc Thumbnail
+#+ I Raise
+#+ I ThisWindow (!Iconic) SetEnv Icon-$[w.id] $[w.iconfile]
+#+ I ThisWindow (!Shaded, Iconifiable, !Iconic) PipeRead \
+#    "xwd -silent -id $[w.id] | convert -crop 90x50+15+50 -frame 0x0 \
+#    -mattecolor gray -quality 0 xwd:- png:$[FVWM_USERDIR]/images/tmp/icon.tmp.$[w.id].png \
+#    && echo WindowStyle IconOverride, Icon $[FVWM_USERDIR]/images/tmp/icon.tmp.$[w.id].png \
+#    || echo Nop"
+#+ I Iconify
+#
+#DestroyFunc DeThumbnail
+#AddToFunc DeThumbnail
+#+ I PipeRead "echo Test \\(i \\$\\[Icon-$[w.id]\\]\\) WindowStyle Icon \\$\\[Icon-$[w.id]\\]"
+#+ I TestRc (NoMatch) WindowStyle NoIconOverride, Icon
+#+ I Exec rm -f $[FVWM_USERDIR]/images/tmp/icon.tmp.$[w.id].png
+#+ I All (Iconic, CurrentPage) PlaceAgain icon
+#+ I UnsetEnv Icon-$[w.id]
+## }}}
+
+# [ Dock.fvwm Thumbnail ]# {{{
+#--------------------------------------------
+# From.Dock.Theme 使用 自带的 thumb.c 编译的程序，不知是否调用 convert [?]
+
+# module/misc 文件里面定义的 FvwmEvent
+#DestroyModuleConfig FvwmEvent: *
+#*FvwmEvent: deiconify DeThumbnail
+
+#*FvwmEvent: deiconify DeThumbnail
+# }}}
+
+# [ imlib2 缩略图 ]# {{{
+#--------------------------------------------
+# From : http://pemarchandet.free.fr/fvwm.html
+# >>> 需要编译 scripts/thumb.c 文件 ！
+
+## 可以将 /dev/shm/ 替换为 /tmp 更好的利用内存资源
+#SetEnv fvwm_icon_size 100
+#
+#DestroyFunc Thumbnail
+#AddToFunc Thumbnail
+#+ I PipeRead "echo $[w.id] >> $[FVWM_USERDIR]/.icons"
+#+ I Raise
+#+ I ThisWindow (!Shaded, Iconifiable, !Iconic) PipeRead "$[FVWM_USERDIR]/scripts/thumb $[w.id] $[fvwm_icon_size] /tmp/thumb/icon.tmp.$[w.id].png $[w.miniiconfile]"
+#+ I Iconify
+#
+#DestroyFunc DeThumbnail
+#AddToFunc DeThumbnail
+#+ I PipeRead "echo WindowStyle Icon \\$\\[Icon-$[w.id]\\]"
+#+ I Exec exec rm -f /tmp/thumb/icon.tmp.$[w.id].png
+#+ I PipeRead "sed -ie '/$[w.id]/d' $[FVWM_USERDIR]/.icons"
+#
+#*FvwmEvent: deiconify DeThumbnail
+#
+## Icons Binding
+#Mouse 1         I       A       DeiconifyAndRearrange
+#
+## This will remove gaps when de-iconifying an application
+#AddToFunc DeiconifyAndRearrange
+#+ C Iconify off
+#+ C All (CurrentPage, Iconic) PlaceAgain Icon
+#AddToFunc IconFunc
+# + C DeiconifyAndRearrange
+# + M Raise
+# + M Move
+# + D DeiconifyAndRearrange
+#
+## This will remove gaps when de-iconifying an application from the keybinding
+#DestroyFunc DeiconifyAndRearrange2
+#AddToFunc DeiconifyAndRearrange2
+#+ I Iconify off
+#+ I All (CurrentPage, Iconic) PlaceAgain Icon
+#
+## The following allows us to associate keybindings with deiconifying
+## iconified apps that appear in the IconBox. As coded here, this will only work
+## if PlaceAgain Icon is used in the config (as per the default).
+#Key 1       A   MC  DeiconifyAppNum 1
+#Key 2       A   MC  DeiconifyAppNum 2
+#Key 3       A   MC  DeiconifyAppNum 3
+#Key 4       A   MC  DeiconifyAppNum 4
+#Key 5       A   MC  DeiconifyAppNum 5
+#Key 6       A   MC  DeiconifyAppNum 6
+#
+#DestroyFunc DeiconifyAppNum
+#AddToFunc DeiconifyAppNum
+#+ I PipeRead `echo WindowId $$(sed -ne '$$0p' $[FVWM_USERDIR]/.icons) DeiconifyAndRearrange2`
+
+
+
+# }}}
+
+# [ import 缩略图 ]# {{{
+#--------------------------------------------
+# From : xp.fvwm import 的参数需要优先，提供生成缩略图速度
+#DestroyFunc Thumbnail
+#AddToFunc   Thumbnail
+#+ I Raise
+#+ I SetEnv Icon-$[w.id] $[w.iconfile]
+#+ I ThisWindow (!Shaded,Iconifiable,!Iconic) PipeRead \
+#    "import -resize 128x96 -window $[w.id] -silent /tmp/thumb/icon.tmp.$[w.id].png \
+#    && echo WindowStyle IconOverride, \
+#    Icon /tmp/thumb/icon.tmp.$[w.id].png \
+#    || echo Nop"
+#
+#DestroyFunc DeThumbnail
+#AddToFunc DeThumbnail
+#+ I PipeRead "echo WindowStyle Icon \\$\\[Icon-$[w.id]\\]"
+#+ I UnsetEnv Icon-$[w.id]
+#+ I Exec rm -f /tmp/thumb/icon.tmp.$[w.id].png
+#
+## 通过 FvwmEvent 在每次 DeIconify 取消图标化后调用 DeThumbnail
+#DestroyModuleConfig FvwmEvent: *
+#*FvwmEvent: deiconify DeThumbnail
+
+# }}}
+
+
+# }}}
+
+# [ Fullscreen ]# {{{
+#############################################
+
+# FVWM-Crystal plugin: Fullscreen
+# Written by: Maciej Delmanowski <harnir@linux.net.pl>
+# 实现窗口最大化，去除 边框 / 标题栏
+
+DestroyFunc Fullscreen
+AddToFunc Fullscreen
++ I Fullscreen-Stop
++ I Current (!Maximizable) Break
++ I TestRc (False) Fullscreen-Start
+
+DestroyFunc Fullscreen-Start
+AddToFunc Fullscreen-Start
++ I Current (State 0) Break
++ I SetEnv OldX-$[w.id] $[w.x]
++ I SetEnv OldY-$[w.id] $[w.y]
++ I SetEnv OldWidth-$[w.id] $[w.width]
++ I SetEnv OldHeight-$[w.id] $[w.height]
++ I Move 0p 0p
++ I Resize 100 100 frame
+#+ I Layer 0 5
++ I WindowStyle NoTitle, !Borders, StaysOnTop, !Iconifiable, !Maximizable
++ I State 0 true
+
+DestroyFunc Fullscreen-Stop
+AddToFunc Fullscreen-Stop
+#+ I Current (!State 0) Break
++ I DestroyWindowStyle
++ I State 0 false
+#+ I Layer 0 4
++ I PipeRead "echo ResizeMove \\$\\[OldWidth-$[w.id]\\]p \\$\\[OldHeight-$[w.id]\\]p \\$\\[OldX-$[w.id]\\]p \\$\\[OldY-$[w.id]\\]p"
+
+# }}}
+
+# [ ShowDesk ]# {{{
+#############################################
+# From http://www.linuxsir.org/bbs/thread370167.html
+# 图标化窗口前要记住窗口当前的状态和窗口列表的顺序，以便恢复
+
+DestroyFunc ShowDesk
+AddToFunc   ShowDesk
++ I All (CurrentPage, !Iconic,Iconifiable) ThisWindow State 1 True
++ I TestRc (Match) All (CurrentPage, Iconic) ThisWindow State 1 False
+#+ I All (CurrentPage, !Iconic, State 1) Iconify
++ I All (CurrentPage, !Iconic, State 1) cusIconify
++ I TestRc (Match) Break
++ I All (CurrentPage, Iconic, State 1) RestoreDesktop
+
+DestroyFunc UnIconify
+AddToFunc   UnIconify
+#+ I Next (CurrentPage, Iconic, State 1) Iconify off
++ I Next (CurrentPage, Iconic, State 1) cusIconify off
++ I TestRc (!Match) Break
++ I UnIconify
+
+DestroyFunc RestoreDesktop
+AddToFunc   RestoreDesktop
++ I UnIconify
++ I All (CurrentPage Iconic) PlaceAgain Icon
++ I All (CurrentPage, State 1) ThisWindow State 1 False
+
+
+
+# }}}
+
+# [ TempRaise 边界提升 ]# {{{
+#--------------------------------------------
+# From : http://www.linuxsir.org/bbs/thread370167.html
+
+# 对 屏幕上方 的 DockButtons 暂时提升 Layer
+#EdgeCommand Top Schedule 500 Test (EdgeHasPointer Top) TempRaise FvwmButtons DockButtons
+EdgeCommand Top Schedule 500 Test (EdgeHasPointer Top) TempRaise FvwmButtons
+# 对 屏幕左方 的 最小化图标  暂时提升 Layer
+EdgeCommand Left Schedule 500 Test (EdgeHasPointer Left) TempRaise Iconic
+
+# 默认的桌面程序一般 Layer 为 4，TempRaise 提升 Layer 为 6
+DestroyFunc TempRaise
+AddToFunc TempRaise
++ I All ($0) Layer 0 6
++ I Next ($0) Schedule Periodic 1000 $[w.id] LowerTemp $0 $[w.id]
+
+# 默认的桌面程序一般 Layer 为 4，LowerTemp 降低 Layer 为 2
+DestroyFunc LowerTemp
+AddToFunc LowerTemp
++ I Any (HasPointer, $0) Break 1
++ I All ($0) Layer 0 2
++ I Schedule 100 Deschedule $1
+
+# }}}
+
+# [ ImageMagic 截图 ]# {{{
+##############################################
+#
+#DestroyFunc FvwmWindowScreenshot
+#AddToFunc   FvwmWindowScreenshot
+#+ I ThisWindow (!Shaded !Iconic Iconifiable) \
+#    Exec import -window $[w.id] -quality 100 -silent \
+#    "$[fvwm_home]/screenshot/screenshot-`date +%F[%R]`.$[w.id].jpg"
+#
+## 延迟 $0 秒后，再截图
+#DestroyFunc FvwmDesktopScreenshot
+#AddToFunc   FvwmDesktopScreenshot
+#+ I Exec sleep $0; import -window root -quality 100 -silent \
+#    "$[fvwm_home]/screenshot/screenshot-`date +%F[%R]`.jpg"
+#
+## From.Dock.Theme
+#DestroyFunc FvwmWindowScreenshot
+#AddToFunc   FvwmWindowScreenshot
+#+ I ThisWindow (!Shaded !Iconic Iconifiable) \
+#  Exec import -window $[w.id] -quality 100 -silent \
+#  "$[fvwm_home]/screenshot/screenshot-`date +%F[%R]`.png"
+#
+#DestroyFunc FvwmDesktopScreenshot
+#AddToFunc   FvwmDesktopScreenshot
+#+ I Exec sleep $0; import -window root -quality 100 -silent \
+#  "$[fvwm_home]/screenshot/screenshot-`date +%F[%R]`.png"
+#
+## }}}
+
+# [ Lock Screen 锁屏 ]
+#--------------------------------------------
+# 锁屏 通过调用 xscreensaver 来实现
+# From : http://lcs.ios.ac.cn/~scwang/html/fvwm.html
+DestroyFunc LockScreen
+AddToFunc LockScreen
++ I Exec sleep 5; xset dpms force off
++ I Exec exec xscreensaver-command -lock
+
+
+# }}}
+
+# [ Module 模块 ]# {{{
+#############################################
+# From : http
+# Style Fvwm*       NoTitle,  Sticky, BorderWidth 0, CirculateSkipIcon, CirculateSkip
+
+# [ 简介 ]# {{{
+#############################################
+# FvwmConsole         交互开关模块 ：Module * 打开 / * Close / KillModule * 关闭
+# FvwmAnimate         图标化窗口时使用的动画特效，效果有些卡！
+# FvwmBanner          进入 Fvwm 自动运行的系统图片提示
+# FvwmButtons         以图标的形式来装饰系统，也可以把一些dockapp欠入其中，同时也
+# FvwmCommandS        在 普通终端 / Shell 脚本中使用 Fvwm 命令，格式：FvwmCommand 'GotoPage prev'
+# FvwmEvent           配合 Imagemagic 实现 Thumbnail 功能
+# FvwmIconMan         内嵌 TaskBar 中的窗口列表
+# FvwmIdent           窗口信息
+# FvwmPager           桌面地图
+# FvwmProxy           Alt-Tab
+# FvwmScript          定义 Widget 的 Fvwm 脚本语言
+# FvwmTaskBar         窗口列表，任务栏
+# FvwmWharf           象一个抽屉似的。把一些图标藏在其中。
+# FvwmWinList         Alt-Tab 竖直的窗口列表，类似 FvwmIconMan/MenuStyle 中的 WindowList
+
+# }}}
+
+# [ FvwmIdent ]# {{{
+#############################################
+
+DestroyModuleConfig FvwmIdent: *
+*FvwmIdent: Colorset 6
+*FvwmIdent: Font "Shadow=0 se:xft:microsoft yahei:size=9:antialias=True"
+
+# }}}
+
+# [ Pager ]# {{{
+#############################################
+
+Style "FvwmPager" !Title, !Handles, Borderwidth 0, Sticky, WindowListSkip, \
+  CirculateSkip, !FixedPosition, FixedSize, !Iconifiable
+
+DestroyModuleConfig FvwmPager: *
+#*FvwmPager: Geometry 250x50+715+5
+# 宽：250 高：50 顶点坐标：[ 0,25 ]
+*FvwmPager: Geometry 250x50+2+25
+*FvwmPager: BorderWidth 0
+# [ !!! ] WindowsColorsets 中的 shadow / hilight 色可以用于 border
+*FvwmPager: Window3DBorders
+
+# 虚拟桌面 填充颜色
+*FvwmPager: Colorset * 3
+# 虚拟桌面 被选中激活时的填充颜色
+*FvwmPager: HilightColorset * 4
+# Mini 窗口 1.字体颜色，2.填充颜色
+*FvwmPager: WindowColors 6 7 6 7
+# Mini 窗口的填充/高亮色
+*FvwmPager: WindowColorsets 6 7
+
+# 桌面标签 字体
+*FvwmPager: Font none
+# 窗口标签 字体
+*FvwmPager: SmallFont none
+
+# 显示 窗口 对应的 "mini" 图标
+#*FvwmPager: MiniIcons
+#*FvwmPager: IconGeometry 16x16
+
+# 显示所有（窗口/最小化图标）label标签提示
+*FvwmPager: Balloons All
+# 在 Mini 桌面中的提示标签颜色
+*FvwmPager: BalloonColorset * 6
+*FvwmPager: BalloonFont  "Shadow=0 se:xft:microsoft yahei:size=9:antialias=True"
+# 与窗口的偏移量
+*FvwmPager: BalloonYOffset +4
+#*FvwmPager: BalloonBorderWidth 1
+# 边框颜色，默认：黑色，Black
+*FvwmPager: BalloonBorderColor 0
+
+# 不显示 使用 WindowListSkip 属性的窗口
+*FvwmPager: UseSkipList
+# 鼠标中键 拖曳 窗口到其他桌面，所要拖曳的距离，默认：3
+*FvwmPager: MoveThreshold 1
+# 使用 实线 分隔，默认：虚线分隔
+*FvwmPager: SolidSeparators
+# 不使用 分隔
+#*FvwmPager: NoSeparators
+# Mini 窗口边框宽度，默认：1
+#*FvwmPager: WindowBorderWidth 1
+# 隐藏 桌面标签
+#*FvwmPager: ShapeLabels
+
+
+
+# }}}
+
+# [ TaskBar ]# {{{
+#############################################
+#DestroyModuleConfig TopBar: *
+#*TopBar: Columns $[bar_width]
+#*TopBar: Rows 1
+#*TopBar: Colorset 8
+#*TopBar: Frame 0
+#*TopBar: (38x1, Swallow FvwmClock 'FvwmScript FvwmClock')
+#*TopBar: (2x1, Colorset 8)
+#*TopBar: (693x1, Swallow FvwmIconMan 'FvwmIconMan')
+#*TopBar: (2x1, Colorset 8)
+#*TopBar: (100x1, Swallow FvwmPager 'FvwmPager *')
+#*TopBar: (2x1, Colorset 8)
+#*TopBar: (100x1, Swallow MpdControl 'FvwmScript MpdControl')
+#*TopBar: (20x1, Swallow(UseOld,NoKill) xload 'Exec exec xload -title xload -bg lightgray -fg black -nolabel -geometry 16x16', Action(Mouse 1) 'Exec exec aterm -T Top -e htop')
+#*TopBar: (20x1, Swallow Weather 'FvwmScript Weather')
+#*TopBar: (20x1, Swallow MailState 'FvwmScript MailState')
+#*TopBar: (3x1, Colorset 4)
+# }}}
+
+# [ IconMan ]# {{{
+#############################################
+Style FvwmIconMan    Sticky, !Title, WindowListSkip, CirculateSkipIcon, \
+                      NoHandles, BorderWidth 0, FixedSize, !Iconifiable, StaysOnBottom
+
+DestroyModuleConfig FvwmIconMan: *
+*FvwmIconMan:  Font "Shadow=0 se:xft:microsoft yahei:size=9:antialias=True"
+*FvwmIconMan:  Colorset                3
+*FvwmIconMan:  PlainColorset           0
+*FvwmIconMan:  FocusColorset           7
+*FvwmIconMan:  FocusAndSelectColorset  0
+*FvwmIconMan:  IconColorset            6
+*FvwmIconMan:  SelectColorset          0
+# Normal Button 一般按钮样式，[ flat/up/down/sunkedge... ]
+*FvwmIconMan:  PlainButton             up
+# 鼠标 所停靠的按钮
+*FvwmIconMan:  SelectButton            down
+# 获得 键盘焦点 窗口
+*FvwmIconMan:  FocusButton             down
+# 当前 聚焦窗口，并且获得 键盘焦点
+*FvwmIconMan:  FocusAndSelectButton    down
+# 最小化 窗口
+*FvwmIconMan:  IconButton              up
+*FvwmIconMan:  MaxButtonWidth          100
+# 3D 边框 宽度，0 代表 flat button
+*FvwmIconMan:  ReliefThickness         0
+# 图标 控制
+*FvwmIconMan:  NumManagers             1
+# 显示 当前桌面 的窗口，[ global/desk/page/screen... ]
+*FvwmIconMan:  Resolution              page
+# 开启 WindowSkip 选项，不显示含有该属性的窗口
+*FvwmIconMan:  UseWinList              true
+# 所有窗口显示 MiniIcon 图标，true 为仅 Iconify 窗口显示图标
+*FvwmIconMan:  DrawIcons               always
+# 显示 上卷 窗口
+*FvwmIconMan:  Shape                   true
+# 当窗口获得焦点，任务栏对应的选项高亮，默认为 false
+*FvwmIconMan:  FollowFocus             true
+# 排序 方式 [ name/none/id... ]
+*FvwmIconMan:  Sort                    name
+# 没有系统图标的窗口 最小化 动作
+*FvwmIconMan:  NoIconAction            "SendToModule FvwmAnimate animate"
+
+*FvwmIconMan:  1 Title                 "Menu"
+*FvwmIconMan:  1 IconName              "FvwmIconMan: all"
+# 窗口 标题 格式，%t %r 默认 '%i %c '
+*FvwmIconMan:  1 Format                "%t"
+*FvwmIconMan:  1 DontShow              icon=Untitled
+*FvwmIconMan:  1 ManagerGeometry       1037x1
+*FvwmIconMan:  1 ButtonGeometry        1x14
+
+*FvwmIconMan:  Action    Mouse   1 N sendcommand TaskBarFocus
+*FvwmIconMan:  Action    Mouse   2 N sendcommand "Menu TitleMenu"
+*FvwmIconMan:  Action    Mouse   3 N sendcommand Iconify
+
+# }}}
+
+# [ FvwmButton Dock ]# {{{
+#--------------------------------------------
+
+# [ Dock ]# {{{
+#--------------------------------------------
+
+#From : 
+#Style FvwmButtons  !Iconifiable, FixedPosition, Fixedsize
+Style FvwmButtons !Title, !Handles, Sticky, WindowListSkip, TitleAtTop,  \
+        CirculateHit, HandleWidth 0, BorderWidth 0, BorderColorset 8, HilightBorderColorset 8 , NeverFocus
+
+# 修改 TitleAtBottom 为 TitleAtTop 让自动隐藏后的边框在上面 [?]
+#Style "DockButtons" !Title, !Handles, Sticky, WindowListSkip, TitleAtTop,  \
+        CirculateSkip, HandleWidth 0, BorderWidth 0, BorderColorset 8, HilightBorderColorset 8 , NeverFocus
+
+# ProgramLaunching Dock
+##############
+DestroyModuleConfig FvwmButtons: *
+# Dock 细分为 2 行 15 列。可以将 Dock 看作一个表格，每个元素都占有相应数量的单元格
+
+*FvwmButtons: Rows 2
+*FvwmButtons: Columns 168
+
+*FvwmButtons: Colorset 3
+# 针对整个 Button 的颜色，整个 Dock 作为一个 Button 嵌入在 FvwmButtons 里面
+#*FvwmButtons: ActiveColorset 3
+# 窗口位置 屏幕上方，宽度：当前桌面(viewport)的宽度
+*FvwmButtons: Geometry $[vp.width]x56+0+0
+# MPD 按钮显示 歌曲信息时用到
+*FvwmButtons: Font "Shadow=0 se:xft:Microsoft Yahei:size=8:antialias=True"
+
+
+# FvwmPager 嵌入在 Dock 里面
+*FvwmButtons: (28x2, Frame 0, Swallow FvwmPager "FvwmPager")
+
+# Dock 中每个元素所占有的单元格，和其布局。格式：行×列，frame 浮雕边框宽度
+*FvwmButtons: (5x2 Frame 0 Icon dock/gmrun.png, ActiveIcon dock/gmrun.png, ActiveColoset 7,PressColorset 11 ,\
+    Action(Mouse 1) "Exec exec gmrun", \
+    Action(Mouse 3) "Module FvwmForm FvwmForm-Run" )
+
+*FvwmButtons: (5x2, Frame 0, Icon dock/xterm.png, ActiveIcon dock/xterm.png, ActiveColoset 7,PressColorset 11 ,\
+    Action(Mouse 1) 'Exec exec urxvt ' ,\
+    Action(Mouse 2) 'Exec exec tilda ' ,\
+    Action(Mouse 3) "Exec exec xterm" )
+
+*FvwmButtons: (5x2, Frame 0, Icon dock/chromium.png, ActiveIcon dock/chromium.png, ActiveColoset 7,PressColorset 11 ,\
+    Action(Mouse 1) "Exec exec chromium" ,\
+    Action(Mouse 3) "Exec exec firefox" )
+
+    # Emacs 中文输入法无法激活，使用 环境变量 启动
+*FvwmButtons: (5x2, Frame 0, Icon dock/geany.png, ActiveIcon dock/geany.png, ActiveColoset 7,PressColorset 11 ,\
+    Action(Mouse 1) "Exec exec `export LC_CTYPE=zh_CN.UTF-8;emacs --debug-init`" ,\
+    Action(Mouse 3) "Menu EditorsMenu Rectangle +$left+$top 0  -100m 0" )
+
+*FvwmButtons: (5x2, Frame 0, Icon dock/pcmanfm.png, ActiveIcon 48x48/home.png, ActiveColoset 7,PressColorset 11 ,\
+    Action(Mouse 1) "Exec exec pcmanfm",\
+    Action(Mouse 2) `Exec exec rox` ,\
+    Action(Mouse 3) "Menu DockMenu Rectangle +$left+$top 0  -100m 0" )
+
+*FvwmButtons: (5x2, Frame 0, Icon dock/ibus.png, ActiveIcon dock/ibus.png, ActiveColoset 7,PressColorset 11 ,\
+    Action(Mouse 1) "DockLaunch stardict stardict $left $top" )
+
+*FvwmButtons: (5x2, Frame 0, Icon dock/pidgin.png, ActiveIcon dock/pidgin.png, ActiveColoset 7,PressColorset 11 ,\
+    Action(Mouse 1) "DockLaunch pidgin pidgin $left $top" )
+
+*FvwmButtons: (5x2, Frame 0, Icon dock/gimp.png, ActiveIcon dock/gimp.png, ActiveColoset 7,PressColorset 11 ,\
+    Action(Mouse 1) "Exec exec mtpaint" ,\
+    Action(Mouse 2) "Exec exec gimp" )
+
+*FvwmButtons: (5x2, Frame 0, Icon dock/galculator.png, ActiveColoset 7,PressColorset 11 ,\
+    Action(Mouse 1) "Exec exec galculator" )
+
+*FvwmButtons: (5x2, Frame 0, Icon dock/ooo.writer.png, ActiveIcon dock/ooo.writer.png, ActiveColoset 7,PressColorset 11 ,\
+    Action(Mouse 1) "Exec exec oowriter" )
+
+*FvwmButtons: (5x2, Frame 0, Icon dock/ossxmix.png, ActiveIcon dock/ossxmix.png, ActiveColoset 7,PressColorset 11 ,\
+    Action(Mouse 1) "Exec exec ossxmix" )
+
+*FvwmButtons: (40x2, Frame 0, Swallow "mpdSongName" "FvwmScript scripts/mpdSongName")
+
+# Stalonetray 官方网站提供的嵌入 FvwmButton  From : http://stalonetray.sourceforge.net/wmhints.html
+# 确认在 ~/.stalonetrayrc 启用 no_shrink 选项 ( 或 在命令令行中添加选项 --no-shrink ) stalonetray 不改变 geometry
+# 如果 不使用 嵌入 方式 EWMHUseStackingOrderHints , 不使用该选项 --window-layer 无法生效
+*FvwmButtons: (8x1, Frame 0, Swallow (NoClose,UseOld) "stalonetray" `/home/busa/bin/systemtray`)
+
+
+
+
+# }}}
+
+# [ DockLaunch RunProgram ]# {{{
+#--------------------------------------------
+# 参数列表顺序 DockLaunch urxvt Terminal $left $top
+#                         $0    $1       $2    $3
+DestroyFunc DockLaunch
+AddToFunc DockLaunch
+# 若要打开的程序已经存在，则打开 WindowList 列出该程序，并跳转到其所在位置
++ C Any ($1) Next ($1) WindowListFunc
++ H Any ($1) WindowList ($1) Rectangle +$2+$3 0 -100m CurrentAtEnd UseListSkip SortByClass NoCurrentDeskTitle
++ C TestRc (NoMatch) Exec exec $0
++ D Exec exec $0
+
+# 类似于 DockLaunch 函数，检查已经运行的程序，防止没必要的重复运行，例如：Statdict 等
+DestroyFunc RunProgram
+AddToFunc RunProgram
++ I PipeRead `$[HOME]/.fvwm/checkrun $*`
++ I None [$0] All (FvwmButtons) Raise
++ I None [$0] WindowList
++ I TestRc (Match) Break 1
+#+ I Next [$0] cFlipFocus NoWarp
++ I Next [$0] FlipFocus
++ I Current (Iconic) IconifyAndRearrange
++ I Current Raise
+
+# }}}
+
+# [ Autohide ]# {{{
+#--------------------------------------------
+# 由于 隐藏后边框颜色问题 / 内嵌的 Pager 需要实时关注，所以取消自动隐藏
+# 配合 TempRaise 可以在其他窗口覆盖 Dock 时，自动提升 Dock
+
+## 自动隐藏 dock 栏，按键 Shift + F1 显示 Dock 栏
+#Key 1   A   C   Next (CirculateHit, AutohidePanel) AutohidePanelToggle
+#
+#DestroyFunc AutohidePanelToggle
+#AddToFunc AutohidePanelToggle 
+#+ I ThisWindow (Shaded) enter_handler
+#+ I TestRc (NoMatch) NoWindow enter_handler
+#
+#AddToFunc autohide
+#+ I ThisWindow ($0) Deschedule $[w.id]
+#+ I ThisWindow ($0) ThisWindow (shaded) WindowShade off
+#+ I ThisWindow ($0) Focus
+## 鼠标 自动聚焦到 Dock 中央
+##+ I ThisWindow ($0) WarpToWindow 50 50 
+#+ I TestRc (!Match) All ($0, !shaded) autohide_hide $1 $2
+##+ I ThisWindow ($0) KeepRc ThisWindow (shaded) WindowShade off
+#
+#AddToFunc autohide_hide
+#+ I Schedule $0 $[w.id] WindowShade $1
+#+ I Schedule $0 $[w.id] Deschedule $[w.id]
+#
+#AddToFunc StartFunction
+#+ I Module FvwmAuto FvwmAutohide -menter enter_handler
+#
+## 最后一个参数“S”表示隐藏的方向，S 是"向上隐藏"。相应的参数有N, S, E, W, NW, NE, SW or SE
+## From : http://www.cnblogs.com/lone/archive/2009/08/09/1542212.html
+#AddToFunc enter_handler
+#+ I autohide FvwmButtons 500 2000 S
+##+ I autohide AutohideTerm 500 2000 N
+##+ I autohide AutohideNcmpc 500 2000 N
+
+## }}}
+
+
+
+# }}}
+
+# [ FvwmForm Run ]# {{{
+#############################################
+
+Style FvwmForm-Run      StaysOnTop, WindowListSkip, NoHandles,BorderWidth 0
+
+#DestroyModuleConfig  FvwmForm-Run: *
+#*FvwmForm-Run: Colorset 8
+#*FvwmForm-Run: ItemColorset 8
+#*FvwmForm-Run: Font "Shadow=0 se:xft:microsoft yahei:size=9:antialias=True"
+#*FvwmForm-Run: InputFont "Shadow=0 se:xft:microsoft yahei:size=8:antialias=True"
+#*FvwmForm-Run: ButtonFont "Shadow=0 se:xft:microsoft yahei:size=9:antialias=True"
+#*FvwmForm-Run: PadVText 0
+#*FvwmForm-Run: Line right
+#*FvwmForm-Run: Text "Run:"
+#*FvwmForm-Run: Input Program 30 ""
+#*FvwmForm-Run: Button quit "Ok" ^M
+#*FvwmForm-Run: Command Exec exec "$(Program)"
+#*FvwmForm-Run: Button quit "Cancel" ^[
+#*FvwmForm-Run: Nop
+
+# [ Run 2 ]# {{{
+#############################################
+# From http://www.linuxsir.org/bbs/thread370167.html
+# 支持 历史 记录，支持 普通命令 / Fvwm 命令
+
+DestroyModuleConfig FvwmForm-Run: *
+*FvwmForm-Run: Font "Shadow=0 se:xft:microsoft yahei:size=9:antialias=True"
+*FvwmForm-Run: InputFont "Shadow=0 se:xft:microsoft yahei:size=8:antialias=True"
+*FvwmForm-Run: ButtonFont "Shadow=0 se:xft:microsoft yahei:size=9:antialias=True"
+*FvwmForm-Run: Line left
+*FvwmForm-Run: Text "Run:"
+*FvwmForm-Run: Line left
+*FvwmForm-Run: Input Comm 45 ""
+*FvwmForm-Run: Button continue "H"
+*FvwmForm-Run: Command Menu CommandHistory
+*FvwmForm-Run: Line right
+*FvwmForm-Run: Selection InOrEx multiple
+*FvwmForm-Run: Choice ExtComm Exec on "External command           "
+*FvwmForm-Run: Button quit "Run" ^M
+*FvwmForm-Run: Command $(InOrEx) $(Comm)
+*FvwmForm-Run: Command StoreComm $(InOrEx) $(Comm)
+*FvwmForm-Run: Button quit "Cancel" ^[
+*FvwmForm-Run: Command Nop
+
+# Run 运行 历史记录文件名修改后可能无法读取历史记录[?]
+DestroyFunc RunHistory
+AddToFunc RunHistory
++ I DestroyMenu recreate CommandHistory
++ I AddToMenu CommandHistory History Title
++ I PipeRead `i=0;tac $HOME/.fvwm/commhistory|while read line;\
+    do echo AddToMenu CommandHistory "\\"&$i. $line\\""\
+    "PipeRead \'echo \\'$line\\';echo StoreComm \\'$line\\'; echo KillModule FvwmForm FvwmForm-Run\'";((i++));done`
+
+DestroyFunc StoreComm
+AddToFunc   StoreComm
++ I SetEnv RunComm $[1]
++ I Test (!EnvMatch RunComm calc) PipeRead `file=$[HOME]/.fvwm/commhistory;\
+    if ! [ -f \$\file ];\
+    then echo -n "">>\$\file;fi;\
+    add="$*";add=\$\{add\# };\
+    tail -n 50 \$\file|awk -v add="\$\add" '\$\0 != add && \$\0 != "" {print} END{print add}' >\$\{file}.bak;\
+    mv \$\{file}.bak \$\file`
+
+# 点击 Run 上面的 H 按钮，弹出 历史记录菜单
+AddToMenu CommandHistory History Title
++ DynamicPopupAction Function RunHistory
+
+
+# }}}
+
+
+
+
+
+# }}}
+
+# [ FvwmQuit ]# {{{
+#############################################
+
+SetEnv QuitWidth    220
+SetEnv QuitHeight   100
+
+Style FvwmQuit  Title, StaysOnTop, Sticky,!StickyStippledTitle,WindowListSkip, \
+                CirculateSkipIcon, CirculateSkip, HandleWidth 1, \
+                BorderWidth 0, NeverFocus, Layer 10, !Handles
+
+DestroyModuleConfig FvwmQuit: *
+*FvwmQuit:  BoxSize     fixed
+*FvwmQuit:  Colorset    6
+*FvwmQuit:  Rows        19
+*FvwmQuit:  Columns     40
+*FvwmQuit:  Geometry    250x128+715-525
+*FvwmQuit:  Padding     0 0
+*FvwmQuit:  Frame       0
+*FvwmQuit:  Font        "Shadow=0 se:xft:microsoft yahei:size=8:antialias=True"
+
+#*FvwmQuit:  (36x5, Title "     What do you want to do?")
+
+*FvwmQuit:  (3x3+36+0, ActionOnPress, Icon close.png, ActiveIcon close.png, Action(Mouse 1) `KillModule FvwmButtons FvwmQuit`)
+
+*FvwmQuit:  (10x8+2+6, ActionOnPress, Icon exit.logout.png, ActiveIcon exit.logout.png, Action(Mouse 1) Quit )
+*FvwmQuit:  (10x8+15+6, ActionOnPress, Icon exit.reboot.png, ActiveIcon exit.reboot.png, Action(Mouse 1) `exec killall fvwm && sudo shutdown -r now`)
+*FvwmQuit:  (10x8+28+6, ActionOnPress, Icon exit.halt.png, ActiveIcon exit.halt.png, Action(Mouse 1) `exec killall fvwm && sudo shutdown -h now`)
+
+*FvwmQuit:  (10x5+2+14, Title Exit)
+*FvwmQuit:  (10x5+15+14, Title Reboot)
+*FvwmQuit:  (10x5+28+14, Title Shutdown)
+
+# }}}
+
+## [ MPD Swallow Dock ]# {{{
+##############################################
+#DestroyModuleConfig FvwmMPD: *
+#*FvwmMPD: Rows 1
+#*FvwmMPD: Frame 0
+#*FvwmMPD: Columns 15
+#*FvwmMPD: Coloset 6
+#*FvwmMPD: BoxSize fixed
+#*FvwmMPD: (1x1, Swallow "mpdSongName" "FvwmScript scripts/mpdSongName")
+#
+#Style FvwmMPD Sticky, !Title, WindowListSkip, StaysOnBottom, \
+#            BorderWidth 0, FixedSize, !Handles, WindowListSkip, \
+#            CirculateSkipIcon, CirculateSkip, HandleWidth 0, \
+#            NeverFocus
+## }}}
+
+## [ Clock Swallow Dock ]# {{{
+##############################################
+#DestroyModuleConfig FvwmClock: *
+#*FvwmClock: Rows 1
+#*FvwmClock: Frame 0
+#*FvwmClock: Columns 1
+#*FvwmClock: Colorset 6
+#*FvwmClock: BoxSize fixed
+#*FvwmClock: (Swallow "TimeAndDate" "FvwmScript scripts/TimeAndDate")
+#
+#Style FvwmClock Sticky, !Title, WindowListSkip, StaysOnBottom, BorderWidth 0, FixedSize, NoHandles, NeverFocus
+#
+## }}}
+
+
+
+# }}}
+
+# [ Menu 菜单 ]# {{{
+#############################################
+
+# [ MenuStyle ]# {{{
+#############################################
+MenuStyle * MenuColorset 0, ActiveColorset 2
+#MenuStyle * Font "Shadow=0 se:xft:microsoft yahei:size=9:antialias=True"
+#MenuStyle * Font "Shadow=0 se:xft:snap:size=8"
+MenuStyle * Font "xft:Droid Sans Mono:Italic:size=9:antialias=True"
+#MenuStyle * ItemFormat "%.0p%|%3.2i%2.5l%.5l%.5r%2.3>%1|%.0p"
+#MenuStyle * ItemFormat "%10|%3.2i%2.5l%0.5r%2.8>%1|"
+#MenuStyle * ItemFormat "%5|%3.2i%2.2l%.8>%|"
+#MenuStyle * ItemFormat "%8|%3.2i%2.2l%.8>%|"
+MenuStyle * ItemFormat "%10|%5.0i%0.5l%>%10|"
+# %n||n%        [左右两边的 Margin 缩进，但是不影响子菜单三角]
+# %space/Tab    [可以显示在菜单边缘，可以影响到子菜单三角］
+# %i            [菜单图标]      %(left).right(pix)
+
+# 去除选项 3D 边框
+MenuStyle * BorderWidth 0
+# 关闭当前选择的菜单选项 3D 边框
+MenuStyle * Hilight3DOff
+MenuStyle * Hilight3DThickness 0
+# 菜单标题下绘制几条分隔线
+MenuStyle * TitleUnderlines0
+# 鼠标停留在菜单标题不弹出子菜单
+MenuStyle * !TitleWarp
+# 子菜单 相对 父菜单 偏移距离/宽度
+MenuStyle * PopupOffset 2 100
+MenuStyle * PopdownDelayed
+# 鼠标移至子菜单选项，不自动弹出子菜单；当鼠标移出菜单右侧，则立即弹出子菜单；鼠标单击菜单选项也可弹出子菜单
+MenuStyle * PopupDelayed, PopupDelay 0, PopdownImmediately
+# 子菜单 弹出 延时
+#MenuStyle * PopupDelayed, PopupDelay 100, PopdownImmediately
+
+# 鼠标移出子菜单，马上收缩子菜单
+MenuStyle * RemoveSubmenus
+# 不使用 菜单 快捷键
+#MenuStyle * AutomaticHotkeysOff
+
+# 选项高亮
+MenuStyle * ActiveFore
+# 关闭子菜单平移 延时动画
+#MenuStyle * AnimationOff
+# 当菜单弹出没有足够空间时，菜单进行平移腾出空间给子菜单
+MenuStyle * Animation
+# 子菜单标志为色彩平面三角（而非 3D 三角），第二个选项使三角同文字都使用"高亮色"
+MenuStyle * TrianglesSolid, TrianglesUseFore
+# 菜单选项之间的空隙，类似行间距
+MenuStyle * VerticalItemSpacing 1 2
+# 菜单上下的空白缩进
+MenuStyle * VerticalMargins 8 8
+# 分割线有缩进，而非分割整个菜单
+MenuStyle * SeparatorsShort
+
+# }}}
+
+# [ Main Menu ]# {{{
+#############################################
+# >>> 若菜单选项不放在引号之内，选项宽度无法确定，可能会与子菜单三角重叠
+
+# [ Base ]# {{{
+#--------------------------------------------
+
+DestroyMenu MainMenu
+AddToMenu   MainMenu
++ "gmrun      [Alt-R]"  Exec exec gmrun
++ "tilda      [Alt-T]"  Exec exec tilda
++ "rox        [Alt-X]"  Exec exec rox
++ "urxvt      [Alt-U]"  Exec exec urxvt
++ "screen     [Alt- ]"  Exec exec xterm -e screen
++ "sonata     [Alt-S]"  Exec exec sonata
++ "firefox    [Alt-W]"  Exec exec firefox
++ "pcmanfm    [Alt-E]"  Exec exec pcmanfm 
++ "leafpad    [Alt-L]"  Exec exec leafpad
++ "stardict   [Alt-D]"  Exec exec stardict
++ "mtpaint    [Alt-P]"  Exec exec mtpaint
++ "mentohust  [Alt-M]"  Exec exec mentohust &
++ "console    [Alt-F1]" Module FvwmConsole -terminal xterm
++ "Fvwmrun    [Alt- ]"  Module FvwmForm FvwmForm-Run
+#######################
++ ""                    Nop
+#######################
++ "Fvwm        "        Popup FvwmMenu
++ "Desk        "        Popup MenuDesk
++ "Other       "        Popup otherapp
++ "Office      "        Popup go-office
++ "Server      "        Popup Services
+#######################
++ ""                    Nop
+#######################
++ "Restart Fvwm"        Restart
++ "Logout      "        Quit
++ "Exit        "        Module FvwmButtons FvwmQuit
+
+#+  "gvim       "  Exec exec gvim
+#   For the alsa sound driver 声卡独占
+#+  "audacious  "  Exec exec aoss audacious2 
+#+  "audacious  "  Exec exec audacious2 -i gtkui
+
+# }}}
+
+# [ Office ]# {{{
+#--------------------------------------------
+DestroyMenu go-office
+AddToMenu   go-office
++  "writer      "       Exec exec oowriter
++  "calc        "       Exec exec oocalc
++  "impress     "       Exec exec ooimpress
++  "web         "       Exec exec ooweb
++  "base        "       Exec exec oobase
++  "math        "       Exec exec oomath
++  "draw        "       Exec exec oodraw
++  "officenter  "       Exec exec ooffice
+
+# }}}
+
+# [ Other ]# {{{
+#--------------------------------------------
+DestroyMenu otherapp
+AddToMenu   otherapp
+
++ "pidgin      "        Exec exec pidgin
++ "chromium    "        Exec exec chromium
++ "mldonkey    "        Exec exec mldonkey_gui
++ "filezilla   "        Exec exec filezilla
+
++ "chmsee      "        Exec exec chmsee
++ "epdfview    "        Exec exec epdfview
++ "xarchiver   "        Exec exec xarchiver
+
++ "dia         "        Exec exec dia
++ "gimp        "        Exec exec gimp
++ "gcolor2     "        Exec exec gcolor2
++ "galculator  "        Exec exec galculator
+
++ "wine        "        Exec exec wine start /unix %f
+# MySQL Database Design Tool
++ "SQLworkbench"        Exec exec mysql-workbench
+
+# IcedTea Application Launcher , IcedTea Web Start
++ "javaws      "        Exec exec javaws
+# OpenJDK Monitoring & Management Console , Monitor and manage OpenJDK applications
++ "jconsole    "        Exec exec jconsole
+# Manage OpenJDK policy files
++ "policytool  "        Exec exec policytool
+
+# Preferred Applications 偏好 程序
++ "Prefer-Apps "        Exec exec libfm-pref-apps
+# 磁盘实用工具
++ "palimpsest  "        Exec exec palimpsest
+
+# 浏览网络内的Zeroconf服务
++ "avahi-discover"      Exec exec avahi-discover
+# 浏览具有Zeroconf功能的VNC服务器
++ "bvnc        "        Exec exec bvnc
+# 浏览具有Zeroconf功能的SSH服务器
++ "bssh        "        Exec exec bssh
+
+
+# }}}
+
+# [ Server ]# {{{
+#--------------------------------------------
+DestroyMenu Services
+AddToMenu   Services
++ "Sshd        "        Popup MenuSshd
++ "Httpd       "        Popup MenuHttpd
++ "MySQL       "        Popup MenuMySQL
+#+ Mldonkey             Popup MenuMldonkey
+#+ Vsftpd               Popup MenuVsftpd
+#+ Tor/Privoxy          Popup MenuTor
+
+AddToMenu MenuHttpd
++ start                 Exec exec /etc/init.d/apache2 start
++ stop                  Exec exec /etc/init.d/apache2 stop
++ restart               Exec exec /etc/init.d/apache2 restart
+
+AddToMenu MenuMySQL
+#+ start                Exec exec /etc/init.d/mysql start && /etc/init.d/mysql-ndb start && /etc/init.d/mysql-ndb-mgm start
+#+ start                Exec exec xterm -e su -c "/etc/init.d/mysql start && /etc/init.d/mysql-ndb start && /etc/init.d/mysql-ndb-mgm start"
++ start_no              Exec exec /etc/rc.d/mysqld start
++ start                 Exec exec xterm -e su -c "/etc/rc.d/mysqld start"
++ stop                  Exec exec xterm -e su -c "/etc/rc.d/mysqld stop"
++ restart               Exec exec xterm -e su -c "/etc/rc.d/mysqld restart"
+#+ stop                 Exec exec /etc/init.d/mysql stop && /etc/init.d/mysql-ndb stop && /etc/init.d/mysql-ndb-mgm stop
+#+ restart              Exec exec /etc/init.d/mysql restart && /etc/init.d/mysql-ndb restart && /etc/init.d/mysql-ndb-mgm restart
+
+#AddToMenu MenuSshd
+#+ start                Exec exec /etc/init.d/ssh start
+#+ stop                 Exec exec /etc/init.d/ssh stop
+#+ restart              Exec exec /etc/init.d/ssh restart
+
+#AddToMenu MenuMldonkey
+#+ start                Exec exec /etc/init.d/mldonkey-server force-start
+#+ stop                 Exec exec /etc/init.d/mldonkey-server stop
+
+#AddToMenu MenuVsftpd
+#+ start                Exec exec /etc/init.d/vsftpd start
+#+ stop                 Exec exec /etc/init.d/vsftpd stop
+#+ restart              Exec exec /etc/init.d/vsftpd restart
+
+#AddToMenu MenuTor
+#+ start                Exec exec /etc/init.d/tor start && /etc/init.d/privoxy start
+#+ stop                 Exec exec /etc/init.d/privoxy stop && /etc/init.d/tor stop
+
+
+# }}}
+
+# [ Desk ]# {{{
+#--------------------------------------------
+DestroyMenu MenuDesk
+AddToMenu   MenuDesk
++ Conky                 Popup MenuConky
++ Tint                  Popup MenuTint
++ Xcompmgr              Popup MenuXcompmgr
++ Lxappearance          Exec exec lxappearance
++ Nitrogen              Exec exec nitrogen
+
+AddToMenu   MenuConky
+#+ start                Exec exec conky -c $[FVWM_USERDIR]/ownfiles/conkyrc
++ start                 Exec exec conky
++ stop                  Exec exec killall conky
+
+AddToMenu   MenuTint
++ start                 Exec exec tint2 -c .tint2/tint2rc
++ stop                  Exec exec killall tint
+
+AddToMenu   MenuXcompmgr
+#+ start                Exec xcompmgr -Ss -n -Cc -fF -I-10 -O-10 -D1 -t-3 -l-4 -r4
++ start                 Exec exec xcompmgr -Ss -n -Cc -fF -I-10 -O-10 -D1 -t-3 -l-4 -r4
++ stop                  Exec exec killall xcompmgr
+
+
+
+# }}}
+
+# [ Fvwm ]# {{{
+#--------------------------------------------
+DestroyMenu FvwmMenu
+AddToMenu   FvwmMenu
++  "Run         "       Module FvwmForm FvwmForm-Run
++  "Console     "       Module FvwmConsole -terminal xterm
++  "fvwmrc      "       Exec exec xterm -e vim $[HOME]/.fvwm/config
++  ".Fvwm       "       Exec exec pcmanfm $HOME/.fvwm/
++  "Reload      "       Restart
++  ""                   Nop
+
+# Kill Module
++ "&B. $[gt.Stop] Dock"  KillModule FvwmButtons
++ "&O. $[gt.Stop] IconBox"     KillModule FvwmIconBox
++ "&M. $[gt.Stop] IconMan"     KillModule FvwmIconMan
++ "&P. $[gt.Stop] Pager"       KillModule FvwmPager
++ "&R. $[gt.Stop] Backer"      KillModule FvwmBacker
++ "&S. $[gt.Stop] ScrollBar"   KillModule FvwmScroll
++ "&T. $[gt.Stop] FvwmTaskBar" KillModule FvwmTaskBar
++ "&U. $[gt.Stop] AutoRaise"   KillModule FvwmAuto
++ "&W. $[gt.Stop] WinList"     KillModule FvwmWinList
+
+
+# }}}
+
+# }}}
+
+# [ Title Menu ] # {{{
+#############################################
+
+## [ suse ]# {{{
+##############################################
+#AddToMenu windowops "Window menu (Shift-Alt-Space)"    Title
+# + "Mo&ve                  (Alt-F5) "  Pick Move
+# + "Resi&ze                (Alt-F6) "  Pick Resize
+# + "&Iconify               (Alt-F4) "  Pick Iconify
+# + "&Maximize/Normal (Shift-Alt-F3) "  Pick Maximize
+# + "(Un)St&ick       (Shift-Alt-F4) "  Pick Stick
+# +    ""  Nop 
+# + "Window &list          (Alt-F11) "  WindowList
+# +    ""  Nop 
+# + "&Close                 (Alt-F9) "  Pick Delete
+# + "&Kill                 (Alt-F11) "  Pick Destroy
+
+# }}}
+
+# [ TitleMain ]# {{{
+#--------------------------------------------
+DestroyMenu TitleMenu
+AddToMenu TitleMenu
++  "Identify   "            Pick Module FvwmIdent
++  "           "            Nop
++  "Fullscreen "            Fullscreen
++  "maximize   "            Maximize
+# 使用自定义 最小化函数 协同 Layer 提升
++  "minimize   "            cusIconify
++  "thumbnail  "            Thumbnail
++  "Resize     "            Resize
++  "Shade"                  WindowShade
+#+  "Shade      "            Pick WindowShade Toggle
++  "Print      "            Exec exec scrot -sb Title-%F_%H%M%S.png
++  "Close/Kill "            Popup CloseOrKill
+
++  "           "            Nop
++  "Layer      "            Popup Layerit
++  "Lower"                  Lower
++  "Stick"                  Stick
++  "Refresh    "            Pick RefreshWindow
++  "           "            Nop
+
++  "Move       "            Popup WinMove
+# 阶梯式 排列窗口
++  "Cascade    "            FvwmRearrange -cascade -noresize -animate  5 5 90 90
++  "Rearrange  "            Popup WinRearrange
++  "Max Vertical  "         Popup MaxVertically
++  "Max Horizontal"         Popup MaxHorizontally
++  "Send To... "            Popup SendTo
+
+# }}}
+
+# [ SubTitleMenu ]# {{{
+#--------------------------------------------
+
+DestroyMenu CloseOrKill
+AddToMenu   CloseOrKill
++  "close      "            close
++  "kill       "            destroy
+
+DestroyMenu Layerit
+AddToMenu   Layerit
++ "Layer +1    "  Pick (CirculateHit) Layer +1
++ "Layer -1    "  Pick (CirculateHit) Layer -1
++ "StaysPut    "  Pick (CirculateHit) Layer 0 4
++ "StaysOnTop  "  Pick (CirculateHit) Layer 0 6
++ "StaysOnBtm  "  Pick (CirculateHit) Layer 0 2
+
+DestroyMenu MaxVertically
+AddToMenu   MaxVertically
++ "Max Off"                 Pick Maximize Off
++ "Max Vert"                Pick (!State 13) Maximize On 0 100
+
+DestroyMenu MaxHorizontally
+AddToMenu   MaxHorizontally
++ "Max Off"                 Pick Maximize Off
++ "Max Horiz"               Pick (!State 14) Maximize On 100 0
+
+DestroyMenu WinMove
+AddToMenu   WinMove
++  "Move Up    "            Pick AnimatedMove keep 0p Warp
++  "Move Down  "            Pick PipeRead "echo AnimatedMove keep $$(($[vp.height] - $[w.height]))p Warp"
++  "Move to Left"           Pick AnimatedMove $[tab_size]p keep Warp
++  "Move to Right"          Pick PipeRead "echo AnimatedMove $$(($[vp.width] - $[w.width] - $[right_margin]))p keep Warp"
++  "Manual Move "           Pick Move
+
+# 窗口 重新配列 布局
+DestroyMenu WinRearrange
+AddToMenu   WinRearrange
++  "Rearrange  "            FvwmRearrange -tile -h -noresize -animate  5 5 90 90
++  "One-Column "            Pick Piperead 'echo FvwmRearrange -tile -animate -resize -mn 1 -m $[EWMH-BS-Panel-Left]p $[EWMH-BS-Panel-Top]p `expr $[vp.width] - $[EWMH-BS-Panel-Right]`p `expr $[vp.height] - $[EWMH-BS-Panel-Bottom]`p'
++  "Two-Column "            Pick Piperead 'echo FvwmRearrange -tile -animate -resize -mn 2 -m $[EWMH-BS-Panel-Left]p $[EWMH-BS-Panel-Top]p `expr $[vp.width] - $[EWMH-BS-Panel-Right]`p `expr $[vp.height] - $[EWMH-BS-Panel-Bottom]`p'
+
+DestroyMenu SendTo
+AddToMenu   SendTo
++ "Prev"                    MoveAndGotoPagePrev
++ "Next"                    MoveAndGotoPageNext
++  "desk &1"                MoveToPage 0 0
++  "desk &2"                MoveToPage 1 0
++  "desk &3"                MoveToPage 2 0
+
+DestroyFunc MoveAndGotoPagePrev
+AddToFunc MoveAndGotoPagePrev
++ I MoveToPage wrapx -1w 0
++ I GotoPage wrapx -1w 0
+
+DestroyFunc MoveAndGotoPageNext
+AddToFunc MoveAndGotoPageNext
++ I MoveToPage wrapx +1w 0
++ I GotoPage wrapx +1w 0
+
+# }}}
+
+# }}}
+
+# [ Dock Menu ]# {{{
+#--------------------------------------------
+# Dock 的 Rox 右键菜单
+DestroyMenu DockMenu
+AddToMenu   DockMenu
+#Test (x /opt/openoffice/program/soffice) + "Openoffice2%32x32/ooo_template.png" Exec exec /opt/openoffice/program/soffice
+#Test (x gedit) + "gedit%32x32/gedit.png" Exec exec gedit
++ me                    Exec exec `rox ~/me/`
++ pic                   Exec exec `rox ~/me/pic/`
++ book                  Exec exec `rox ~/me/books/`
++ text                  Exec exec `rox ~/me/text/`
++ yuer                  Exec exec `rox ~/me/yuer/`
++ mnt                   Exec exec `rox /mnt/`
++ myusb                 Exec exec `rox /mnt/myusb/`
+
+
+# }}}
+
+# }}}
+
+# [ Binding 快捷键 ]# {{{
+#############################################
+
+# (A)ny, (C)ontrol, (S)hift, (M)eta, (N)othing
+# 1-5, representing the X Modifiers mod1-mod5 (man xmodmap) 
+
+# 特殊按键
+#Key Return A M ToggleTitle
+#Key ampersand   A       M       GoToDesk 0 0
+#Key eacute      A       M       GoToDesk 0 1
+#Key quotedbl    A       M       GoToDesk 0 2
+#Key apostrophe  A       M       GoToDesk 0 3
+
+# [ App Keyshot ]# {{{
+#############################################
+
+Key     D       A       M   Exec exec stardict
+Key     E       A       M   Exec exec pcmanfm            # Explore
+# Alt - F 文件菜单
+#Key     F       A       M   Exec exec 
+Key     G       A       M   Exec exec gvim
+Key     I       A       M   Exec exec pidgin         # IM
+Key     L       A       M   Exec exec leafpad
+Key     M       A       M   Exec exec mentohust
+Key     P       A       M   Exec exec mtpaint
+Key     R       A       M   Exec exec gmrun
+Key     S       A       M   Exec exec sonata
+Key     T       A       M   Exec exec tilda
+Key     U       A       M   Exec exec urxvt
+Key     W       A       M   Exec exec firefox
+Key     X       A       M   Exec exec rox
+# 1 前面的顿号，<1> xev 查看 ` 的keycode，<2>在 xmodmap -pke 中查找对应的名称
+Key     grave   A       M   Exec exec xterm
+
+
+# snap 字体路径要包含在 xorg.conf 配置文件里面，否则无效
+Key     F1      A       M   Module FvwmConsole -terminal xterm
+Key     F2      A       M   Exec dmenu_run -fn "-*-snap-*-*-*-*-*-*-*-*-*-*-*-*"
+#Key     F2      A       M   Exec dmenu_run -b -fn -*-snap-*-*-*-*-*-*-*-*-*-*-*-*
+#Key     F2      A       M   None (*run) Exec dmenu_run || grun || fbrun || xfrun4
+
+# }}}
+
+# [ Other Key ]# {{{
+#############################################
+# 全屏 切换 函数调用
+Key     F       A       4   Fullscreen
+# 显示桌面
+Key     D       A       4   ShowDesk
+Key     F5      A       SM  Pick RefreshWindow
+
+# 虚拟桌面切换
+Key     Left    A       CM  Scroll -100 +0
+Key     Right   A       CM  Scroll +100 +0
+#Key     Up      A       CM  Scroll +0 -100
+#Key     Down    A       CM  Scroll +0 +100
+
+# 虚拟桌面切换
+#Key     Right   A       CM  GotoPage +1p +0p
+#Key     Left    A       CM  GotoPage -1p -0p
+#Key     Up      A       CM  GotoPage +0p -1p
+#Key     Down    A       CM  GotoPage -0p +1p
+
+# Ctrl-Alt-BackSpace 弹出 Exit 对话框
+Key     BackSpace   A       CM  Module FvwmButtons FvwmQuit
+
+# Scrot 截图
+Key     Print   A       A   Exec scrot -q 100 Key-%F_%H%M%S.png
+Key     Print   A       M   Exec scrot -q 100 -sb Key-%F_%H%M%S.png
+
+# Alt-Tab 菜单 
+# Root c c 菜单居中，与后面的 Options 选项之间不能使用逗号，分隔！！！
+# SelectOnRelease Alt_L 释放Alt键立即跳转到选中窗口，否则要再按一下回车/单击，默认使用 Alt_L
+# NoIcons 指的是 最小化的窗口，而非菜单项的图标
+Key     Tab     A       M   WindowList Root c c NoCurrentDeskTitle,NoGeometry,CurrentDesk,Icons,Sticky,OnTop,OnBottom,MaxLabelWidth 320,IconifiedAtEnd,SelectOnRelease Alt_L
+# Super-Tab 切换 窗口
+Key     Tab     A       4   Next (AcceptsFocus) focus
+Key     Tab     A       S4  Prev (AcceptsFocus) focus
+
+# 当前桌面 聚焦窗 口切换
+#Key     Left    A       M   Prev (CurrentPage, AcceptsFocus, !Iconic) EWMHActivateWindowFunc
+#Key     Right   A       M   Next (CurrentPage, AcceptsFocus, !Iconic) EWMHActivateWindowFunc
+
+# Alt-Tab 切换窗口，调用 AltTab 函数
+#Key     Tab     A       M   AltTab
+#AddToFunc AltTab
+#+ I Next (AcceptsFocus CurrentDesk CurrentPage !Iconic) Focus
+#+ I Prev (AcceptsFocus CurrentDesk CurrentPage !Iconic) WarpToWindow 50 50
+
+# Super - 1 / 2 / 3 切换桌面
+Key     1       A       4       GotoPage 0 0
+Key     2       A       4       GotoPage 1 0
+Key     3       A       4       GotoPage 2 0
+# Super- F1 / F2 / F3 窗口 发送 并 移动到其他桌面
+Key     F1      A       4       MovetoPage 0 0
+Key     F2      A       4       MovetoPage 1 0
+Key     F3      A       4       MovetoPage 2 0
+
+# 关闭窗口
+Key     F4      A       M   ThisWindow (!Iconic, !Shaded) Close
+Key     q       A       M   ThisWindow (!Iconic, !Shaded) Close
+#Key     q       A       C   ThisWindow (!Iconic, !Shaded) Close
+#Key     q       A       4   ThisWindow (!Iconic, !Shaded) Close
+
+# 窗口 平移
+Key     Up      A       SC  Current (CurrentPage, !Iconic) AnimatedMove keep w-7
+Key     Down    A       SC  Current (CurrentPage, !Iconic) AnimatedMove keep w+7
+Key     Right   A       SC  Current (CurrentPage, !Iconic) AnimatedMove w+7 w+0
+Key     Left    A       SC  Current (CurrentPage, !Iconic) AnimatedMove w-7 w+0
+
+# 音量 增减
+Key     Up      A       M   Exec ossmix vol +10
+Key     Down    A       M   Exec ossmix vol -10
+key     Right   A       MS  Exec ossmix vol +5
+key     Left    A       MS  Exec ossmix vol -5
+
+#key     F6      A       N   FuncMoveCenter
+#
+#Key     F11     A       M   Current Maximize    True    0   growdown
+#Key     F10     A       M   Current Maximize    True    0   growup
+#Key     F9      A       M   Current Maximize    True    growleft    0
+#Key     F12     A       M   Current Maximize    True    growright   0
+#
+#Key     F4      A       C   Module FvwmForm FvwmFormQuit
+#Key     Super_L A       A   Menu MenuFvwmRoot Rectangle +0+$[menupos] +0 +0
+#Key     Super_R A       A   Menu MenuFvwmRoot Rectangle +0+$[menupos] +0 +0
+#Key     Menu    A       A   Current (CurrentPage, !Iconic) Menu menu_WindowOps
+
+
+# }}}
+
+# [ Mouse ]# {{{
+#############################################
+
+# [ 函数 ]# {{{
+#############################################
+
+## 左键 窗口 关闭按钮
+#Mouse 1 1 A DeleteOrDestroy
+## 左键 窗口 最小化按钮
+#Mouse 1 3 A IconifyOrShade
+## 左键 窗口 最大化按钮
+#Mouse 1 5 A WinMaximize 100 100
+## 中键 窗口 最大化按钮
+#Mouse 2 5 A WinMaximize 0 100
+## 右键 窗口 最大化按钮
+#Mouse 3 5 A WinMaximize 100 0
+#
+## 左键 最小化图标
+#Mouse 1 W M MoveOrIconify
+#Mouse 1 I A MoveOrIconify
+#
+#E
+## 鼠标滚轮 窗口上卷
+#Mouse 4 T A WinWindowShade True
+#Mouse 5 T A WinWindowShade False
+#
+## 窗口菜单
+#Mouse    3  T  A  Menu TitleMenu
+
+# 窗口移动
+Mouse   1   W   M   MoveFunc
+# 调节窗口尺寸
+Mouse   1   FS  A   ResizeFunc
+# 调节窗口尺寸
+Mouse   3   W   M   ResizeFunc
+
+
+# }}}
+
+# [ 非函数 ]# {{{
+############################################
+
+# 将 Close / Iconify / Maximize 参数全部传递给 ClickButton 函数，防止点错按钮
+Mouse   1   1   A   ClickButton Close
+Mouse   1   3   A   ClickButton Maximize 100 100
+Mouse   2   3   A   ClickButton Maximize 0   100
+Mouse   3   3   A   ClickButton Maximize 100 0
+Mouse   1   5   A   ClickButton Iconify
+# 点击图标 按钮 聚焦窗口
+Mouse   1   7   A   Raise
+
+## 窗口移动，激活之后，窗口粘在鼠标上面，知道鼠标再次单击取消聚焦
+#Mouse   1   W   M   Move
+## 调节窗口尺寸
+#Mouse   1   FS  A   Resize
+## 调节窗口尺寸
+#Mouse   3   W   M   Resize
+
+# 窗口上卷
+Mouse   4   T   A   WindowShade True
+Mouse   5   T   A   WindowShade False
+
+# 图标操作
+Mouse   1   I   A   Iconify
+Mouse   2   I   A   Menu TitleMenu
+Mouse   3   I   A   Move
+
+# }}}
+
+
+# 默认 左键单击 出现 Buildin 菜单
+Mouse   1   R   A   Nop
+# 主菜单
+Mouse   3   R   A   Menu MainMenu
+# 中键菜单
+#Mouse   2   R   A   WindowList NoCurrentDeskTitle,Sticky,Icons,OnBottom,OnTop,MaxLabelWidth 512,IconifiedAtEnd
+Mouse   2   R   A   WindowList NoCurrentDeskTitle
+
+# 标题栏双击最大化
+Mouse   1   T   A   TitleMaximize
+
+# 窗口 标题 菜单
+Mouse   3   T   A   Menu TitleMenu
+Mouse   2   W   M   Menu TitleMenu
+
+# Transset 窗口透明，鼠标指针停留在，标题栏 程序图标 上面鼠标滚轮即可调节透明度
+Mouse   3   7   A   Exec transset-df -i $[w.id]
+Mouse   4   7   A   Exec transset-df --inc 0.1 -i $[w.id]
+Mouse   5   7   A   Exec transset-df --dec 0.1 -i $[w.id]
+
+Mouse   4   W   M   Exec exec transset-df -p --inc 0.1
+Mouse   5   W   M   Exec exec transset-df --min 0.1 -p --dec 0.1
+
+key Up      W   MS  Exec transset-df --inc 0.1 -i $[w.id]
+key Down    W   MS  Exec transset-df --dec 0.1 -i $[w.id]
+
+# 滚轮 桌面切换
+Mouse   4   R   N   Scroll -100 0
+Mouse   5   R   N   Scroll +100 0
+
+# 鼠标滚轮 桌面切换 [?]
+#Mouse   4   R   A   GoToPage wrapx 1p 1
+
+# 鼠标滚轮 切换 窗口 焦点
+#Mouse   4   R   C   None (Maximized, Raised, Focused, !Iconic) Prev (CurrentPage, AcceptsFocus, !Iconic) EWMHActivateWindowFunc
+#Mouse   5   R   C   None (Maximized, Raised, Focused, !Iconic) Next (CurrentPage, AcceptsFocus, !Iconic) EWMHActivateWindowFunc
+
+
+# }}}
+
+# [ Stroke 鼠标手势 ]# {{{
+#############################################
+# 会导致 标题栏 右边 的 4 2 / 0 8 按钮出现
+Stroke N456 0   R   N   Exec rox
+Stroke N654 0   R   N   Exec pcmanfm
+Stroke N852 0   R   N   Exec opera
+Stroke N258 0   R   N   Exec audacious
+
+# 会导致 标题栏 出现 8 0 按钮
+#Stroke N456 0   SF4    N   Maximize True growright 0
+#Stroke N654 0   SF4    N   Maximize True growleft  0
+#Stroke N852 0   SF4    N   Maximize True 0 growdown
+#Stroke N258 0   SF4    N   Maximize True 0 growup
+
+# }}}
+
+
+
+# }}}
+
+

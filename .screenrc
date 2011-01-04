@@ -1,0 +1,165 @@
+############################
+# 关闭启动画面
+startup_message off                     # default: on
+
+# 当 terminal 关闭时，screen 自动挂起
+autodetach on                           # default: on
+
+# 不使用 响铃 beep 提示，而使用 闪屏
+vbell off
+#vbell_msg " Wuff ---- Wuff!! "
+
+## Set messages timeout to 5 second:
+#msgwait 5
+#msgminwait 2
+#pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
+
+#nethack style messages
+#nethack on
+# Disable login
+#deflogin off
+
+# 退出相关程序(vim,htop...)，自动刷新屏幕
+altscreen on
+
+# 默认开始路径
+# chdir
+
+# 历史回滚行数
+defscrollback 10000
+
+# 指定编码
+defencoding utf-8
+encoding utf-8 utf-8
+# Utf-8 handling
+#defutf8 on
+
+# 使 screen 在 xterm 里面可以使用滚动条 scrollbar
+#termcapinfo xterm ti@:te@
+
+### ====== 键绑定 ======
+
+# bind F1 to select 1
+# bind F7 to detach screen session from this terminal
+# bind F8 to kill current screen window.
+# bind F9 to create a new screen
+# bind F10 to rename current screen window
+# bind F11 to move to previous window
+# bind F12 to move to next window
+#bindkey -k k1 select 1
+#bindkey -k k7 detach
+#bindkey -k k8 kill
+#bindkey -k k9 screen
+#bindkey -k k; title
+
+# 将快捷键默认 C-a 设为 C-x
+escape ^X^X
+# vim 的鼠标上滚有问题
+#escape ``
+
+
+# 定制 region 函数键与Emacs一致
+#bind 0 remove
+#bind 1 only
+#bind 2 split
+#bind o focus
+
+# F7 to create a new screen
+bindkey -k k7 screen
+
+# F8 to kill current screen window
+bindkey -k k8 kill
+
+# F9 to detach screen session
+bindkey -k k9 detach
+
+# F11/F12 to "move to previous window"
+bindkey -k F1 prev
+bindkey -k F2 next
+
+# 指定 shell
+#shell bash
+shell /bin/zsh
+
+# 动态 标题栏
+#shelltitle '% | zsh'
+
+# xterm 标题栏, %t 为当前 window 标题
+#hardstatus string "Screen - %t"
+
+# xterm 中的 screen 可以使用滚动条和滚轮
+#terminfo xterm*|rxvt ti@:te@
+
+# 定制 title bar
+termcapinfo rxvt 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+#terminfo xterm* 'XT:hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+
+# screen 如何设置颜色：AB = 背景色，AF = 前景色
+##terminfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+
+# 修复 rxvt-unicode 256 色 问题
+#terminfo rxvt-unicode 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+
+
+# 定制 底部标题栏 caption / hardstatus(最底部) | man 手册里面的 STRING ESCAPES
+
+# 背景颜色与终端相同,无高亮，全部用颜色标注，都为粗体
+# [king] 0 bash  *1 bash                                                   06-26 11:06 
+#caption always "%{=b}%{b}%{G}[%H]%{-}  %+07=%-w%7L>%{b .y}*%n %t%{-}%+w%-014<  %-012=%{b m}%m/%d %c "
+
+# 全局粗体，蓝色字体，绿色用户名，取消之前属性，窗口列表举例7像素，当前聚焦窗口为黄色，最后的窗口举例时间14像素
+caption always "%{=b B}%{G}[%H]%{-}  %+07=%-w%7L>%{y}%n %t%{-}%+w%-014<  %-012=%{b m}%m/%d %c "
+# 状态栏, 不用Hardstatus实现, 因为要把xterm的title伪装成Hardstatus
+
+# Sessions
+#screen
+#screen -t mutt mutt
+#screen -t irssi irssi
+#有个bug, debian sid中这里如果只用screen多开窗口, PS1什么的都对, 但是只能动态显示路径为title, 程序不行, C-a c新建的没问题, 欢迎反馈!!!
+#更新: session的配置放到最后就OK了, 但是这也算个bug吧, 毕竟其他的设置没有因为session的写的位置有过影响
+
+
+# 大括号里面为颜色组合
+# k      black
+# r      red
+# g      green
+# y      yellow
+# b      blue
+# m      magenta
+# c      cyan
+# w      white
+# d      default color
+# .      leave color unchanged
+
+# %h     king@king:~
+
+#------------------- advanced ----------------------
+# 单一窗口 无窗口列表，最后为窗口编号
+# 10:37AM Sat 26-06-2010  bash                                                         0
+#caption always "%?%F%{= Bk}%? %C%A %D %d-%m-%Y %{= kB} %t%= %?%F%{= Bk}%:%{= wk}%? %n "
+
+# king | 0.01 0.00 0.00 | 06-25 12:25 |0$* bash
+#caption always "%?%F%{-b 4w}%:%{-b bb}%? %H | %l | %m-%d %c |%?%F%{-b 4w}%?%L=%-Lw%45>%{-b w4}%n%f* %t%{-}%+Lw%-0<"
+# king|12:33|25Jun|0*$bash 多背景色 窗口标题 有先后 * - 标志
+#hardstatus alwayslastline "%{rw}%H%{wk}|%{wr}%c%{wk}|%d%M|%?%-Lw%?%{wb}%n*%f%t%?(%u)%?%{wk}%?%+Lw%?" 
+
+
+#------------------- compilex ----------------------
+# [ king ][               0$ bash  (1*$bash)  2-$ bash                 ][ 25/06 12:32 ]
+#hardstatus alwayslastline '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+
+# [king]  *0 bash                                                              06-25 12:26
+#hardstatus alwayslastline "%{=b}%{b}%{C}[%H]%{-}  %+010=%-w%8L>%{uB .my}*%n %t%{-}%+w%-014<  %-012=%{b m}%m-%d %c "
+#caption always "%{= R}[ %{=b b}%-w%{=rb db}%>%n %t%{-}%+w%{-b}%< %=%{R}][%{M}%D %M %d %{G}%c%{R}]"
+
+#------------------- simple ----------------------
+# Screen(s): 0 bash  1* bash                                              12:28PM  Fri, Jun/25/2010
+# hardstatus alwayslastline "%{=b}%{G} Screen(s): %{b}%w %=%{kG}%C%A  %D, %M/%d/%Y "
+
+# 窗口标题  序号，没有其他修饰符了
+#caption always "%{.kW}%-w%{.KY}%n %t%{-}%+w %=%{..G} %H %{..Y} %m/%d %C%a " 
+
+# 背景色 当前高亮色 时间 当前窗口无任何修饰符
+#caption always "%{= kw}%-w%{= bY}%n %t%{-}%+w %-= %c"
+

@@ -1,0 +1,52 @@
+# vim:set et ft=conf fdm=marker sw=4 sts=4 ts=4 nopaste :
+
+# 注释符号 ＃ 开头的行都会被 Git 忽略。
+# 标准的 glob 模式匹配，glob 模式是 shell 简化的正则表达式
+# 惊叹号（!）取反
+
+# [ git 中忽略的文件 / 目录 ]
+#--------------------------------------------
+
+# 忽略所有文件/目录
+*
+*/
+
+#--------------------------------------------
+!README
+
+# 忽略所有隐藏目录
+.*/
+.vimperator/my.vimp
+
+#--------------------------------------------
+!.emacs.d/
+!.fvwm/
+!.vim/
+!.vimperator/
+
+# 忽略所有隐藏文件
+.*
+
+#--------------------------------------------
+!.bashrc
+!.conkyrc
+!.emacs
+!.fonts.conf
+!.gitconfig
+!.gitignore
+!.mpdconf
+!.musca_start
+!.my.cnf
+!.rtorrent.rc
+!.screenrc
+!.stalonetrayrc
+!.tmux.conf
+!.vimrc
+!.vimperatorrc
+!.Xdefaults
+!.xinitrc
+!.zshrc
+
+
+
+

@@ -1,0 +1,59 @@
+use_xft yes
+xftfont Zero Threes:size=9:antialisa=false:autohint=true:hinting=true:hintstyle=hintfull
+#xftfont Sans:size=8
+
+#own_window_colour   808080
+background yes
+own_window yes
+own_window_type desktop
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+#alignment top_left
+alignment bl
+gap_x 100
+# 下边距 margin-bottom
+gap_y 0
+minimum_size 1560 20
+# 下边距 margin-bottom
+maximum_width 1580
+
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders yes
+#border_inner_margin 5
+# 与 voffset 类似
+border_inner_margin 0
+
+default_shade_color black
+default_outline_color white
+default_bar_size 20 20
+default_gauge_size 20 20
+
+update_interval 1.0
+total_run_times 0
+no_buffers yes
+double_buffer yes
+
+short_units 1
+uppercase yes
+use_spacer right
+cpu_avg_samples 2
+imlib_cache_size 0
+override_utf8_locale no
+
+#lua_load /root/conky/air_clock/clock.lua
+#lua_draw_hook_pre draw_clock
+
+#lua_load ~/conky/conkyring3/clock_rings.lua
+#lua_draw_hook_pre clock_rings
+
+default_color ffffff
+color1 dddddd
+ 
+#${image /root/conky/bg/30.png -p 0,0 -s 1560x20} ${goto 20}SF Square Head:Aerial: # --020--CPU1--140--CPU2--130--MEM--130--ROOT--030--/--100--Down--100--UP--000--WEATHER--000--TIME--000--DATE--000--
+# 时间格式 man strftime
+#$color${font Zero Threes:size=9}
+TEXT
+${voffset 4}${offset 20}${color1}CPU1    ${color}${cpugraph cpu1 10,50 FFFFFF FF4444}   ${cpu cpu1}${goto 145}% ${goto 170}${color1}CPU2     ${color}${cpugraph cpu2 10,50 FFFFFF B3E828}   ${cpu cpu2}${goto 293}% ${goto 315}	${color1}RAM		${color}${goto 360}${mem} / ${memperc}%    ${goto 450}${color1}/   ${color} ${fs_used /} / ${fs_size /} ${goto 570}${color1}Down  ${color} ${downspeedf eth0} ${goto 650}k/s ${goto 685}${color1}UP  ${color} ${upspeedf eth0} ${goto 745}k/s    ${goto 1300} ${time %H : %M : %S}  ${goto 1380}$color${font snap}${time %m. %d/ %u}

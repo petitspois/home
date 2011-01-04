@@ -1,0 +1,127 @@
+##unset all default Musca keybindings.
+#bind off all
+#
+##set Musca keybindings
+#bind on Mod4+Shift+h hsplit 1/2
+#bind on Mod4+Shift+v vsplit 1/2
+#bind on Mod4+Shift+r remove
+#bind on Mod4+Shift+o only
+#bind on Mod4+Shift+k kill
+#bind on Mod1+F4 kill
+#bind on Mod4+Shift+c cycle
+#bind on Mod1+Tab cycle
+#bind on Mod4+Left focus left
+#bind on Mod4+Right focus right
+#bind on Mod4+Up focus up
+#bind on Mod4+Down focus down
+#bind on Mod4+Tab use (next)
+#bind on Mod4+Shift+Tab use (prev)
+#bind on Mod4+Shift+w switch window
+#bind on Mod4+Shift+g switch group
+#bind on Mod4+x shell
+#bind on Mod4+Shift+x command
+#bind on Mod4+Shift+d dedicate flip
+#bind on Mod4+Shift+a catchall flip
+#bind on Mod4+Shift+u undo
+#bind on Mod4+Shift+s stack flip
+#bind on Mod4+Shift+Left swap left
+#bind on Mod4+Shift+Right swap right
+#bind on Mod4+Shift+Up swap up
+#bind on Mod4+Shift+Down swap down
+#bind on Mod4+Control+Left resize left
+#bind on Mod4+Control+Right resize right
+#bind on Mod4+Control+Up resize up
+#bind on Mod4+Control+Down resize down
+#bind on Mod4+Shift+q quit
+#bind on Mod4+Shift+b border flip
+#
+#
+##bindings to switch between groups
+#bind on Mod4+0 use 0
+#bind on Mod4+1 use 1
+#bind on Mod4+2 use 2
+#bind on Mod4+3 use 3
+#bind on Mod4+4 use 4
+#bind on Mod4+5 use 5
+#bind on Mod4+6 use 6
+#bind on Mod4+7 use 7
+#bind on Mod4+8 use 8
+#bind on Mod4+9 use 9
+#
+#bind on Mod4+Shift+0 move 0
+#bind on Mod4+Shift+1 move 1
+#bind on Mod4+Shift+2 move 2
+#bind on Mod4+Shift+3 move 3
+#bind on Mod4+Shift+4 move 4
+#bind on Mod4+Shift+5 move 5
+#bind on Mod4+Shift+6 move 6
+#bind on Mod4+Shift+7 move 7
+#bind on Mod4+Shift+8 move 8
+#bind on Mod4+Shift+9 move 9
+
+ 
+ # dmenu settings
+ #set dmenu dmenu -b -i -nb '#333333' -nf '#a8a3f7' -fn 'terminus-10'
+ set dmenu dmenu -b -i -nb grey20 -nf '#a1b5cd' -fn '-*-dina-medium-r-normal-*-*-*-*-*-*-*-*-*'
+ #set dmenu dmenu -b -i -nb '#0A0A0A' -nf '#A0A0A0' -fn 'helvetica 9' -sb '#285577' -sf '#FFFFFF'
+
+  
+# 告诉musca不要管理conky和trayer的窗口
+  manage off stalonetray
+  manage off Conky 
+
+  set window_open_frame empty
+  set window_open_focus 0
+  set group_close_empty 1 
+
+#  exec stalonetray
+#  exec xbindkeys
+  exec conky 
+
+#  vsplit 40%
+#  hsplit 20%
+
+
+# 为了方便在网页中显示，我把trayer的命令拆为3行，
+# 请复制后拼接为一行
+exec trayer --edge top --align right --widthtype request --height 20 --SetDockType true --transparent true --alpha 255 --tint 0x00ff00
+
+# 设定聚焦帧的边框颜色为橘黄，我喜欢的颜色
+set border_focus Orange
+# 如果有空帧，则新启动的程序会自动在空帧中打开，这点很方便
+set window_open_frame empty
+# 不需要单击，鼠标经过的时候窗口就聚焦
+set focus_follow_mouse 1
+# 设置dmenu的启动命令，我用的是自己编译的支持xft的dmenu
+#set dmenu /usr/local/bin/dmenu -i -b -fa Sans-12 -p $
+
+# 因为我没有xterm，所以重新绑定Mod4+t启动系统的默认终端
+#bind off Mod4+t
+#bind on Mod4+t exec x-terminal-emulator
+
+# 按Mod4+q退出musca，不知道为什么不管用
+bind on Mod4+q quit
+
+# 按Mod1(我这里是Alt) + 方向键移动选定的窗口
+bind on Mod1+Left slide left
+bind on Mod1+Right slide right
+bind on Mod1+Up slide up
+bind on Mod1+Down slide down
+
+# 按Mod4 + 数字键快速地切换工作组
+bind on Mod4+1 use 0
+bind on Mod4+2 use 1
+bind on Mod4+3 use 2
+bind on Mod4+4 use 3
+bind on Mod4+5 use 4
+
+# 确定每个工作组的活跃范围，屏幕上留出20像素给conky和trayer
+pad 0 0 0 25
+hook on ^add pad 0 0 0 25
+# 添加一个叫web的工作组，并加载我导出的窗口布局，上网用
+add web
+load .mweb
+# 切换到原来第一个工作组
+use 0
+load .mdefault
+
