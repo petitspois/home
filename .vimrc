@@ -608,6 +608,8 @@ autocmd FileType Makefile set noexpandtab
 ""autocmd! BufNewFile,BufReadPost  *.cpp nmap < F5 > < ESC >:w< cr >:!clear && g++ < c -R >% -o test && ./test< cr >
 ""autocmd! BufNewFile,BufReadPost  *.c   nmap < F5 > < ESC >:w< cr >:!clear && gcc < c -R >% -o test && ./test< cr >
 
+" Tab = 两个空格
+autocmd FileType css,html inoremap <Tab> <Space><Space>
 
 
 "}}}
