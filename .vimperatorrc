@@ -60,6 +60,7 @@ noremap K <C-u>
 "noremap 1m   :set guioptions-=m<CR>
 " Menu 显示/隐藏 菜单栏 开关
 noremap <F2> :set guioptions!=m<CR>
+noremap <F3> :set guioptions!=T<CR>
 " 停止 加载页面
 noremap s <C-c>
 ""noremap m :mark 
@@ -96,7 +97,7 @@ noremap <leader>q   ZZ
 noremap <leader>r   :restart<CR>
 "noremap <leader>s   :dialog     pagesource<CR>
 
-noremap <leader>s   :source ~/.vimperatorrc
+noremap <leader>s   :source ~/.vimperatorrc<CR>
 
 "map < <C-6>
 "noremap > g$
@@ -146,6 +147,19 @@ vnoremap <C-x> <C-v><C-x>
 
 "}}}
 
+" [ 快速启用/禁用代理 ]"{{{
+"""""""""""""""""""""""""""""""""""""""""""""
+" From : http://linuxtoy.org/archives/用-vimperator-快速启用禁用代理.html
+" From : http://vim.group.javaeye.com/group/topic/16187
+"map <F12> :set! network.proxy.type=1<CR>:echo ":("<CR>
+"map <S-F12> :set! network.proxy.type=0<CR>:echo ":)"<CR>
+" 代理状态的图标 Firefox 插件 QuickProxy
+
+" 不如直接：
+"map  :set! extensions.autoproxy.proxyMode=auto:echo "auto"
+"map  :set! extensions.autoproxy.proxyMode=global:echo "global"
+
+"}}}
 
 " 让Greader/Gmail等键盘命令不受到影响
 autocmd LocationChange .* js modes.passAllKeys = /.*(mail\.google\.com|www\.google\.com\/reader).*/.test(buffer.URL)
@@ -206,8 +220,9 @@ cabbrev lh  lifehacker.com
 " linuxsir soft vim fvwm
 cabbrev ls  www.linuxsir.org/bbs/forum28.html
 " linuxsir Fedora
-cabbrev ls  www.linuxsir.org/bbs/forum28.html
 cabbrev lf  www.linuxsir.org/bbs/forum40.html
+" linuxsir Debian
+cabbrev ld  www.linuxsir.org/bbs/forum49.html
 cabbrev ly  linuxtoy.org
 
 cabbrev jh  jihuo.qq.com

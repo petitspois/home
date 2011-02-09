@@ -16,9 +16,6 @@
 # 忽略所有隐藏目录
 #.*/
 
-# [ 其他忽略 ]
-#--------------------------------------------
-
 # [ 忽略普通目录 ]# {{{
 #--------------------------------------------
 bs/
@@ -38,17 +35,43 @@ dock.fvwm/
 l.fvwm/
 simple.fvwm/
 xp.fvwm/
+
+# 记事本
+arch.text/
+fedora.text/
+f.debian/
+debian/
+
+awesome/
+kdic-computer.tar.gz
+mysite-env/
+mywebsite/
+noscript
+pic/
+potato_weekly.pdf
+tiger.gif
+
 # }}}
+
+# [ 忽略隐藏 目录 文件  ]# {{{
+#--------------------------------------------
 
 .config/
 .fvwm/
 .lftp/
 .ncmpcpp/
 .purple/
+.ssh/
+.vim/
 .vimperator/my.vimp
 .vimperator/info/
 
-# [ 排除 ]# {{{
+
+
+
+# }}}
+
+# [ 跟踪文件列表 ]# {{{
 #--------------------------------------------
 
 # [ 普通文件 ]
@@ -61,6 +84,8 @@ xp.fvwm/
 !.conkyrc
 !.emacs
 !.fonts.conf
+!.gtk
+!.gtkrc-2.0
 !.gitconfig
 !.gitignore
 !.mpdconf
@@ -87,8 +112,9 @@ xp.fvwm/
 !.fvwm/config
 !.aria2/
 !.purple/prefs.xml
-!.ssh/
-!.vim/
+#!.ssh/
+#!.vim/
+!.config/awesome/
 !.config/fcitx/config
 !.lftp/rc
 !.ncmpcpp/config

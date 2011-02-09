@@ -187,70 +187,105 @@
 !       <Btn5Down>,<Btn5Up>:scroll-forw(1,halfpage)\n\
 
 
-! [ Font 字体 ]
-!-------------------------------------------
+!! [ Font 字体 ]
+!!-------------------------------------------
+!!
+!XTerm*locale:       true
+!!!!! Warning: Cannot convert string "true" to type Int
+!XTerm*utf8:     1
+!XTerm*utf8Title:    true
+!!xterm*fontMenu*fontdefault*Label:Default
+!XTerm*xftAntialias: true
+!Xterm.cjkWidth:     true
+!XTerm*faceName                          : Envy Code R-10
+!XTerm*faceNameDoublesize                : WenQuanYi Micro Hei-10
 !
-XTerm*locale:       true
-!!!! Warning: Cannot convert string "true" to type Int
-XTerm*utf8:     1
-XTerm*utf8Title:    true
-!xterm*fontMenu*fontdefault*Label:Default
-XTerm*xftAntialias: true
-Xterm.cjkWidth:     true
-XTerm*faceName                          : Envy Code R-10
-XTerm*faceNameDoublesize                : WenQuanYi Micro Hei-10
+!XTerm*ttyModes:     erase   ^?
+!
+!XTerm*VT100.Translations:#override          \
+!    <Key>BackSpace: string(0x7f)            \n\
+!    <Key>Delete:    string(0x1b)    string("[3~")   \n\
+!    Meta<Key>K: scroll-back(1,halfpage)     \n\
+!    Meta<Key>J: scroll-forw(1,halfpage)
+!! JK Keys done at 2010-06-13T13:08:00+08:00
+!
+!
+!! [ Style 样式 ]
+!!--------------------------------------------
+!
+!!XTerm*termName:     xterm
+!
+!XTerm*saveLines                         : 5000
+!XTerm*multiClickTime                    : 250
+!XTerm*borderless                        : 1
+!XTerm*internalBorder                    : 3
+!
+!! 1650X1050 刚好可以并排两个窗口
+!!XTerm*geometry                          : 119x34
+!XTerm*geometry                          : 115x34
+!XTerm*background                        : #1a1a1a
+!XTerm*foreground                        : white
+!XTerm*cursorColor                       : LightSteelBlue1
+!XTerm*scrollBar                         : false
+!
+!XTerm*scrollKey:    true
+!XTerm*scrollTtyOutput:  false
+!!XTerm*scrollTtyKeypress:true
+!XTerm*loginShell:   true
+!XTerm*jumpScroll:   true
+!!XTerm*multiScroll: false
+!!XTerm*toolBar:     true
+!
+!XTerm*backarrowKey: false
+!!XTerm*borderLess:   false
+!!XTerm*cursorBlink:  true
+!XTerm*deleteIsDEL:  false
+!XTerm*dynamicColors:    true
+!XTerm*oldXtermFKeys:    true
+!XTerm*rightScrollBar:   true
+!XTerm*underLine:    true
+!
+!
+!! [ Alt / Ctrl 快捷键可用 ]
+!!--------------------------------------------
+!! 修复 Alt 输入
+!XTerm*altSendsEscape:   true
+!XTerm*eightBitInput:    false
 
-XTerm*ttyModes:     erase   ^?
+!x config
+Xft.dpi: 96
+Xft.rgba: rgb
+Xft.hinting: 1
+Xft.hintstyle: hintslight
+Xft.antialias: 1
+Xcursor.theme: Vanilla-DMZ-AA
 
-XTerm*VT100.Translations:#override          \
-    <Key>BackSpace: string(0x7f)            \n\
-    <Key>Delete:    string(0x1b)    string("[3~")   \n\
-    Meta<Key>K: scroll-back(1,halfpage)     \n\
-    Meta<Key>J: scroll-forw(1,halfpage)
-! JK Keys done at 2010-06-13T13:08:00+08:00
+!xterm config
 
+!look and feel
+xterm*termName: xterm-256color
+xterm*geometry: 100x30
+xterm*scrollBar: false
+xterm*loginshell: false
+xterm*background: black
+xterm*foreground: gray
+xterm*cursorBlink: false
 
-! [ Style 样式 ]
-!--------------------------------------------
+!fix alt key input
+xterm*eightBitInput: false
+xterm*altSendsEscape: true
 
-!XTerm*termName:     xterm
+!font and locale
+xterm*utf8: 1
+xterm*locale: true
+xterm*utf8Title: true
+xterm*renderFont: true
+xterm*preeditType: Root
+xterm*xftAntialias: true
+!xterm*faceName: DejaVu Sans Mono:pixelsize=13.5
+xterm*faceName: Envy Code R:pixelsize=12
+xterm*faceNameDoublesize: WenQuanYi Micro Hei Mono:pixelsize=12
 
-XTerm*saveLines                         : 5000
-XTerm*multiClickTime                    : 250
-XTerm*borderless                        : 1
-XTerm*internalBorder                    : 3
-
-! 1650X1050 刚好可以并排两个窗口
-!XTerm*geometry                          : 119x34
-XTerm*geometry                          : 115x34
-XTerm*background                        : #1a1a1a
-XTerm*foreground                        : white
-XTerm*cursorColor                       : LightSteelBlue1
-XTerm*scrollBar                         : false
-
-XTerm*scrollKey:    true
-XTerm*scrollTtyOutput:  false
-!XTerm*scrollTtyKeypress:true
-XTerm*loginShell:   true
-XTerm*jumpScroll:   true
-!XTerm*multiScroll: false
-!XTerm*toolBar:     true
-
-XTerm*backarrowKey: false
-!XTerm*borderLess:   false
-!XTerm*cursorBlink:  true
-XTerm*deleteIsDEL:  false
-XTerm*dynamicColors:    true
-XTerm*oldXtermFKeys:    true
-XTerm*rightScrollBar:   true
-XTerm*underLine:    true
-
-
-! [ Alt / Ctrl 快捷键可用 ]
-!--------------------------------------------
-! 修复 Alt 输入
-XTerm*altSendsEscape:   true
-XTerm*eightBitInput:    false
 
 
 

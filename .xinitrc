@@ -40,6 +40,8 @@ fcitx &
 ############################################
 
 
+# awesome 启用透明功能，依赖
+xcompmgr &
 #urxvt &
 #tilda &
 #xterm &
@@ -56,7 +58,7 @@ xset b off
 
 #DEFAULTSESSION=openbox-session
 #DEFAULTSESSION=compiz
-DEFAULTSESSION=fvwm2
+DEFAULTSESSION=awesome
 
 case $1 in
 fvwm*)
@@ -77,6 +79,9 @@ compiz)
 	;;	  
 openbox)
 	exec openbox-session
+	;;	  
+awesome)
+	exec awesome
 	;;	  
 *)
 	exec $DEFAULTSESSION
