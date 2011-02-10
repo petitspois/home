@@ -81,6 +81,7 @@ tiger.gif
 # [ 隐藏文件 ]
 #--------------------------------------------
 !.bashrc
+!.bitlbee.conf
 !.conkyrc
 !.emacs
 !.fonts.conf
