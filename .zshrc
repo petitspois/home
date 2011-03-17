@@ -8,7 +8,7 @@
 # 使 screen 支持 256 色
 export TERM=xterm-256color
 
-export PATH="${PATH}:${HOME}/me/code/shell"
+export PATH="${PATH}:${HOME}/code/shell:${HOME}/.todo"
 export CDPATH='.:..:../..:~:~/me:~/me/text:~/public_html/:/home/download/'
 export MYSQL_PS1="[\\u@\\h \\d]"
 
@@ -17,20 +17,33 @@ export SHELL=`which zsh`
 # Emacs 中 fcitx 输入法激活
 #export LC_CTYPE=zh_CN.UTF-8
 
-# [ Keychain ssh-agent ]
+## [ Keychain ssh-agent ]# {{{
+##--------------------------------------------
+## From : http://linux.chinaunix.net/bbs/archiver/tid-1132824.html
+## 在 新启动的 zsh 中，继承 / 共用 keychain 产生的 ssh-agent 进程
+#if [ -n `ps aux | grep ssh-agent | grep -v grep | awk '{print $2}'` ]
+#then
+#    if [ -z ${SSH_AGENT_PID} ];then
+#        source ~/.keychain/`hostname`-sh
+#    fi
+#fi
+#
+## }}}
+
+# [ man keychain ]# {{{
 #--------------------------------------------
-# From : http://linux.chinaunix.net/bbs/archiver/tid-1132824.html
-# 在 新启动的 zsh 中，继承 / 共用 keychain 产生的 ssh-agent 进程
-if [ -n `ps aux | grep ssh-agent | grep -v grep | awk '{print $2}'` ]
-then
-    if [ -z ${SSH_AGENT_PID} ];then
-        source ~/.keychain/`hostname`-sh
-    fi
-fi
+
+[ -z "$HOSTNAME" ] && HOSTNAME=`uname -n`
+[ -f $HOME/.keychain/$HOSTNAME-sh ] &&
+       . $HOME/.keychain/$HOSTNAME-sh
+[ -f $HOME/.keychain/$HOSTNAME-sh-gpg ] &&
+       . $HOME/.keychain/$HOSTNAME-sh-gpg
 
 function keys(){
     source ~/.keychain/`hostname`-sh;
 }
+
+# }}}
 
 
 
@@ -457,6 +470,21 @@ alias du='du -h'
 #show directories size
 alias dud='du -s *(/)'
 
+# From : http://git.sysphere.org/dotfiles/tree/zshrc?h=public
+#rehash="hash -r"
+alias df="df -hT"
+alias du="du -hc"
+alias dus="du -S | sort -n"
+
+alias psg="ps auxw | grep -i "
+alias psptree="ps auxwwwf"
+#alias iodrag="ionice -c3 nice -n19"
+alias eject="eject -v "
+alias retract="eject -t -v "
+alias vuser="fuser -v "
+
+
+
 # 多级目录回溯
 alias ..="cd .."
 alias ..2="cd ../.."
@@ -470,7 +498,7 @@ alias ee='emacsclient -t'
 
 alias c='clear'
 alias m='mutt'
-alias t='tmux'
+#alias t='tmux'
 alias s='screen'
 
 alias myhttpd='sudo /etc/rc.d/httpd'
@@ -536,6 +564,11 @@ pacsearch()
 	-e 's#community/.*#\\033[1;35m&\\033[0;37m#g' \
 	-e 's#^.*/.* [0-9].*#\\033[0;36m&\\033[0;37m#g' )"
 }
+
+
+# 查看 窗口 class 属性 / 名称
+# From : Archwiki Openbox
+alias xp='xprop | grep "WM_WINDOW_ROLE\|WM_CLASS" && echo "WM_CLASS(STRING) = \"NAME\", \"CLASS\""'
 
 # inode 最新的文件
 alias -g nn="*(oc[1])"
@@ -644,6 +677,16 @@ zstyle ':completion:*:my-accounts' users-hosts $my_accounts
 function calc { echo $(($@)) }
 function timeconv { date -d @$1 +"%Y-%m-%d %T" }
 
+function myip
+{
+    ifconfig|sed -n '2p'
+}
+# 查询公网 IP，需要安装 curl 工具
+function pubip() {
+curl -s 'http://checkip.dyndns.org' | sed 's/.*Current IP Address: \([0-9\.]*\).*/\1/g';
+
+}
+
 #show 256 color tab
 256tab() {
     for k in `seq 0 1`;do 
@@ -737,8 +780,8 @@ bindkey '\ee' edit-command-line
 
 # }}}
 
-# [ man color ]# {{{
-#--------------------------------------------
+# {{{ man color
+#
 export LESS_TERMCAP_mb=$'\E[01;31m'   # begin blinking
 export LESS_TERMCAP_md=$'\E[01;31m'   # begin bold
 export LESS_TERMCAP_me=$'\E[0m'       # end mode
@@ -746,16 +789,41 @@ export LESS_TERMCAP_se=$'\E[0m'       # end standout-mode
 export LESS_TERMCAP_so=$'\E[1;33;40m' # begin standout-mode - info box
 export LESS_TERMCAP_ue=$'\E[0m'       # end underline
 export LESS_TERMCAP_us=$'\E[1;32m'    # begin underline
+
+# man color set
+#export LESS_TERMCAP_mb=$'\E[01;31m'
+#export LESS_TERMCAP_md=$'\E[01;31m'
+#export LESS_TERMCAP_me=$'\E[0m'
+#export LESS_TERMCAP_se=$'\E[0m'
+#export LESS_TERMCAP_so=$'\E[01;40;34m'
+#export LESS_TERMCAP_so=$'\E[01;44;34m'
+#export LESS_TERMCAP_ue=$'\E[0m'
+#export LESS_TERMCAP_us=$'\E[01;32m'
+
+
+
+
+
+
+
+
 # }}}
 
+# [ todo.sh ]# {{{
+#--------------------------------------------
+
+# From : https://github.com/ginatrapani/todo.txt-cli/wiki/Tips-and-Tricks
+function t() { 
+  if [ $# -eq 0 ]; then
+    todo.sh -d $HOME/.todo/config ls
+  else
+    #todo.sh -d /path/to/your/todo.cfg $* 
+    todo.sh -d $HOME/.todo/config $* 
+  fi
+}
 
 
 
 
-
-
-
-
-
-
+# }}}
 

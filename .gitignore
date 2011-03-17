@@ -36,6 +36,18 @@ l.fvwm/
 simple.fvwm/
 xp.fvwm/
 
+# [ debian ]
+#--------------------------------------------
+book/
+code/
+doc/
+fedore/
+from.etc/
+kou/
+text/
+todo/
+
+
 # 记事本
 arch.text/
 fedora.text/

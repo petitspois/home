@@ -1,8 +1,7 @@
 #!/bin/sh
-#
-# ~/.xinitrc
-#
-# Executed by startx (run your window manager from here)
+
+# [ App Evnvirenmet 程序依赖环境变量 ]# {{{
+#--------------------------------------------
 
 # urxvt Tabpage 标签页高亮提示完成任务
 #export PROMPT_COMMAND="echo -ne '\a'"
@@ -10,9 +9,13 @@
 # NetBeans java 程序 字体开启抗锯齿
 #export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
 
-# [ fcitx iput  ]
-#-------------------------------------------
+# pcmanfm2 使用 gvfs 挂载设备
+#if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
+#	eval "$(dbus-launch --sh-syntax --exit-with-session)"
+#fi
 
+# [ fcitx iput  ]# {{{
+#-------------------------------------------
 # From : /usr/share/fcitx/doc/fcitx3.pdf
 #export XIM=fcitx
 #export XIM_PROGRAM=/usr/bin/fcitx
@@ -27,37 +30,51 @@ export XMODIFIERS="@im=fcitx"
 killall fcitx
 fcitx &
 
-# [ Scim input ]
-#-------------------------------------------
+# }}}
 
+# [ Scim input ]# {{{
+#-------------------------------------------
 #export XMODIFIERS=@im=SCIM
 #export GTK_IM_MODULE="scim"
 #export QT_IM_MODULE="scim"
 
 #scim -d
 
+# }}}
 
-############################################
 
 
-# awesome 启用透明功能，依赖
-xcompmgr &
+# }}}
+
+# [ AutoRun  自动启动 ]# {{{
+#--------------------------------------------
 #urxvt &
 #tilda &
 #xterm &
 
+# awesome 启用透明功能，依赖
+#xcompmgr &
+
+# 阴影效果对比明显，无窗口/菜单渐隐
+xcompmgr -l -5 -t -5 -r 5 -o 0.60 -c &
+
+# wallpaper 壁纸
+feh --bg-scale ~/pic/wall/glass.jpg
+
 # 关闭X下响铃
-xset b off
+#xset b off
 
-# pcmanfm2 使用 gvfs 挂载设备
-#if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
-#	eval "$(dbus-launch --sh-syntax --exit-with-session)"
-#fi
+# 键盘 键位 置换
+xmodmap ~/.xmodmap
 
-############################################
 
-#DEFAULTSESSION=openbox-session
-#DEFAULTSESSION=compiz
+# }}}
+
+# [ Window Manager 窗口管理器 ]# {{{
+#--------------------------------------------
+#openbox-session
+#awesome
+
 DEFAULTSESSION=awesome
 
 case $1 in
@@ -88,15 +105,7 @@ awesome)
 	;;	  
 esac
 
+# }}}
 
-
-
-############################################
-
-
-# exec gnome-session
-# exec startkde
-# exec startxfce4
-# ...or the Window Manager of your choice
 
 

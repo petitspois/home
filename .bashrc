@@ -6,7 +6,8 @@ fi
 #PS1="\[\e[1;31m\][\W]\$\[\e[s\]\[\e[1;\$((COLUMNS-4))f\]\[\e[1;32m\]\$(whoami)\[\e[u\]\[\e[0m\]"
 #PS1="\[\e[1;31m\]\W \$\[\e[s\]\[\e[1;\$((COLUMNS-5))f\]\[\e[1;32m\]\$(whoami)\[\e[u\]\[\e[0m\]"
 
-PS1='\[\033[1;31m\]\W ·\[\033[m\]'
+#PS1='\[\033[34m\]\t\[\033[1;31m\][\u@\h]\[\033[1;32m\]\w\[\033[m\]\$'
+PS1='\[\033[1;32m\][ \u@\W ] ·\[\033[m\]'
 
 #export PATH=$PATH:/root/progrem/shell
 export PATH=$PATH:~/code/shell

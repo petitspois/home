@@ -2,6 +2,15 @@
 # 关闭启动画面
 startup_message off                     # default: on
 
+# [ 刷新窗口 ]
+#--------------------------------------------
+# 和 redisplay 一同刷新窗口，仅刷新当前激活窗口，默认：no
+#partial on
+# 刷新全部窗口
+#allpartial on
+
+#redisplay
+
 # 当 terminal 关闭时，screen 自动挂起
 autodetach on                           # default: on
 
@@ -52,8 +61,9 @@ encoding utf-8 utf-8
 #bindkey -k k9 screen
 #bindkey -k k; title
 
-# 将快捷键默认 C-a 设为 C-x
+# 将快捷键默认 C-a 设为 C-x / [不行]反斜杠 \ 因为不常用
 escape ^X^X
+#escape \\
 # vim 的鼠标上滚有问题
 #escape ``
 
@@ -109,7 +119,7 @@ termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
 #caption always "%{=b}%{b}%{G}[%H]%{-}  %+07=%-w%7L>%{b .y}*%n %t%{-}%+w%-014<  %-012=%{b m}%m/%d %c "
 
 # 全局粗体，蓝色字体，绿色用户名，取消之前属性，窗口列表举例7像素，当前聚焦窗口为黄色，最后的窗口举例时间14像素
-caption always "%{=b B}%{G}[%H]%{-}  %+07=%-w%7L>%{y}%n %t%{-}%+w%-014<  %-012=%{b m}%m/%d %c "
+caption always "%{=b k}%{c}[%H]%{-}  %+07=%-w%7L>%{g}%n %t%{-}%+w%-014<  %-012=%{b y}%m/%d %c "
 # 状态栏, 不用Hardstatus实现, 因为要把xterm的title伪装成Hardstatus
 
 # Sessions
@@ -119,15 +129,14 @@ caption always "%{=b B}%{G}[%H]%{-}  %+07=%-w%7L>%{y}%n %t%{-}%+w%-014<  %-012=%
 #有个bug, debian sid中这里如果只用screen多开窗口, PS1什么的都对, 但是只能动态显示路径为title, 程序不行, C-a c新建的没问题, 欢迎反馈!!!
 #更新: session的配置放到最后就OK了, 但是这也算个bug吧, 毕竟其他的设置没有因为session的写的位置有过影响
 
-
 # 大括号里面为颜色组合
 # k      black
 # r      red
 # g      green
 # y      yellow
 # b      blue
-# m      magenta
-# c      cyan
+# m      magenta    洋红
+# c      cyan       亮蓝
 # w      white
 # d      default color
 # .      leave color unchanged

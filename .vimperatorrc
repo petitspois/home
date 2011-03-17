@@ -30,6 +30,13 @@ set wildmode=list:full
 
 set editor="xterm -e vim -c ':colorscheme jellybeans' -f"
 
+
+" 使用 :open 命令打开参数时，若参数不是URL，调用的搜索引擎。默认：google，
+" 搜索引擎关键词，使用 :dialog searchengines 查看搜索引擎对应的关键字
+"set defsearch=google
+set defsearch=ssl
+
+
 " [[ 与 ]] 跳转到下一页的链接识别
 set nextpattern=\s*下一页|下一张|下一篇|下一頁|下页|后页\s*,^\\bnext\\b,\\bnext\\b,^>$,^(>>|››|»)$,^(>|»),(>|»)$,\\bmore\\b
 set previouspattern=\s*上一页|上一张|上一篇|上一頁|上页|前页\s*,^\\bprev|previous\\b, \\bprev|previous\\b,^<$,^(<<|‹‹|«)$,^(<|«)$,(<|«)$
@@ -169,8 +176,6 @@ autocmd LocationChange .* js modes.passAllKeys = /.*(mail\.google\.com|www\.goog
 " [ 常用 URL 缩写 ]"{{{
 """""""""""""""""""""""""""""""""""""""""""""
 " 命令行 模式 缩写，打出以下缩写之后，再加一个空格展开缩写！
-"cabbrev tn  tabnew
-"cabbrev to  tabopen
 cabbrev ..  http://localhost
 cabbrev cf  about:config
 
@@ -227,6 +232,7 @@ cabbrev ly  linuxtoy.org
 
 cabbrev jh  jihuo.qq.com
 cabbrev tb  www.taobao.com
+cabbrev kb  hangzhou.koubei.com
 
 " ubuntu fvwm
 cabbrev ud  forum.ubuntu.org.cn/viewforum.php?f=168
@@ -236,7 +242,8 @@ cabbrev yk  www.youku.com
 cabbrev xm  www.xiami.com/music
 
 ""cabbrev zw  zh.wikipedia.org
-cabbrev zw  http://zh.wikipedia.org/zh-cn/Wikipedia:首页
+"cabbrev zw  http://zh.wikipedia.org/zh-cn/Wikipedia:首页
+cabbrev w   zh.wikipedia.org/wiki/Wikipedia:首页
 " 互动百科，词条
 cabbrev hd  c.hudong.com
 
