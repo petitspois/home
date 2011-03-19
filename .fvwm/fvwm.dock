@@ -1,0 +1,143 @@
+
+# [ AutoHideTerminal ]# {{{
+#--------------------------------------------
+
+#AddToFunc StartFunction
+#+ I Module FvwmButtons -g 1280x400+0-0 AutohideTerm
+#
+#Style "AutohideTerm" !Title, !Handles, Sticky, WindowListSkip,TitleAtTop,  \
+#        CirculateSkip, BorderWidth 1, HandleWidth 0, StaysOnTop
+#
+#DestroyModuleConfig AutohideTerm: *
+#*AutohideTerm: Columns 16
+#*AutohideTerm: Rows 12
+#*AutohideTerm: Colorset 9
+#*AutohideTerm: Frame 0
+#*AutohideTerm: Padding 0 0
+#
+##*AutohideTerm: (Size 16x12, Frame 0, Colorset 9,Swallow (UseOld) xterm `Exec exec xterm -fa  'Lucida Console' -fs 8`)
+#*AutohideTerm: (Size 16x12, Frame 0, Swallow (UseOld) xterm `Exec exec xterm `)
+
+
+
+# }}}
+
+# [ Fvwm Dock ]# {{{
+#--------------------------------------------
+
+Style "DockButtons" !Title, !Handles, Sticky, WindowListSkip, TitleAtBottom,  \
+        CirculateSkip, BorderWidth 1, HandleWidth 0, NeverFocus
+
+# ProgramLaunching Dock
+##############
+DestroyModuleConfig DockButtons: *
+# Dock 细分为 2 行 15 列。可以将 Dock 看作一个表格，每个元素都占有相应数量的单元格
+*DockButtons: Rows 2
+*DockButtons: Columns 15
+*DockButtons: Colorset 8
+# 根据 显示器 分辨率 设置 dock 宽度 # 窗口位置 屏幕上方
+*DockButtons: Geometry 1050x60+360+0
+*DockButtons: Font "Shadow=0 se:xft:Microsoft Yahei:size=8:antialias=True"
+
+# Dock 中每个元素所占有的单元格，和其布局。格式：行×列
+*DockButtons: (1x2 Frame 0 Icon dock/gmrun.png, ActiveIcon dock/gmrun.png,  \
+  Action(Mouse1) "DockLaunch gmrun gmrun $left $top", Action(Mouse 3) "Menu MathMenu Rectangle +$left+$top  0 -100m 0" ) 
+
+*DockButtons: (1x2, Frame 0, Icon dock/xterm.png, ActiveIcon dock/xterm.png,\
+  Action(Mouse 1) "DockLaunch xterm Terminal $left $top", Action(Mouse 3) "Menu TermMenu Rectangle +$left+$top 0 -100m 0")
+
+*DockButtons: (1x2, Frame 0, Icon dock/chromium.png, ActiveIcon dock/chromium.png,\
+  Action(Mouse 1) "DockLaunch chromium chromium $left $top", Action(Mouse 3) "Menu MultimediaMenu Rectangle +$left+$top 0 -100m 0" )
+
+*DockButtons: (1x2, Frame 0, Icon dock/geany.png, ActiveIcon dock/geany.png,  \
+  Action(Mouse 1) "DockLaunch emacs emacs $left $top", Action(Mouse 3) "Menu EditorsMenu Rectangle +$left+$top 0  -100m 0")
+
+*DockButtons: (1x2, Frame 0, Icon dock/pcmanfm.png, ActiveIcon 48x48/home.png, \
+Action(Mouse 3) "DockLaunch pacman pacman $left $top", Action(Mouse 1) "Exec exec rox ROX-Filer $left $top")
+
+*DockButtons: (1x2, Frame 0, Icon dock/ibus.png, ActiveIcon dock/ibus.png, \
+  Action(Mouse 1) "DockLaunch stardict stardict $left $top", Action(Mouse 3) "Menu NetMenu Rectangle +$left+$top 0 -100m 0")
+
+*DockButtons: (1x2, Frame 0, Icon dock/pidgin.png, ActiveIcon dock/pidgin.png,\
+  Action(Mouse 1) "DockLaunch pidgin Pidgin $left $top", Action(Mouse 3) "Menu NetMenu Rectangle +$left+$top 0 -100m 0")
+  #Action(Mouse 1) "DockLaunch pidgin Pidgin $left $top", Action(Mouse 3) "DockLaunch Mercury com-zerog-lax-LAX $left $top")
+
+*DockButtons: (1x2, Frame 0, Icon dock/gimp.png, ActiveIcon dock/gimp.png, \
+  Action(Mouse 1) "DockLaunch mtpaint mtpaint $left $top")
+
+#*DockButtons: (1x2, Frame 0, Icon dock/pcmanfm.png, ActiveIcon 48x48/home.png, \
+#Action(Mouse 3) "DockLaunch pacman --profile filemanagement Konqueror $left $top", Action(Mouse 1) "Exec exec rox ROX-Filer $left $top")
+
+# FvwmPager 嵌入在 Dock 里面
+*DockButtons: (2x2, Frame 1, Swallow FvwmPager "FvwmPager")
+
+*Dockbuttons: (2x2, Frame0, Swallow "mpdSongName" "FvwmScript scripts/mpdSongName")
+*DockButtons: (2x1, Frame0, Swallow "TimeScript" "FvwmScript scripts/TimeScript")
+*DockButtons: (1x1, Frame0, Icon dock/logout.32.png, Action(Mouse1) "Restart", Action(Mouse3) "Reboot")
+*DockButtons: (2x1, Frame0, Swallow "DateScript" "FvwmScript scripts/DateScript")
+*DockButtons: (1x1, Frame0, Icon dock/shutdown.32.png, Action(Mouse1) "Exit", Action(Mouse3) "Shutdown")
+
+#AddToFunc StartFunction 
+#+ I Module FvwmButtons MpdPanel 
+
+#DestroyModuleConfig MpdPanel: *
+#*MpdPanel: Geometry 200x40-5-10
+#*MpdPanel: Colorset 40
+#*MpdPanel: Rows 1
+#*MpdPanel: Font "Shadow=0 se:xft:Verdona:size=8:antialias=True"
+#*MpdPanel: Columns 1
+#*MpdPanel: (1x1,Frame 0, Swallow "mpdSongName" "FvwmScript scripts/mpdSongName")
+
+# }}}
+
+# [ DockLaunch Function ]# {{{
+#--------------------------------------------
+# 打开 程序 函数，包含 程序名 /   / 窗口位置 等参数
+DestroyFunc DockLaunch
+AddToFunc DockLaunch
++ C TestRc (NoMatch) Exec $0
+# 其他两个参数作用未知 [?]
+#+ C Any ($1) Next ($1) WindowListFunc
+#+ H Any ($1) WindowList ($1) Rectangle +$2+$3 0 -100m CurrentAtEnd UseListSkip SortByClass NoCurrentDeskTitle
++ D Exec $0
+
+# }}}
+
+# [ Autohide ]# {{{
+#--------------------------------------------
+# 自动隐藏 dock 栏，按键 Shift + F1 显示 Dock 栏
+Key 1   A   C   Next (CirculateHit, AutohidePanel) AutohidePanelToggle
+
+DestroyFunc AutohidePanelToggle
+AddToFunc AutohidePanelToggle 
++ I ThisWindow (Shaded) enter_handler
++ I TestRc (NoMatch) NoWindow enter_handler
+
+AddToFunc autohide
++ I ThisWindow ($0) Deschedule $[w.id]
++ I ThisWindow ($0) ThisWindow (shaded) WindowShade off
++ I ThisWindow ($0) Focus
++ I ThisWindow ($0) WarpToWindow 50 50 
++ I TestRc (!Match) All ($0, !shaded) autohide_hide $1 $2
+
+AddToFunc autohide_hide
++ I Schedule $0 $[w.id] WindowShade $1
++ I Schedule $0 $[w.id] Deschedule $[w.id]
+
+# }}}
+
+
+AddToFunc StartFunction
++ I Module FvwmAuto FvwmAutohide -menter enter_handler
+
+AddToFunc enter_handler
++ I autohide DockButtons 500 2000 N
+#+ I autohide AutohideTerm 500 2000 N
+#+ I autohide AutohideNcmpc 500 2000 N
+
+
+
+
+
+
+
