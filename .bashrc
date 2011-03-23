@@ -2,6 +2,9 @@ if [ -f /etc/bash_completion ]; then
 	. /etc/bash_completion
 fi
 
+# [ PSI color style ]# {{{
+#--------------------------------------------
+
 # 右上角 用户名
 #PS1="\[\e[1;31m\][\W]\$\[\e[s\]\[\e[1;\$((COLUMNS-4))f\]\[\e[1;32m\]\$(whoami)\[\e[u\]\[\e[0m\]"
 #PS1="\[\e[1;31m\]\W \$\[\e[s\]\[\e[1;\$((COLUMNS-5))f\]\[\e[1;32m\]\$(whoami)\[\e[u\]\[\e[0m\]"
@@ -9,19 +12,41 @@ fi
 #PS1='\[\033[34m\]\t\[\033[1;31m\][\u@\h]\[\033[1;32m\]\w\[\033[m\]\$'
 PS1='\[\033[1;32m\][ \u@\W ] ·\[\033[m\]'
 
-#export PATH=$PATH:/root/progrem/shell
+#PS1='\[\033[34m\]\t\[\033[1;31m\][\u@\h]\[\033[1;32m\]\w\[\033[m\]\$'
+#PS1='\[\033[34m\]\t\[\033[m\]\[\033[36m\][\u@\[\033[m\]\[\033[36m\]\h]\[\033[m\]\[\033[31;1m\]\w\[\033[m\]\$'
+
+#Black  0;30
+#Red 	0;31
+#Green 	0;32
+#Brown 	0;33
+#Blue 	0;34
+#Purple 0;35
+#Cyan 	0;36
+
+# }}}
+
+# [ export 环境变量 ]# {{{
+#--------------------------------------------
+
 export PATH=$PATH:~/code/shell
 #export CDPATH='.:..:../..:~/links:~:~/projects:/var/www/virtual_hosts'
-export CDPATH='.:..:../..:~:~/me:~/me/text:~/public_html/'
+export CDPATH='.:..:../..:~:~/text:~/public_html/'
 export MYSQL_PS1="[\\u@\\h \\d]"
 
 # go-office gtk2 set
 #export OOO_FORCE_DESKTOP=gnome
 #export OOO_FORCE_DESKTOP=gnome
 
-alias myhttpd='sudo /etc/rc.d/httpd'
-alias mymysqld='sudo /etc/rc.d/mysqld'
-alias mysshd='sudo /etc/rc.d/sshd'
+
+
+
+
+
+
+# }}}
+
+# [ alias 别名 ]#{{{
+#--------------------------------------------
 
 # ls color set
 export LS_OPTIONS='--color=auto'
@@ -49,7 +74,8 @@ alias tee='tee -a'
 alias grep='grep -i --color'
 
 alias c="clear"
-alias t="tmux"
+# todo.sh 使用该 别名了
+#alias t="tmux"
 alias Vim="sudo vim"
 alias exit="clear; exit"
 alias halt="sudo halt"
@@ -63,12 +89,28 @@ alias ..4="cd ../../../.."
 alias ..5="cd ../../../../.."
 
 # U 盘挂载
-alias Uin="sudo mount -t vfat -o iocharset=utf8,uid=1000,gid=100 /dev/sdb4 /mnt/myusb/"
-alias Uout="sudo umount /mnt/myusb/"
+alias Uin="sudo mount -t vfat -o iocharset=utf8,uid=1000,gid=100 /dev/sdb4 /mnt/usb/"
+alias Uout="sudo umount /mnt/usb/"
 alias mym="sudo mount -o iocharset=utf8,uid=1000,gid=100 "
 alias myu="sudo umount "
-#####################################################################
 
+alias myhttpd='sudo /etc/rc.d/httpd'
+alias mymysqld='sudo /etc/rc.d/mysqld'
+alias mysshd='sudo /etc/rc.d/sshd'
+
+
+
+
+
+
+
+
+#}}}
+
+# [ bash set 变量设置 ]# {{{
+#--------------------------------------------
+
+# bash 使用 vi 风格的行编辑
 set -o vi
 
 ## Bash下Vi输入模式重设 Ctrl-N, Ctrl-P, Ctrl-L等快捷
@@ -90,18 +132,22 @@ set -o vi
 #"\C-f": forward-char
 #"\C-b": backward-char
 
-# man color set
-export LESS_TERMCAP_mb=$'\E[01;31m'
-export LESS_TERMCAP_md=$'\E[01;31m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[01;40;34m'
-export LESS_TERMCAP_so=$'\E[01;44;34m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[01;32m'
+# }}}
 
+# [ man 手册 颜色 ]#{{{
+#--------------------------------------------
+# same to .zshrc
+export LESS_TERMCAP_mb=$'\E[01;31m'   # begin blinking
+export LESS_TERMCAP_md=$'\E[01;31m'   # begin bold
+export LESS_TERMCAP_me=$'\E[0m'       # end mode
+export LESS_TERMCAP_se=$'\E[0m'       # end standout-mode
+export LESS_TERMCAP_so=$'\E[1;33;40m' # begin standout-mode - info box
+export LESS_TERMCAP_ue=$'\E[0m'       # end underline
+export LESS_TERMCAP_us=$'\E[1;32m'    # begin underline
+#}}}
 
-#####################################################################
+# [ tmux 256 color 提示符 ]# {{{
+#--------------------------------------------
 
 # tmux 256 support
 #[[ $TERM == "screen" ]] && export -p TERM="screen-256color"
@@ -147,7 +193,14 @@ esac
 
 
 
-#####################################################################
+
+
+
+
+# }}}
+
+# [ arch pacman alias ]# {{{
+#--------------------------------------------
 
 alias P="pacman"
 alias Y="yaourt"
@@ -166,13 +219,12 @@ alias yq="yaourt -Q "
 alias yu="sudo yaourt -Su"
 alias yy="sudo yaourt -Sy"
 
-
 #lets you search through all available packages simply using 'pacsearch packagename'
-alias pacsearch="pacman -Sl | cut -d' ' -f2 | grep "
+#alias pacsearch="pacman -Sl | cut -d' ' -f2 | grep "
 
 # colorized pacman output with pacs alias:
 #alias pacs="pacsearch"
-#pacsearch() 
+#pacsearch()
 #{
 #	echo -e "$(pacman -Ss $@ | sed \
 #	-e 's#core/.*#\\033[1;31m&\\033[0;37m#g' \
@@ -181,6 +233,11 @@ alias pacsearch="pacman -Sl | cut -d' ' -f2 | grep "
 #	-e 's#^.*/.* [0-9].*#\\033[0;36m&\\033[0;37m#g' )"
 #}
 
+# }}}
+
+# [ history 历史记录 ]# {{{
+#--------------------------------------------
+
 #datestamp_history(){
 #export infodate=`date “+: %c”`
 #export infohis=`history 1`
@@ -188,7 +245,7 @@ alias pacsearch="pacman -Sl | cut -d' ' -f2 | grep "
 #}
 #export PROMPT_COMMAND=datestamp_history
 
-#####################################################################
+#--------------------------------------------
 
 # HISTSIZE 控制历史命令记录的总行数,默认 500
 export HISTSIZE=1000
@@ -207,21 +264,21 @@ export HISTCONTROL=erasedups
 
 # 使用 HISTTIMEFORMAT 显示时间戳
 #export HISTTIMEFORMAT='%F %T '
- 
+
 # HISTFILE 更改历史文件名称
 #HISTFILE=/root/.commandline_warrior
 
-#PS1='\[\033[34m\]\t\[\033[1;31m\][\u@\h]\[\033[1;32m\]\w\[\033[m\]\$'
-#PS1='\[\033[34m\]\t\[\033[m\]\[\033[36m\][\u@\[\033[m\]\[\033[36m\]\h]\[\033[m\]\[\033[31;1m\]\w\[\033[m\]\$'
 
-#export XMODIFIERS="@im=fcitx"
-#export XIM=fcitx
-#export XIM_PROGRAM=fcitx
 
-#Black  0;30
-#Red 	0;31
-#Green 	0;32
-#Brown 	0;33
-#Blue 	0;34
-#Purple 0;35
-#Cyan 	0;36
+
+
+
+
+# }}}
+
+
+
+
+
+
+

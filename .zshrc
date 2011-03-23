@@ -556,7 +556,7 @@ alias yy="sudo yaourt -Sy"
 # pacman 查找 输出彩色
 #alias pacs="pacman -Ss "
 alias pacs="pacsearch"
-pacsearch() 
+pacsearch()
 {
 	echo -e "$(pacman -Ss $@ | sed \
 	-e 's#core/.*#\\033[1;31m&\\033[0;37m#g' \

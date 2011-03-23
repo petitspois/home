@@ -10,9 +10,9 @@
 #export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
 
 # pcmanfm2 使用 gvfs 挂载设备
-#if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
-#	eval "$(dbus-launch --sh-syntax --exit-with-session)"
-#fi
+if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
+	eval "$(dbus-launch --sh-syntax --exit-with-session)"
+fi
 
 # [ fcitx iput  ]# {{{
 #-------------------------------------------
@@ -98,7 +98,8 @@ openbox)
 	exec openbox-session
 	;;	  
 awesome)
-	exec awesome
+	exec dbus-launch ck-launch-session awesome
+#	exec awesome
 	;;	  
 *)
 	exec $DEFAULTSESSION

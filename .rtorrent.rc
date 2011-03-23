@@ -24,7 +24,7 @@ directory =/home/download/m
 # Default session directory. Make sure you don't run multiple instance
 # of rtorrent using the same session directory. Perhaps using a
 # relative path?
-session = /home/download/bt.tmp
+session = /home/download/m/bt.tmp
 
 # Watch a directory for new torrents, and stop those that have been
 # deleted.
