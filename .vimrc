@@ -482,13 +482,14 @@ imap jj <esc>
 "norea ;r        ; [  ]<CR><Esc>44a-<Esc>o<BS><Esc>2kf]
 "norea "r        " [  ]<CR><Esc>44i"<Esc>kf]
 " 折叠块
-norea #r        # [  ]<CR><Esc>44a-<Esc>o<Esc>0Dyy8p3kzf10j
-norea ;r        ; [  ]<CR><Esc>44a-<Esc>o<Esc>0Dyy8p3kzf10j
-norea "r        " [  ]<CR><Esc>44a-<Esc>o<Esc>0Dyy8p3kzf10j
+norea #r        # [  ]<CR><Esc>44a-<Esc>o<Esc>0Dyy8p3kzf7j
+norea ;r        ; [  ]<CR><Esc>44a-<Esc>o<Esc>0Dyy8p3kzf7j
+norea "r        " [  ]<CR><Esc>44a-<Esc>o<Esc>0Dyy8p3kzf7j
 " 注释分割线
-norea #c        # [  ]<CR><Esc>44a-<Esc>o<Esc>0D2k05|
-norea ;c        ; [  ]<CR><Esc>44a-<Esc>o<Esc>0D2k05|
-norea "c        " [  ]<CR><Esc>44a-<Esc>o<Esc>0D2k05|
+norea #c        # [  ]<CR><Esc>44a-<Esc>o<Esc>0D2kwl
+norea ;c        ; [  ]<CR><Esc>44a-<Esc>o<Esc>0D2kwl
+norea "c        " [  ]<CR><Esc>44a-<Esc>o<Esc>0D2kwl
+
 
 
 "norea #r        # [ ]<CR><Esc>44i#<Esc>o<Esc>3k    "可以移动到正确的行首

@@ -8,7 +8,7 @@
 # 使 screen 支持 256 色
 export TERM=xterm-256color
 
-export PATH="${PATH}:${HOME}/code/shell:${HOME}/.todo"
+export PATH="${PATH}:${HOME}/code/shell:${HOME}/todo"
 export CDPATH='.:..:../..:~:~/me:~/me/text:~/public_html/:/home/download/'
 export MYSQL_PS1="[\\u@\\h \\d]"
 
@@ -443,6 +443,7 @@ user-complete(){
 # }}}
 
 #命令别名 {{{
+
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
@@ -465,10 +466,19 @@ alias ld='ls -d */'
 alias lhd='ls -d .*/'
 alias lla='ls -Alh'
 
-alias df='df -Th'
-alias du='du -h'
-#show directories size
-alias dud='du -s *(/)'
+# 多级目录回溯
+alias ..="cd .."
+alias ..2="cd ../.."
+alias ..3="cd ../../.."
+alias ..4="cd ../../../.."
+alias ..5="cd ../../../../.."
+
+# [ 系统 ]# {{{
+#--------------------------------------------
+#alias df='df -Th'
+#alias du='du -h'
+## show directories size
+#alias dud='du -s *(/)'
 
 # From : http://git.sysphere.org/dotfiles/tree/zshrc?h=public
 #rehash="hash -r"
@@ -484,23 +494,25 @@ alias retract="eject -t -v "
 alias vuser="fuser -v "
 
 
-
-# 多级目录回溯
-alias ..="cd .."
-alias ..2="cd ../.."
-alias ..3="cd ../../.."
-alias ..4="cd ../../../.."
-alias ..5="cd ../../../../.."
+# }}}
 
 alias tee='tee -a'
 alias grep='grep --color=auto -i'
-alias ee='emacsclient -t'
+#alias ee='emacsclient -t'
 
 alias c='clear'
 alias m='mutt'
 #alias t='tmux'
 alias s='screen'
 
+# [ keychain ]
+#--------------------------------------------
+alias kk='keychain .ssh/me/id_dsa_10.11.1'
+alias ks='source .keychain/king-sh'
+
+
+# [ server ]
+#--------------------------------------------
 alias myhttpd='sudo /etc/rc.d/httpd'
 alias mymysqld='sudo /etc/rc.d/mysqld'
 alias mysshd='sudo /etc/rc.d/sshd'
@@ -508,7 +520,6 @@ alias myftpd='sudo /etc/rc.d/vsftpd'
 
 # [ Sudo ]
 #--------------------------------------------
-
 alias Cp="sudo cp"
 alias Mv="sudo mv"
 alias Rm="sudo rm"
@@ -517,15 +528,17 @@ alias exit="clear; exit"
 alias halt="sudo halt"
 alias reboot="sudo reboot"
 
-# U 盘挂载
+# [ U 盘挂载 ]
+#--------------------------------------------
 alias Uin="sudo mount -t vfat -o iocharset=utf8,uid=1000,gid=100 /dev/sdb1 /mnt/myusb/"
 alias Uout="sudo umount /mnt/myusb/"
 alias mym="sudo mount -o iocharset=utf8,uid=1000,gid=100 "
 alias myu="sudo umount "
 
 
+# [ archlinux pacman ]# {{{
+#--------------------------------------------
 
-# Pacman
 alias P="pacman"
 alias Y="yaourt"
 
@@ -549,7 +562,6 @@ alias yq="yaourt -Q "
 alias yu="sudo yaourt -Su"
 alias yy="sudo yaourt -Sy"
 
-
 # 使用 'pacsearch packagename' 查找pkg，只列出软件包的名称，版本号，没有描述信息
 #alias pacsearch="pacman -Sl | cut -d' ' -f2 | grep "
 
@@ -565,6 +577,11 @@ pacsearch()
 	-e 's#^.*/.* [0-9].*#\\033[0;36m&\\033[0;37m#g' )"
 }
 
+
+
+
+
+# }}}
 
 # 查看 窗口 class 属性 / 名称
 # From : Archwiki Openbox
@@ -633,14 +650,14 @@ for i in avi rmvb wmv; alias -s $i=mplayer
 #hash -d tx="/home/king/me/text/"
 #hash -d usb="/mnt/myusb/"
 hash -d pkg="/var/cache/pacman/pkg"
-hash -d x="/home/king/me/text/"
-hash -d u="/mnt/myusb/"
+hash -d x="/home/ink/text/"
+hash -d u="/mnt/usb/"
 hash -d m="/home/download/m"
 
-hash -d e="/etc"
-hash -d c="/etc/conf.d"
-hash -d r="/etc/rc.d"
-hash -d X="/etc/X11"
+#hash -d e="/etc"
+#hash -d c="/etc/conf.d"
+#hash -d r="/etc/rc.d"
+#hash -d X="/etc/X11"
 
 #}}}
 
@@ -666,18 +683,17 @@ zstyle ':completion:*:ping:*' hosts 192.168.128.1{38,} www.g.cn \
 
 #补全 ssh scp sftp 等
 my_accounts=(
+57wsqh@216.194.70.6
+lvii@fedora.unix-center.net
 {r00t,root}@{192.168.1.1,192.168.0.1}
-kardinal@linuxtoy.org
-123@211.148.131.7
 )
 zstyle ':completion:*:my-accounts' users-hosts $my_accounts
 #}}}
 
 # 自定义 函数 ##{{{
-function calc { echo $(($@)) }
-function timeconv { date -d @$1 +"%Y-%m-%d %T" }
 
-function myip
+# 本机 IP 地址
+function lip
 {
     ifconfig|sed -n '2p'
 }
@@ -687,7 +703,7 @@ curl -s 'http://checkip.dyndns.org' | sed 's/.*Current IP Address: \([0-9\.]*\).
 
 }
 
-#show 256 color tab
+# 256 颜色
 256tab() {
     for k in `seq 0 1`;do 
         for j in `seq $((16+k*18)) 36 $((196+k*18))`;do 
@@ -697,6 +713,9 @@ curl -s 'http://checkip.dyndns.org' | sed 's/.*Current IP Address: \([0-9\.]*\).
         done;
     done
 }
+
+function calc { echo $(($@)) }
+function timeconv { date -d @$1 +"%Y-%m-%d %T" }
 
 fm()
 {
@@ -815,10 +834,11 @@ export LESS_TERMCAP_us=$'\E[1;32m'    # begin underline
 # From : https://github.com/ginatrapani/todo.txt-cli/wiki/Tips-and-Tricks
 function t() { 
   if [ $# -eq 0 ]; then
-    todo.sh -d $HOME/.todo/config ls
+    #todo.sh -d $HOME/.todo/config ls
+    todo.sh -d /home/ink/todo/todo.cfg ls
   else
     #todo.sh -d /path/to/your/todo.cfg $* 
-    todo.sh -d $HOME/.todo/config $* 
+    todo.sh -d /home/ink/todo/todo.cfg $* 
   fi
 }
 
