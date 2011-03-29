@@ -538,6 +538,12 @@ alias Uout="sudo umount /mnt/myusb/"
 alias mym="sudo mount -o iocharset=utf8,uid=1000,gid=100 "
 alias myu="sudo umount "
 
+# [ code ]
+#--------------------------------------------
+alias vv="source ~/code/pinax/bin/activate"
+
+
+
 
 # [ archlinux pacman ]# {{{
 #--------------------------------------------
@@ -586,9 +592,17 @@ pacsearch()
 
 # }}}
 
+
+alias mm="sudo mentohust"
+alias bb="bitlbee -c ~/.bitlbee.conf"
+
+
 # 查看 窗口 class 属性 / 名称
 # From : Archwiki Openbox
 alias xp='xprop | grep "WM_WINDOW_ROLE\|WM_CLASS" && echo "WM_CLASS(STRING) = \"NAME\", \"CLASS\""'
+
+
+
 
 # inode 最新的文件
 alias -g nn="*(oc[1])"
@@ -650,12 +664,14 @@ for i in avi rmvb wmv; alias -s $i=mplayer
 
 #路径别名 {{{
 #进入相应的路径时只要 cd ~xxx
-#hash -d tx="/home/king/me/text/"
 #hash -d usb="/mnt/myusb/"
-hash -d pkg="/var/cache/pacman/pkg"
 hash -d x="/home/ink/text/"
-hash -d u="/mnt/usb/"
+hash -d c="/home/ink/code/"
+hash -d d="/home/ink/code/django/"
 hash -d m="/home/download/m"
+hash -d p="/home/ink/pic/"
+hash -d u="/mnt/usb/"
+hash -d pkg="/var/cache/pacman/pkg"
 
 #hash -d e="/etc"
 #hash -d c="/etc/conf.d"
