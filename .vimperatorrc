@@ -176,7 +176,9 @@ autocmd LocationChange .* js modes.passAllKeys = /.*(mail\.google\.com|www\.goog
 " [ 常用 URL 缩写 ]"{{{
 """""""""""""""""""""""""""""""""""""""""""""
 " 命令行 模式 缩写，打出以下缩写之后，再加一个空格展开缩写！
-cabbrev ..  http://localhost
+"cabbrev ..  http://localhost
+" 有时 localhost 域名解析会莫名耗费好些时间
+cabbrev ..  127.0.0.1
 cabbrev cf  about:config
 
 cabbrev a   archlinux.org
