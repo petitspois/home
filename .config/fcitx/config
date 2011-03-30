@@ -34,7 +34,7 @@ SendTextWhenSwitchEng=False
 # Candidate Word Number
 CandidateWordNumber=5
 # 主窗口，自动隐藏 默认 : Auto
-MainWindowHideMode=Yes
+MainWindowHideMode=True
 # Show Input Window In the center of screen
 CenterInputWindow=False
 # Show Input Window After Trigger Input Mode
