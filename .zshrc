@@ -502,6 +502,7 @@ alias grep='grep --color=auto -i'
 
 alias c='clear'
 alias m='mutt'
+alias p='pwd'
 #alias t='tmux'
 alias s='screen'
 
@@ -510,7 +511,7 @@ alias s='screen'
 alias kk='keychain .ssh/me/id_dsa_10.11.1'
 alias ks='source .keychain/king-sh'
 # 统一同步目录路径
-alias rcd='rsync -altvz --delete -e ssh /home/ink/text/ fedora:.myback/text'
+alias rcd='rsync -altvz --delete -e ssh /home/ink/text/ ubuntu:.myback/text'
 alias rcc='rsync -altvz --delete -e ssh /home/ink/text/ cjb:.myback/text'
 
 

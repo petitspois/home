@@ -840,12 +840,122 @@ endfunction
 
 "}}}
 
+" [ 自动更新 时间戳 ]"{{{
+"--------------------------------------------
+
+" 按 F3 ，会得到当前光标处插入时间戳
+""imap <F3> <CR>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
+imap <F3> TTT : =strftime("%Y-%m-%d %a %I:%M %p")<CR>
+
+""nnoremap <F5> "=strftime("%c")<CR>P
+""inoremap <F5> <C-R>=strftime("%c")<CR>
+
+" 为 txt 自动更新时间戳
+autocmd BufWritePre,FileWritePre *.txt ks|call LastModified()|'s
+fun LastModified()
+    exe "1,$ s/TTT: .*/TTT:" .
+        \ strftime("%F %T") . "/e"
+endfun
+
+""function! LastModified()
+""  if &modified
+""    let save_cursor = getpos(".")
+""    let n = min([20, line("$")])
+""    keepjumps exe '1,' . n . 's#^\(.\{,10}TTT: \).*#\1' .
+""          \ strftime('%a %b %d, %Y  %I:%M%p') . '#e'
+""    call histdel('search', -1)
+""    call setpos('.', save_cursor)
+""  endif
+""endfun
+""autocmd BufWritePre *.txt call LastModified()
+
+" [ 十二月 24th, 2007 ]"{{{
+"--------------------------------------------
+" From : http://joyloft.net/?p=748
+" vim: 给源代码增加时间戳
+
+"function! Timestamp(comment)
+"    if (a:comment == '')
+"        return
+"    endif
+"    let pattern = '\('.a:comment.' Last Change:\s\+\)\d\{4}-\d\{2}-\d\{2} \d\{2}:\d\{2}:\d\{2}'
+"    let row = search('\%^\_.\{-}\(^\zs' . pattern . '\)', 'n')
+"    let now = strftime('%Y-%m-%d %H:%M:%S', localtime())
+"    if row != 0
+"        let new_row_str =substitute(getline(row), '^' . pattern , '\1', '') . now
+"        call setline(row, new_row_str)
+"    else
+"        normal m'
+"        silent! :1
+"        normal O
+"        let new_row_str = a:comment . " Last Change: " . now
+"        call setline(1, new_row_str)
+"        normal ''
+"    endif
+"endfunction
+"au BufWritePre *vimrc,*.vim       call Timestamp('"')
+"au BufWritePre *.h,*.cpp          call Timestamp('//')
+"au BufWritePre Makefile           call Timestamp('#')
+
+
+
+
+"}}}
+
+" [ vim wiki ]"{{{
+"--------------------------------------------
+
+" From : http://vim.wikia.com/wiki/VimTip97
+" 更新 前20 行中的 Last modified 时间戳
+" 'Last modified: ' can have up to 10 characters before (they are retained).
+" Restores cursor and window position using save_cursor variable.
+
+"function! LastModified()
+"  if &modified
+"    let save_cursor = getpos(".")
+"    let n = min([20, line("$")])
+"    keepjumps exe '1,' . n . 's#^\(.\{,10}Last modified: \).*#\1' .
+"          \ strftime('%a %b %d, %Y  %I:%M%p') . '#e'
+"    call histdel('search', -1)
+"    call setpos('.', save_cursor)
+"  endif
+"endfun
+"autocmd BufWritePre * call LastModified()
+
+"}}}
+
+" [ 2007 ]"{{{
+"--------------------------------------------
+
+" From : http://www.cnblogs.com/soli/archive/2007/09/07/885044.html
+" 在vim中使用autocmd命令在保存文件时自动插入最后修改日期和时间
+
+"autocmd BufWritePre,FileWritePre [._]vimrc ks|call LastModified()|'s
+"fun LastModified()
+"    exe "1,$ s/[L]astModified: .*/LastModified:" .
+"        \ strftime("%F %T") . "/e"
+"endfun
+
+
+
+
+
+"}}}
+
+
+
+"}}}
+
+
+
+
+
 "}}}
 
 " [ Plugins 插件 ]"{{{
 """"""""""""""""""""""""""""""""""""""""""""
 
-" [ Taglist.vim ]"{{{
+" [ Taglist.vim ]"{{{vim 
 """""""""""""""""""""""""""""""""""""""""""""
 
 " 按照名称排序
@@ -880,45 +990,45 @@ let Tlist_Inc_Winwidth=0
 
 "}}}
 
-" [ NERD Tree ]"{{{
-"""""""""""""""""""""""""""""""""""""""""""""
-
-nnoremap <leader>f :NERDTreeToggle
-nnoremap  <F4> :NERDTreeToggle<CR>
-imap <F4> <ESC>:NERDTreeToggle<CR>
-"nnoremap <A-f> <ESC>:NERDTreeToggle<CR>
-
-" 窗口位置（'left' or 'right'）
-let NERDTreeWinPos='left'
-" 窗口宽
-let NERDTreeWinSize=30
-" 指定鼠标模式（1.双击打开；2.单目录双文件；3.单击打开）
-let NERDTreeMouseMode=2
-" 是否默认显示书签列表
-let NERDTreeShowBookmarks=1
-" 显示行号
-let NERDTreeShowLineNumbers=1
-" 高亮显示光标所在行
-"let NERDTreeHighlightCursorline=1
-" 窗口状态栏
-let NERDTreeStatusline=1
-" Default: $HOME/.NERDTreeBookmarks
-let NERDTreeBookmarksFile=$HOME.'/.vim/NERDBookmarks.txt'
-
-" 让Tree把自己给装饰得多姿多彩漂亮点
-"let NERDChristmasTree=1
-" 控制当光标移动超过一定距离时，自动将焦点调整到屏中心
-"let NERDTreeAutoCenter=1
-
-"NERDTreeSortOrder           排序规则
-"NERDTreeCaseSensitiveSort   排序时大小写不敏感 
-"NERDTreeBookmarksFile       指定书签文件
-"NERDTreeChDirMode           确定是否改变Vim的CWD
-"NERDTreeHijackNetrw         是否使用:edit命令时打开NerdTree，替代默认的netrw
-"NERDTreeQuitOnOpen          打开文件后是否关闭NerdTree窗口
-
-
-"}}}
+"" [ NERD Tree ]"{{{
+""""""""""""""""""""""""""""""""""""""""""""""
+"
+"nnoremap <leader>f :NERDTreeToggle
+"nnoremap  <F4> :NERDTreeToggle<CR>
+"imap <F4> <ESC>:NERDTreeToggle<CR>
+""nnoremap <A-f> <ESC>:NERDTreeToggle<CR>
+"
+"" 窗口位置（'left' or 'right'）
+"let NERDTreeWinPos='left'
+"" 窗口宽
+"let NERDTreeWinSize=30
+"" 指定鼠标模式（1.双击打开；2.单目录双文件；3.单击打开）
+"let NERDTreeMouseMode=2
+"" 是否默认显示书签列表
+"let NERDTreeShowBookmarks=1
+"" 显示行号
+"let NERDTreeShowLineNumbers=1
+"" 高亮显示光标所在行
+""let NERDTreeHighlightCursorline=1
+"" 窗口状态栏
+"let NERDTreeStatusline=1
+"" Default: $HOME/.NERDTreeBookmarks
+"let NERDTreeBookmarksFile=$HOME.'/.vim/NERDBookmarks.txt'
+"
+"" 让Tree把自己给装饰得多姿多彩漂亮点
+""let NERDChristmasTree=1
+"" 控制当光标移动超过一定距离时，自动将焦点调整到屏中心
+""let NERDTreeAutoCenter=1
+"
+""NERDTreeSortOrder           排序规则
+""NERDTreeCaseSensitiveSort   排序时大小写不敏感 
+""NERDTreeBookmarksFile       指定书签文件
+""NERDTreeChDirMode           确定是否改变Vim的CWD
+""NERDTreeHijackNetrw         是否使用:edit命令时打开NerdTree，替代默认的netrw
+""NERDTreeQuitOnOpen          打开文件后是否关闭NerdTree窗口
+"
+"
+""}}}
 
 " [ zencoding ]"{{{
 """""""""""""""""""""""""""""""""""""""""""""
@@ -944,16 +1054,20 @@ let g:user_zen_settings = {
 "}}}
 
 
+" [ netrw vim 自带文件管理器 ]
+"""""""""""""""""""""""""""""""""""""""""""""
+let g:netrw_winsize = 30
+nmap <silent> <leader>o :Sexplore!<cr>
+
+
 " [ template.vim ]
 """""""""""""""""""""""""""""""""""""""""""""
 " 取消自动载入模板
 let g:template_autoload = 0
 
-" [ Buftabs.vim ]
+" [ autoclose.vim ]
 """""""""""""""""""""""""""""""""""""""""""""
-
-" 仅显示 buffer 对应的文件名，不显示路径
-let g:buftabs_only_basename=1
+"let g:loaded_AutoClose = 1
 
 " [ html autoclose ]
 """""""""""""""""""""""""""""""""""""""""""""
@@ -966,21 +1080,9 @@ let xml_use_xhtml = 1
 " autocmd 使 html_autoclose.vim 作用于xtml,xml文件
 " "au FileType xhtml,xml so $HOME/.vim/ftplugin/html_autoclosetag.vim
 
-" [ autoclose.vim ]
-"""""""""""""""""""""""""""""""""""""""""""""
-
-"let g:loaded_AutoClose = 1
-
-
-" [ matchit.vim ]
-"""""""""""""""""""""""""""""""""""""""""""""
-
-" 默认在 /usr/share/vim/vim7/macros/matchit.vim
-
 
 " [ jquery.vim syntax 插件 ]
 """""""""""""""""""""""""""""""""""""""""""""
-
 "js语法高亮脚本的设置
 "let g:javascript_enable_domhtmlcss=1
 
@@ -988,6 +1090,24 @@ let xml_use_xhtml = 1
 au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 " vimer.com
 "au BufRead,BufNewFile *.js set syntax=jquery
+
+" [ give up 卸载的 插件 ]"{{{
+"""""""""""""""""""""""""""""""""""""""""""""
+" [ Buftabs.vim ]
+"""""""""""""""""""""""""""""""""""""""""""""
+" 仅显示 buffer 对应的文件名，不显示路径
+"let g:buftabs_only_basename=1
+" [ matchit.vim ]
+"""""""""""""""""""""""""""""""""""""""""""""
+" vim 6.0 后，已经将 matchit 集成
+" 默认在 /usr/share/vim/vim7/macros/matchit.vim
+
+
+
+
+
+
+"}}}
 
 
 
