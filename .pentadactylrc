@@ -300,7 +300,7 @@ hi StatusLine background:#555555 !important;
 hi StatusLineBroken background:#555555 !important;
 hi StatusLineSecure background:#555555 !important;
 hi StatusLineExtended background:#555555 !important;
-hi CmdLine padding: 1px !important;
+hi CmdLine padding: 1px background:#CCCCCC !important;
 hi Normal color: black !important; background: white !important; font-weight: normal !important;font-family: monospace !important;
 hi CompTitle color: #6DA335; background: #f0f0f0; font-weight: bold;
 hi GradientLeft background-color: #6DA335;

@@ -713,18 +713,17 @@ zstyle ':completion:*:my-accounts' users-hosts $my_accounts
 # 自定义 函数 ##{{{
 
 # 本机 IP 地址
-function lip
-{
-    ifconfig|sed -n '2p'
-}
+function lip { ifconfig|sed -n '2p' }
 # 查询公网 IP，需要安装 curl 工具
-function pubip() {
-curl -s 'http://checkip.dyndns.org' | sed 's/.*Current IP Address: \([0-9\.]*\).*/\1/g';
+function pubip() 
+{ curl -s 'http://checkip.dyndns.org' | sed 's/.*Current IP Address: \([0-9\.]*\).*/\1/g'; }
 
-}
+# 查询 pacman 安装执行命令
+function pkg()
+{ sed -n '/pacman -S /p' /var/log/pacman.log|awk -F "'" '{print $2}'|uniq }
 
 # 256 颜色
-256tab() {
+function 256tab() {
     for k in `seq 0 1`;do 
         for j in `seq $((16+k*18)) 36 $((196+k*18))`;do 
             for i in `seq $j $((j+17))`; do 
@@ -737,17 +736,12 @@ curl -s 'http://checkip.dyndns.org' | sed 's/.*Current IP Address: \([0-9\.]*\).
 function calc { echo $(($@)) }
 function timeconv { date -d @$1 +"%Y-%m-%d %T" }
 
-fm()
-{
-    $mydir=`pwd`;
-    `rox $mydir &`;
-}
-
+function fm()
+{ $mydir=`pwd`; `rox $mydir &`; }
 
 #alarm using atd
-alarm() { 
-    echo "msg ${argv[2,-1]} && aplay -q ~/.sounds/MACSound/System\ Notifi.wav" | at now + $1 min
-}
+alarm() 
+{ echo "msg ${argv[2,-1]} && aplay -q ~/.sounds/MACSound/System\ Notifi.wav" | at now + $1 min }
 
 #calculator
 calc()  { awk "BEGIN{ print $* }" ; }
