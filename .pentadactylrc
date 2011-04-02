@@ -1,0 +1,322 @@
+" vim:set et ft=vim fdm=marker sw=4 sts=4 ts=4 nopaste :
+"1.0b6 (created: 2011/03/09 09:25:18)
+
+loadplugins '\.(js|penta)$'
+group user
+
+" [ Option ]"{{{
+"--------------------------------------------
+
+" 加载 runtimepath 定义路径下面的文件。将其他定义，独立出来，可以控制是否加载
+runtime my.vimp
+
+set history=25
+set wildcase=:smart
+" 命令行 自动补全
+set wildmode=list:full
+" 使用 tab 触发 自动补全，将补全正则表达式式设为 空
+set autocomplete=
+" 默认为普通模式，非插入模式
+"set focuscontent
+
+" 所有的匹配都会高亮
+set hlfind
+
+set titlestring="Firefox -- ink"
+"set visualbell
+" 使用 :open 命令打开参数时，若参数不是URL，调用的搜索引擎。默认：google，
+" 搜索引擎关键词，使用 :dialog searchengines 查看搜索引擎对应的关键字
+"set defsearch=google
+"set defsearch=ssl
+
+
+
+
+
+"}}}
+
+" [ map 快捷键 ]"{{{
+""""""""""""""""""""""""""""""""""""""""""""
+
+" [ 自定义缩写 ]"{{{
+"--------------------------------------------
+
+" 屏幕滚动
+noremap j 5j
+noremap k 5k
+noremap J <C-d>
+noremap K <C-u>
+
+" Show Menu 显示 菜单栏，[   可用 ]
+"noremap 0m   :set guioptions+=m<CR>
+" Hide Menu 隐藏 菜单栏，[ 不可用 ]
+"noremap 1m   :set guioptions-=m<CR>
+" Menu 显示/隐藏 菜单栏 开关
+noremap <F2> :set guioptions!=m<CR>
+noremap <F3> :set guioptions!=T<CR>
+
+" 停止 加载页面
+noremap s <C-c>
+""noremap m :mark 
+
+" 标签页 切换
+"noremap T <C-^>
+noremap <F11> gT
+noremap <F12> gt
+inoremap <F11> <esc>gT
+inoremap <F12> <esc>gt
+
+set mapleader=','
+noremap <leader>p   gT
+noremap <leader>n   gt
+noremap <leader>a   :dialog     addons<CR>
+noremap <leader>b   :sidebar!    BookMarks<CR>
+"noremap <leader>b   :sidebar!   书签<CR>
+noremap <leader>B   :dialog     bookmarks<CR>
+noremap <leader>c   :dialog     cleardata<CR>
+noremap <leader>C   :dialog     cookies<CR>
+" 打开 Delicious 侧栏"
+noremap <leader>d   :sidebar!    Delicious<CR>
+noremap <leader>D   :dialog     downloads<CR>
+noremap <leader>h   :sidebar!    history<CR>
+"noremap <leader>h   :sidebar!    历史<CR>
+noremap <leader>H   :dialog     history<CR>
+noremap <leader>i   :dialog     pageinfo<CR>
+noremap <leader>I   :dialog     import<CR>
+" 若不注释与 m 有关的按键定义，会与 mark 标记冲突
+""noremap <leader>m   :dialog     addbookmark<CR>
+noremap <leader>o   :dialog     openfile<CR>
+noremap <leader>p   :dialog     preferences<CR>
+" 书签 / 历史记录 详细管理
+noremap <leader>P   :dialog     places<CR>
+noremap <leader>q   ZZ
+noremap <leader>r   :restart<CR>
+"noremap <leader>s   :dialog     pagesource<CR>
+
+"noremap <leader>s   :source ~/.pentadactylrc<CR>
+noremap <leader>S   :rehash<CR>
+
+" 停止网页loading，原来的是<C-c>，复制还是保留好一点。
+"map -modes=n,v <C-s> :stop<Return>
+
+"=为新的页面放大+，不过数字键盘那边不能用
+"map -modes=n,v = -builtin +
+
+" 左右切换Tab，原来的可以用方向键搭救；不喜可以改成前进后退
+" 默认的前进后退的热键也很方便L H <C-o> <C-i>
+"map -modes=n,v h gT
+"map -modes=n,v l gt
+
+" 复制内容比网址实用一点吧，互换很有必要
+"map -modes=n,v y -builtin Y
+"map -modes=n,v Y -builtin y
+
+"map < <C-6>
+"noremap > g$
+"noremap , <C-o>
+"noremap . <C-i>
+"map U :ju<CR>
+"map <C-.> :tabm<CR>
+
+"" 想办法再减少按键频率
+"noremap g gg
+" 查看源码 开/关
+"noremap S gf
+"noremap " gn
+"noremap ] ]]
+"noremap [ [[
+
+"}}}
+
+" [ Firefox keyshot ]"{{{
+"""""""""""""""""""""""""""""""""""""""""""""
+
+"noremap <C-c> <C-v><C-c>
+"" normal 和 visual 模式
+"nnoremap <C-c> <C-v><C-c>
+"vnoremap <C-c> <C-v><C-c>
+"" insert 和 command line 模式
+"inoremap <C-c> <C-v><C-c>
+"cnoremap <C-c> <C-v><C-c>
+
+" noremap 等价于使用 -builtin 参数的 map
+"map -modes=n,v,i,c <C-c> -builtin <C-v><C-c>
+
+" 复制 / 粘贴 / 撤销 / 全选
+" pentadactyl 中 map 命令引入一个特殊字符 – <Pass>
+" 该特殊字符可以把前面 mapping 的键直接传给 firefox
+map -m n,v,i,c,t <C-a> <Pass>
+map -m n,v,i,c,t <C-c> <Pass>
+map -m i,c,t <C-v> <Pass>
+map -m i,c,t <C-x> <Pass>
+map -m i,c,t <C-z> <Pass>
+
+
+" 还原书签栏
+"noremap <C-b> <C-v><C-b>
+" 还原 ctrl-k 跳到搜索栏
+"noremap <C-k> <C-v><A-d><Tab>
+
+
+"}}}
+
+" [ 快速启用/禁用代理 ]"{{{
+"""""""""""""""""""""""""""""""""""""""""""""
+" From : http://linuxtoy.org/archives/用-vimperator-快速启用禁用代理.html
+" From : http://vim.group.javaeye.com/group/topic/16187
+"map <F12> :set! network.proxy.type=1<CR>:echo ":("<CR>
+"map <S-F12> :set! network.proxy.type=0<CR>:echo ":)"<CR>
+" 代理状态的图标 Firefox 插件 QuickProxy
+
+" 不如直接：
+"map  :set! extensions.autoproxy.proxyMode=auto:echo "auto"
+"map  :set! extensions.autoproxy.proxyMode=global:echo "global"
+
+"}}}
+
+"}}}
+
+" [ 常用 URL 缩写 ]"{{{
+"""""""""""""""""""""""""""""""""""""""""""""
+" 命令行 模式 缩写，打出以下缩写之后，再加一个空格展开缩写！
+"cabbrev ..  http://localhost
+" 有时 localhost 域名解析会莫名耗费好些时间
+cabbrev ..  127.0.0.1
+cabbrev cf  about:config
+
+cabbrev a   archlinux.org
+cabbrev ak  wiki.archlinux.org
+cabbrev aur aur.archlinux.org
+cabbrev bd  www.baidu.com
+cabbrev bg  www.bing.com
+cabbrev bt  www.torrentz.com
+cabbrev vc  www.verycd.com
+cabbrev ss  music.soso.com
+
+" Firefox 论坛
+cabbrev fm  g.mozest.com
+cabbrev ff  www.firefox.net.cn/forum/index.php
+" Plugin 插件
+cabbrev fp  https://addons.mozilla.org/zh-CN/firefox/
+cabbrev us  userscripts.org
+
+" [ Google ]"{{{
+"--------------------------------------------
+cabbrev g   www.google.com.hk
+cabbrev gc  https://www.google.com/accounts
+cabbrev gd  https://docs.google.com
+cabbrev ge  https://encrypted.google.com.hk
+cabbrev gf  www.google.com.hk/finance?hl=zh-CN&sourceid=cnhp
+cabbrev gi  images.google.com
+cabbrev gm  https://mail.google.com
+cabbrev gp  http://ditu.google.cn/maps?hl=zh-cn&tab=wl
+cabbrev gr  https://www.google.com/reader
+cabbrev gs  goosh.org
+cabbrev gt  translate.google.com/#en|zh-CN|
+cabbrev gv  video.google.com
+
+"cabbrev gd  www.google.com/dictionary
+" 中文 --> English
+cabbrev ce  http://www.google.com/dictionary?aq=f&langpair=zh-CN|en&q=&hl=en
+" English --> 中文
+cabbrev ec  http://www.google.com/dictionary?aq=f&langpair=en|zh-CN&q=&hl=en
+
+"}}}
+
+" linuxsir archlinux
+cabbrev al  bbs.archlinux.org
+cabbrev la  www.linuxsir.org/bbs/forum96.html
+cabbrev lh  lifehacker.com
+" linuxsir soft vim fvwm
+cabbrev ls  www.linuxsir.org/bbs/forum28.html
+" linuxsir Fedora
+cabbrev lf  www.linuxsir.org/bbs/forum40.html
+" linuxsir Debian
+cabbrev ld  www.linuxsir.org/bbs/forum49.html
+cabbrev ly  linuxtoy.org
+
+cabbrev jh  jihuo.qq.com
+cabbrev tb  www.taobao.com
+cabbrev kb  hangzhou.koubei.com
+
+" ubuntu fvwm
+cabbrev ud  forum.ubuntu.org.cn/viewforum.php?f=168
+cabbrev uu  forum.ubuntu.org.cn
+cabbrev yt  www.youtube.com
+cabbrev yk  www.youku.com
+cabbrev xm  www.xiami.com/music
+
+""cabbrev zw  zh.wikipedia.org
+"cabbrev zw  http://zh.wikipedia.org/zh-cn/Wikipedia:首页
+cabbrev w   zh.wikipedia.org/wiki/Wikipedia:首页
+" 互动百科，词条
+cabbrev hd  c.hudong.com
+
+" proxy 代理
+cabbrev ut  www.ubint.net
+cabbrev mg  https://www.megaproxy.com/freesurf
+
+
+
+"}}}
+
+" From : Pentadactyl 简单介绍
+
+" [ Advance ]"{{{
+"--------------------------------------------
+
+" 文字链接被选中，则直接打开链接；选中的是一般文字，用默认搜索引擎搜索
+" 否则打开:tabopen或者:open命令行，手动输入关键字搜索
+map t -js content.getSelection().toString()!=''?dactyl.execute(":tabopen "+ content.getSelection()):CommandExMode().open("tabopen ")
+map o -js content.getSelection().toString()!=''?dactyl.execute(":open "+ content.getSelection()):CommandExMode().open("open ")
+
+set nextpattern='\bnext\b',^>$,'^(>>|»)$','^(>|»)','(>|»)$','\bmore\b','s*下一页|下一张|下一章|下一篇|下一頁|下页|后页s*'
+set previouspattern='\bprev|previous\b',^<$,'^(<<|«)$','^(<|«)','(<|«)$','s*上一页|上一张|上一章|上一篇|上一頁|上页|前页s*'
+
+"这个用来对付某些支持热键的网站，如gmail googlereader，暂保留jk可用，简单容易懂。
+set passkeys=https:'//mail.google.comcom|www.google.com/reader/:jk'
+
+" [vimperator] 让Greader/Gmail等键盘命令不受到影响
+"autocmd LocationChange .* js modes.passAllKeys = /.*(mail\.google\.com|www\.google\.com\/reader).*/.test(buffer.URL)
+
+" [[ 与 ]] 跳转到下一页的链接识别
+"set nextpattern=\s*下一页|下一张|下一篇|下一頁|下页|后页\s*,^\\bnext\\b,\\bnext\\b,^>$,^(>>|››|»)$,^(>|»),(>|»)$,\\bmore\\b
+"set previouspattern=\s*上一页|上一张|上一篇|上一頁|上页|前页\s*,^\\bprev|previous\\b, \\bprev|previous\\b,^<$,^(<<|‹‹|«)$,^(<|«)$,(<|«)$
+
+
+
+
+
+
+"}}}
+
+" [ 状态栏 主题 ]"{{{
+"--------------------------------------------
+" From : http://www.douban.com/group/topic/14238246/
+
+style -name=status-bar chrome://* #status-bar {font-family: monospace !important; font-weight: normal !important;} #dactyl-statusline-field-container {padding-right: 5px !important;}
+
+hi StatusLine background:#555555 !important;
+hi StatusLineBroken background:#555555 !important;
+hi StatusLineSecure background:#555555 !important;
+hi StatusLineExtended background:#555555 !important;
+hi CmdLine padding: 1px !important;
+hi Normal color: black !important; background: white !important; font-weight: normal !important;font-family: monospace !important;
+hi CompTitle color: #6DA335; background: #f0f0f0; font-weight: bold;
+hi GradientLeft background-color: #6DA335;
+hi Preview color: #4B9CEB;
+hi ErrorMsg color: red !important; background-color: #f0f0f0 !important;
+hi Hint font-family: monospace; font-size: 9px; text-transform: uppercase; color: white; background-color: #1E90FF; padding:1px;
+hi HintElem background-color: transparent;
+
+style -name commandline-ime chrome://* #dactyl-commandline-command input {ime-mode: inactive;}
+
+"}}}
+
+
+
+
+
+
+
+
