@@ -75,7 +75,7 @@ xmodmap ~/.xmodmap
 #openbox-session
 #awesome
 
-DEFAULTSESSION=musca
+DEFAULTSESSION=awesome
 
 case $1 in
 fvwm*)
