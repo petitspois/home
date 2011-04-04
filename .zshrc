@@ -243,34 +243,30 @@ screen_precmd()
 {
 
     # 底部 标题 使用 短路径
-    title "%10< ..<%c%<<"
+    #title "%10< ..<%c%<<"
 
     # 输出 bell 报警信号 , urgent notification trigger
     #echo -ne '\a'
     #title "`print -Pn "%~" |sed "s:\([~/][^/]*\)/.*/:\1...:"`" "$TERM $PWD"
-    #title "`print -Pn "%~" |sed "s:\([~/][^/]*\)/.*/:\1...:;s:\([^-]*-[^-]*\)-.*:\1:"`" "$TERM $PWD"
-    #echo -ne '\033[?17;0;127c'
+    title "`print -Pn "%~" |sed "s:\([~/][^/]*\)/.*/:\1...:;s:\([^-]*-[^-]*\)-.*:\1:"`" "$TERM $PWD"
+    echo -ne '\033[?17;0;127c'
 }
 # }}}
 
 screen_preexec()
 # {{{
 {
+    #title "%10>..>$1%<<"
 
-    title "%10>..>$1%<<"
-    #local -a cmd; cmd=(${(z)1})
-    #if [[ $cmd[1]:t == "ssh" ]]; then
-    #    title "@""`echo $cmd[2]|sed 's:.*@::'`" "$TERM $cmd"
-    #elif [[ $cmd[1]:t == "sudo" ]]; then
-    #    title "#"$cmd[2]:t "$TERM $cmd[3,-1]"
-    #elif [[ $cmd[1]:t == "for" ]]; then
-    #    title "()"$cmd[7] "$TERM $cmd"
-    #elif [[ $cmd[1]:t == "svn" ]]; then
-    #    title "$cmd[1,2]" "$TERM $cmd"
-    #elif [[ $cmd[1]:t == "ls" ]] || [[ $cmd[1]:t == "ll" ]] ; then
-    #else
-    #    title $cmd[1]:t "$TERM $cmd[2,-1]"
-    #fi
+    local -a cmd; cmd=(${(z)1})
+    case $cmd[1]:t in
+        'ssh')          title "@""`echo $cmd[2]|sed 's:.*@::'`" "$TERM $cmd";;
+        'sudo')         title "#"$cmd[2]:t "$TERM $cmd[3,-1]";;
+        'for')          title "()"$cmd[7] "$TERM $cmd";;
+        'svn'|'git')    title "$cmd[1,2]" "$TERM $cmd";;
+        'ls'|'ll')      ;;
+        *)              title $cmd[1]:t "$TERM $cmd[2,-1]";;
+    esac
 
 }
 # }}}
@@ -664,6 +660,23 @@ alias ..3="cd ../../.."
 alias ..4="cd ../../../.."
 alias ..5="cd ../../../../.."
 # }}}
+
+# [ git ]# {{{
+#--------------------------------------------
+alias ga='git add'
+alias gc='git commit '
+alias gl='git ls-files'
+alias go='git log'
+alias gs='git status'
+
+
+
+
+# }}}
+
+
+
+
 
 # [ 系统 ]# {{{
 #--------------------------------------------
