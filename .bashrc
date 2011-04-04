@@ -1,8 +1,8 @@
 if [ -f /etc/bash_completion ]; then
-	. /etc/bash_completion
+    . /etc/bash_completion
 fi
 
-# [ PSI color style ]# {{{
+# [ PS1 color style ]# {{{
 #--------------------------------------------
 
 # 右上角 用户名
@@ -10,18 +10,18 @@ fi
 #PS1="\[\e[1;31m\]\W \$\[\e[s\]\[\e[1;\$((COLUMNS-5))f\]\[\e[1;32m\]\$(whoami)\[\e[u\]\[\e[0m\]"
 
 #PS1='\[\033[34m\]\t\[\033[1;31m\][\u@\h]\[\033[1;32m\]\w\[\033[m\]\$'
-PS1='\[\033[1;32m\][ \u·\W ] > \[\033[m\]'
+PS1='\[\033[1;31m\][ \u·\W ] > \[\033[m\]'
 
 #PS1='\[\033[34m\]\t\[\033[1;31m\][\u@\h]\[\033[1;32m\]\w\[\033[m\]\$'
 #PS1='\[\033[34m\]\t\[\033[m\]\[\033[36m\][\u@\[\033[m\]\[\033[36m\]\h]\[\033[m\]\[\033[31;1m\]\w\[\033[m\]\$'
 
 #Black  0;30
-#Red 	0;31
-#Green 	0;32
-#Brown 	0;33
-#Blue 	0;34
+#Red    0;31
+#Green  0;32
+#Brown  0;33
+#Blue   0;34
 #Purple 0;35
-#Cyan 	0;36
+#Cyan   0;36
 
 # }}}
 
@@ -166,28 +166,28 @@ export LESS_TERMCAP_us=$'\E[1;32m'    # begin underline
 #     export PROMPT_COMMAND
 # fi
 
-#alias tmux='tmux -2 '	# 256 colors
+#alias tmux='tmux -2 '  # 256 colors
 # xterm urxvt 256 color [tmux]
 export TERM=xterm-256color
 
 # xterm title 标题栏,PROMPT_COMMAND 会在 PS1 随执行，报警声，bell
 case $TERM in
-	xterm*)
-		PROMPT_COMMAND='echo -ne "\033]0;xterm -> ${PWD}\007"'
-		export PROMPT_COMMAND
-		;;
-	#screen*)
-	#	# 以下为 自定义 变量
-	#	PATHTITLE='\[\ek\W\e\\\]'
-	#	PROGRAMTITLE='\[\ek\e\\\]'
-	#	PS1="${PROGRAMTITLE}${PATHTITLE}${PS1}"
-	#	;;
-	rxvt)
-		PROMPT_COMMAND='echo -ne "\033]0;urxvt : ${PWD}\007"'
-		export PROMPT_COMMAND
-		;;
-	*)
-		;;
+    xterm*)
+        PROMPT_COMMAND='echo -ne "\033]0;xterm -> ${PWD}\007"'
+        export PROMPT_COMMAND
+        ;;
+    #screen*)
+    #   # 以下为 自定义 变量
+    #   PATHTITLE='\[\ek\W\e\\\]'
+    #   PROGRAMTITLE='\[\ek\e\\\]'
+    #   PS1="${PROGRAMTITLE}${PATHTITLE}${PS1}"
+    #   ;;
+    rxvt)
+        PROMPT_COMMAND='echo -ne "\033]0;urxvt : ${PWD}\007"'
+        export PROMPT_COMMAND
+        ;;
+    *)
+        ;;
 esac
 
 
@@ -226,11 +226,11 @@ alias yy="sudo yaourt -Sy"
 #alias pacs="pacsearch"
 #pacsearch()
 #{
-#	echo -e "$(pacman -Ss $@ | sed \
-#	-e 's#core/.*#\\033[1;31m&\\033[0;37m#g' \
-#	-e 's#extra/.*#\\033[0;32m&\\033[0;37m#g' \
-#	-e 's#community/.*#\\033[1;35m&\\033[0;37m#g' \
-#	-e 's#^.*/.* [0-9].*#\\033[0;36m&\\033[0;37m#g' )"
+#   echo -e "$(pacman -Ss $@ | sed \
+#   -e 's#core/.*#\\033[1;31m&\\033[0;37m#g' \
+#   -e 's#extra/.*#\\033[0;32m&\\033[0;37m#g' \
+#   -e 's#community/.*#\\033[1;35m&\\033[0;37m#g' \
+#   -e 's#^.*/.* [0-9].*#\\033[0;36m&\\033[0;37m#g' )"
 #}
 
 # }}}

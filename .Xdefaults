@@ -1,6 +1,6 @@
 
 ! ##############################################################################
-!           black   red     green   yellow  blue    magenta     cyan    white
+!           black   red     green   yellow  blue    magenta洋红 cyan    white
 ! normal    0       1       2       3       4       5           6       7
 ! bold      8       9       10      11      12      13          14      15
 ! 补色器    ：http://colorschemedesigner.com/

@@ -108,7 +108,8 @@ colors
 autoload -Uz vcs_info
 
 # 颜色变量
-for COLOR in RED GREEN YELLOW WHITE BLACK CYAN; do
+# black   red     green   yellow  blue    magenta     cyan    white
+for COLOR in RED GREEN YELLOW WHITE BLACK CYAN BLUE MAGENTA; do
     eval PR_$COLOR='%{$fg[${(L)COLOR}]%}'
     eval PR_BRIGHT_$COLOR='%{$fg_bold[${(L)COLOR}]%}'
 done
@@ -118,13 +119,13 @@ PR_RESET="%{${reset_color}%}";
 
 # %b - branchname               分支名
 # %u - unstagedstr              未跟踪
-# %c - stangedstr               跟踪
+# %c - stangedstr               新添加 跟踪
 # %a - action                   [e.g. rebase-i]
 # %R - repository path          版本路径
 # %S - path in the repository   在版本库中到路径
 
 # 为 版本库左右添加 空格
-FMT_BRANCH="${PR_BRIGHT_GREEN} %b%u%c${PR_RESET}"    # e.g. master¹²
+FMT_BRANCH="${PR_BRIGHT_GREEN} %b${PR_CYAN}%u${PR_WHITE}%c${PR_RESET}"    # e.g. master¹²
 FMT_ACTION="[${PR_CYAN}%a${PR_RESET}%]"              # e.g. (rebase-i)
 # 右边的 ：(ink@king:~/)
 FMT_PATH="%R${PR_YELLOW}/%S"                         # e.g. ~/repo/subdir
@@ -705,6 +706,7 @@ alias info='info --vi-keys'
 alias port='netstat -ntlp'      #opening ports
 #alias tree="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
 
+alias sch='find . -name '
 alias tee='tee -a'
 alias grep='grep --color=auto -i'
 #alias ee='emacsclient -t'
@@ -938,6 +940,8 @@ function fm()
 # 使用 atd 播放提示音，要用到 alsa 声音驱动
 alarm()
 { echo "msg ${argv[2,-1]} && aplay -q ~/.sounds/MACSound/System\ Notifi.wav" | at now + $1 min }
+
+nms() { find . -name $* }
 
 # [ 打印 256 颜色 ]# {{{
 #--------------------------------------------

@@ -1,0 +1,425 @@
+####################################################
+## /usr/share/doc/ncmpcpp/config 配置参考文件     ##
+## ~/.ncmpcpp/config 用户个人配置文件位置         ##
+####################################################
+
+# [ Setting ]# {{{
+#--------------------------------------------
+
+# [ connection 设置 ]# {{{
+#--------------------------------------------
+
+# 启用 tag editor 与 rename 功能
+mpd_host = "localhost"
+
+mpd_port = "6600"
+
+mpd_music_dir = "~/yuer/"
+
+#mpd_connection_timeout = "5"
+#
+#mpd_crossfade_time = "5"
+#
+#mpd_communication_mode = "notifications" (polling/notifications)
+
+# }}}
+
+# [ system encoding 系统编码 ]# {{{
+#--------------------------------------------
+# ncmpcpp 会自动检测系统编码，如果不行可以指定
+# 下面编码选项设置
+#
+# 注意：通过 "ncmpcpp --version" 查看是否编译支持
+# charset detection 选项
+#
+# 注意：由于 MPD 默认使用 Utf8，只有在你的编码不同时
+# 设置该选项才有意义
+#
+#system_encoding = ""
+
+# }}}
+
+# [ delays 延迟 ]# {{{
+#--------------------------------------------
+# 高亮 playlis 之后，delay 将不可用 ( 0 = don't disable )
+#
+#playlist_disable_highlight_delay = "5"
+#
+# 定义 各种显示信息多久之后可见
+#
+#message_delay_time = "4"
+
+# }}}
+
+# [ various 设置 ]# {{{
+#--------------------------------------------
+#
+# 注意：常规命令在歌曲改变时执行，对提示通知比较有用
+#
+# 注意：不支持歌曲格式，可以使用以下命令代替：
+# "ncmpcpp --now-playing SONG_FORMAT"
+##
+#execute_on_song_change = ""
+#
+#playlist_show_remaining_time = "no"
+#
+#playlist_shorten_total_times = "no"
+#
+#playlist_separate_albums = "no"
+#
+#playlist_display_mode = "classic" (classic/columns)
+#
+#browser_display_mode = "classic" (classic/columns)
+#
+#search_engine_display_mode = "classic" (classic/columns)
+#
+#discard_colors_if_item_is_selected = "yes"
+#
+#incremental_seeking = "yes"
+#
+#seek_time = "1"
+#
+#autocenter_mode = "no"
+#
+#centered_cursor = "no"
+#
+# 注意：可以定义第三个字符来修改显示 'empty' 进度条
+#
+#progressbar_look = "=>"
+progressbar_look = "-<·"
+#
+#default_place_to_search_in = "database" (database/playlist)
+#
+#user_interface = "classic" (classic/alternative)
+#
+#media_library_left_column = "a" (possible values: a,y,g,c,p, legend above)
+#
+#default_find_mode = "wrapped" (wrapped/normal)
+#
+#default_space_mode = "add" (add/select)
+#
+#default_tag_editor_left_col = "albums" (albums/dirs)
+#
+#default_tag_editor_pattern = "%n - %t"
+#
+#header_visibility = "yes"
+#
+#statusbar_visibility = "yes"
+#
+#titles_visibility = "yes"
+#
+#header_text_scrolling = "yes"
+#
+#fancy_scrolling = "yes"
+#
+#cyclic_scrolling = "no"
+#
+#lines_scrolled = "2"
+#
+#follow_now_playing_lyrics = "no"
+#
+#store_lyrics_in_song_dir = "no"
+#
+# 注意：设置以下变量，ncmpcpp 将尝试以你设定的语言从 last.fm
+# 获取数据，若连接失败，则回退到英语。否则，初始将使用英语
+#
+# 注意：语言必须表述为 ISO 639 alpha-2 code
+#
+#lastfm_preferred_language = ""
+#
+#ncmpc_like_songs_adding = "no" (enabled - add/remove, disabled - always add)
+#
+#show_hidden_files_in_local_browser = "no"
+#
+#display_screens_numbers_on_start = "yes"
+#
+#
+# key_screen_switcher 如何工作？
+#
+# - "previous" - 在 当前/上一个 screen 之间切换
+# - "sequence" : 2 -> 9 -> 5" - 在给定的 screen 顺序中切换
+#
+# screen 编号可以放在 'sequence' 关键词之后：
+#
+# - 1 - 帮助                help
+# - 2 - 播放列表            playlist
+# - 3 - 曲库浏览            browser
+# - 4 - 搜索引擎            search engine
+# - 5 - 媒体库              media library
+# - 6 - 播放列表编辑器      playlist editor
+# - 7 - tag 编辑器          tag editor
+# - 8 - 音频输出            outputs
+# - 9 - 播放分析            visualizer
+# - 10 - 时钟               clock
+#
+# 上面示例可以在 播放列表 媒体库 和 可视化之间切换
+#
+#screen_switcher_mode = "sequence: 2 -> 3"
+#
+# 通过指定 screen 编号，作为启动 ncmpcpp 默认窗口
+#
+#startup_screen = "2"
+#
+#jump_to_now_playing_song_at_start = "yes"
+#
+#ask_before_clearing_main_playlist = "no"
+#
+#clock_display_seconds = "no"
+#
+#display_volume_level = "yes"
+#
+#display_bitrate = "no"
+#
+#display_remaining_time = "no"
+#
+#regular_expressions = "basic" (basic/extended)
+#
+# 注意：若以下选项启用，ncmpcpp 将在对 browser / tags /
+# media library 排序时忽略前导词 "The"
+#
+#ignore_leading_the = "no"
+#
+#block_search_constraints_change_if_items_found = "yes"
+#
+#mouse_support = "yes"
+#
+#mouse_list_scroll_whole_page = "yes"
+#
+#empty_tag_marker = "<empty>"
+#
+#tag_editor_extended_numeration = "no"
+#
+#media_library_display_date = "yes"
+#
+#media_library_disable_two_column_mode = "no"
+#
+#enable_window_title = "yes"
+#
+# 注意：可以指定默认的搜索模式，可用模式如下：
+# - 1 - 使用 mpd 内置搜索，不支持 正则 / 通配符
+# - 2 - 使用 ncmpcpp 搜索，  支持 正则 / 通配符
+#       ( 若使用远程 mpd 下载 较大的数据库要花些时间 )
+# - 3 - 仅支持 完整 匹配 ( 该模式使用 mpd 函数在数据库和本地当前播放列表搜索 )
+#
+search_engine_default_search_mode = "2"
+#
+# 注意：以下参数允许通过 ncmpcpp browser 实体操作
+# 远程文件和目录
+#
+#allow_physical_files_deletion = "no"
+#
+#allow_physical_directories_deletion = "no"
+#
+#external_editor = ""
+#
+#use_console_editor = "no" (set to yes, if your editor is console app)
+
+# }}}
+
+# }}}
+
+# [ Style ]# {{{
+#--------------------------------------------
+
+# [ song format ]# {{{
+#--------------------------------------------
+#
+# %l - 歌曲长度时间    length
+# %f - 歌曲文件名      filename
+# %D - 歌曲目录名      directory
+# %a - 歌手            artist
+# %A - 专辑作者        album artist
+# %t - 歌曲名称        title
+# %b - 歌曲专辑        album
+# %y - 发行时间        year
+# %n - 曲目编号        track number (01/12 -> 01)
+# %N - 详细编号        full track info (01/12 -> 01/12)
+# %g - 歌曲类别        genre
+# %c - 作曲家          composer
+# %p - 演奏者          performer
+# %d - 唱片/压制       disc
+# %C - 评语/批注       comment
+# $R - 开始使用右对齐  begin right alignment
+#
+# 只有当需要的值或通过 {}|{} 定义的备用值可用时，例如：{%a - %t}|{%f}
+# 歌曲信息会按照大括号 {} 里面定义格式显示
+# 注意：若限制 tag 标签的长度，只需在格式变量前面添加合适的 %NUM
+# 例如：'%20b' 限制 album 最大为 20 个终端字符间距
+#
+# 注意：类似 "%a - %t" (i.e. 不需要额外的大括号 ) 等价于 "{%a - %t}"
+# 若其中的一个 tags 丢失，将无法显示有效信息
+#
+# 文本还可以比主窗口显示更多的颜色，例如：若想显示为绿色 $3%l$9
+# 可用的颜色值：
+#
+# - 0 - 默认窗口颜色( 屏蔽其他任何颜色 ) default window color
+# - 1 - black
+# - 2 - red
+# - 3 - green
+# - 4 - yellow
+# - 5 - blue
+# - 6 - magenta
+# - 7 - cyan
+# - 8 - white
+# - 9 - 颜色定义结束符 end of current color
+#
+# 颜色定义支持嵌套
+#
+#song_list_format = "{%a - }{%t}|{$8%f$9}$R{$3(%l)$9}"
+#song_list_format = "{$3(%l)$9}{%t}|{$8%f$9}$R{%a}"
+song_list_format = "{$3 [%l]  $9}{%a - }{%t}|{$8%f$9}"
+#
+#song_status_format = "{{%a{ \"%b\"{ (%y)}} - }{%t}}|{%f}"
+#
+#song_library_format = "{%n - }{%t}|{%f}"
+#
+#tag_editor_album_format = "{(%y) }%b"
+#
+#
+# 注意：以下变量用于界面字体格式定义，支持所以上面列举的 tags 和 colors
+# 添加额外的字体属性标记，在 '$' 字符之后跟相应的参数，如下：
+#
+# - b - 粗体    bold text
+# - u - 下划线  underline text
+# - r - 反选    reverse colors
+# - a - use alternative character set
+#
+# 若不想使用某属性，只要再次添加一次，不过要在 '$' 与属性格式符之间插入
+# '/' 字符。如：{$b%t$/b}|{$r%f$/r} 粗体 title / tags 和 反转的文件名
+#
+#alternative_header_first_line_format = "$b$1$aqqu$/a$9 {%t}|{%f} $1$atqq$/a$9$/b"
+#
+#alternative_header_second_line_format = "{{$4$b%a$/b$9}{ - $7%b$9}{ ($4%y$9)}}|{%D}"
+#
+# 注意：以下参数依然支持上面列举的文本属性
+#
+now_playing_prefix = "$b>>>"
+now_playing_suffix = "$/b"
+#
+#browser_playlist_prefix = "$2playlist$9 "
+#
+#selected_item_prefix = "$6"
+#
+#selected_item_suffix = "$9"
+#
+## colors are not supported for below variable
+#
+#song_window_title_format = "{%a - }{%t}|{%f}"
+
+# }}}
+
+# [ columns 设置 ]# {{{
+#--------------------------------------------
+#
+# 列属性设置语法格式：
+# (width of column)[column's color]{displayed tag}
+# ( 列宽 )[ 列颜色 ]{ 显示 tag }
+#
+# 注意：宽度默认使用 % ，若希望使用固定列宽，在 NUM 之后添加 f
+# e.g. (10)[white]{a} 列宽为屏幕的 10%，而 (10f)[white]{a} 使用
+# 10 个终端字符间距，无论终端窗口宽度为多少
+#
+# - 颜色为可选配置，若使用默认，使用无参数的 []
+##
+# 注意：通过在 tags 字符之后添加适当的字符，可用指定一列额外的属性
+# 可用的属性值：
+# - r - 列右对齐
+# - E - 若 tag 为空，不显示空的 tag 标记
+
+# 还可以：
+#
+# - 在属性值之后用 ':' 分隔自定义的列名称，如： {lr:Length}
+# 设定 右对齐 名为 "Length" 的列
+#
+# -若之前 tag 列为空，可用按照指定 tags 备用次序进行填充，例如：
+# 使用 '|' 字符分隔， {a|c|p:Owner} 创建名为 Owner 的列，当之前
+# 的 tag 不存在时依次显示其他备用 tag 
+#
+#song_columns_list_format = "(7f)[green]{l} (25)[cyan]{a} (40)[]{t|f} (30)[red]{b}"
+
+# }}}
+
+# [ colors 主题定制 ]# {{{
+#--------------------------------------------
+
+#
+#colors_enabled = "yes"
+#
+#empty_tag_color = "cyan"
+#
+#header_window_color = "default"
+#
+#volume_color = "default"
+#
+#state_line_color = "default"
+#
+#state_flags_color = "default"
+#
+#main_window_color = "yellow"
+#
+#color1 = "white"
+#
+#color2 = "green"
+#
+#main_window_highlight_color = "yellow"
+#
+#progressbar_color = "default"
+#
+#statusbar_color = "default"
+#
+#alternative_ui_separator_color = "black"
+#
+#active_column_color = "red"
+#
+#visualizer_color = "yellow"
+#
+#window_border_color = "green"
+#
+#active_window_border = "red"
+
+# }}}
+
+# [ music visualizer ]# {{{
+#--------------------------------------------
+
+# [ mpd 相关配置 ]# {{{
+#--------------------------------------------
+#
+# 要启用音乐仪表盘，需要 mpd fifo 输出，format 参数：
+# 要设为 44100:16:1，~/.mpdconf参考配置：
+# audio_output {
+#        type            "fifo"
+#        name            "My FIFO"
+#        path            "/tmp/mpd.fifo"
+#        format          "44100:16:1"
+# }
+## }}}
+
+#visualizer_fifo_path = ""
+#
+# 注意：下面的参数指定 ncmpcpp 使用哪个 output
+# 提供 visualizer 数据。并且提供 synchronization
+# 和 sound 同步，因为现在还有些许问题
+#
+#visualizer_output_name = ""
+#
+# 注意：以下参数定义 ncmpcpp 同步 visualizer 和 audio
+# 输出的时间间隔，默认：30s，如果存在同步问题，减小
+# 取值。谨记：明智的取值需要 >= 10
+#
+#visualizer_sync_interval = "30"
+#
+# spectrum frequency visualization
+# 注意：要启用 波谱 频带 观测，编译 ncmpcpp 时添加
+# fftw3 参数
+#
+#visualizer_type = "wave" (spectrum/wave)
+
+# }}}
+
+# }}}
+
+
+
+
+
