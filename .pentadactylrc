@@ -41,6 +41,9 @@ set titlestring="Firefox -- ink"
 " [ 自定义缩写 ]"{{{
 "--------------------------------------------
 
+" c 键进入命令行模式
+map c :
+
 " 屏幕滚动
 noremap j 5j
 noremap k 5k
@@ -95,6 +98,11 @@ noremap <leader>r   :restart<CR>
 
 "noremap <leader>s   :source ~/.pentadactylrc<CR>
 noremap <leader>S   :rehash<CR>
+
+" 快速改变页面编码
+noremap <leader>eu :set encoding=UTF-8
+noremap <leader>eg :set encoding=GB2312
+
 
 " 停止网页loading，原来的是<C-c>，复制还是保留好一点。
 "map -modes=n,v <C-s> :stop<Return>
@@ -292,28 +300,39 @@ set passkeys=https:'//mail.google.comcom|www.google.com/reader/:jk'
 
 " [ 状态栏 主题 ]"{{{
 "--------------------------------------------
-" From : http://www.douban.com/group/topic/14238246/
 
-style -name=status-bar chrome://* #status-bar {font-family: monospace !important; font-weight: normal !important;} #dactyl-statusline-field-container {padding-right: 5px !important;}
+" [ white theme ]"{{{
+"--------------------------------------------
+"" From : http://www.douban.com/group/topic/14238246/
+" 在 命令行中 使用 hi status 补全可以查看当前到属性值
 
-hi StatusLine background:#555555 !important;
-hi StatusLineBroken background:#555555 !important;
-hi StatusLineSecure background:#555555 !important;
-hi StatusLineExtended background:#555555 !important;
-hi CmdLine padding: 1px background:#CCCCCC !important;
-hi Normal color: black !important; background: white !important; font-weight: normal !important;font-family: monospace !important;
-hi CompTitle color: #6DA335; background: #f0f0f0; font-weight: bold;
-hi GradientLeft background-color: #6DA335;
-hi Preview color: #4B9CEB;
-hi ErrorMsg color: red !important; background-color: #f0f0f0 !important;
-hi Hint font-family: monospace; font-size: 9px; text-transform: uppercase; color: white; background-color: #1E90FF; padding:1px;
-hi HintElem background-color: transparent;
+"style -name=status-bar chrome://* #status-bar {font-family: monospace !important; font-weight: normal !important;} #dactyl-statusline-field-container {padding-right: 5px !important;}
 
-style -name commandline-ime chrome://* #dactyl-commandline-command input {ime-mode: inactive;}
+hi StatusLine color: white !important; background: #444444 !important;
+hi StatusLineNormal color: white !important; background: #444444 !important;
+hi CmdCmdLine color: black !important; background: #8a8a8a !important;
+"hi StatusLineBroken background:#f0f0f0 !important;
+"hi StatusLineSecure background:#f0f0f0 !important;
+"hi StatusLineExtended background:#f0f0f0 !important;
+"hi CmdLine padding: 1px !important;
+"hi Normal color: black !important; background: white !important; font-weight: normal !important;font-family: monospace !important;
+"hi CompTitle color: #6DA335; background: #f0f0f0; font-weight: bold;
+"hi GradientLeft background-color: #6DA335;
+"hi Preview color: #4B9CEB;
+"hi ErrorMsg color: red !important; background-color: #f0f0f0 !important;
+"hi Hint font-family: monospace; font-size: 9px; text-transform: uppercase; color: white; background-color: #1E90FF; padding:1px;
+"hi HintElem background-color: transparent;
+
+" style -name commandline-ime chrome://* #dactyl-commandline-command input {ime-mode: inactive;}
+
 
 "}}}
 
 
+
+
+
+"}}}
 
 
 

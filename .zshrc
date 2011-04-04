@@ -1,15 +1,58 @@
 # vim:set et ft=zsh fdm=marker sw=4 ts=4 nopaste softtabstop=4 :
 
-#       环境变量# {{{
-############################################
+# [ Refer ]# {{{
+#--------------------------------------------
 
-# 前置的主要原因是有可能需要提前设置PATH等环境变量
+# Zsh 技巧三则
+# From : http://linuxtoy.org/archives/zsh_per_dir_hist.html
+
+# zsh里代表当前目录下最后修改的文件的alias
+# From : http://roylez.heroku.com/2010/03/06/zsh-recent-file-alias.html
+
+
+
+# }}}
+
+# [ man ]# {{{
+#--------------------------------------------
+# setopt <选项>     -->     man zshoptions
+# autoload  <选项>  -->     man zshmisc
+
+# 补全              -->     man zshcompctl / zshcompwid
+# 交互 / 编辑       -->     man zshzle
+
+# 函数
+
+# zsh                Zsh overview (this section)
+# zshroadmap         Informal introduction to the manual
+# zshmisc            Anything not fitting into the other sections
+# zshexpn            Zsh command and parameter expansion
+# zshparam           Zsh parameters
+# zshoptions         Zsh options
+# zshbuiltins        Zsh built-in functions
+# zshzle             Zsh command line editing
+# zshcompwid         Zsh completion widgets
+# zshcompsys         Zsh completion system
+# zshcompctl         Zsh completion control
+# zshmodules         Zsh loadable modules
+# zshcalsys          Zsh built-in calendar functions
+# zshtcpsys          Zsh built-in TCP functions
+# zshzftpsys         Zsh built-in FTP client
+# zshcontrib         Additional zsh functions and utilities
+# zshall             Meta-man page containing all of the above
+
+
+# }}}
+
+# [ 环境变量 ] # {{{
+#--------------------------------------------
+# 前置原因:有可能需要提前设置PATH等环境变量
 
 # 使 screen 支持 256 色
 export TERM=xterm-256color
 
 export PATH="${PATH}:${HOME}/code/shell:${HOME}/todo"
-export CDPATH='.:..:../..:~:~/me:~/me/text:~/public_html/:/home/download/'
+export CDPATH='.:..:../..:~:~/text:~/public_html/:/home/download/'
 export MYSQL_PS1="[\\u@\\h \\d]"
 
 export SHELL=`which zsh`
@@ -39,13 +82,10 @@ export SHELL=`which zsh`
 [ -f $HOME/.keychain/$HOSTNAME-sh-gpg ] &&
        . $HOME/.keychain/$HOSTNAME-sh-gpg
 
-function keys(){
-    source ~/.keychain/`hostname`-sh;
-}
+function keys()
+{ source ~/.keychain/`hostname`-sh; }
 
 # }}}
-
-
 
 # NetBeans java 程序 字体开启抗锯齿
 #export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
@@ -53,83 +93,17 @@ function keys(){
 #RPROMPT=$(echo '%{\033[31m%}%D %T%{\033[m%}')
 #PROMPT=$(echo '%{\033[34m%}%M%{\033[32m%}%/
 #%{\033[36m%}%n %{\033[01;31m%}>%{\033[33m%}>%{\033[34m%}>%{\033[m%} ')
+
+
 # }}}
 
-# 终端 标题栏 动态改变 #  {{{
-case $TERM in
-    #xterm*|rxvt*)
-    rxvt*)
-        function title() { print -nP "\e]0;$1\a" } 
-        ;;
-    xterm-256color|screen*)
-        #only set screen title if it is in a local shell
-        if [ -n $STY ] && (screen -ls |grep $STY &>/dev/null); then
+# [ PS1 prompt ]# {{{
+#--------------------------------------------
 
-            # 标题栏 定制函数
-            function title() 
-            {
-                # 动态 标题栏
-                print -nP "\ek$1\e\\"
-                #modify window title bar
-                #print -nPR $'\033]0;'$2$'\a'
-            }
-
-        elif [ -n $TMUX ]; then       # actually in tmux !
-            function title() {  print -nP "\e]2;$1\a" }
-        else
-            function title() {}
-        fi
-        ;;
-    *) 
-        function title() {} 
-        ;;
-esac     
-
-# Screen 动态改变 标题栏 扩展函数
-# set screen title if not connected remotely
-#if [ "$STY" != "" ]; then
-screen_precmd() {
-
-    # 底部 标题 使用 短路径
-    title "%10< ..<%c%<<"
-
-    #a bell, urgent notification trigger
-    #echo -ne '\a'
-    #title "`print -Pn "%~" | sed "s:\([~/][^/]*\)/.*/:\1...:"`" "$TERM $PWD"
-    #title "`print -Pn "%~" |sed "s:\([~/][^/]*\)/.*/:\1...:;s:\([^-]*-[^-]*\)-.*:\1:"`" "$TERM $PWD"
-    #echo -ne '\033[?17;0;127c'
-}
-
-screen_preexec() {
-
-    title "%10>..>$1%<<"
-    #local -a cmd; cmd=(${(z)1})
-    #if [[ $cmd[1]:t == "ssh" ]]; then
-    #    title "@""`echo $cmd[2]|sed 's:.*@::'`" "$TERM $cmd"
-    #elif [[ $cmd[1]:t == "sudo" ]]; then
-    #    title "#"$cmd[2]:t "$TERM $cmd[3,-1]"
-    #elif [[ $cmd[1]:t == "for" ]]; then
-    #    title "()"$cmd[7] "$TERM $cmd"
-    #elif [[ $cmd[1]:t == "svn" ]]; then
-    #    title "$cmd[1,2]" "$TERM $cmd"
-    #elif [[ $cmd[1]:t == "ls" ]] || [[ $cmd[1]:t == "ll" ]] ; then
-    #else
-    #    title $cmd[1]:t "$TERM $cmd[2,-1]"
-    #fi 
-}
-
-#{{{ 将 自定义的 screen 扩展函数 添加到 zsh 默认的 precmd preexec 函数队列
-
-# 适用于 zsh 4.3.* 版本
-typeset -ga preexec_functions precmd_functions chpwd_functions
-precmd_functions+=screen_precmd
-preexec_functions+=screen_preexec
-preexec_functions+=pwd_color_prexec
-chpwd_functions+=pwd_color_chpwd
-
-#}}}
-
-#}}}
+############################################
+# 效果超炫的提示符
+# http://i.linuxtoy.org/docs/guide/ch30s04.html
+############################################
 
 # PS1 参考示例# {{{
 ## color 颜色 定义
@@ -200,13 +174,92 @@ setprompt () {
 setprompt
 # }}}
 
-############################################
-# 效果超炫的提示符
-# http://i.linuxtoy.org/docs/guide/ch30s04.html
-############################################
 
-#       Base 基本# {{{
-############################################
+
+
+
+# }}}
+
+# [ screen / tmux 小标题 ] #  {{{
+#--------------------------------------------
+
+case $TERM in
+    #xterm*|rxvt*)
+    rxvt*)
+        function title() { print -nP "\e]0;$1\a" } 
+        ;;
+    xterm-256color|screen*)
+        #only set screen title if it is in a local shell
+        if [ -n $STY ] && (screen -ls |grep $STY &>/dev/null); then
+
+            # 标题栏 定制函数
+            function title() 
+            {
+                # 动态 标题栏
+                print -nP "\ek$1\e\\"
+                #modify window title bar
+                #print -nPR $'\033]0;'$2$'\a'
+            }
+
+        elif [ -n $TMUX ]; then       # actually in tmux !
+            function title() {  print -nP "\e]2;$1\a" }
+        else
+            function title() {}
+        fi
+        ;;
+    *) 
+        function title() {} 
+        ;;
+esac
+
+# Screen 动态改变 标题栏 扩展函数
+# set screen title if not connected remotely
+#if [ "$STY" != "" ]; then
+screen_precmd() {
+
+    # 底部 标题 使用 短路径
+    title "%10< ..<%c%<<"
+
+    #a bell, urgent notification trigger
+    #echo -ne '\a'
+    #title "`print -Pn "%~" | sed "s:\([~/][^/]*\)/.*/:\1...:"`" "$TERM $PWD"
+    #title "`print -Pn "%~" |sed "s:\([~/][^/]*\)/.*/:\1...:;s:\([^-]*-[^-]*\)-.*:\1:"`" "$TERM $PWD"
+    #echo -ne '\033[?17;0;127c'
+}
+
+screen_preexec() {
+
+    title "%10>..>$1%<<"
+    #local -a cmd; cmd=(${(z)1})
+    #if [[ $cmd[1]:t == "ssh" ]]; then
+    #    title "@""`echo $cmd[2]|sed 's:.*@::'`" "$TERM $cmd"
+    #elif [[ $cmd[1]:t == "sudo" ]]; then
+    #    title "#"$cmd[2]:t "$TERM $cmd[3,-1]"
+    #elif [[ $cmd[1]:t == "for" ]]; then
+    #    title "()"$cmd[7] "$TERM $cmd"
+    #elif [[ $cmd[1]:t == "svn" ]]; then
+    #    title "$cmd[1,2]" "$TERM $cmd"
+    #elif [[ $cmd[1]:t == "ls" ]] || [[ $cmd[1]:t == "ll" ]] ; then
+    #else
+    #    title $cmd[1]:t "$TERM $cmd[2,-1]"
+    #fi 
+}
+
+#{{{ 将 自定义的 screen 扩展函数 添加到 zsh 默认的 precmd preexec 函数队列
+
+# 适用于 zsh 4.3.* 版本
+typeset -ga preexec_functions precmd_functions chpwd_functions
+precmd_functions+=screen_precmd
+preexec_functions+=screen_preexec
+preexec_functions+=pwd_color_prexec
+chpwd_functions+=pwd_color_chpwd
+
+#}}}
+
+#}}}
+
+# [ Base 基本 ] # {{{
+#--------------------------------------------
 
 # 默认配置文件 格式 ：
 #setopt appendhistory autocd extendedglob nomatch notify
@@ -214,244 +267,219 @@ setprompt
 # 关闭 报错 响铃
 setopt NO_BEEP
 
-#do not expand aliases _before_ completion has finished
-setopt complete_aliases
+# 关闭 C-q/C-k 锁定 终端快捷键 [screen]
+unsetopt flowcontrol
 
-#automatically send SIGCON to disowned jobs
-setopt auto_continue
-
-# 扩展通配符 ^() *~() ()#
-setopt extended_glob
-
-# pushds 和 popds 操作 静默模式
+# pushds 和 popds 操作后，不打印输出 dir stack
 setopt pushd_silent
 
-# expand alphabetic brace expressions
-setopt brace_ccl
+# 允许在交互模式中使用注释 如： cmd #这是注释
+setopt INTERACTIVE_COMMENTS
 
-# 拼写检查
-setopt correct
+# [ 进程 ? ]
+#--------------------------------------------
+# 自动向 暂停工作 disowned jobs 发送 CONT 继续重新工作信号
+setopt auto_continue
 
-# 命令执行完毕前，搜索所有路径
-setopt hash_list_all
-
-# 自动补全提示 ，使用 类似 ls -F 的文件类型标志符
-setopt list_types
-
-# 显示 后台 运行的 作业 号
+# 使用默认的 long 格式，显示 后台 运行的 作业 jobs
 setopt long_list_jobs
 
-# when globbing numbered files, use real counting
-setopt numeric_glob_sort
+# 创建文件时，将 ^ * # 字符视作 文件命名的合法字符 [?] 无效
+setopt extended_glob
 
-# 关闭 C-q/C-k 锁定 终端快捷键 [screen]
-#unsetopt flowcontrol
+# [ XXX ] #--------------------------------------------
+
+# 展开 达括号中到表达式 [?]
+setopt brace_ccl
+
+# 在改变路径是，若包含 链接目录，要如何处理 [?]
 # ~/ln -> /; cd ln; pwd -> /
 #setopt chase_links
+
+# 扩展路径
+#/v/c/p/p => /var/cache/pacman/pkg
+#setopt complete_in_word
+
+
+
 # }}}
 
-# 历史纪录的配置 {{{
-############################################
+# [ completion 补全 ]# {{{
+#--------------------------------------------
+
+# man zshoptions 查看选项到详细说明
+setopt AUTO_LIST AUTO_MENU
+#开启此选项，补全时会直接选中菜单项
+#setopt MENU_COMPLETE
+
+# 补全命令，包括 .ssh/known_hosts 里面到主机
+autoload -U compinit
+compinit
+
+# 启用自动 cd，输入目录名回车进入目录
+# 稍微有点混乱，不如 cd 补全实用
+#setopt AUTO_CD
+
+# 在命令补全过程中，不展开 alias 别名
+setopt complete_aliases
+
+# 拼写检查 仅对命令纠错
+setopt CORRECT
+# 对命令中的所有参数纠错
+#setopt CORRECT_ALL
+
+# 在开始补全时，会将可能路径提前 hash，可能会使 补全变慢
+#setopt hash_list_all
+
+# 补全文件类型提示 ，类似 ls -F 的文件类型标志符
+setopt list_types
+
+# 补全 数字开头到文件时，按照数字排序，而非字典排序
+setopt numeric_glob_sort
+
+
+
+
+
+# }}}
+
+# [ history 历史记录 ] # {{{
+#--------------------------------------------
+# 历史记录 修饰符 man zshexpn
 
 #历史纪录条目数量
-export HISTSIZE=1000
+export HISTSIZE=2000
 #注销后保存的历史纪录条目数量
-export SAVEHIST=1000
+export SAVEHIST=2000
 #历史纪录文件
 export HISTFILE=~/.zhistory
+
 # 多 session 共享历史
 setopt SHARE_HISTORY
-# 附加，递增立即写入方式 历史纪录，而 APPEND_HISTORY 则是在 shell 退出之后写入
+# 立即附加，递增立即写入方式 历史纪录，而 APPEND_HISTORY 则是在 shell 退出之后写入
 setopt INC_APPEND_HISTORY
-#如果连续输入的命令相同，历史纪录中只保留一个
-setopt HIST_IGNORE_DUPS      
-#为历史纪录中的命令添加时间戳      
-setopt EXTENDED_HISTORY      
 # 删除历史文件 里面的空白
 setopt hist_reduce_blanks
+# 为历史纪录中的命令添加 时间戳 格式 [?]：
+# : 1301840847:0;history 20
+#setopt EXTENDED_HISTORY
+
+# 去除重复，若历史中已有，不再写入
+setopt HIST_IGNORE_DUPS
+# 去除重复，新纪录覆盖旧的历史记录
+#setopt hist_ignore_all_dups
+# 使用 history 命令显示时，不显示重复历史记录
+setopt HIST_FIND_NO_DUPS
+# 不纪录以空格开始的命令
+#setopt HIST_IGNORE_SPACE
+
 # 使用 历史命令时 重载 完整的 命令
+# file text/soft/zsh.txt
+# vim !$ 时，不立即执行，而是输出
+# vim text/soft/zsh.txt 用户确认后在执行
 setopt hist_verify
+
 # 删除 超出 最大上限 数量的 记录
 setopt hist_expire_dups_first
-# don not beep on history expansion errors
+# 获取 / 写入 [?] 历史记录错误，不发出 beep 报警
 setopt no_hist_beep
 
 #启用 cd 命令的历史纪录，cd -[TAB]进入历史路径
 setopt AUTO_PUSHD
-#相同的历史路径只保留一个
-setopt PUSHD_IGNORE_DUPS
-#setopt hist_ignore_all_dups
 
-#在命令前添加空格，不将此命令添加到纪录文件中
-#setopt HIST_IGNORE_SPACE      
+
 #}}}
 
-#杂项 {{{
-#允许在交互模式中使用注释  例如：
-#cmd #这是注释
-setopt INTERACTIVE_COMMENTS      
-      
-#启用自动 cd，输入目录名回车进入目录
-#稍微有点混乱，不如 cd 补全实用
-#setopt AUTO_CD
-      
-#扩展路径
-#/v/c/p/p => /var/cache/pacman/pkg
-setopt complete_in_word
-      
-#禁用 core dumps
-limit coredumpsize 0
+# [ zle bindkey ]# {{{
+#--------------------------------------------
 
-#Emacs风格 键绑定
+# man zle = zsh command editor Emacs 风格
 bindkey -e
-#设置 [DEL]键 为向后删除
+
+# 设置 [DEL]键 为向后删除
+#  1 前面的顿号，<1> xev 查看 ` 的 keycode，<2>在 xmodmap -pke 中查找对应的名称
 bindkey "\e[3~" delete-char
 
-#report to me when people login/logout
-watch=(notme)
-#replace the default beep with a message
-#ZBEEP="\e[?5h\e[?5l"        # visual beep
-
-#以下字符视为单词的一部分
-WORDCHARS='*?_-[]~=&;!#$%^(){}<>'
-#}}}
-
-#自动补全功能 {{{
-setopt AUTO_LIST
-setopt AUTO_MENU
-#开启此选项，补全时会直接选中菜单项
-#setopt MENU_COMPLETE
-
-autoload -U compinit
-compinit
-
-#自动补全缓存
-#zstyle ':completion::complete:*' use-cache on
-#zstyle ':completion::complete:*' cache-path .zcache
-# cd 不选择 父 目录
-#zstyle ':completion:*:cd:*' ignore-parents parent pwd
-
-# 纠错，作用于所有参数
-# setopt correctall
-# 纠错，作用于所有参数
-# setopt correctall
-
-#自动补全选项
-zstyle ':completion:*:match:*' original only
-zstyle ':completion::prefix-1:*' completer _complete
-zstyle ':completion:predict:*' completer _complete
-zstyle ':completion:incremental:*' completer _complete _correct
-zstyle ':completion:*' completer _complete _prefix _correct _prefix _match _approximate
-
-#路径补全
-zstyle ':completion:*' expand 'yes'
-zstyle ':completion:*' squeeze-shlashes 'yes'
-zstyle ':completion::complete:*' '\\'
-
-zstyle ':completion:*' menu select
-zstyle ':completion:*:*:default' force-list always
-
-#彩色补全菜单 
-eval $(dircolors -b) 
-export ZLSCOLORS="${LS_COLORS}"
-zmodload zsh/complist
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-
-#修正大小写
-#zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
-# 大写 <==> 小写
-zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
-# 大小写 <==> 大小写
-#zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-
-#错误校正      
-zstyle ':completion:*' completer _complete _match _approximate
-zstyle ':completion:*:match:*' original only
-# 容错字数 可以修改
-zstyle ':completion:*:approximate:*' max-errors 1 numeric
-
-#kill 命令补全      
-#compdef pkill=kill
-#compdef pkill=killall
-#zstyle ':completion:*:*:kill:*' menu yes select
-#zstyle ':completion:*:*:*:*:processes' force-list always
-#zstyle ':completion:*:*:killall:*' menu yes select
-#zstyle ':completion:*:killall:*'   force-list always
-#zstyle ':completion:*:processes' command 'ps -au$USER'
+#bindkey "\M-v" "\`xclip -o\`\M-\C-e\""
 
 
-# kill 命令补全
-# From http://wandsea.com/doc/opensource_guide/ch14s09.html
-compdef pkill=kill
-compdef pkill=killall
-zstyle ':completion:*:*:kill:*' menu yes select
-zstyle ':completion:*:*:*:*:processes' force-list always
-zstyle ':completion:*:processes' command 'ps -au$USER'
 
-# 使用 cache 加速 pacman 补全
-zstyle ':completion::complete:*' use-cache on
+# Archwiki 只在当前会话中进行，历史记录查找
+bindkey "^[[A" history-search-backward
+bindkey "^[[B" history-search-forward
 
-#补全类型提示分组 
-zstyle ':completion:*:matches' group 'yes'
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*:options' description 'yes'
-zstyle ':completion:*:options' auto-description '%d'
-zstyle ':completion:*:descriptions' format $'\e[01;33m -- %d --\e[0m'
-zstyle ':completion:*:messages' format $'\e[01;35m -- %d --\e[0m'
-zstyle ':completion:*:warnings' format $'\e[01;31m -- No Matches Found --\e[0m'
+# Ctrl 左/右 ==> Alt - B / F 单词移动
+bindkey '[1;5D' backward-word # C-left
+bindkey '[1;5C' forward-word  # C-right
 
-## 补全提示 格式 样式
-#zstyle ':completion:*:descriptions' format $'\e[33m == \e[1;46;33m %d \e[m\e[33m ==\e[m' 
-#zstyle ':completion:*:messages' format $'\e[33m == \e[1;46;33m %d \e[m\e[0;33m ==\e[m'
-#zstyle ':completion:*:warnings' format $'\e[33m == \e[1;47;31m No Matches Found \e[m\e[0;33m ==\e[m' 
-#zstyle ':completion:*:corrections' format $'\e[33m == \e[1;47;31m %d (errors: %e) \e[m\e[0;33m ==\e[m'
+# Archwiki [?]
+[[ -n "${key[Home]}" ]]     && bindkey "${key[Home]}"   beginning-of-line
+[[ -n "${key[End]}" ]]      && bindkey "${key[End]}"    end-of-line
+
+[[ -n "${key[Insert]}" ]]   && bindkey "${key[Insert]}" overwrite-mode
+[[ -n "${key[Delete]}" ]]   && bindkey "${key[Delete]}" delete-char
+
+[[ -n "${key[Up]}" ]]       && bindkey "${key[Up]}"     up-line-or-history
+[[ -n "${key[Down]}" ]]     && bindkey "${key[Down]}"   down-line-or-history
+
+[[ -n "${key[Left]}" ]]     && bindkey "${key[Left]}"   backward-char
+[[ -n "${key[Right]}" ]]    && bindkey "${key[Right]}"  forward-char
+
+# Ctrl N/P 历史记录 翻页，默认支持 [?]
+#bindkey "" history-beginning-search-backward
+#bindkey "" history-beginning-search-forward
 
 
-#}}}
 
-##行编辑高亮模式 {{{
+
+# [ 行编辑高亮模式 ] # {{{
+#--------------------------------------------
 # Ctrl+@ 设置标记，标记和光标点之间为 region
-zle_highlight=(region:bg=magenta #选中区域 
-               special:bold      #特殊字符
-               isearch:underline)#搜索时使用的关键字
+zle_highlight=(region:bg=magenta  #选中区域
+               special:bold       #特殊字符
+               isearch:underline) #搜索时使用的关键字
 #}}}
 
-# 空行按[tab] 出 "cd [tab]" 再按[tab] 开始遍历菜单 -[tab] 出 directory stack --[tab] 变为 +[tab] （负负得正）逆序 directory stack# {{{
-user-complete(){
-    case $BUFFER in
-        "cd --" )                  # "cd --" 替换为 "cd +"
-        BUFFER="cd +"
-        zle end-of-line
-        zle expand-or-complete
-        ;;
-        "cd +-" )                  # "cd +-" 替换为 "cd -"
-        BUFFER="cd -"
-        zle end-of-line
-        zle expand-or-complete
-        ;;
-        "" )                       # 空行填入 "cd "
-        BUFFER="cd "
-        zle end-of-line
-        zle expand-or-complete
-        ;;
-        * )
-        zle expand-or-complete
-        ;;
-    esac
-}
 # }}}
 
-#命令别名 {{{
+# [ 杂项  ] #{{{
+#--------------------------------------------
 
+# 禁用 core dumps，man zshbuiltins
+limit coredumpsize 0
+
+# report to me when people login/logout
+watch=(notme)
+# replace the default beep with a message
+#ZBEEP="\e[?5h\e[?5l"        # visual beep
+
+# 以下字符视为单词的一部分
+WORDCHARS='*?_-[]~=&;!#$%^(){}<>'
+
+
+
+
+
+#}}}
+
+# [ 命令别名  ] #{{{
+#--------------------------------------------
+
+
+# [ cp / mv / rm / ln 覆盖提示 ]# {{{
+#--------------------------------------------
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
 alias ln='ln -i'
+# }}}
+
+# [ ls ]# {{{
+#--------------------------------------------
 
 alias ls='ls -F --color=auto'
 # x 按行排列，X 按文件类型排序
-#alias ls='ls -xXF --color=auto'
+# alias ls='ls -xXF --color=auto'
 alias l='ls -1X'
 alias ll='ls -lh --time-style=+%Y-%m-%d'
 alias la='ls -A'
@@ -466,29 +494,33 @@ alias ld='ls -d */'
 alias lhd='ls -d .*/'
 alias lla='ls -Alh'
 
-# 多级目录回溯
+# }}}
+
+# [ cd .. 多级目录回溯 ]# {{{
+#--------------------------------------------
 alias ..="cd .."
 alias ..2="cd ../.."
 alias ..3="cd ../../.."
 alias ..4="cd ../../../.."
 alias ..5="cd ../../../../.."
+# }}}
 
 # [ 系统 ]# {{{
 #--------------------------------------------
-#alias df='df -Th'
-#alias du='du -h'
 ## show directories size
 #alias dud='du -s *(/)'
 
 # From : http://git.sysphere.org/dotfiles/tree/zshrc?h=public
 #rehash="hash -r"
 alias df="df -hT"
-alias du="du -hc"
+# XXX -c 参数会递归检索当前目录，特别当前目录有好多文件
+alias du="du -h"
 alias dus="du -S | sort -n"
 
 alias psg="ps auxw | grep -i "
 alias psptree="ps auxwwwf"
 #alias iodrag="ionice -c3 nice -n19"
+# 弹出 / 收回光驱
 alias eject="eject -v "
 alias retract="eject -t -v "
 alias vuser="fuser -v "
@@ -496,55 +528,76 @@ alias vuser="fuser -v "
 
 # }}}
 
+alias info='info --vi-keys'
+alias port='netstat -ntlp'      #opening ports
+#alias tree="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
+
 alias tee='tee -a'
 alias grep='grep --color=auto -i'
 #alias ee='emacsclient -t'
 
+alias exit="clear; exit"
 alias c='clear'
 alias m='mutt'
 alias p='pwd'
 #alias t='tmux'
 alias s='screen'
 
-# [ keychain ]
+# [ keychain ssh rsync 同步 ]# {{{
 #--------------------------------------------
 alias kk='keychain .ssh/me/id_dsa_10.11.1'
 alias ks='source .keychain/king-sh'
-# 统一同步目录路径
-alias rcd='rsync -altvz --delete -e ssh /home/ink/text/ ubuntu:.myback/text'
-alias rcc='rsync -altvz --delete -e ssh /home/ink/text/ cjb:.myback/text'
+# 统一同步目录路径，local --> remote
+alias lru='rsync -altvz --delete -e ssh /home/ink/text/ ubuntu:.myback/text'
+alias lrc='rsync -altvz --delete -e ssh /home/ink/text/ cjb:.myback/text'
+# 后面不带 XXX 绝对路径 cp 复制远程目录到本地 HOME 家目录
+alias rlc=' rsync -altvz --delete -e ssh ubuntu:~/cp .myback/text ~'
 
 
-# [ server ]
+
+# }}}
+
+# [ server ]# {{{
 #--------------------------------------------
 alias myhttpd='sudo /etc/rc.d/httpd'
 alias mymysqld='sudo /etc/rc.d/mysqld'
 alias mysshd='sudo /etc/rc.d/sshd'
 alias myftpd='sudo /etc/rc.d/vsftpd'
 
-# [ Sudo ]
+
+
+# }}}
+
+# [ Sudo ]# {{{
 #--------------------------------------------
 alias Cp="sudo cp"
 alias Mv="sudo mv"
 alias Rm="sudo rm"
 alias Vim="sudo vim"
-alias exit="clear; exit"
 alias halt="sudo halt"
 alias reboot="sudo reboot"
 
-# [ U 盘挂载 ]
+
+
+# }}}
+
+# [ U 盘挂载 ]# {{{
 #--------------------------------------------
-alias Uin="sudo mount -t vfat -o iocharset=utf8,uid=1000,gid=100 /dev/sdb1 /mnt/myusb/"
-alias Uout="sudo umount /mnt/myusb/"
+alias Uin="sudo mount -t vfat -o iocharset=utf8,uid=1000,gid=100 /dev/sdc1 /mnt/"
+alias Uout="sudo umount /mnt/"
 alias mym="sudo mount -o iocharset=utf8,uid=1000,gid=100 "
 alias myu="sudo umount "
+
+
+
+# }}}
 
 # [ code ]
 #--------------------------------------------
 alias vv="source ~/code/pinax/bin/activate"
 
-
-
+alias mm="sudo mentohust"
+alias bb="bitlbee -c ~/.bitlbee.conf"
 
 # [ archlinux pacman ]# {{{
 #--------------------------------------------
@@ -593,40 +646,23 @@ pacsearch()
 
 # }}}
 
-
-alias mm="sudo mentohust"
-alias bb="bitlbee -c ~/.bitlbee.conf"
-
-
-# 查看 窗口 class 属性 / 名称
-# From : Archwiki Openbox
+# 查看 窗口 class 属性 / 名称 # From : Archwiki Openbox
 alias xp='xprop | grep "WM_WINDOW_ROLE\|WM_CLASS" && echo "WM_CLASS(STRING) = \"NAME\", \"CLASS\""'
 
-
-
-
-# inode 最新的文件
-alias -g nn="*(oc[1])"
-# * 通配符，zsh里面在后面可以加括号修饰它，o 表示排序，c 排序方式为inode time，方括号限定了只显示一个
-# 用inode change time而非file modification time 让解压缩出来的修改时间较旧的文件依然被NN所指向
-
-#历史命令 top10
+# 历史命令 top10
 alias top10='print -l  ${(o)history%% *} | uniq -c | sort -nr | head -n 10'
 
-alias info='info --vi-keys'
-alias port='netstat -ntlp'      #opening ports
-#alias tree="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
-
-#[Esc][h] man 当前命令时，显示简短说明 
-alias run-help >&/dev/null && unalias run-help
-autoload run-help
 
 #}}}
 
-# 全局 命令别名# {{{
-# -g 全局命令别名，放在命令的哪个地方都可以
+# [ 全局 命令别名 ] # {{{
+#--------------------------------------------
+# -g 全局命令别名，放在命令的哪个位置都行
+# cat test.txt L ==> cat test.txt|less
+
 alias -g A="|awk"
-alias -g B='|sed -r "s:\x1B\[[0-9;]*[mK]::g"' # remove color, make things boring
+# remove color, make things boring
+alias -g B='|sed -r "s:\x1B\[[0-9;]*[mK]::g"'
 alias -g C="|wc"
 alias -g E="|sed"
 alias -g G="|egrep"
@@ -638,10 +674,26 @@ alias -g S="|sort"
 alias -g T="|tail -n $(($LINES-2))"
 alias -g X="|xargs"
 alias -g N="> /dev/null"
-alias -g NF="./*(oc[1])" # last modified(inode time) file or directory
+# last modified(inode time) file or directory
+#alias -g NF="./*(oc[1])"
+
+# NN 指向 inode 最新的那个文件，下载完7z x NN 解压缩，解压缩 cd NN 进入解压缩后的目录，方便!
+alias -g NN="*(oc[1])"
+# zsh 通配符 * 后可加括号修饰，o 表示排序，c 排序方式 inode time，方括号限定一个显示
+# 用inode time 而非 file modified time NN 仍能指向 解压缩出来 修改时间较旧的文件
+
+
 # }}}
 
-# 文件关联# {{{
+# [ 文件关联 ] # {{{
+#--------------------------------------------
+# 查看 *.png 文件，只要输入该文件名（Tab 补完）回车，Zsh 会自动调用关联打开
+# From : http://linuxtoy.org/archives/zsh-tip.html
+
+# 依赖选项，默认就开启
+#autoload -U zsh-mime-setup
+#zsh-mime-setup
+# alias 形式来实现文件关联 , 其中 png 为文件扩展名，= 右边的 feh 为关联的程序。-s 必不可少
 
 for i in jpg png gif; alias -s $i=feh
 for i in avi rmvb wmv; alias -s $i=mplayer
@@ -663,17 +715,22 @@ for i in avi rmvb wmv; alias -s $i=mplayer
 
 # }}}
 
-#路径别名 {{{
-#进入相应的路径时只要 cd ~xxx
-#hash -d usb="/mnt/myusb/"
+# [ 路径别名  ] #{{{
+#--------------------------------------------
+# 使用 cd ~XXX 快速进入自定义目录
+
+hash -d a="/home/ink/.config/awesome/"
+hash -d b="/home/ink/book/"
 hash -d x="/home/ink/text/"
 hash -d c="/home/ink/code/"
 hash -d d="/home/ink/code/django/"
 hash -d m="/home/download/m"
+hash -d o="/var/log/"
 hash -d p="/home/ink/pic/"
 hash -d u="/mnt/usb/"
 hash -d pkg="/var/cache/pacman/pkg"
 
+# [?] 进入到相应目录，提示符会显示 ~e
 #hash -d e="/etc"
 #hash -d c="/etc/conf.d"
 #hash -d r="/etc/rc.d"
@@ -681,36 +738,27 @@ hash -d pkg="/var/cache/pacman/pkg"
 
 #}}}
 
-zle -N user-complete
-bindkey "\t" user-complete
+# [ 自定义补全 ] #{{{
+#--------------------------------------------
 
-##在命令前插入 sudo {{{
-# 输完命令，这个命令需要管理员权限， Ctrl+a s u d o (空格）[Ctrl+e] 按两下 ESC 键完成上面的过程 定义功能 
-sudo-command-line() {
-    [[ -z $BUFFER ]] && zle up-history
-    [[ $BUFFER != sudo\ * ]] && BUFFER="sudo $BUFFER"
-    zle end-of-line                 #光标移动到行末
-}
-zle -N sudo-command-line
-#定义快捷键为： [Esc] [Esc]
-bindkey "\e\e" sudo-command-line
-#}}}
+# ping
+zstyle ':completion:*:ping:*' hosts www.zstu.edu.cn www.google.com \
+192.168.128.1{38,} 192.168.{1,0}.1{{7..9},} 10.10.62.{1,{5{2..8},}}
 
-#{{{自定义补全
-#补全 ping
-zstyle ':completion:*:ping:*' hosts 192.168.128.1{38,} www.g.cn \
-       192.168.{1,0}.1{{7..9},}
-
-#补全 ssh scp sftp 等
+# ssh scp sftp 等
 my_accounts=(
 57wsqh@216.194.70.6
 lvii@fedora.unix-center.net
 {r00t,root}@{192.168.1.1,192.168.0.1}
 )
 zstyle ':completion:*:my-accounts' users-hosts $my_accounts
+
+
+
 #}}}
 
-# 自定义 函数 ##{{{
+# [ 自定义 函数 ] #{{{
+#--------------------------------------------
 
 # 本机 IP 地址
 function lip { ifconfig|sed -n '2p' }
@@ -718,11 +766,20 @@ function lip { ifconfig|sed -n '2p' }
 function pubip() 
 { curl -s 'http://checkip.dyndns.org' | sed 's/.*Current IP Address: \([0-9\.]*\).*/\1/g'; }
 
-# 查询 pacman 安装执行命令
+# 查询执行 pacman -S 安装命令
 function pkg()
 { sed -n '/pacman -S /p' /var/log/pacman.log|awk -F "'" '{print $2}'|uniq }
 
-# 256 颜色
+# 用 rox 打开当前目录
+function fm()
+{ $mydir=`pwd`; `rox $mydir &`; }
+
+# 使用 atd 播放提示音，要用到 alsa 声音驱动
+alarm()
+{ echo "msg ${argv[2,-1]} && aplay -q ~/.sounds/MACSound/System\ Notifi.wav" | at now + $1 min }
+
+# [ 打印 256 颜色 ]# {{{
+#--------------------------------------------
 function 256tab() {
     for k in `seq 0 1`;do 
         for j in `seq $((16+k*18)) 36 $((196+k*18))`;do 
@@ -733,88 +790,89 @@ function 256tab() {
     done
 }
 
-function calc { echo $(($@)) }
-function timeconv { date -d @$1 +"%Y-%m-%d %T" }
+# }}}
 
-function fm()
-{ $mydir=`pwd`; `rox $mydir &`; }
+# [ 目录 堆栈 ]# {{{
+#--------------------------------------------
+# 空行按[tab] 自动输出 cd 提示
+# cd    [tab] 再按 [tab] 开始遍历当前目录
+# cd -  [tab] 打开 directory stack 菜单
+# cd -- [tab] 变为 +[tab] （负负得正）逆序 directory stack
+user-complete(){
+    case $BUFFER in
+        # "cd --" 替换为 "cd +"
+        "cd --" )
+        BUFFER="cd +"
+        zle end-of-line
+        zle expand-or-complete
+        ;;
+        # "cd +-" 替换为 "cd -"
+        "cd +-" )
+        BUFFER="cd -"
+        zle end-of-line
+        zle expand-or-complete
+        ;;
+        # 空行自动输入 "cd "
+        "" )
+        BUFFER="cd "
+        zle end-of-line
+        zle expand-or-complete
+        ;;
+        * )
+        zle expand-or-complete
+        ;;
+    esac
+}
+# 调用 user-complete 函数
+zle -N user-complete
+# 绑定到 快捷键 tab
+bindkey "\t" user-complete
 
-#alarm using atd
-alarm() 
-{ echo "msg ${argv[2,-1]} && aplay -q ~/.sounds/MACSound/System\ Notifi.wav" | at now + $1 min }
+# }}}
 
-#calculator
-calc()  { awk "BEGIN{ print $* }" ; }
+# [ 在命令前插入 sudo  ] #{{{
+#--------------------------------------------
+# 输完命令，命令若要 root 权限，一般采用：[Ctrl+a] sudo (空格）[Ctrl+e]
+# 按两下 ESC 键，在命令开头补全 sudo
 
-#check if a binary exists in path
+sudo-command-line()
+{
+    [[ -z $BUFFER ]] && zle up-history
+    [[ $BUFFER != sudo\ * ]] && BUFFER="sudo $BUFFER"
+    #光标移动到行末
+    zle end-of-line
+}
+zle -N sudo-command-line
+#定义快捷键为： [Esc] [Esc]
+bindkey "\e\e" sudo-command-line
+
+#}}}
+
+# [ 高端应用 ]# {{{
+#--------------------------------------------
+
+# whence 类似 which 但当没有查询到结果时，不提示错误
 bin-exist() {[[ -x `whence -cp $1 2>/dev/null` ]]}
 
 #recalculate track db gain with mp3gain
 (bin-exist mp3gain) && id3gain() { find $* -type f -iregex ".*\(mp3\|ogg\|wma\)" -exec mp3gain -r -s i {} \; }
 
 #ccze for log viewing
+# tac 是 cat 反义词，倒序输出文件
 (bin-exist ccze) && lless() { tac $* |ccze -A |less }
 
 #man page to pdf
 (bin-exist ps2pdf) && man2pdf() {  man -t ${1:?Specify man as arg} | ps2pdf -dCompatibility=1.3 - - > ${1}.pdf; }
-# }}}
-
-# 键盘定义及键绑定 {{{
-#bindkey "\M-v" "\`xclip -o\`\M-\C-e\""
-# 设置键盘 {{{
-# create a zkbd compatible hash;
-# to add other keys to this hash, see: man 5 terminfo
-autoload -U zkbd
-bindkey -e #use emacs style keybindings :(
-typeset -A key #define an array
-
-#if zkbd definition exists, use defined keys instead
-if [[ -f ~/.zkbd/${TERM}-${DISPLAY:-$VENDOR-$OSTYPE} ]]; then
-    source ~/.zkbd/$TERM-${DISPLAY:-$VENDOR-$OSTYPE}
-else
-    key[Home]=${terminfo[khome]}
-    key[End]=${terminfo[kend]}
-    key[Insert]=${terminfo[kich1]}
-    key[Delete]=${terminfo[kdch1]}
-    key[Up]=${terminfo[kcuu1]}
-    key[Down]=${terminfo[kcud1]}
-    key[Left]=${terminfo[kcub1]}
-    key[Right]=${terminfo[kcuf1]}
-    key[PageUp]=${terminfo[kpp]}
-    key[PageDown]=${terminfo[knp]}
-    for k in ${(k)key} ; do
-        # $terminfo[] entries are weird in ncurses application mode...
-        [[ ${key[$k]} == $'\eO'* ]] && key[$k]=${key[$k]/O/[}
-    done
-fi
-
-# setup key accordingly
-[[ -n "${key[Home]}" ]] && bindkey "${key[Home]}" beginning-of-line
-[[ -n "${key[End]}" ]] && bindkey "${key[End]}" end-of-line
-[[ -n "${key[Insert]}" ]] && bindkey "${key[Insert]}" overwrite-mode
-[[ -n "${key[Delete]}" ]] && bindkey "${key[Delete]}" delete-char
-[[ -n "${key[Up]}" ]] && bindkey "${key[Up]}" up-line-or-history
-[[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-history
-[[ -n "${key[Left]}" ]] && bindkey "${key[Left]}" backward-char
-[[ -n "${key[Right]}" ]] && bindkey "${key[Right]}" forward-char
 
 # }}}
 
-# 键绑定 {{{
-bindkey "" history-beginning-search-backward
-bindkey "" history-beginning-search-forward
-bindkey '[1;5D' backward-word # C-left
-bindkey '[1;5C' forward-word # C-right
-
-autoload -U edit-command-line
-zle -N edit-command-line
-bindkey '\ee' edit-command-line
-# }}}
 
 # }}}
 
-# {{{ man color
-#
+# [ man color ] # {{{ 
+#--------------------------------------------
+
+
 export LESS_TERMCAP_mb=$'\E[01;31m'   # begin blinking
 export LESS_TERMCAP_md=$'\E[01;31m'   # begin bold
 export LESS_TERMCAP_me=$'\E[0m'       # end mode
@@ -823,7 +881,7 @@ export LESS_TERMCAP_so=$'\E[1;33;40m' # begin standout-mode - info box
 export LESS_TERMCAP_ue=$'\E[0m'       # end underline
 export LESS_TERMCAP_us=$'\E[1;32m'    # begin underline
 
-# man color set
+# color theme 和当前 xdefaults 的 color 主题有些冲突
 #export LESS_TERMCAP_mb=$'\E[01;31m'
 #export LESS_TERMCAP_md=$'\E[01;31m'
 #export LESS_TERMCAP_me=$'\E[0m'
@@ -832,13 +890,6 @@ export LESS_TERMCAP_us=$'\E[1;32m'    # begin underline
 #export LESS_TERMCAP_so=$'\E[01;44;34m'
 #export LESS_TERMCAP_ue=$'\E[0m'
 #export LESS_TERMCAP_us=$'\E[01;32m'
-
-
-
-
-
-
-
 
 # }}}
 
@@ -860,4 +911,16 @@ function t() {
 
 
 # }}}
+
+# [ XXX ] #--------------------------------------------
+
+#[Esc][h] man 当前命令时，显示简短说明
+alias run-help >&/dev/null && unalias run-help
+autoload run-help
+
+#一启动 zsh 的时候顺带自动开启 screen 呢
+#在~/.zshrc中加入 echo "$TERM"| grep -vq "screen" && \ exec screen zsh
+
+
+
 
