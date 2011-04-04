@@ -44,6 +44,18 @@
 
 # }}}
 
+#   [ 提示符颜色 ASCII 编码 ]# {{{
+#--------------------------------------------
+#   Black   0;30
+#   Red     0;31
+#   Green   0;32
+#   Brown   0;33
+#   Blue    0;34
+#   Purple  0;35
+#   Cyan    0;36
+
+# }}}
+
 # [ 环境变量 ] # {{{
 #--------------------------------------------
 # 前置原因:有可能需要提前设置PATH等环境变量
@@ -60,35 +72,9 @@ export SHELL=`which zsh`
 # Emacs 中 fcitx 输入法激活
 #export LC_CTYPE=zh_CN.UTF-8
 
-## [ Keychain ssh-agent ]# {{{
-##--------------------------------------------
-## From : http://linux.chinaunix.net/bbs/archiver/tid-1132824.html
-## 在 新启动的 zsh 中，继承 / 共用 keychain 产生的 ssh-agent 进程
-#if [ -n `ps aux | grep ssh-agent | grep -v grep | awk '{print $2}'` ]
-#then
-#    if [ -z ${SSH_AGENT_PID} ];then
-#        source ~/.keychain/`hostname`-sh
-#    fi
-#fi
-#
-## }}}
-
-# [ man keychain ]# {{{
-#--------------------------------------------
-
-[ -z "$HOSTNAME" ] && HOSTNAME=`uname -n`
-[ -f $HOME/.keychain/$HOSTNAME-sh ] &&
-       . $HOME/.keychain/$HOSTNAME-sh
-[ -f $HOME/.keychain/$HOSTNAME-sh-gpg ] &&
-       . $HOME/.keychain/$HOSTNAME-sh-gpg
-
-function keys()
-{ source ~/.keychain/`hostname`-sh; }
-
-# }}}
-
 # NetBeans java 程序 字体开启抗锯齿
 #export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
+
 
 #RPROMPT=$(echo '%{\033[31m%}%D %T%{\033[m%}')
 #PROMPT=$(echo '%{\033[34m%}%M%{\033[32m%}%/
@@ -97,13 +83,13 @@ function keys()
 
 # }}}
 
+# [ PS1 / screen 标题 ]# {{{
+
 # [ PS1 prompt ]# {{{
 #--------------------------------------------
-
-############################################
 # 效果超炫的提示符
 # http://i.linuxtoy.org/docs/guide/ch30s04.html
-############################################
+#--------------------------------------------
 
 # PS1 参考示例# {{{
 ## color 颜色 定义
@@ -133,19 +119,18 @@ function keys()
 
 # PS1 提示符# {{{
 setprompt () {
-    # load some modules
-    autoload -U colors zsh/terminfo # Used in the colour alias below
+    # 加载模块 # Used in the colour alias below
+    autoload -U colors zsh/terminfo
     colors
     setopt prompt_subst
 
-    # make some aliases for the colours: (coud use normal escap.seq's too)
+    # 生成 颜色 变量名称 # make some aliases for the colours:
     for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
         eval PR_$color='%{$fg[${(L)color}]%}'
     done
     PR_NO_COLOR="%{$terminfo[sgr0]%}"
 
-
-    # Check the UID
+    # 根据 UID 判断 普通用户 / root
     if [[ $UID -ge 1000 ]]; then # normal user
         eval PR_USER='${PR_GREEN}%n${PR_NO_COLOR}'
         #eval PR_USER_OP='${PR_GREEN}%#${PR_NO_COLOR}'
@@ -154,12 +139,12 @@ setprompt () {
     elif [[ $UID -eq 0 ]]; then # root
         eval PR_USER='${PR_RED}%n${PR_NO_COLOR}'
         eval PR_USER_OP='${PR_RED}%#${PR_NO_COLOR}'
-    fi  
+    fi
 
-    # Check if we are on SSH or not  --{FIXME}--  always goes to |no SSH|
+    # Check if on SSH or not  --{FIXME}--  always goes to |no SSH|
     if [[ -z "$SSH_CLIENT"  ||  -z "$SSH2_CLIENT" ]]; then 
         eval PR_HOST='${PR_GREEN}%M${PR_NO_COLOR}' # no SSH
-    else 
+    else
         eval PR_HOST='${PR_YELLOW}%M${PR_NO_COLOR}' #SSH
     fi
 
@@ -171,7 +156,10 @@ setprompt () {
     #PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}][${PR_BLUE}%1~${PR_CYAN}]${PR_USER_OP}'
     #PS2=$'%_>'
 }
+
+# 调用函数 [?]
 setprompt
+
 # }}}
 
 
@@ -258,6 +246,9 @@ chpwd_functions+=pwd_color_chpwd
 
 #}}}
 
+
+# }}}
+
 # [ Base 基本 ] # {{{
 #--------------------------------------------
 
@@ -272,9 +263,13 @@ unsetopt flowcontrol
 
 # pushds 和 popds 操作后，不打印输出 dir stack
 setopt pushd_silent
+setopt pushd_ignore_dups        # do not push dups on stack
 
 # 允许在交互模式中使用注释 如： cmd #这是注释
 setopt INTERACTIVE_COMMENTS
+
+# 在 提示符函数中有调用
+#setopt prompt_subst             # prompt more dynamic, allow function in prompt
 
 # [ 进程 ? ]
 #--------------------------------------------
@@ -292,6 +287,8 @@ setopt extended_glob
 # 展开 达括号中到表达式 [?]
 setopt brace_ccl
 
+setopt nonomatch
+
 # 在改变路径是，若包含 链接目录，要如何处理 [?]
 # ~/ln -> /; cd ln; pwd -> /
 #setopt chase_links
@@ -307,13 +304,20 @@ setopt brace_ccl
 # [ completion 补全 ]# {{{
 #--------------------------------------------
 
+# [ 补全 选项 ]# {{{
+#--------------------------------------------
+
 # man zshoptions 查看选项到详细说明
 setopt AUTO_LIST AUTO_MENU
 #开启此选项，补全时会直接选中菜单项
 #setopt MENU_COMPLETE
 
+#启用 cd 命令的历史纪录，cd -[TAB]进入历史路径
+setopt AUTO_PUSHD
+
 # 补全命令，包括 .ssh/known_hosts 里面到主机
 autoload -U compinit
+#autoload -Uz compinit # [?]
 compinit
 
 # 启用自动 cd，输入目录名回车进入目录
@@ -336,6 +340,129 @@ setopt list_types
 
 # 补全 数字开头到文件时，按照数字排序，而非字典排序
 setopt numeric_glob_sort
+
+
+
+
+
+# }}}
+
+# [ 补全 类型  ] #{{{
+#--------------------------------------------
+# 格式定义 man zshcompsys 中的 completer 字段
+# zstyle ':completion:*' completer _complete _complete:-foo
+# zsytle ':completion:*:completer:context or command:argument:tag'
+
+# Archwiki 补全菜单可以使用方向键导航
+zstyle ':completion:*' menu select
+# 只有一个候选结果时，也显示补全候选菜单，默认：大于 2 个候选菜单才显示
+zstyle ':completion:*:*:default' force-list always
+
+# 使用 cache 加速 pacman 补全 # man zshcompsys
+zstyle ':completion::complete:*' use-cache on
+#zstyle ':completion::complete:*' cache-path .zcache
+# cd 不选择 父 目录
+zstyle ':completion:*' ignore-parents parent pwd directory
+
+# 路径补全，扩展函数，包含 prefix / suffix
+zstyle ':completion:*' expand 'yes'
+# 若 路径中包含 多个 // 斜扛，当作一个处理：/foo//who ==> /foo/who
+zstyle ':completion:*' squeeze-shlashes 'yes'
+zstyle ':completion::complete:*' '\\'
+
+
+# 错误校正
+#zstyle ':completion:*' completer _complete _match _approximate
+#zstyle ':completion:*' completer _oldlist _expand _force_rehash _complete _match #_user_expand
+zstyle ':completion:*' completer _complete _prefix _correct _prefix _match _approximate
+
+
+zstyle ':completion:*:match:*' original only
+# 容错字数 可以修改
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+# 递增 补全
+zstyle ':completion:incremental:*' completer _complete _correct
+
+# [ XXX ] #--------------------------------------------
+
+# 前缀 补全选项 [?] man 中没找到 prefix-1 格式
+zstyle ':completion::prefix-1:*' completer _complete
+# 推测 / 预告 补全 [?] man 中没找到
+zstyle ':completion:predict:*' completer _complete
+
+# [ XXX ] #--------------------------------------------
+
+#修正大小写
+# 大写 <==> 小写
+zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
+# 大小写 <==> 大小写
+#zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# kill 命令补全
+# From http://wandsea.com/doc/opensource_guide/ch14s09.html
+compdef pkill=kill
+compdef pkill=killall
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:kill:*'   force-list always
+zstyle ':completion:*:*:killall:*' menu yes select
+zstyle ':completion:*:killall:*'   force-list always
+zstyle ':completion:*:*:*:*:processes' force-list always
+zstyle ':completion:*:processes' command 'ps -au$USER'
+
+
+#}}}
+
+# [ 补全菜单 样式 ]# {{{
+#--------------------------------------------
+
+# 给补全菜单添加颜色
+eval $(dircolors -b)
+export ZLSCOLORS="${LS_COLORS}"
+zmodload -i zsh/complist
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+
+# 补全提示 标题描述 group matches and descriptions
+zstyle ':completion:*:matches' group 'yes'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:options' auto-description '%d'
+
+# 补全 标题 样式
+#zstyle ':completion:*:descriptions' format $'\e[01;33m -- %d --\e[0m'
+#zstyle ':completion:*:messages' format $'\e[01;35m -- %d --\e[0m'
+#zstyle ':completion:*:warnings' format $'\e[01;31m -- No Matches Found --\e[0m'
+
+#zstyle ':completion:*:descriptions' format $'\e[33m == \e[1;7;36m %d \e[m\e[33m ==\e[m' 
+#zstyle ':completion:*:messages' format $'\e[33m == \e[1;7;36m %d \e[m\e[0;33m ==\e[m'
+#zstyle ':completion:*:warnings' format $'\e[33m == \e[1;7;31m No Matches Found \e[m\e[0;33m ==\e[m' 
+#zstyle ':completion:*:corrections' format $'\e[33m == \e[1;7;37m %d (errors: %e) \e[m\e[0;33m ==\e[m'
+
+#   [ 提示符颜色 ASCII 编码 ]# {{{
+#--------------------------------------------
+#   Black   0;30
+#   Red     0;31
+#   Green   0;32
+#   Brown   0;33
+#   Blue    0;34
+#   Purple  0;35
+#   Cyan    0;36
+# }}}
+
+zstyle ':completion:*:descriptions' format $'\e[33m | \e[1;7;32m %d \e[m\e[33m |\e[m' 
+zstyle ':completion:*:messages' format $'\e[33m | \e[1;7;32m %d \e[m\e[0;33m |\e[m'
+zstyle ':completion:*:warnings' format $'\e[33m | \e[1;7;33m No Matches \e[m\e[0;33m |\e[m'
+zstyle ':completion:*:corrections' format $'\e[33m | \e[1;7;35m %d [errors: %e] \e[m\e[0;33m |\e[m'
+
+#zstyle ':completion:*:descriptions' format $'\e[33m == \e[1;46;33m %d \e[m\e[33m ==\e[m' 
+#zstyle ':completion:*:messages' format $'\e[33m == \e[1;46;33m %d \e[m\e[0;33m ==\e[m'
+#zstyle ':completion:*:warnings' format $'\e[33m == \e[1;47;31m No Matches Found \e[m\e[0;33m ==\e[m' 
+#zstyle ':completion:*:corrections' format $'\e[33m == \e[1;47;31m %d (errors: %e) \e[m\e[0;33m ==\e[m'
+
+
+
+# }}}
+
 
 
 
@@ -384,8 +511,6 @@ setopt hist_expire_dups_first
 # 获取 / 写入 [?] 历史记录错误，不发出 beep 报警
 setopt no_hist_beep
 
-#启用 cd 命令的历史纪录，cd -[TAB]进入历史路径
-setopt AUTO_PUSHD
 
 
 #}}}
@@ -402,6 +527,8 @@ bindkey "\e[3~" delete-char
 
 #bindkey "\M-v" "\`xclip -o\`\M-\C-e\""
 
+# c-z 后，再按一次，将进程调到前台 [?]
+bindkey -s "" "fg\n"
 
 
 # Archwiki 只在当前会话中进行，历史记录查找
@@ -633,11 +760,11 @@ alias yy="sudo yaourt -Sy"
 alias pacs="pacsearch"
 pacsearch()
 {
-	echo -e "$(pacman -Ss $@ | sed \
-	-e 's#core/.*#\\033[1;31m&\\033[0;37m#g' \
-	-e 's#extra/.*#\\033[0;32m&\\033[0;37m#g' \
-	-e 's#community/.*#\\033[1;35m&\\033[0;37m#g' \
-	-e 's#^.*/.* [0-9].*#\\033[0;36m&\\033[0;37m#g' )"
+    echo -e "$(pacman -Ss $@ | sed \
+    -e 's#core/.*#\\033[1;31m&\\033[0;37m#g' \
+    -e 's#extra/.*#\\033[0;32m&\\033[0;37m#g' \
+    -e 's#community/.*#\\033[1;35m&\\033[0;37m#g' \
+    -e 's#^.*/.* [0-9].*#\\033[0;36m&\\033[0;37m#g' )"
 }
 
 
@@ -673,7 +800,8 @@ alias -g R="|tac"
 alias -g S="|sort"
 alias -g T="|tail -n $(($LINES-2))"
 alias -g X="|xargs"
-alias -g N="> /dev/null"
+#alias -g N="> /dev/null"
+alias -g N='&> /dev/null &'
 # last modified(inode time) file or directory
 #alias -g NF="./*(oc[1])"
 
@@ -869,6 +997,32 @@ bin-exist() {[[ -x `whence -cp $1 2>/dev/null` ]]}
 
 # }}}
 
+# [ man keychain ]# {{{
+#--------------------------------------------
+## [ Keychain ssh-agent ]# {{{
+##--------------------------------------------
+## From : http://linux.chinaunix.net/bbs/archiver/tid-1132824.html
+## 在 新启动的 zsh 中，继承 / 共用 keychain 产生的 ssh-agent 进程
+#if [ -n `ps aux | grep ssh-agent | grep -v grep | awk '{print $2}'` ]
+#then
+#    if [ -z ${SSH_AGENT_PID} ];then
+#        source ~/.keychain/`hostname`-sh
+#    fi
+#fi
+#
+## }}}
+
+[ -z "$HOSTNAME" ] && HOSTNAME=`uname -n`
+[ -f $HOME/.keychain/$HOSTNAME-sh ] &&
+       . $HOME/.keychain/$HOSTNAME-sh
+[ -f $HOME/.keychain/$HOSTNAME-sh-gpg ] &&
+       . $HOME/.keychain/$HOSTNAME-sh-gpg
+
+function keys()
+{ source ~/.keychain/`hostname`-sh; }
+
+# }}}
+
 # [ man color ] # {{{ 
 #--------------------------------------------
 
@@ -907,6 +1061,16 @@ function t() {
   fi
 }
 
+# From : https://github.com/roylez/dotfiles/blob/master/.zshrc.stalker
+#alias t='todo.sh'
+alias ts='todo.sh show'
+alias ta='t a'
+alias tp='t p'
+alias td='t do'
+alias tw='t wait'
+alias tc='t continue'
+# [?]
+#compdef t=todo.sh
 
 
 
@@ -918,6 +1082,12 @@ function t() {
 alias run-help >&/dev/null && unalias run-help
 autoload run-help
 
+# force rehash 当没找到命令时，强制 rehash
+# http://zshwiki.org/home/examples/compsys/general
+_force_rehash() {
+    (( CURRENT == 1 )) && rehash
+    return 1    # Because we did not really complete anything
+}
 #一启动 zsh 的时候顺带自动开启 screen 呢
 #在~/.zshrc中加入 echo "$TERM"| grep -vq "screen" && \ exec screen zsh
 

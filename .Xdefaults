@@ -202,6 +202,7 @@ XTerm*oldXtermFKeys:    true
 XTerm*rightScrollBar:   true
 XTerm*underLine:    true
 
+XTerm*visualBell:    false
 
 ! [ Alt / Ctrl 快捷键可用 ]
 !--------------------------------------------

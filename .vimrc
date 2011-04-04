@@ -25,7 +25,7 @@ set nobackup
 " 去除警示声
 set noerrorbells
 set novisualbell
-set vb t_vb=
+"set t_vb=
 
 " 除($，^，.，*)外的正则特殊符号需加"\"转义
 set magic
@@ -641,6 +641,7 @@ autocmd FileType css,html inoremap <buffer> <tab> <space><space>
 " [ Function 功能函数 ]"{{{
 """"""""""""""""""""""""""""""""""""""""""""
 
+" XXX 在 xterm 每次编辑输入时，会引起 visualbell
 " [ 光标颜色 ]"{{{
 """""""""""""""""""""""""""""""""""""""""""""
 
@@ -650,20 +651,20 @@ autocmd FileType css,html inoremap <buffer> <tab> <space><space>
 " 第三句  插入模式结束，光标变回红的
 " 第四句  退出 vim之后，光标变成绿色
 
-" 在xterm里的screen里的vim里面
-if &term =~ "xterm"
-    silent !echo -ne "\e]12;OliveDrab1\007"
-    let &t_SI="\e]12;violet\007"
-    let &t_EI="\e]12;OliveDrab1\007"
-    autocmd VimLeave * :!echo -ne "\e]12;LightSteelBlue\007"
-
-"elseif &term =~ "screen"    " screen in urxvt or xterm
-"    :silent !echo -ne "\eP\e]12;IndianRed2\007\e\\"
-"    let &t_SI=\eP\e]12;RoyalBlue1\007\e\\"
-"    let &t_EI=\eP\e]12;IndianRed2\007\e\\"
-"    autocmd VimLeave * :!echo -ne "\eP\e]12;green\007\e\\"
-
-endif
+"" 在xterm里的screen里的vim里面
+"if &term =~ "xterm"
+"    silent !echo -ne "\e]12;OliveDrab1\007"
+"    let &t_SI="\e]12;violet\007"
+"    let &t_EI="\e]12;OliveDrab1\007"
+"    autocmd VimLeave * :!echo -ne "\e]12;LightSteelBlue\007"
+"
+""elseif &term =~ "screen"    " screen in urxvt or xterm
+""    :silent !echo -ne "\eP\e]12;IndianRed2\007\e\\"
+""    let &t_SI=\eP\e]12;RoyalBlue1\007\e\\"
+""    let &t_EI=\eP\e]12;IndianRed2\007\e\\"
+""    autocmd VimLeave * :!echo -ne "\eP\e]12;green\007\e\\"
+"
+"endif
 
 
 "}}}
