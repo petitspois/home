@@ -12,8 +12,6 @@
 # roylez    # From : https://github.com/roylez/dotfiles/raw/master/.zshrc
 # gogonkt   # From : https://github.com/gogonkt/dotG/blob/master/.zshrc
 
-# }}}
-
 # [ man ]# {{{
 #--------------------------------------------
 # setopt <选项>     -->     man zshoptions
@@ -21,7 +19,6 @@
 
 # 补全              -->     man zshcompctl / zshcompwid
 # 交互 / 编辑       -->     man zshzle
-
 # 函数
 
 # zsh                Zsh overview (this section)
@@ -40,8 +37,7 @@
 # zshtcpsys          Zsh built-in TCP functions
 # zshzftpsys         Zsh built-in FTP client
 # zshcontrib         Additional zsh functions and utilities
-# zshall             Meta-man page containing all of the above
-
+# XXX zshall             Meta-man page containing all of the above
 
 # }}}
 
@@ -54,6 +50,18 @@
 #   Blue    0;34
 #   Purple  0;35
 #   Cyan    0;36
+
+# }}}
+
+# }}}
+
+# [ todo ]# {{{
+#--------------------------------------------
+
+# 历史记录，中文乱码，自定义，时间戳格式
+
+
+
 
 # }}}
 
@@ -84,29 +92,28 @@ export SHELL=`which zsh`
 
 # }}}
 
-# [ prompt PS1 ] # {{{
+# [ PS1 git prompt  ] # {{{
 #--------------------------------------------
 # From : gogonkt
 # [master¹//~]%                 (ink@king:~/)
+# http://kriener.org/articles/2009/06/04/zsh-prompt-magic
 
 autoload -U promptinit
 promptinit
-# prompt gentoo
 
-# prompt with git {{{
-
-# http://kriener.org/articles/2009/06/04/zsh-prompt-magic
 setopt prompt_subst
 autoload colors
 colors
 
 autoload -Uz vcs_info
 
-# set some colors
+# 颜色变量
 for COLOR in RED GREEN YELLOW WHITE BLACK CYAN; do
     eval PR_$COLOR='%{$fg[${(L)COLOR}]%}'
     eval PR_BRIGHT_$COLOR='%{$fg_bold[${(L)COLOR}]%}'
 done
+
+# 重置颜色
 PR_RESET="%{${reset_color}%}";
 
 # %b - branchname               分支名
@@ -118,14 +125,13 @@ PR_RESET="%{${reset_color}%}";
 
 # 为 版本库左右添加 空格
 FMT_BRANCH="${PR_BRIGHT_GREEN} %b%u%c${PR_RESET}"    # e.g. master¹²
-FMT_ACTION="[${PR_CYAN}%a${PR_RESET}%]"             # e.g. (rebase-i)
+FMT_ACTION="[${PR_CYAN}%a${PR_RESET}%]"              # e.g. (rebase-i)
 # 右边的 ：(ink@king:~/)
-FMT_PATH="%R${PR_YELLOW}/%S"                       # e.g. ~/repo/subdir
+FMT_PATH="%R${PR_YELLOW}/%S"                         # e.g. ~/repo/subdir
 
-# check-for-changes can be really slow.
-# ! ℃
-# you should disable it, if you work with large repositories
+# 检查更新，对于比较大到版本库，可能会影响速度，可以禁用
 zstyle ':vcs_info:*:prompt:*' check-for-changes true
+
 #zstyle ':vcs_info:*:prompt:*' unstagedstr '¹'  # display ¹ if there are unstaged changes
 #zstyle ':vcs_info:*:prompt:*' stagedstr '²'    # display ² if there are staged changes
 #zstyle ':vcs_info:*:prompt:*' actionformats "${FMT_BRANCH}${FMT_ACTION}//" "${FMT_PATH}"
@@ -136,8 +142,10 @@ zstyle ':vcs_info:*:prompt:*' stagedstr   '"'  # display " if there are staged c
 zstyle ':vcs_info:*:prompt:*' actionformats "${FMT_BRANCH}${FMT_ACTION}"  "${FMT_PATH}"
 # 没有 git 的目录
 zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}"               "${FMT_PATH}"
+# [?]
 zstyle ':vcs_info:*:prompt:*' nvcsformats   ""                             "%~"
 
+# [?] zsh 函数定义格式
 function precmd {
     vcs_info 'prompt'
 }
@@ -158,31 +166,32 @@ function lprompt {
     PROMPT="${PR_RESET}${bracket_open}${git}${PR_YELLOW}${cwd}${bracket_close}${PR_RED}○ ${PR_RESET}"
 }
 
-function rprompt {
-    local brackets=$1
-    local color1=$2
-    local color2=$3
-
-    local bracket_open="${color1}${brackets[1]}${PR_RESET}"
-    local bracket_close="${color1}${brackets[2]}${PR_RESET}"
-    local colon="${color1}:"
-    local at="${color1}@${PR_RESET}"
-
-    local user_host="${color2}%n${at}${color2}%m"
-    local vcs_cwd='${${vcs_info_msg_1_%%.}/$HOME/~}'
-    local cwd="${color2}%B%20<..<${vcs_cwd}%<<%b"
-    local inner="${user_host}${colon}${cwd}"
-
-    RPROMPT="${PR_RESET}${bracket_open}${inner}${bracket_close}${PR_RESET}"
-}
+# [ 右侧：提示 ： (ink@king:~/) ]# {{{
+#--------------------------------------------
+#function rprompt {
+#    local brackets=$1
+#    local color1=$2
+#    local color2=$3
+#
+#    local bracket_open="${color1}${brackets[1]}${PR_RESET}"
+#    local bracket_close="${color1}${brackets[2]}${PR_RESET}"
+#    local colon="${color1}:"
+#    local at="${color1}@${PR_RESET}"
+#
+#    local user_host="${color2}%n${at}${color2}%m"
+#    local vcs_cwd='${${vcs_info_msg_1_%%.}/$HOME/~}'
+#    local cwd="${color2}%B%20<..<${vcs_cwd}%<<%b"
+#    local inner="${user_host}${colon}${cwd}"
+#
+#    RPROMPT="${PR_RESET}${bracket_open}${inner}${bracket_close}${PR_RESET}"
+#}
+# }}}
 
 #lprompt '[]' $BR_BRIGHT_BLACK $PR_GREEN
 # 不使用 [] 包裹提示符
 lprompt '' $BR_BRIGHT_BLACK $PR_GREEN
 # 不调用 显示右边的 ： (ink@king:~/)
 #rprompt '()' $BR_BRIGHT_BLACK $PR_GREEN
-
-# }}}
 
 # }}}
 
@@ -532,37 +541,24 @@ export SAVEHIST=2000
 #历史纪录文件
 export HISTFILE=~/.zhistory
 
-# 多 session 共享历史
-setopt SHARE_HISTORY
-# 立即附加，递增立即写入方式 历史纪录，而 APPEND_HISTORY 则是在 shell 退出之后写入
-setopt INC_APPEND_HISTORY
-# 删除历史文件 里面的空白
-setopt hist_reduce_blanks
 # 为历史纪录中的命令添加 时间戳 格式 [?]：
-# : 1301840847:0;history 20
-#setopt EXTENDED_HISTORY
+# : 1301840847:0;history 20 # EXTENDED_HISTORY
 
-# 去除重复，若历史中已有，不再写入
-setopt HIST_IGNORE_DUPS
-# 去除重复，新纪录覆盖旧的历史记录
-#setopt hist_ignore_all_dups
-# 使用 history 命令显示时，不显示重复历史记录
-setopt HIST_FIND_NO_DUPS
-# 不纪录以空格开始的命令
-#setopt HIST_IGNORE_SPACE
+# 去除重复（相邻两次输入） [?]，若历史中已有，不再写入
+#setopt HIST_IGNORE_DUPS
 
-# 使用 历史命令时 重载 完整的 命令
-# file text/soft/zsh.txt
-# vim !$ 时，不立即执行，而是输出
+# file text/soft/zsh.txt # vim !$ 时，不立即执行，而是输出
 # vim text/soft/zsh.txt 用户确认后在执行
-setopt hist_verify
-
-# 删除 超出 最大上限 数量的 记录
-setopt hist_expire_dups_first
-# 获取 / 写入 [?] 历史记录错误，不发出 beep 报警
-setopt no_hist_beep
-
-
+setopt hist_verify              # 使用 历史命令时 重载 完整的 命令
+setopt no_hist_beep             # 获取 / 写入 [?] 历史记录错误，不发出 beep 报警
+setopt hist_ignore_all_dups     # 去除重复，新纪录覆盖旧的历史记录
+setopt hist_reduce_blanks       # 删除历史文件 里面的空白
+setopt hist_ignore_space        # 不纪录以空格开始的命令
+setopt share_history            # 多 session 共享历史
+setopt hist_verify              # reload full command when runing from history
+setopt hist_expire_dups_first   # 删除 超出 最大上限 数量的 记录
+setopt hist_find_no_dups        # 使用 history 命令显示时，不显示重复历史记录
+setopt inc_append_history       # 立即附加，递增立即写入方式 历史纪录，而 APPEND_HISTORY 则是在 shell 退出之后写入
 
 #}}}
 
@@ -638,13 +634,14 @@ alias ln='ln -i'
 # [ ls ]# {{{
 #--------------------------------------------
 
-#alias ls='ls -F --color=auto'
-# 时间戳 颜色 格式化 From : roylez
-alias ls=$'ls -h --color=auto -X --time-style="+\e[33m[\e[32m%Y-%m-%d \e[35m%k:%M\e[33m]\e[m"'
+alias ls='ls -F --color=auto'
 # x 按行排列，X 按文件类型排序
 # alias ls='ls -xXF --color=auto'
 alias l='ls -1X'
-alias ll='ls -lh --time-style=+%Y-%m-%d'
+#alias ll='ls -lh --time-style=+%Y-%m-%d'
+# XXX 注意，开头的 $ 符号转义。时间戳 颜色 格式化 From : roylez
+#alias ll=$'ls -lh --color=auto -X --time-style="+\e[33m[ \e[36m%Y-%m-%d \e[35m%k:%M\e[33m ]\e[m"'
+alias ll=$'ls -lh --color=auto -X --time-style="+\e[35m[ \e[36m%Y-%m-%d \e[35m]\e[m"'
 alias la='ls -A'
 alias lx='ls -xX'
 
@@ -1135,6 +1132,7 @@ _force_rehash() {
 
 ## [ wunjo git zsh PS1 ]# {{{
 ##--------------------------------------------
+## 华丽到 提示符
 ## From : https://github.com/jcorbin/zsh-git
 #
 ##king /home/ink on master(b31b096)
@@ -1719,90 +1717,6 @@ _force_rehash() {
 #
 #
 ## }}}
-
-## [ my PS1 prompt ]# {{{
-##--------------------------------------------
-## 效果超炫的提示符
-## http://i.linuxtoy.org/docs/guide/ch30s04.html
-##--------------------------------------------
-#
-## PS1 参考示例# {{{
-### color 颜色 定义
-#
-##autoload colors
-##[[ $terminfo[colors] -ge 8 ]] && colors
-##pR="%{$reset_color%}%u%b" pB="%B" pU="%U"
-##for i in red green blue yellow magenta cyan white black; {eval pfg_$i="%{$fg[$i]%}" pbg_$i="%{$bg[$i]%}"}
-##
-#
-##setopt prompt_subst             # prompt more dynamic, allow function in prompt
-##
-##if [ "$SSH_TTY" = "" ]; then
-##    local host="$pB$pfg_magenta%m$pR"
-##else
-##    local host="$pB$pfg_red%m$pR"
-##fi
-##
-##local user="$pB%(!:$pfg_red:$pfg_green)%n$pR"       #different color for privileged sessions
-##local symbol="$pB%(!:$pfg_red# :$pfg_yellow> )$pR"
-##local job="%1(j,$pfg_red:$pfg_blue%j,)$pR"
-##
-###PROMPT='$user$pfg_yellow@$pR$host$(get_prompt_git)$job$symbol'
-##PROMPT='$user$pfg_yellow@$pR$host$job$symbol'
-##PROMPT2="$PROMPT$pfg_cyan%_$pR $pB$pfg_black>$pR$pfg_green>$pB$pfg_green>$pR "
-## }}}
-#
-## MY PS1 提示符# {{{
-#setprompt () {
-#    # 加载模块 # Used in the colour alias below
-#    autoload -U colors zsh/terminfo
-#    colors
-#    setopt prompt_subst
-#
-#    # 生成 颜色 变量名称 # make some aliases for the colours:
-#    for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
-#        eval PR_$color='%{$fg[${(L)color}]%}'
-#    done
-#    PR_NO_COLOR="%{$terminfo[sgr0]%}"
-#
-#    # 根据 UID 判断 普通用户 / root
-#    if [[ $UID -ge 1000 ]]; then # normal user
-#        eval PR_USER='${PR_GREEN}%n${PR_NO_COLOR}'
-#        #eval PR_USER_OP='${PR_GREEN}%#${PR_NO_COLOR}'
-#        # 自定义 用户标志符
-#        eval PR_USER_OP='${PR_CYAN}·${PR_NO_COLOR}'
-#    elif [[ $UID -eq 0 ]]; then # root
-#        eval PR_USER='${PR_RED}%n${PR_NO_COLOR}'
-#        eval PR_USER_OP='${PR_RED}%#${PR_NO_COLOR}'
-#    fi
-#
-#    # Check if on SSH or not  --{FIXME}--  always goes to |no SSH|
-#    if [[ -z "$SSH_CLIENT"  ||  -z "$SSH2_CLIENT" ]]; then 
-#        eval PR_HOST='${PR_GREEN}%M${PR_NO_COLOR}' # no SSH
-#    else
-#        eval PR_HOST='${PR_YELLOW}%M${PR_NO_COLOR}' #SSH
-#    fi
-#
-#    # 自定义 用户标志符的空格是添加在 PS1，若添加在 上面的 $PR_USER 会出错！
-#    PS1=$'${PR_RED} %B%1~%b ${PR_USER_OP} ${PR_NO_COLOR}'
-#    #RPROMPT='$PR_GREEN%B%n$PR_NO_COLOR'
-#
-#    # set the prompt
-#    #PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}][${PR_BLUE}%1~${PR_CYAN}]${PR_USER_OP}'
-#    #PS2=$'%_>'
-#}
-#
-## 调用函数 [?]
-#setprompt
-#
-## }}}
-#
-#
-#
-#
-#
-## }}}
-
 
 # [  ]# {{{
 #--------------------------------------------
