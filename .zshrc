@@ -619,7 +619,6 @@ zle_highlight=(region:bg=magenta  #选中区域
 # [ 命令别名  ] #{{{
 #--------------------------------------------
 
-
 # [ cp / mv / rm / ln 覆盖提示 ]# {{{
 #--------------------------------------------
 alias cp='cp -i'
@@ -675,10 +674,6 @@ alias gs='git status'
 
 # }}}
 
-
-
-
-
 # [ 系统 ]# {{{
 #--------------------------------------------
 ## show directories size
@@ -702,8 +697,10 @@ alias vuser="fuser -v "
 
 # }}}
 
+# [ soft ]# {{{
+#--------------------------------------------
+
 alias info='info --vi-keys'
-alias port='netstat -ntlp'      #opening ports
 #alias tree="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
 
 alias sch='find . -name '
@@ -717,16 +714,35 @@ alias m='mutt'
 alias p='pwd'
 #alias t='tmux'
 alias s='screen'
+alias sS='screen -S '
+alias sl='screen -ls'
+alias sr='screen -r'
+# XXX for 循环定义 [?]
+alias sa='screen -S a'
+alias sb='screen -S b'
+alias sc='screen -S c'
+
+
+alias mm="sudo mentohust"
+alias bb="bitlbee -c ~/.bitlbee.conf"
+alias zz="source ~/.zshrc"
+
+
+
+
+
+# }}}
 
 # [ keychain ssh rsync 同步 ]# {{{
 #--------------------------------------------
 alias kk='keychain .ssh/me/id_dsa_10.11.1'
 alias ks='source .keychain/king-sh'
 # 统一同步目录路径，local --> remote
-alias lru='rsync -altvz --delete -e ssh /home/ink/text/ ubuntu:.myback/text'
-alias lrc='rsync -altvz --delete -e ssh /home/ink/text/ cjb:.myback/text'
+alias lru='rsync -altvz --delete -e ssh /home/ink/text/ ubuntu:.wen/text'
+alias lrc='rsync -altvz --delete -e ssh /home/ink/text/ cjb:.wen/text'
 # 后面不带 XXX 绝对路径 cp 复制远程目录到本地 HOME 家目录
-alias rlc=' rsync -altvz --delete -e ssh ubuntu:~/cp .myback/text ~'
+alias rlu=' rsync -altvz --delete -e ssh ubuntu:~/.wen/text ~'
+alias rlc=' rsync -altvz --delete -e ssh cjb:~/.wen/text ~'
 
 
 
@@ -734,6 +750,8 @@ alias rlc=' rsync -altvz --delete -e ssh ubuntu:~/cp .myback/text ~'
 
 # [ server ]# {{{
 #--------------------------------------------
+alias port='netstat -ntlp'      #opening ports
+
 alias myhttpd='sudo /etc/rc.d/httpd'
 alias mymysqld='sudo /etc/rc.d/mysqld'
 alias mysshd='sudo /etc/rc.d/sshd'
@@ -767,12 +785,17 @@ alias myu="sudo umount "
 
 # }}}
 
-# [ code ]
+# [ code ]# {{{
 #--------------------------------------------
 alias vv="source ~/code/pinax/bin/activate"
 
-alias mm="sudo mentohust"
-alias bb="bitlbee -c ~/.bitlbee.conf"
+# 系统使用的是 python2，使用 python 提示没有这个命令。但 pinax 虚拟开发环境，可以使用 python
+# XXX 要提前加载 虚拟开发环境
+alias pmr="python manage.py runserver"
+alias pms="python manage.py syncdb"
+
+
+# }}}
 
 # [ archlinux pacman ]# {{{
 #--------------------------------------------
@@ -873,7 +896,6 @@ alias -g NN="*(oc[1])"
 
 for i in jpg png gif; alias -s $i=feh
 for i in avi rmvb wmv; alias -s $i=mplayer
-
 #alias -s txt=$EDITOR
 #alias -s gz=tar -xzvf
 #alias -s bz2=tar -xjvf

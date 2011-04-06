@@ -48,6 +48,7 @@ set encoding=utf-8
 " 新建/保存文件使用编码
 set fileencoding=utf-8
 
+
 " 文件编码匹配原则：由大到小（有利于找到合适编码）
 "set fencs=utf-8,usc-bom,euc-jp,gb18030,gbk,gb2312,cp936
 set fileencodings=ucs-bom,utf-8,cp936,gbk,gb2312,gb18030,big5,euc-jp,euc-kr,latin1
@@ -126,11 +127,11 @@ if(has("gui_running"))
 else
     colorscheme wombat256
     "colorscheme xoria256
-    " 高亮选择的当前行/列，类似 瞄准线
-    set cursorline
-    "set cursorcolumn
 endif
 
+" 高亮选择的当前行/列，类似 瞄准线
+set cursorline
+"set cursorcolumn
 
 "colorscheme jellybeans
 "colorscheme xoria
@@ -482,13 +483,17 @@ imap jj <esc>
 "norea ;r        ; [  ]<CR><Esc>44a-<Esc>o<BS><Esc>2kf]
 "norea "r        " [  ]<CR><Esc>44i"<Esc>kf]
 " 折叠块
-norea #r        # [  ]<CR><Esc>44a-<Esc>o<Esc>0Dyy8p3kzf7j
-norea ;r        ; [  ]<CR><Esc>44a-<Esc>o<Esc>0Dyy8p3kzf7j
-norea "r        " [  ]<CR><Esc>44a-<Esc>o<Esc>0Dyy8p3kzf7j
+
+norea #r        # [  ]<CR><Esc>44a-<Esc>o<Esc>0Dyy6p3kzf7j
+norea ;r        ; [  ]<CR><Esc>44a-<Esc>o<Esc>0Dyy6p3kzf7j
+norea "r        " [  ]<CR><Esc>44a-<Esc>o<Esc>0Dyy6p3kzf7j
 " 注释分割线
 norea #c        # [  ]<CR><Esc>44a-<Esc>o<Esc>0D2kwl
 norea ;c        ; [  ]<CR><Esc>44a-<Esc>o<Esc>0D2kwl
 norea "c        " [  ]<CR><Esc>44a-<Esc>o<Esc>0D2kwl
+
+norea #x        # [ XXX ]<CR><Esc>44a-<Esc>o<Esc>0D2kJ<Esc>j
+
 
 
 
@@ -1150,6 +1155,10 @@ if(has("gui_running"))
     "查看更多 Gvim 选项
     "help guioptions
 
+"解决consle输出乱码
+language messages zh_CN.utf-8
+"解决中文菜单乱码
+""set langmenu=zh_CN.utf-8
 
 " <F2> 开关 菜单栏 / 工具栏
 "noremap <silent> <F2> :if &guioptions =~# 'T' <Bar>
@@ -1160,6 +1169,13 @@ if(has("gui_running"))
 "    \set guioptions+=m <Bar>
 "    \endif<CR>
 
+
 endif
 
 "}}}
+
+"查询相关设置：
+" set options?
+" set guifont?
+"查看更多 Gvim 选项
+"help guioptions
