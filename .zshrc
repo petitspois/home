@@ -738,11 +738,12 @@ alias zz="source ~/.zshrc"
 alias kk='keychain .ssh/me/id_dsa_10.11.1'
 alias ks='source .keychain/king-sh'
 # 统一同步目录路径，local --> remote
-alias lru='rsync -altvz --delete -e ssh /home/ink/text/ ubuntu:.wen/text'
-alias lrc='rsync -altvz --delete -e ssh /home/ink/text/ cjb:.wen/text'
-# 后面不带 XXX 绝对路径 cp 复制远程目录到本地 HOME 家目录
-alias rlu=' rsync -altvz --delete -e ssh ubuntu:~/.wen/text ~'
-alias rlc=' rsync -altvz --delete -e ssh cjb:~/.wen/text ~'
+alias lru='rsync -altvz --delete -e ssh /home/ink/text/ ubuntu:~/.wen/text'
+alias lrc='rsync -altvz --delete -e ssh /home/ink/text/ cjb:~/.wen/text'
+alias lrct='rsync -altvz --delete -e ssh /home/ink/todo/ cjb:~/.wen/todo'
+# 后面不带 XXX 绝对路径 cp 复制远程目录到本地 HOME 家目录，[?] scp 时间戳
+#alias rlu=' rsync -altvz --delete -e ssh ubuntu:~/.wen/text ~'
+#alias rlc=' rsync -altvz --delete -e ssh cjb:~/.wen/text ~'
 
 
 

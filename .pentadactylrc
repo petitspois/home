@@ -190,6 +190,7 @@ map -m i,c,t <C-z> <Pass>
 "cabbrev ..  http://localhost
 " 有时 localhost 域名解析会莫名耗费好些时间
 cabbrev ..  127.0.0.1
+cabbrev ,,  https://
 cabbrev cf  about:config
 
 cabbrev a   archlinux.org
@@ -199,7 +200,8 @@ cabbrev bd  www.baidu.com
 cabbrev bg  www.bing.com
 cabbrev bt  www.torrentz.com
 cabbrev vc  www.verycd.com
-cabbrev ss  music.soso.com
+"cabbrev ss  music.soso.com
+cabbrev ss  https://
 
 " Firefox 论坛
 cabbrev fm  g.mozest.com

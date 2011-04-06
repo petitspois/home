@@ -126,7 +126,7 @@ tiger.gif
 !.stalonetrayrc
 !.tmux.conf
 !.vimrc
-!.vimperatorrc
+#!.vimperatorrc
 !.Xdefaults
 !.xinitrc
 !.zshrc
@@ -138,7 +138,7 @@ tiger.gif
 #!.emacs.d/
 #!.fvwm/config
 #!.fvwm/fvwm.dock
-!.vimperator/
+#!.vimperator/
 !.fvwm/config
 !.aria2/
 !.purple/prefs.xml

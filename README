@@ -1,3 +1,48 @@
 # vim:set et ft=conf fdm=marker sw=4 sts=4 ts=4 nopaste :
-# 本项目主要是学习 git 练习之用，将 archlinux 下常用配置
-# 做个备份！谢谢光临
+
+.Xdefaults
+.aria2/aria2.conf
+.bashrc
+.bitlbee.conf
+.config/fcitx/config
+
+# openbox
+.config/openbox/autostart.sh
+.config/openbox/menu.xml
+.config/openbox/rc.xml
+
+.conkyrc
+.fonts.conf
+.fvwm/config
+.fvwm/fvwm.dock
+# git
+.gitconfig
+.gitignore
+
+.gtkrc-2.0
+.lftprc
+.mpdconf
+.musca_start
+.muttrc
+.my.cnf
+.ncmpcpp/config
+.pentadactylrc
+# pidgin
+.purple/prefs.xml
+.rtorrent.rc
+.screenrc
+.stalonetrayrc
+.tmux.conf
+.toprc
+
+.vimrc
+.xinitrc
+.xmodmap
+.zshrc
+README
+
+# 删除 git rm --cache
+.vimperator/colors/status.vimp
+.vimperator/colors/sweets.vimp
+.vimperatorrc
+
