@@ -122,7 +122,7 @@ set t_Co=256
 
 " 色彩主题
 if(has("gui_running"))
-    colorscheme xemacs
+    colorscheme xoria256
     set cursorline
 else
     colorscheme wombat256
@@ -271,6 +271,11 @@ set smartindent
 
 " C样式的缩进，开启会覆盖 smartindent !
 "set cindent
+
+" 解决：继承缩进后，添加注释，自动跳转到行首
+set smarttab
+set cindent
+
 
 "}}}
 
@@ -493,6 +498,7 @@ norea ;c        ; [  ]<CR><Esc>44a-<Esc>o<Esc>0D2kwl
 norea "c        " [  ]<CR><Esc>44a-<Esc>o<Esc>0D2kwl
 
 norea #x        # [ XXX ]<CR><Esc>44a-<Esc>o<Esc>0D2kJ<Esc>j
+norea #u        # coding:utf8<Esc>
 
 
 

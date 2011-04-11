@@ -62,7 +62,8 @@ encoding utf-8 utf-8
 #bindkey -k k; title
 
 # 将快捷键默认 C-a 设为 C-x / [不行]反斜杠 \ 因为不常用
-escape ^X^X
+# C - x 不能使用来回切换之前停留到 tab
+#escape ^X^X
 #escape \\
 # vim 的鼠标上滚有问题
 #escape ``

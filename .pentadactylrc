@@ -16,6 +16,8 @@ set wildcase=:smart
 set wildmode=list:full
 " 使用 tab 触发 自动补全，将补全正则表达式式设为 空
 set autocomplete=
+" pentadactyl 默认使用 | 分割 url，若 url 中包含 | 会被分割为两个 url
+set urlseparator=
 " 默认为普通模式，非插入模式
 "set focuscontent
 
@@ -277,8 +279,8 @@ cabbrev mg  https://www.megaproxy.com/freesurf
 
 " 文字链接被选中，则直接打开链接；选中的是一般文字，用默认搜索引擎搜索
 " 否则打开:tabopen或者:open命令行，手动输入关键字搜索
-map t -js content.getSelection().toString()!=''?dactyl.execute(":tabopen "+ content.getSelection()):CommandExMode().open("tabopen ")
-map o -js content.getSelection().toString()!=''?dactyl.execute(":open "+ content.getSelection()):CommandExMode().open("open ")
+"map t -js content.getSelection().toString()!=''?dactyl.execute(":tabopen "+ content.getSelection()):CommandExMode().open("tabopen ")
+"map o -js content.getSelection().toString()!=''?dactyl.execute(":open "+ content.getSelection()):CommandExMode().open("open ")
 
 set nextpattern='\bnext\b',^>$,'^(>>|»)$','^(>|»)','(>|»)$','\bmore\b','s*下一页|下一张|下一章|下一篇|下一頁|下页|后页s*'
 set previouspattern='\bprev|previous\b',^<$,'^(<<|«)$','^(<|«)','(<|«)$','s*上一页|上一张|上一章|上一篇|上一頁|上页|前页s*'

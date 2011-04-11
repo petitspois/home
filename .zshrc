@@ -164,7 +164,8 @@ function lprompt {
     local cwd="${color3} %B%1~%b "
 
     #PROMPT="${PR_RESET}${bracket_open}${git}${cwd}${bracket_close}○%# ${PR_RESET}"
-    PROMPT="${PR_RESET}${bracket_open}${git}${PR_YELLOW}${cwd}${bracket_close}${PR_RED}○ ${PR_RESET}"
+    #PROMPT="${PR_RESET}${bracket_open}${git}${PR_YELLOW}${cwd}${bracket_close}${PR_RED}○ ${PR_RESET}"
+    PROMPT="${PR_RESET}${bracket_open}${git}${PR_YELLOW}${cwd}${bracket_close}${PR_RED}· ${PR_RESET}"
 }
 
 # [ 右侧：提示 ： (ink@king:~/) ]# {{{
@@ -794,6 +795,9 @@ alias vv="source ~/code/pinax/bin/activate"
 # XXX 要提前加载 虚拟开发环境
 alias pmr="python manage.py runserver"
 alias pms="python manage.py syncdb"
+
+alias p2mr="python2 manage.py runserver"
+alias p2ms="python2 manage.py syncdb"
 
 
 # }}}
