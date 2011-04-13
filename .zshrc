@@ -666,6 +666,7 @@ alias ..5="cd ../../../../.."
 #--------------------------------------------
 alias ga='git add'
 alias gc='git commit '
+alias gca='git commit -a -m'
 alias gl='git ls-files'
 alias go='git log'
 alias gs='git status'
@@ -745,6 +746,10 @@ alias lrct='rsync -altvz --delete -e ssh /home/ink/todo/ cjb:~/.wen/todo'
 # 后面不带 XXX 绝对路径 cp 复制远程目录到本地 HOME 家目录，[?] scp 时间戳
 #alias rlu=' rsync -altvz --delete -e ssh ubuntu:~/.wen/text ~'
 #alias rlc=' rsync -altvz --delete -e ssh cjb:~/.wen/text ~'
+
+alias cgfw="ssh -CNTfnq -D 7070 57wsqh@216.194.70.6"
+alias ygfw="ssh -CNTfnq -D 7070 yuanhui@204.74.211.169"
+
 
 
 

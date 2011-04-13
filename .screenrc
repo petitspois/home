@@ -63,7 +63,7 @@ encoding utf-8 utf-8
 
 # 将快捷键默认 C-a 设为 C-x / [不行]反斜杠 \ 因为不常用
 # C - x 不能使用来回切换之前停留到 tab
-#escape ^X^X
+escape ^xx
 #escape \\
 # vim 的鼠标上滚有问题
 #escape ``
@@ -130,7 +130,27 @@ caption always "%{=b k}%{c}[%H]%{-}  %+07=%-w%7L>%{g}%n %t%{-}%+w%-014<  %-012=%
 #有个bug, debian sid中这里如果只用screen多开窗口, PS1什么的都对, 但是只能动态显示路径为title, 程序不行, C-a c新建的没问题, 欢迎反馈!!!
 #更新: session的配置放到最后就OK了, 但是这也算个bug吧, 毕竟其他的设置没有因为session的写的位置有过影响
 
-# 大括号里面为颜色组合
+# [ Color VARIABLES - Strings ]# {{{
+#--------------------------------------------
+# From : https://github.com/px/screenrc/blob/master/.screenrc
+
+# COLOR: colors codes are combinations of
+# [attribute modifier] [color description]
+# the manual talks of "attribute/color modifiers".
+# see the manual, section "STRING ESCAPES".
+#
+# Color table:
+# 0 Black . leave color unchanged
+# 1 Red b blue
+# 2 Green c cyan
+# 3 Brown / yellow d default color
+# 4 Blue g green b bold
+# 5 Purple k blacK B blinking
+# 6 Cyan m magenta d dim
+# 7 White r red r reverse
+# 8 unused/illegal w white s standout
+# 9 transparent y yellow u underline
+
 # k      black
 # r      red
 # g      green
@@ -144,6 +164,10 @@ caption always "%{=b k}%{c}[%H]%{-}  %+07=%-w%7L>%{g}%n %t%{-}%+w%-014<  %-012=%
 
 # %h     king@king:~
 
+# }}}
+
+
+# 大括号里面为颜色组合
 #------------------- advanced ----------------------
 # 单一窗口 无窗口列表，最后为窗口编号
 # 10:37AM Sat 26-06-2010  bash                                                         0
