@@ -671,8 +671,13 @@ alias gl='git ls-files'
 alias go='git log'
 alias gs='git status'
 
+alias gph="git push home master"
+alias gpe="git push etc master"
+alias gpo="git push origin master"
 
 
+# alias gh='git pull git@github.com:lvii/home.git master'
+# git pull git@github.com:lvii/ink.git debian:master
 
 # }}}
 
