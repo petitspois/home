@@ -511,6 +511,10 @@ norea /v        // vim:set et ft=conf fdm=marker sw=4 sts=4 ts=4 nopaste :<Esc>0
 norea /*v       /* vim:set et ft=conf fdm=marker sw=4 sts=4 ts=4 nopaste : */<Esc>0f=
 "norea #m        #vim:set expandtab filetype= foldmethod=marker nopaste softtabstop=4 shiftwidth=4 tabstop=4 :
 
+" python /edjango 文件 使用 utf8 解析"
+norea #d        # vim:set et ft=django fdm=marker sw=4 sts=4 ts=4 nopaste : coding:utf8<Esc>0f=
+norea #p        # vim:set et ft=python fdm=marker sw=4 sts=4 ts=4 nopaste : coding:utf8<Esc>0f=
+
 norea hphp      header("content-type:text/html;charset=utf8");
 
 " 命令行 缩写，使用于常用目录，可以节省，少打写字，快捷高效
@@ -610,7 +614,7 @@ highlight Folded  ctermfg=7
 " C++ 将每个函数折叠：
 "// vim:fdm=expr:foldexpr=getline(v\:lnum)=~'^\\S.*{'?'>1'\:1
 
-"使用" --------------------------- 作为分隔线（在块的最后一行）的折叠：
+" 使用" --------------------------- 作为分隔线（在块的最后一行）的折叠：
 " vim:fdm=expr:fde=getline(v\:lnum-1)=~'\\v"\\s*-{20,}'?'>1'\:1
 
 "}}}
@@ -644,81 +648,17 @@ autocmd FileType Makefile set noexpandtab
 ""autocmd! BufNewFile,BufReadPost  *.c   nmap < F5 > < ESC >:w< cr >:!clear && gcc < c -R >% -o test && ./test< cr >
 
 " css / html 文件 tab 两个空格缩进，删除时单个删除
-autocmd FileType css,html inoremap <buffer> <tab> <space><space>
+"autocmd FileType css,html inoremap <buffer> <tab> <space><space>
 
+" snippet django 补全扩展文件类型设置
+"autocmd FileType python set ft=django
+autocmd FileType python set ft=python.django
+autocmd FileType html set ft=htmldjango.html
 
 "}}}
 
 " [ Function 功能函数 ]"{{{
 """"""""""""""""""""""""""""""""""""""""""""
-
-" XXX 在 xterm 每次编辑输入时，会引起 visualbell
-" [ 光标颜色 ]"{{{
-"""""""""""""""""""""""""""""""""""""""""""""
-
-" Ubuntu中文论坛：在screen里面动态改变光标颜色
-" 第一句  进入 vim时候，光标变成红的
-" 第二句  进入插入模式，光标变成蓝色
-" 第三句  插入模式结束，光标变回红的
-" 第四句  退出 vim之后，光标变成绿色
-
-"" 在xterm里的screen里的vim里面
-"if &term =~ "xterm"
-"    silent !echo -ne "\e]12;OliveDrab1\007"
-"    let &t_SI="\e]12;violet\007"
-"    let &t_EI="\e]12;OliveDrab1\007"
-"    autocmd VimLeave * :!echo -ne "\e]12;LightSteelBlue\007"
-"
-""elseif &term =~ "screen"    " screen in urxvt or xterm
-""    :silent !echo -ne "\eP\e]12;IndianRed2\007\e\\"
-""    let &t_SI=\eP\e]12;RoyalBlue1\007\e\\"
-""    let &t_EI=\eP\e]12;IndianRed2\007\e\\"
-""    autocmd VimLeave * :!echo -ne "\eP\e]12;green\007\e\\"
-"
-"endif
-
-
-"}}}
-
-" [ 定时执行 ]"{{{
-"""""""""""""""""""""""""""""""""""""""""""""
-"let s:count= 0
-"function! s:TestFunction()
-"  echo 'Counting: ' . s:count
-"  let s:count= s:count + 1
-"  call feedkeys("ma", 't')
-"endfunction
-"set updatetime=1000    " 1 second
-"autocmd! CursorHold *    call s:TestFunction()
-
-"}}}
-
-" [ Tab 智能/自动补全 ]"{{{
-"""""""""""""""""""""""""""""""""""""""""""""
-
-"function! CleverTab()
-"    if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-"        return "\<Tab>"
-"    else
-"        return "\<C-N>"
-"endfunction
-"inoremap <Tab> <C-R>=CleverTab()<CR>
-
-"Tab 智能补全tags
-
-"fun! KeywordComplete()
-"let left = strpart(getline('.'), col('.') - 2, 1)
-"if left =~ "^$"
-"    return "\<Tab>"
-"elseif left =~ ' $'
-"    return "\<Tab>"
-"else
-"    return "\<C-N>"
-"endfun
-"
-"inoremap <silent> <Tab> <C-R>=KeywordComplete()<CR>
-
-"}}}
 
 " [ PHP 字典补全 ]"{{{
 """""""""""""""""""""""""""""""""""""""""""""
@@ -759,28 +699,6 @@ endfunction
 
 "}}}
 
-" [ 导出为 Html ]"{{{
-"""""""""""""""""""""""""""""""""""""""""""""
-" 转换为 html 格式化 命令
-":source $VIMRUNTIME/syntax/2html.vim
-":runtime! syntax/2html.vim
-
-" From : http://vim.wikia.com/wiki/Pasting_code_with_syntax_coloring_in_emails
-"function MyToHtml(line1,line2)
-"    " 使用 css 渲染
-"    let html_use_css=1
-"    " 对 pre 格式化 空格/换行 为 " "和 br
-"    let html_no_pre=1
-"    " 使用 xhtml 标准
-"    let use_xhtml=1
-"    exec a:line1.','.a:line2.'TOhtml'
-"endfunction
-"" 通过 输入 :MyToHtml 命令来进行转换
-"command -range=% MyToHtml :call MyToHtml(<line1>,<line2>)
-
-
-"}}}
-
 " [ PHP 语法检查 ]"{{{
 """""""""""""""""""""""""""""""""""""""""""""
 "
@@ -805,159 +723,17 @@ endfunction
 
 "}}}
 
-" [ 在两个不同的 vim 之间复制文本 ]"{{{
+" [ 导出为 Html ]"{{{
 """""""""""""""""""""""""""""""""""""""""""""
-
-""transfer/read and write one block of text between vim sessions
-" Usage:
-" `from' session:
-"     ma
-"     move to end-of-block
-"     xw
-"
-" `to' session:
-"     move to where I want block inserted
-"     xr
-
+" See : ~/text/vi.vim/comment.vimrc.txt
+"查看帮助：:help 2html
+":10,40TOhtml
 "}}}
 
-" [ vim 配置文件位置判断 ]"{{{
-"""""""""""""""""""""""""""""""""""""""""""""
-"if has("unix")
-"    nmap xr   :r $HOME/.vimxfer<CR>
-"    nmap xw   :'a,.w! $HOME/.vimxfer<CR>
-"    vmap xr   c<esc>:r $HOME/.vimxfer<CR>
-"    vmap xw   :w! $HOME/.vimxfer<CR>
-"else
-"    nmap xr   :r c:/.vimxfer<CR>
-"    nmap xw   :'a,.w! c:/.vimxfer<CR>
-"    vmap xr   c<esc>:r c:/.vimxfer<cr>
-"    vmap xw   :w! c:/.vimxfer<CR>
-"endif"
-
-"}}}
-
-" [ 创建 js 文件时自动生成 头注释 ]"{{{
-"""""""""""""""""""""""""""""""""""""""""""""
-"command -nargs=0 Addreadme :call Addreadme()
-"function Addreadme()
-"call setline(1,"/**")
-"call append(1," * @require : none")
-"call append(2," * @author : someone@bluehua.org")
-"call append(3," * @date : " . strftime("%Y-%m-%d"))
-"call append(4," * @description : this is a new file ")
-"call append(5," */")
-"endf
-":au BufNewFile *.js :Addreadme
-
-"}}}
-
-" [ 自动更新 时间戳 ]"{{{
+" [ 自动更新 时间戳 ]
 "--------------------------------------------
-
-" 按 F3 ，会得到当前光标处插入时间戳
-""imap <F3> <CR>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
-imap <F3> TTT : =strftime("%Y-%m-%d %a %I:%M %p")<CR>
-
-""nnoremap <F5> "=strftime("%c")<CR>P
-""inoremap <F5> <C-R>=strftime("%c")<CR>
-
-" 为 txt 自动更新时间戳
-autocmd BufWritePre,FileWritePre *.txt ks|call LastModified()|'s
-fun LastModified()
-    exe "1,$ s/TTT: .*/TTT:" .
-        \ strftime("%F %T") . "/e"
-endfun
-
-""function! LastModified()
-""  if &modified
-""    let save_cursor = getpos(".")
-""    let n = min([20, line("$")])
-""    keepjumps exe '1,' . n . 's#^\(.\{,10}TTT: \).*#\1' .
-""          \ strftime('%a %b %d, %Y  %I:%M%p') . '#e'
-""    call histdel('search', -1)
-""    call setpos('.', save_cursor)
-""  endif
-""endfun
-""autocmd BufWritePre *.txt call LastModified()
-
-" [ 十二月 24th, 2007 ]"{{{
-"--------------------------------------------
-" From : http://joyloft.net/?p=748
-" vim: 给源代码增加时间戳
-
-"function! Timestamp(comment)
-"    if (a:comment == '')
-"        return
-"    endif
-"    let pattern = '\('.a:comment.' Last Change:\s\+\)\d\{4}-\d\{2}-\d\{2} \d\{2}:\d\{2}:\d\{2}'
-"    let row = search('\%^\_.\{-}\(^\zs' . pattern . '\)', 'n')
-"    let now = strftime('%Y-%m-%d %H:%M:%S', localtime())
-"    if row != 0
-"        let new_row_str =substitute(getline(row), '^' . pattern , '\1', '') . now
-"        call setline(row, new_row_str)
-"    else
-"        normal m'
-"        silent! :1
-"        normal O
-"        let new_row_str = a:comment . " Last Change: " . now
-"        call setline(1, new_row_str)
-"        normal ''
-"    endif
-"endfunction
-"au BufWritePre *vimrc,*.vim       call Timestamp('"')
-"au BufWritePre *.h,*.cpp          call Timestamp('//')
-"au BufWritePre Makefile           call Timestamp('#')
-
-
-
-
-"}}}
-
-" [ vim wiki ]"{{{
-"--------------------------------------------
-
-" From : http://vim.wikia.com/wiki/VimTip97
-" 更新 前20 行中的 Last modified 时间戳
-" 'Last modified: ' can have up to 10 characters before (they are retained).
-" Restores cursor and window position using save_cursor variable.
-
-"function! LastModified()
-"  if &modified
-"    let save_cursor = getpos(".")
-"    let n = min([20, line("$")])
-"    keepjumps exe '1,' . n . 's#^\(.\{,10}Last modified: \).*#\1' .
-"          \ strftime('%a %b %d, %Y  %I:%M%p') . '#e'
-"    call histdel('search', -1)
-"    call setpos('.', save_cursor)
-"  endif
-"endfun
-"autocmd BufWritePre * call LastModified()
-
-"}}}
-
-" [ 2007 ]"{{{
-"--------------------------------------------
-
-" From : http://www.cnblogs.com/soli/archive/2007/09/07/885044.html
-" 在vim中使用autocmd命令在保存文件时自动插入最后修改日期和时间
-
-"autocmd BufWritePre,FileWritePre [._]vimrc ks|call LastModified()|'s
-"fun LastModified()
-"    exe "1,$ s/[L]astModified: .*/LastModified:" .
-"        \ strftime("%F %T") . "/e"
-"endfun
-
-
-
-
-
-"}}}
-
-
-
-"}}}
-
+" See : ~/text/vi.vim/comment.vimrc.txt
+":r! date "+%Y-%m-%d %H:%M:%S"
 
 
 
@@ -1065,33 +841,31 @@ let g:user_zen_settings = {
 
 "}}}
 
-
 " [ netrw vim 自带文件管理器 ]
 """""""""""""""""""""""""""""""""""""""""""""
 let g:netrw_winsize = 30
 nmap <silent> <leader>o :Sexplore!<cr>
-
 
 " [ template.vim ]
 """""""""""""""""""""""""""""""""""""""""""""
 " 取消自动载入模板
 let g:template_autoload = 0
 
+" [ xmledit ]
+"""""""""""""""""""""""""""""""""""""""""""""
+" xmledit 插件 .vim/fplugin/xml.vim
+" \5 匹配标签对，光标移到标签任意位置即可
+
+" 全局开启开关
+let loaded_xmledit = 0
+
+" 自动关闭 xhtml 单标签 <br /> <img />
+let xml_use_xhtml = 1
+"let xml_no_html = 0
+
 " [ autoclose.vim ]
 """""""""""""""""""""""""""""""""""""""""""""
 "let g:loaded_AutoClose = 1
-
-" [ html autoclose ]
-"""""""""""""""""""""""""""""""""""""""""""""
-
-" \5 匹配标签对，光标移到标签任意位置即可
-" xmledit 插件 -- xml.vim 
-" 自动关闭 xhtml 单标签 <br /> <img />
-let xml_use_xhtml = 1
-
-" autocmd 使 html_autoclose.vim 作用于xtml,xml文件
-" "au FileType xhtml,xml so $HOME/.vim/ftplugin/html_autoclosetag.vim
-
 
 " [ jquery.vim syntax 插件 ]
 """""""""""""""""""""""""""""""""""""""""""""
@@ -1103,26 +877,6 @@ au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 " vimer.com
 "au BufRead,BufNewFile *.js set syntax=jquery
 
-" [ give up 卸载的 插件 ]"{{{
-"""""""""""""""""""""""""""""""""""""""""""""
-" [ Buftabs.vim ]
-"""""""""""""""""""""""""""""""""""""""""""""
-" 仅显示 buffer 对应的文件名，不显示路径
-"let g:buftabs_only_basename=1
-" [ matchit.vim ]
-"""""""""""""""""""""""""""""""""""""""""""""
-" vim 6.0 后，已经将 matchit 集成
-" 默认在 /usr/share/vim/vim7/macros/matchit.vim
-
-
-
-
-
-
-"}}}
-
-
-
 
 "}}}
 
@@ -1130,10 +884,14 @@ au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 """"""""""""""""""""""""""""""""""""""""""""
 if(has("gui_running"))
 
-    " Linux   下字体设置
+    " Linux 字体设置
     set guifont=Envy\ Code\ R\ 10
+    " 中文双字节字符所用字体
+    "set guifontwide=FZXingKai\-S04\ 18
+    " Windows 字体设置
+    "set guifont=Envy_Code_R:h10
 
-    "窗口位置大小,会使 Tilda 打开无法填满窗口
+    " 窗口位置大小,会使 Tilda 打开无法填满窗口
     set lines=31
     set columns=110
 
@@ -1142,29 +900,15 @@ if(has("gui_running"))
     " 去除闪屏
     set novisualbell
     " 完全隐藏工具栏、菜单栏、左右滚动条
-    set guioptions-=T
-    set guioptions-=m
-    set guioptions-=r
-    set guioptions-=l
+    set guioptions-=Tmrl
 
     " 关闭 Alt 激活菜单
     set winaltkeys=no
 
-    " 设置双字节字符所使用的字体--中文
-    "set guifontwide=FZXingKai\-S04\ 18
-    " Windows 下字体设置
-    "set guifont=Envy_Code_R:h10
-
-    "查询相关设置：
-    " set options?
-    " set guifont?
-    "查看更多 Gvim 选项
-    "help guioptions
-
-"解决consle输出乱码
-language messages zh_CN.utf-8
-"解决中文菜单乱码
-""set langmenu=zh_CN.utf-8
+    "解决consle输出乱码
+    language messages zh_CN.utf-8
+    "解决中文菜单乱码
+    ""set langmenu=zh_CN.utf-8
 
 " <F2> 开关 菜单栏 / 工具栏
 "noremap <silent> <F2> :if &guioptions =~# 'T' <Bar>
@@ -1185,3 +929,79 @@ endif
 " set guifont?
 "查看更多 Gvim 选项
 "help guioptions
+
+" [ django ]"{{{
+"--------------------------------------------
+
+" [ django apps 文件打开 快捷键 ]"{{{
+"--------------------------------------------
+" From : http://code.djangoproject.com/wiki/UsingVimWithDjango
+
+let g:last_relative_dir = ''
+nnoremap \1 :call RelatedFile ("models.py")<cr>
+nnoremap \2 :call RelatedFile ("views.py")<cr>
+nnoremap \3 :call RelatedFile ("urls.py")<cr>
+nnoremap \4 :call RelatedFile ("admin.py")<cr>
+nnoremap \5 :call RelatedFile ("tests.py")<cr>
+nnoremap \6 :call RelatedFile ( "templates/" )<cr>
+nnoremap \7 :call RelatedFile ( "templatetags/" )<cr>
+nnoremap \8 :call RelatedFile ( "management/" )<cr>
+nnoremap \0 :e settings.py<cr>
+nnoremap \9 :e urls.py<cr>
+
+fun! RelatedFile(file)
+    #This is to check that the directory looks djangoish
+    if filereadable(expand("%:h"). '/models.py') || isdirectory(expand("%:h") . "/templatetags/")
+        exec "edit %:h/" . a:file
+        let g:last_relative_dir = expand("%:h") . '/'
+        return ''
+    endif
+    if g:last_relative_dir != ''
+        exec "edit " . g:last_relative_dir . a:file
+        return ''
+    endif
+    echo "Cant determine where relative file is : " . a:file
+    return ''
+endfun
+
+fun SetAppDir()
+    if filereadable(expand("%:h"). '/models.py') || isdirectory(expand("%:h") . "/templatetags/")
+        let g:last_relative_dir = expand("%:h") . '/'
+        return ''
+    endif
+endfun
+autocmd BufEnter *.py call SetAppDir()
+
+
+
+"}}}
+
+" [ snippet ]
+"--------------------------------------------
+" 设置文件类型 :set ft=python.django :set ft=htmldjango.html
+"autocmd FileType python set ft=python.django
+"autocmd FileType html set ft=htmldjango.html
+
+" [ templates 文件添加 大括号标签 ]"{{{
+"--------------------------------------------
+"" template 文件添加 包围的 大括号标签，依赖 surround.vim 插件 [?]
+"" 在 visual 模式，使用
+"" 'sb' for block
+"" 'si' if statement
+"" 'sw' with statement
+"" 'sc' comment
+"" 'sf' for statement
+"let g:surround_{char2nr("b")} = "{% block\1 \r..*\r &\1%}\r{% endblock %}"
+"let g:surround_{char2nr("i")} = "{% if\1 \r..*\r &\1%}\r{% endif %}"
+"let g:surround_{char2nr("w")} = "{% with\1 \r..*\r &\1%}\r{% endwith %}"
+"let g:surround_{char2nr("c")} = "{% comment\1 \r..*\r &\1%}\r{% endcomment %}"
+"let g:surround_{char2nr("f")} = "{% for\1 \r..*\r &\1%}\r{% endfor %}"
+
+"}}}
+
+
+
+"}}}
+
+
+

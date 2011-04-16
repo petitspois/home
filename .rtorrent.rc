@@ -1,3 +1,4 @@
+# vim:set et ft=conf fdm=marker sw=4 sts=4 ts=4 nopaste :
 # Maximum and minimum number of peers to connect to per torrent.
 # 最小连接数	最大连接数
 # 下载中的任务(leech)，现有连接数<40时，
@@ -16,22 +17,28 @@ max_uploads = 15
 
 # Global upload and download rate in KiB. "0" for unlimited.
 download_rate = 0
-upload_rate = 200
+upload_rate = 160
 
-# Default directory to save the downloaded torrents.
-directory =/home/download/m
+# [ 下载相关目录 ]# {{{
+#--------------------------------------------
+
+# 默认下载目录
+directory =/home/fun/m
 
 # Default session directory. Make sure you don't run multiple instance
 # of rtorrent using the same session directory. Perhaps using a
 # relative path?
-session = /home/download/m/bt.tmp
+# session 临时文件目录
+session = /home/fun/m/bt.tmp
 
 # Watch a directory for new torrents, and stop those that have been
 # deleted.
 # 通过samba或scp往这个目录传种子，就会自动开始下载
-schedule = watch_directory,5,5,load_start=/home/download/m/bt.peers/*.torrent
+schedule = watch_directory,5,5,load_start=/home/fun/m/bt.peers/*.torrent
 # */
 # schedule = untied_directory,5,5,stop_untied=
+
+# }}}
 
 # Close torrents when diskspace is low.
 schedule = low_diskspace,5,60,close_low_diskspace=100M
@@ -140,21 +147,6 @@ system.method.set = group.seeding.ratio.command, d.close=, d.erase=
 #如果 添加 表示 关闭+删除，
 #也可增加其他设定
 #注意！不要用 d.erase是删除任务且如果有其他设定将删掉全部文件。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ########################################################################
 
