@@ -1,0 +1,32 @@
+# vim:set et ft=conf fdm=marker sw=4 sts=4 ts=4 nopaste :
+# XXX .getmail 目录 700 权限 getmailrc 644
+[options]
+verbose = 1
+read_all = false
+delete = false
+message_log = ~/mail/log/getmail.log
+
+[retriever]
+type = SimplePOP3SSLRetriever
+server = pop.gmail.com
+username = volcanowill@gmail.com
+port = 995
+password = "你的密码"
+
+# 不是 MDA 过滤整理邮件
+#[destination]
+#type = Maildir
+#path = ~/mail/
+
+[destination]
+type = MDA_external
+path = /usr/bin/maildrop
+unixfrom = True
+
+
+
+
+
+
+
+
