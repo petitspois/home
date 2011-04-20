@@ -676,6 +676,8 @@ alias gca='git commit -a -m'
 alias gl='git ls-files'
 alias go='git log'
 alias gs='git status'
+alias gb='git branch'
+alias gbc='git checkout'
 
 alias gph="git push home master"
 alias gpe="git push etc master"
