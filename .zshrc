@@ -327,6 +327,12 @@ setopt extended_glob
 # 展开 达括号中到表达式 [?]
 setopt brace_ccl
 
+
+# shell 不会按照远程地址上的文件去扩展参数，# scp ip:/home/tommy/*
+# 本地当前目录中，不存在 ip:/home/tommy/*，匹配失败
+# 默认情况下，bash 在匹配失败时就使用原来的内容，zsh 则报告一个错误
+# zsh 中执行 setopt nonomatch 则告诉它不要报告 no matches 的错误，而是当匹配失败时直接使用原来的内容
+# XXX 实际上，不管是 bash 还是 zsh，不管设置了什么选项，只要把 "ip:/home/tommy/*" 加上引号，可解决问题
 setopt nonomatch
 
 # 在改变路径是，若包含 链接目录，要如何处理 [?]

@@ -8,7 +8,9 @@ group user
 "--------------------------------------------
 
 " 加载 runtimepath 定义路径下面的文件。将其他定义，独立出来，可以控制是否加载
-runtime my.vimp
+" runtime 默认目录是 .pentadactyl ，source 默认目录，是家目录
+"runtime ~/.me/penta.url
+source ~/.me/penta.url
 
 set history=25
 set wildcase=:smart

@@ -6,7 +6,7 @@
 # 李雪白 2007年 配置mutt做邮件客服端
 # http://home.ustc.edu.cn/~lixuebai/GNU/MuttConfig.html
 
-
+# 浅述mutt邮件客户端  newnuy@gmail.com 2010-10-06 http://newnuy.com/?p=24
 
 
 # }}}
@@ -57,12 +57,18 @@ set sendmail="/usr/bin/msmtp"
 set from="guodong <volcanowill@gmail.com>"
 set use_from=yes
 
-#add -f <from> to sendmail command line
+# add -f <from> to sendmail command line
 # 把mutt发送的from域作为发送邮件的 sender(否则用user@localdomian)
 #set envelope_from=yes
 set sendmail_wait=0
 
-
+# From : newnuy
+## 对于多个发信账户（比如公司邮箱和私人邮箱），进行账户的切换
+#set envelope_from = yes          # 导致可以切换发信账户
+## Alt+2 切换到公司邮箱账户
+#macro generic "<esc>2" ":set from='newnuy  <newnuy_7_realtek.com>'"
+## Alt+1 切换到gmail邮箱账户
+#macro generic "<esc>1" ":set from='newnuy  <newnuy_7_gmail.com>'"
 
 
 # [ mutt 自带原生 SMTP 发送 ]# {{{
@@ -86,8 +92,9 @@ set sendmail_wait=0
 
 set editor="vim"
 #set editor="vim -c 'set tw=72 et' '+/^$' "
+# 是否把邮件头也放在编辑器里可以修改
 set edit_headers=yes
-
+#set header     = no          # 回信时不引用信件头
 set realname='guodong'
 
 # 回信时是引用原文
@@ -129,7 +136,12 @@ set indent_str="> "
 #set send_charset="us-ascii:utf-8"
 set send_charset="us-ascii:iso-8859-1:gb2312:utf-8"
 
-
+# From : newnuy
+charset-hook ^us-ascii$ gb2312       # 用gb2312编码显示未设置编码的信件
+charset-hook ^big5$ big5             # 用big5编码显示繁体信件
+charset-hook !utf-8 gb2312           # 用gb2312编码显示非utf-8编码的信件
+set assumed_charset    = "gb2312"    # 用gb2312编码显示未经MIME编码的信件
+set rfc2047_parameters = yes         # 用gb2312编码显示中文附件名
 
 # }}}
 
@@ -180,7 +192,7 @@ color header brightblue default "^(From|Subject):"
 
 # }}}
 
-#macro index G "!getmail\n" "Invoke getmail"
+macro index G "!getmail\n" "Invoke getmail"
 #macro pager G "!getmail\n" "Invoke getmail"
 
 # 按q退出时，是否提示(ask-yes,ask-no)，还是直接就退出了(yes)，还是根本不理你(no)
@@ -206,20 +218,22 @@ set wait_key=yes
 # 要把信件存到另一个信箱，而这个信箱已经存在时，是否提示附加
 set noconfirmappend
 
-# 是否把邮件头也放在编辑器里可以修改
-set edit_headers=no
-
 # 用 pager 看信件时，在 index 留出多少行显示邮件列表
 set pager_index_lines=5
 
+set sort=reverse-threads            # 新的在最上面，按thread归档
+set sort_aux=last-date-received     # 同一个thread里面，最新的在最上面
+
+## 切换收信箱和发件箱的快捷键
+#macro index I "c!\n" "Go to inbox"          # 列表页按Shift+I切换到inbox
+#macro pager I "c!\n" "Go to inbox"          # 信件页按Shift+I切换到inbox
+#macro index S "<change-folder>=sent\n" "Go to sent"
+#macro pager S "<change-folder>=sent\n" "Go to sent"
 
 
-
-
-
-
-
-
+source ~/.me/mutt.a
+# 按 a 可把地址加入
+set alias_file = ~/.me/mutt.a
 
 
 
