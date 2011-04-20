@@ -740,6 +740,8 @@ alias mm="sudo mentohust"
 alias bb="bitlbee -c ~/.bitlbee.conf"
 alias zz="source ~/.zshrc"
 
+# 无线无线链接
+alias ww="wicd-curses"
 
 
 
