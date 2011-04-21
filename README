@@ -1,48 +1,45 @@
 # vim:set et ft=conf fdm=marker sw=4 sts=4 ts=4 nopaste :
 
-.Xdefaults
-.aria2/aria2.conf
-.bashrc
-.bitlbee.conf
-.config/fcitx/config
-
 # openbox
 .config/openbox/autostart.sh
 .config/openbox/menu.xml
 .config/openbox/rc.xml
 
-.conkyrc
+# 通用
+.Xdefaults
+.aria2/aria2.conf
+.bashrc
+.bitlbee.conf
 .fonts.conf
 .fvwm/config
 .fvwm/fvwm.dock
-# git
 .gitconfig
-.gitignore
+.gtk-bookmarks
 
-.gtkrc-2.0
 .lftprc
-.mpdconf
-.musca_start
-.muttrc
-.my.cnf
 .ncmpcpp/config
 .pentadactylrc
-# pidgin
 .purple/prefs.xml
 .rtorrent.rc
 .screenrc
 .stalonetrayrc
 .tmux.conf
 .toprc
-
 .vimrc
-.xinitrc
-.xmodmap
 .zshrc
-README
 
-# 删除 git rm --cache
-.vimperator/colors/status.vimp
-.vimperator/colors/sweets.vimp
-.vimperatorrc
+# 差异
+.mailfilter
+.mutt/muttrc
+.my.cnf
+.conkyrc
+.mpdconf
+.gitignore
+
+# 删除
+.gtkrc-2.0
+.xinitrc
+.musca_start
+.xmodmap
+.config/fcitx/config
 
