@@ -18,65 +18,32 @@
 
 # [ 忽略普通目录 ]# {{{
 #--------------------------------------------
-bs/
-cnf/
-Desktop/
-gfvwm/
-green_fvwm/
-me/
-public_html/
-python/
-script/
-sfvwm/
-svn/
-workspace/
-black.fvwm/
-dock.fvwm/
-l.fvwm/
-simple.fvwm/
-xp.fvwm/
 
-# [ debian ]
-#--------------------------------------------
-book/
-code/
-doc/
-fedore/
-from.etc/
-kou/
-text/
-todo/
-
-# [ new arch ]
-#--------------------------------------------
-fedora/
-manual/
-yuer/
-
-Greens.mwb
-mypubkey.txt
-public.key
-tongbu.txt
-wb.log
-
-
-
-
-
-# 记事本
-arch.text/
-fedora.text/
-f.debian/
-debian/
-
-awesome/
-kdic-computer.tar.gz
-mysite-env/
-mywebsite/
-noscript
-pic/
-potato_weekly.pdf
-tiger.gif
+0.bashrc
+0.conkyrc
+bitlbee.conf
+book
+bs
+code
+Desktop
+django
+doc
+download
+fedora.home
+J2SE
+kou
+nginx.conf
+README
+samba
+servlet
+temp.txt
+text
+to.bac.txt
+todo
+to.etc
+wireless.png
+workspace
+yue
 
 # }}}
 
@@ -110,7 +77,6 @@ tiger.gif
 !.bashrc
 !.bitlbee.conf
 !.conkyrc
-!.emacs
 !.fonts.conf
 !.gtk
 !.gtkrc-2.0
@@ -126,9 +92,7 @@ tiger.gif
 !.stalonetrayrc
 !.tmux.conf
 !.vimrc
-#!.vimperatorrc
 !.Xdefaults
-!.xinitrc
 !.zshrc
 
 
@@ -138,14 +102,13 @@ tiger.gif
 #!.emacs.d/
 #!.fvwm/config
 #!.fvwm/fvwm.dock
-#!.vimperator/
+#!.ssh/
+#!.vim/
+
 !.fvwm/config
 !.aria2/
 !.purple/prefs.xml
-#!.ssh/
-#!.vim/
 !.config/awesome/
-!.config/fcitx/config
 !.lftp/rc
 !.ncmpcpp/config
 

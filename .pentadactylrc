@@ -31,7 +31,7 @@ set titlestring="Firefox -- ink"
 " 使用 :open 命令打开参数时，若参数不是URL，调用的搜索引擎。默认：google，
 " 搜索引擎关键词，使用 :dialog searchengines 查看搜索引擎对应的关键字
 "set defsearch=google
-"set defsearch=ssl
+set defsearch=ssl
 
 
 
@@ -314,8 +314,8 @@ set passkeys=https:'//mail.google.comcom|www.google.com/reader/:jk'
 
 "style -name=status-bar chrome://* #status-bar {font-family: monospace !important; font-weight: normal !important;} #dactyl-statusline-field-container {padding-right: 5px !important;}
 
-hi StatusLine color: white !important; background: #444444 !important;
-hi StatusLineNormal color: white !important; background: #444444 !important;
+"hi StatusLine color: white !important; background: #444444 !important;
+"hi StatusLineNormal color: white !important; background: #444444 !important;
 hi CmdCmdLine color: black !important; background: #8a8a8a !important;
 "hi StatusLineBroken background:#f0f0f0 !important;
 "hi StatusLineSecure background:#f0f0f0 !important;

@@ -222,8 +222,8 @@ case $TERM in
             }
 
         # 定制 tmux 标题栏 # actually in tmux !
-        elif [ -n $TMUX ]; then
-            function title() {  print -nP "\e]2;$1\a" }
+        #elif [ -n $TMUX ]; then
+            #function title() {  print -nP "\e]2;$1\a" }
         else
             function title() {}
         fi
@@ -725,7 +725,7 @@ alias exit="clear; exit"
 alias c='clear'
 alias m='mutt'
 alias p='pwd'
-#alias t='tmux'
+alias tx='tmux'
 alias s='screen'
 alias sS='screen -S '
 alias sl='screen -ls'

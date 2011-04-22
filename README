@@ -37,9 +37,5 @@
 .gitignore
 
 # 删除
-.gtkrc-2.0
-.xinitrc
-.musca_start
-.xmodmap
-.config/fcitx/config
+.gtkrc-2.0 .xinitrc .musca_start .xmodmap .config/fcitx/config
 

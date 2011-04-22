@@ -234,32 +234,6 @@ set matchtime=2
 " [ Indent 缩进 ]"{{{
 """"""""""""""""""""""""""""""""""""""""""""
 
-" ? [输入]空格代替制表符，文本不再出现 tab [?]，被空格取代
-" 要输入 tab，使用 ctrl-v <tab>
-set expandtab
-
-" tab 对应4个空格宽度，python，平衡
-set tabstop=4
-
-" shift >> / cindent 缩进时等价的空格长度
-set shiftwidth=4
-
-" 非空字符后使用正在的tab，空字符下使用 shiftwidth定义的空格长度替换tab 
-""set smarttab
-
-" 4个空格-->进位为1个tab( 类似四舍五入进位 ) [添加/删除]
-" vim 会尽量将 多个空格转换制表符，以减少存储字符数
-set softtabstop=4
-
-
-" 开关 行号 与 tab/空白 填充符"
-"nnoremap <F10> :set nu! list! paste!<CR>
-" setlocal 只对当前标签使用，不进行全局设置
-nnoremap <F10> :setlocal nu! list! paste!<CR>
-
-
-"}}}
-
 " [ Tab 缩进 ]"{{{
 """"""""""""""""""""""""""""""""""""""""""""
 
@@ -279,7 +253,32 @@ set cindent
 
 "}}}
 
-" [ Tabpage 标签页 ]"{{{
+" ? [输入]空格代替制表符，文本不再出现 tab [?]，被空格取代
+" 要输入 tab，使用 ctrl-v <tab>
+set expandtab
+
+" tab 对应4个空格宽度，python，平衡
+set tabstop=4
+
+" shift >> / cindent 缩进时等价的空格长度
+set shiftwidth=4
+
+" 非空字符后使用正在的tab，空字符下使用 shiftwidth定义的空格长度替换tab 
+""set smarttab
+
+" 4个空格-->进位为1个tab( 类似四舍五入进位 ) [添加/删除]
+" vim 会尽量将 多个空格转换制表符，以减少存储字符数
+set softtabstop=4
+
+" 开关 行号 与 tab/空白 填充符"
+"nnoremap <F10> :set nu! list! paste!<CR>
+" setlocal 只对当前标签使用，不进行全局设置
+nnoremap <F10> :setlocal nu! list! paste!<CR>
+
+
+"}}}
+
+" [ tab page 标签页 ]"{{{
 """"""""""""""""""""""""""""""""""""""""""""
 
 " tabnew <==> tabedit
