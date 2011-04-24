@@ -45,8 +45,9 @@ set titlestring="Firefox -- ink"
 " [ 自定义缩写 ]"{{{
 "--------------------------------------------
 
+noremap b :bmarks
 " c 键进入命令行模式
-map c :
+noremap c :
 
 " 屏幕滚动
 noremap j 5j
@@ -91,7 +92,7 @@ noremap <leader>H   :dialog     history<CR>
 noremap <leader>i   :dialog     pageinfo<CR>
 noremap <leader>I   :dialog     import<CR>
 " 若不注释与 m 有关的按键定义，会与 mark 标记冲突
-""noremap <leader>m   :dialog     addbookmark<CR>
+noremap <leader>m   :dialog     addbookmark<CR>
 noremap <leader>o   :dialog     openfile<CR>
 noremap <leader>p   :dialog     preferences<CR>
 " 书签 / 历史记录 详细管理

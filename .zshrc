@@ -753,7 +753,7 @@ alias ww="wicd-curses"
 # [ keychain ssh rsync 同步 ]# {{{
 #--------------------------------------------
 alias kk='keychain .ssh/me/id_dsa_10.11.1'
-alias ks='source .keychain/king-sh'
+alias ks='source .keychain/$HOSTNAME-sh'
 # 统一同步目录路径，local --> remote
 alias lru='rsync -altvz --delete -e ssh /home/ink/text/ ubuntu:~/.wen/text'
 alias lrc='rsync -altvz --delete -e ssh /home/ink/text/ cjb:~/.wen/text'
