@@ -11,6 +11,7 @@
 # c00kiemon5ter https://github.com/c00kiemon5ter/dotfiles/blob/master/.mutt/muttrc
 # Stebalien https://github.com/Stebalien/dotfiles/tree/master/email
 # mutt 中级技巧 2009-02-11 http://hi.baidu.com/yunpengwu/blog/item/66922b2ee41247574fc22611.html
+# 张连成 #http://zhangliancheng.com/2011/03/use-mutt-to-receive-and-send-gmail/
 
 # }}}
 
@@ -43,12 +44,17 @@ set postponed=+drafts
 set mbox=+read
 #move mail from spool to mailbox when quiting ?
 set move=no
-# 对邮件头作了暂存，从而加速邮件的显示，[?] 无效
-#set header_cache=~/.hcache
+
+# 默认值：no 设为yes，标记为被删除的邮件将被保存下来而不是被删除
+# 注：仅适用于 maildir 风格的邮箱。此设置将不会影响其他类型的信箱
+#set maildir_trash=no
+
+#set trash="~/.mail/trash/"
 
 # From : http://www.fwolf.com/blog/post/306
 # 指定的是一个目录，这样每个邮件目录都会在这个目录下建立一个缓存文件
 # 也可以直接指定一个独立的文件, 打开有几千封邮件的文件夹的时候，都要花费时间建立索引、排序
+#set header_cache=~/.hcache
 set header_cache="~/mail/cache/"
 # 禁止对已缓存内容的校验, 除了mutt 不会再用另外一个程序去修改mail目录下的内容
 set maildir_header_cache_verify=no
@@ -58,7 +64,7 @@ set maildir_header_cache_verify=no
 #set message_cachedir=${HOME}/.mutt/cache/bodies
 
 # 按 c tab tab 列出监视是否有新邮件邮箱
-mailboxes +inbox +cpyug +drafts
+mailboxes +inbox +drafts +cpyug +hzlug +trash
 
 
 
@@ -78,6 +84,9 @@ set wait_key=yes
 
 # 默认：no
 #set beep_new=yes
+#set check_new=yes
+#do not resume postponed mail
+#set recall=no
 
 # 默认：yes，当没有阅读新邮件而退出信箱时，是否将这些未读邮件标记为旧的
 # yes，下次启动mutt，这些邮件在index菜单中将被标记为"O"，表示它们是旧的
@@ -113,12 +122,13 @@ set noconfirmappend
 #--------------------------------------------
 
 # 使用箭头 "->" 指示当前选择的条目，而不是高亮整个条目
-set arrow_cursor
+#set arrow_cursor
 
 # 默认：no，有别名与发件人地址匹配，是否在index菜单中会显示别名的"个人"名称
 #set reverse_alias
 
 # 移动到最后一封邮件时，是否会重新移动到开始 [?]
+# 避免整页整页的翻页，一行一行的翻页
 set menu_scroll
 
 # 按 "t" 或者 "D" 之类的标记操作时，光标是否自动移动到下一封信件
@@ -126,6 +136,8 @@ set resolve=yes
 
 set sort=reverse-threads            # 新的在最上面，按thread归档
 set sort_aux=last-date-received     # 同一个thread里面，最新的在最上面
+# [?] 文件浏览器中的条目。默认，alpha 字母 showing mbox list default to newest first
+#set sort_browser=reverse-date
 
 #set sort=threads
 #set sort_aux=reverse-last-date-received
@@ -187,18 +199,29 @@ set sendmail_wait=-1
 # 把mutt发送的from域作为发送邮件的 sender(否则用user@localdomian)
 #set envelope_from=yes
 
+# 默认：yes，mutt 发送邮件时会生成 From: 字段。设为no，就不会生成 From: 字段，除非使用命名 my_hdr 指定一个
 set use_from=yes
 set realname='guodong'
 set from="guodong <volcanowill@gmail.com>"
 
+# 设置自己的邮件头
+#set hdrs
+#my_hdr From: guodong<volcanowill@gmail.com>
+#my_hdr Reply-To: guodong<volcanowill@gmail.com>
+#my_hdr X-PGP-Key-ID:3038867F
+#my_hdr X-Operating-System: gnu/linux
+# 可用来备份到收件箱
+#my_hdr Bcc: roylzuo+sent@gmail.com
+
 # 反解析姓名 # Set different from information
 alternates '^volcanowill@gmail.com$'
+#alternates 'royl(ez|zuo)@gmail.com|lzuo@(hkusua|graduate).hku.hk|z.le@uq.edu.au'
 set reverse_name=yes
 set reverse_realname=yes
 
-
 # From : newnuy
 ## 对于多个发信账户（比如公司邮箱和私人邮箱），进行账户的切换
+# From : roylez add -f <from> to sendmail command line
 #set envelope_from = yes          # 导致可以切换发信账户
 ## Alt+2 切换到公司邮箱账户
 #macro generic "<esc>2" ":set from='newnuy  <newnuy_7_realtek.com>'"
@@ -224,6 +247,10 @@ set reverse_realname=yes
 
 # [ reply 回复 ]# {{{
 #--------------------------------------------
+
+# 默认：no，不会将自己视为收件人
+#unset metoo
+#unset reply_self
 
 set editor="vim"
 #set editor="vim -c 'set tw=72 et' '+/^$' "
@@ -300,6 +327,7 @@ set send_charset="us-ascii:iso-8859-1:gb2312:utf-8"
 charset-hook ^us-ascii$ gb2312       # 用gb2312编码显示未设置编码的信件
 charset-hook ^big5$ big5             # 用big5编码显示繁体信件
 charset-hook !utf-8 gb2312           # 用gb2312编码显示非utf-8编码的信件
+charset-hook ^iso-8859-1$ gb2312     # 张连成
 set assumed_charset    = "gb2312"    # 用gb2312编码显示未经MIME编码的信件
 set rfc2047_parameters = yes         # 用gb2312编码显示中文附件名
 
@@ -320,6 +348,11 @@ ignore *
 
 #unignore From: To: Reply-To: Subject: Date: CC: BCC: X-Mailer: User-Agent:
 #hdr_order From: Reply-To: Date: To: Cc: Subject: User-Agent:
+
+#unignore Date: From: User-Agent: X-Mailer X-Operating-System To: \
+#Cc: Reply-To: Subject: Mail-Followup-To:
+#hdr_order Date: From: User-Agent: X-Mailer X-Operating-System To: \
+#Cc: Reply-To: Subject: Mail-Followup-To:
 
 unignore From: To: Cc:
 hdr_order From: To: Cc:
@@ -381,7 +414,9 @@ set quote_regexp="^([A-Za-z ]+>|[]%>:|}-][]>:|}-]*)"
 
 # 默认值："^(re([\[0-9\]+])*|aw):[ \t]*" 默认值对应英文的"Re:"与德文的"Aw:"
 # when threading and replying 识别回复信息正则表达式
-set reply_regexp='^((re(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*'
+#set reply_regexp='^((re(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*'
+# From : roylez
+set reply_regexp="^(re([\[0-9\]+])*|aw|回复)(:[ \t]|：)"
 
 
 
@@ -390,7 +425,7 @@ set reply_regexp='^((re(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*'
 
 # }}}
 
-# [ mailist ]# {{{
+# [ mailist 邮件列表 ]# {{{
 #--------------------------------------------
 
 # From : Stebalien # 发送邮件时是否生成 Mail-Followup-To: 字段
@@ -398,6 +433,26 @@ set reply_regexp='^((re(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*'
 #set followup_to = no
 #set honor_followup_to = no
 
+# Sets 'Mail-Followup-To' header
+#set followup_to=yes
+#set honor_followup_to=yes
+
+# See your own posts using fcc
+#fcc-hook mutt-user +mutt
+
+lists mutt-users
+subscribe mutt-users
+
+# for mailing lists
+lists ubuntu-users@lists.ubuntu.com
+lists ubuntu-devel@lists.ubuntu.com
+lists seasar-user@ml.seasar.org
+lists issue@seasar.org
+lists vim_use@googlegroups.com
+lists uclibc@uclibc.org
+
+subscribe ubuntu-users@lists.ubuntu.com
+subscribe ubuntu-devel@lists.ubuntu.com
 # 标记一个地址为邮件列表，用 "list" 命令。标记一个地址为你已经订阅的邮件列表，用"subscribe"命令
 subscribe python-cn@googlegroups.com hzlug@googlegroups.com
 
@@ -407,16 +462,13 @@ subscribe python-cn@googlegroups.com hzlug@googlegroups.com
 
 # }}}
 
-# 按 a 可把地址加入地址簿
-set alias_file = ~/.me/mutt.a
-source ~/.me/mutt.a
-
 # [ MIME 附件 mailcap ]# {{{
 #--------------------------------------------
 
 #set mailcap_path="${HOME}/.mutt/mailcap"
 
 #auto_view text/html
+#auto_view text/html application/msword
 
 # [ Reply-To ]# {{{
 #--------------------------------------------
@@ -463,19 +515,18 @@ set forward_decode
 # [ macro 宏 ]# {{{
 #--------------------------------------------
 
-macro index G "!getmail\n" "Invoke getmail"
-#macro pager G "!getmail\n" "Invoke getmail"
+macro index .G "!getmail\n" "Invoke getmail"
+#macro pager .G "!getmail\n" "Invoke getmail"
 
 ## 切换收信箱和发件箱的快捷键
-#macro index I "c!\n" "Go to inbox"          # 列表页按Shift+I切换到inbox
-#macro pager I "c!\n" "Go to inbox"          # 信件页按Shift+I切换到inbox
-#macro index S "<change-folder>=sent\n" "Go to sent"
-#macro pager S "<change-folder>=sent\n" "Go to sent"
-
-macro index .n "<tag-pattern>~N<enter><tag-prefix><clear-flag>N<clear-flag>" "Catchup all new messages"
-macro generic,index,pager A "<shell-escape>abook<return>" "launch abook"
-macro index,pager a "<pipe-message>abook --add-email<return>" "add the sender address to abook"
 macro index .. "c=\n" "Go to inbox"
+macro index I "c!\n" "Go to inbox"          # 列表页按Shift+I切换到inbox
+macro pager I "c!\n" "Go to inbox"          # 信件页按Shift+I切换到inbox
+macro index S "<change-folder>=sent\n" "Go to sent"
+macro pager S "<change-folder>=sent\n" "Go to sent"
+
+# 标记所有 New 邮件
+macro index .n "<tag-pattern>~N<enter><tag-prefix><clear-flag>N<clear-flag>" "Catchup all new messages"
 
 
 
@@ -486,35 +537,37 @@ macro index .. "c=\n" "Go to inbox"
 # [ key bind ]# {{{
 #--------------------------------------------
 
-### bindings ~ vim like
-## these just give me headaches
+## 注释掉了让人头痛的快捷键
 ##bind index,pager \# noop
 ##bind index i noop
+
 #bind pager i exit
-#bind pager / search
-#bind pager <up> previous-line
-#bind pager <down> next-line
-#bind pager k previous-line
-#bind pager j next-line
-#bind pager gg top
-#bind pager G bottom
-#bind index gg first-entry
-#bind index G last-entry
-#bind pager K previous-undeleted
-#bind pager J next-undeleted
-#bind index K previous-unread
-#bind index J next-unread
-#bind index,pager R group-reply
+bind pager /        search
+bind pager <up>     previous-line
+bind pager <down>   next-line
+bind pager <        previous-line
+bind pager >        next-line
+bind pager k        previous-line
+bind pager j        next-line
+#bind pager K        previous-undeleted
+#bind pager J        next-undeleted
+bind pager gg       top
+bind pager G        bottom
+
+bind index [        previous-line
+bind index ]        next-line
+bind index \cf      next-page
+bind index \cb      previous-page
+bind index gg       first-entry
+bind index G       last-entry
+bind index K        previous-unread
+bind index J        next-unread
+
+bind index,pager R  group-reply
+bind index ,g       group-reply
 
 
-#bind pager k previous-line
-#bind pager < previous-line
-#bind pager j next-line
-#bind pager > next-line
-#bind pager down next-page
-#bind pager up previous-page
-#bind index [ previous-line
-#bind index ] next-line
+
 
 
 
@@ -525,8 +578,34 @@ macro index .. "c=\n" "Go to inbox"
 #--------------------------------------------
 
 #folder-hook . "push \"l!(~s 'FOLDER INTERNAL DATA')\n*\""
-#my_hdr X-Operating-System: gnu/linux
 
+## 删除到trash目录
+#folder-hook . 'macro index d "~/mail/trash\r"'
+#folder-hook ~/mail/trash/ 'bind index d delete-message'
+
+# 垃圾箱
+folder-hook . 'macro index d "$folder/trash\r"'
+folder-hook $folder/trash 'bind index d delete-message'
+
+
+
+
+# }}}
+
+# [ abook / alias_file 地址簿 ]# {{{
+#--------------------------------------------
+
+# 按 a 可把地址加入地址簿
+set alias_file = ~/.me/mutt.a
+source ~/.me/mutt.a
+
+# 地址簿
+set query_command = "abook --mutt-query '%s'"
+
+# 打开 abook 地址博，联系人
+macro generic,index,pager A "<shell-escape>abook<return>" "launch abook"
+# 添加联系人到 abook
+macro index,pager a "<pipe-message>abook --add-email<return>" "add sender to abook"
 
 
 
@@ -540,9 +619,6 @@ macro index .. "c=\n" "Go to inbox"
 # https://github.com/trapd00r/configs/blob/master/muttprintrc
 #set print_command="muttprint -r $HOME/muttprintrc"
 
-# 地址簿
-#set query_command = "abook --mutt-query '%s'"
-#macro index,pager a "<pipe-message>abook --add-email-quiet<return>" "add the sender to abook"
 
 ## [ GnuPG 加密 ]# {{{
 ##--------------------------------------------
