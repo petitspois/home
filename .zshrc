@@ -74,6 +74,10 @@ export TERM=xterm-256color
 
 export PATH="${PATH}:${HOME}/code/shell:${HOME}/todo"
 export CDPATH='.:..:../..:~:~/text:~/public_html/:/home/download/'
+
+# pinax 下载的 django 插件添加到 PYTHONPATH 中，其他程序也可以调用
+export PYTHONPATH="$PYTHONPATH:${HOME}/code/pinax/lib/python2.7/site-packages"
+
 export MYSQL_PS1="[\\u@\\h \\d]"
 
 export SHELL=`which zsh`
