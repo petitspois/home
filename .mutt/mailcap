@@ -1,0 +1,18 @@
+# vim:set et ft=mailcap fdm=marker sw=4 sts=4 ts=4 nopaste :
+# dreamawake http://www.linuxsir.org/bbs/lastpostinthread280356.html
+
+# 在 firefox 新建标签中打开 html 附件，而且查看附件时不会锁住 mutt
+text/html; firefox %s; firefox -a firefox -remote 'openURL(file://%s, new-tab)'; copiousoutput
+
+# 用 libreoffice 打开 word 文档
+application/msword; loffice -writer %s; copiousoutput
+
+
+
+
+
+
+
+
+
+
