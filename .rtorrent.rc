@@ -1,13 +1,14 @@
 # vim:set et ft=conf fdm=marker sw=4 sts=4 ts=4 nopaste :
+
 # Maximum and minimum number of peers to connect to per torrent.
-# 最小连接数	最大连接数
+# 最小连接数 最大连接数
 # 下载中的任务(leech)，现有连接数<40时，
 # rTorrent会持续的访问多个tracker来保证连接达到40，而此时就可能引发CPU的占用问题
 min_peers = 40
 max_peers = 300
 
 # Same as above but for seeding completed torrents (-1 = same as downloading)
-# 做种时最小连接数	做种时最大连接数
+# 做种时最小连接数 做种时最大连接数
 min_peers_seed = 10
 max_peers_seed = 20
 
@@ -17,28 +18,22 @@ max_uploads = 15
 
 # Global upload and download rate in KiB. "0" for unlimited.
 download_rate = 0
-upload_rate = 160
+upload_rate = 200
 
-# [ 下载相关目录 ]# {{{
-#--------------------------------------------
-
-# 默认下载目录
-directory =/home/fun/m
+# Default directory to save the downloaded torrents.
+directory =/home/ink/download/bt
 
 # Default session directory. Make sure you don't run multiple instance
 # of rtorrent using the same session directory. Perhaps using a
 # relative path?
-# session 临时文件目录
-session = /home/fun/m/bt.tmp
+session = /home/ink/download/bt/tmp
 
 # Watch a directory for new torrents, and stop those that have been
 # deleted.
 # 通过samba或scp往这个目录传种子，就会自动开始下载
-schedule = watch_directory,5,5,load_start=/home/fun/m/bt.peers/*.torrent
+schedule = watch_directory,5,5,load_start=/home/ink/download/bt/peers/*.torrent
 # */
 # schedule = untied_directory,5,5,stop_untied=
-
-# }}}
 
 # Close torrents when diskspace is low.
 schedule = low_diskspace,5,60,close_low_diskspace=100M
@@ -72,11 +67,11 @@ encryption = allow_incoming,enable_retry,prefer_plaintext
 # May be set to "disable" (completely disable DHT), "off" (do not start DHT),
 # "auto" (start and stop DHT as needed), or "on" (start DHT immediately).
 # The default is "off". For DHT to work, a session directory must be defined.
-# 
+#
 # 启用 DHT 必须要有 session 目录支持.pt不允许dht(?)
 dht = on
 
-# UDP port to use for DHT. 
+# UDP port to use for DHT.
 dht_port = 6881
 
 # Enable peer exchange (for torrents not marked private)
@@ -88,13 +83,14 @@ peer_exchange = yes
 encoding_list = UTF-8
 
 ########################################################################
-#							功能设置
+# 功能设置
 ########################################################################
 
+# fedora 错误
 #发送缓存
-send_buffer_size = 10M
+#send_buffer_size = 10M
 #接收缓存
-receive_buffer_size = 10M
+#receive_buffer_size = 10M
 
 #rTorrent在进行HTTP访问时，对CPU占用率极高，MSS(microsoft screen)上经常遇到的假死现象
 #默认设置是32个
@@ -117,7 +113,7 @@ hash_interval = 200
 
 
 ########################################################################
-#							连接设置
+# 连接设置
 ########################################################################
 
 #Tos，Type of Service（服务类型）
@@ -125,7 +121,7 @@ hash_interval = 200
 #或者自定义值，把它设为高速率（据说是黄金值）
 #tos = default|lowdelay|throughput|reliability|mincost, tos = hex
 
-tos = throughput
+#tos = throughput
 
 # Enable the default ratio group.
 ratio.enable=
@@ -148,8 +144,8 @@ system.method.set = group.seeding.ratio.command, d.close=, d.erase=
 #也可增加其他设定
 #注意！不要用 d.erase是删除任务且如果有其他设定将删掉全部文件。
 
-########################################################################
 
+########################################################################
 
 #rtorrent创建的文件夹(或文件)的权限，默认是0644，建议改成0000，使所有用户都能访问。
 #也只有这样在samba中才可以直接打开、拷贝、删除rtorrent创建的文件
@@ -157,7 +153,6 @@ system.method.set = group.seeding.ratio.command, d.close=, d.erase=
 
 #该参数与web配置以及远程管理有关
 #scgi_port =localhost:5000
-
 
 ########################################################################
 
@@ -184,6 +179,4 @@ check_hash = no
 # decent hash checking rate.
 #hash_max_tries = 10
 
-
 ########################################################################
-

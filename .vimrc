@@ -899,7 +899,10 @@ if(has("gui_running"))
     " 去除闪屏
     set novisualbell
     " 完全隐藏工具栏、菜单栏、左右滚动条
-    set guioptions-=Tmrl
+    set guioptions-=T
+    set guioptions-=m
+    set guioptions-=r
+    set guioptions-=l
 
     " 关闭 Alt 激活菜单
     set winaltkeys=no

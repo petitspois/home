@@ -78,6 +78,11 @@ export MYSQL_PS1="[\\u@\\h \\d]"
 
 export SHELL=`which zsh`
 
+# java dev
+export M2_HOME=/opt/apache-maven-3.0.3
+export PATH=$PATH:$M2_HOME/bin
+
+
 # Emacs 中 fcitx 输入法激活
 #export LC_CTYPE=zh_CN.UTF-8
 
@@ -513,7 +518,8 @@ zstyle ':completion:*:corrections' format $'\e[33m | \e[1;7;35m %d [errors: %e] 
 
 # ping
 zstyle ':completion:*:ping:*' hosts www.zstu.edu.cn www.google.com \
-192.168.128.1{38,} 192.168.{1,0}.1{{7..9},} 10.10.62.{1,{5{2..8},}}
+192.168.128.1{38,} 192.168.{1,0}.1{{7..9},} 10.252.{10,12,} 10.9.3.
+#192.168.128.1{38,} 192.168.{1,0}.1{{7..9},} 10.10.62.{1,{5{2..8},}}
 
 # ssh scp sftp 等
 my_accounts=(
@@ -735,6 +741,8 @@ alias sa='screen -S a'
 alias sb='screen -S b'
 alias sc='screen -S c'
 
+# vim 别名
+if [ -e /usr/bin/vimx ]; then alias vim='/usr/bin/vimx'; fi
 
 alias mm="sudo mentohust"
 alias bb="bitlbee -c ~/.bitlbee.conf"
@@ -940,14 +948,15 @@ for i in avi rmvb wmv; alias -s $i=mplayer
 #--------------------------------------------
 # 使用 cd ~XXX 快速进入自定义目录
 
-hash -d a="/home/ink/.config/awesome/"
-hash -d b="/home/ink/book/"
-hash -d x="/home/ink/text/"
-hash -d c="/home/ink/code/"
-hash -d d="/home/ink/code/django/"
+hash -d a="$HOME/.config/awesome/"
+hash -d b="$HOME//book/"
+hash -d x="$HOME/text/"
+hash -d c="$HOME/code/"
+hash -d d="$HOME/code/django/"
+hash -d k="$HOME/kou"
 hash -d m="/home/download/m"
 hash -d o="/var/log/"
-hash -d p="/home/ink/pic/"
+hash -d p="$HOME/pic/"
 hash -d u="/mnt/usb/"
 hash -d pkg="/var/cache/pacman/pkg"
 
