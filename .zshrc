@@ -683,7 +683,7 @@ alias gl='git ls-files'
 alias go='git log'
 alias gs='git status'
 
-alias gph="git push home master"
+alias gph="git push home master:fedora"
 alias gpe="git push etc master"
 alias gpo="git push origin master"
 

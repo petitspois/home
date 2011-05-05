@@ -1,6 +1,7 @@
 
 # 参考配置：/usr/share/doc/mpd/mpd.example
 # 文件位置：.mpdconf [ >>> 不是 .mpd.conf ]
+# 需要根据路径进行修改的参数 user / music_directory / playlist_directory / *_file
 
 # [ Base ]# {{{
 #--------------------------------------------
@@ -8,23 +9,25 @@
 filesystem_charset  "UTF-8"
 id3v1_encoding      "gbk"
 #user                "mpd"
-user                "ink"
 log_level           "default"
-
 # 可以通过 ncmpcpp 里面的 u 命令更新 数据库
 bind_to_address     "127.0.0.1"
 port                "6600"
 
+user                "ink"
 
-# 使用 自定义的 mpd 相关位置，省去每次更新导至的权限还原问题
-# 在 yuer 目录下面新建 ： mpd/ 和 playlist/ 目录
-music_directory     "~/yuer"
-playlist_directory  "~/yuer/playlist/"
-db_file             "~/yuer/mpd/mpd.db"
-pid_file            "~/yuer/mpd/mpd.pid"
-state_file          "~/yuer/mpd/mpdstate"
-log_file            "~/yuer/mpd/mpd.log"
-#error_file          "~/me/yuer/mpd/error.log"
+music_directory     "~/yue/yuer"
+
+playlist_directory  "~/yue/yuer/playlist/"
+
+db_file             "~/yue/yuer/mpd/mpd.db"
+pid_file            "~/yue/yuer/mpd/mpd.pid"
+state_file          "~/yue/yuer/mpd/mpdstate"
+log_file            "~/yue/yuer/mpd/mpd.log"
+error_file          "~/yue/yuer/mpd/error.log"
+
+
+
 
 
 # 若使用 mpd 默认的 /var 下的相关位置，下面user均为你的用户名
@@ -45,21 +48,30 @@ log_file            "~/yuer/mpd/mpd.log"
 
 mixer_type          "software"
 
+#audio_output {
+#    type            "oss"
+#    name            "My OSS Device"
+#    mixer_control   "PCM"       # optional
+#    #format          "44100:16:2"    # optional
+#
+#    # 默认配置
+#    #device          "/dev/dsp"  # optional
+#    #mixer_device    "/dev/mixer"    # optional
+#
+#    # From ArchWiki OSS
+#    device          "/dev/oss/oss_hdaudio0/pcm0"
+#    mixer_device    "/dev/oss/oss_hdaudio0/mix0"
+#}
+
 audio_output {
-    type            "oss"
-    name            "My OSS Device"
-    mixer_control   "PCM"       # optional
-    #format          "44100:16:2"    # optional
-
-    # 默认配置
-    #device          "/dev/dsp"  # optional
-    #mixer_device    "/dev/mixer"    # optional
-
-    # From ArchWiki OSS
-    device          "/dev/oss/oss_hdaudio0/pcm0"
-    mixer_device    "/dev/oss/oss_hdaudio0/mix0"
+	type		"alsa"
+	name		"My ALSA Device"
+#	device		"hw:0,0"	# optional
+#	format		"44100:16:2"	# optional
+#	mixer_device	"default"	# optional
+#	mixer_control	"PCM"		# optional
+#	mixer_index	"0"		# optional
 }
-
 
 
 #audio_output {

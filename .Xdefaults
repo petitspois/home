@@ -115,6 +115,9 @@
 
 !*}}}
 
+! [ new xterm ]! {{{
+!-------------------------------------------
+
 ! [ Font ]! {{{
 !--------------------------------------------
 
@@ -139,9 +142,6 @@
 
 !*}}}
 
-! [ new xterm ]! {{{
-!-------------------------------------------
-
 ! [ Font 字体 ]
 !-------------------------------------------
 !
@@ -152,10 +152,13 @@ XTerm*utf8Title:    true
 !xterm*fontMenu*fontdefault*Label:Default
 XTerm*xftAntialias: true
 Xterm.cjkWidth:     true
+XTerm*faceName                          : Envy Code R:pixelsize=12
+XTerm*faceNameDoublesize                : WenQuanYi Micro Hei Mono:pixelsize=12
 
 ! 等价于 xterm -fa 'Envy Code R' -fs 10
-XTerm*faceName                          : Envy Code R-10
-XTerm*faceNameDoublesize                : WenQuanYi Micro Hei-10
+! Fedora 下不能生效
+!XTerm*faceName                          : Envy Code R-9
+!XTerm*faceNameDoublesize                : WenQuanYi Micro Hei-10
 
 XTerm*ttyModes:     erase   ^?
 
