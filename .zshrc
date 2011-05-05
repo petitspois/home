@@ -72,7 +72,7 @@
 # 使 screen 支持 256 色
 export TERM=xterm-256color
 
-export PATH="${PATH}:${HOME}/code/shell:${HOME}/todo"
+export PATH="${PATH}:${HOME}/code/shell:${HOME}/.todo"
 export CDPATH='.:..:../..:~:~/text:~/public_html/:/home/download/'
 export MYSQL_PS1="[\\u@\\h \\d]"
 
@@ -1142,13 +1142,11 @@ export LESS_TERMCAP_us=$'\E[1;32m'    # begin underline
 #--------------------------------------------
 
 # From : https://github.com/ginatrapani/todo.txt-cli/wiki/Tips-and-Tricks
-function t() { 
+function t() {
   if [ $# -eq 0 ]; then
-    #todo.sh -d $HOME/.todo/config ls
-    todo.sh -d /home/ink/todo/todo.cfg ls
+    todo.sh -d $HOME/.todo/todo.cfg ls
   else
-    #todo.sh -d /path/to/your/todo.cfg $* 
-    todo.sh -d /home/ink/todo/todo.cfg $* 
+    todo.sh -d $HOME/.todo/todo.cfg $* 
   fi
 }
 
