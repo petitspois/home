@@ -1,13 +1,17 @@
 # vim:set et ft=muttrc fdm=marker sw=4 sts=4 ts=4 nopaste :
 
-# [ Refer 参考 ]# {{{
+# [ Refer 参考 ]# {{{ 
 #--------------------------------------------
 
-# 李雪白 2007年 配置mutt做邮件客服端
-# http://home.ustc.edu.cn/~lixuebai/GNU/MuttConfig.html
-
+# [图文] Mutt email 程序使用入门 王垠 编码 http://www.kreny.com/docs/mutt.htm
+# Mutt中文手册 2009年12月24日 http://xhc.me/wp-content/uploads/mutt/manual_1.5.19_zh.html
+# 李雪白 2007年 配置mutt做邮件客服端 # http://home.ustc.edu.cn/~lixuebai/GNU/MuttConfig.html
 # 浅述mutt邮件客户端  newnuy@gmail.com 2010-10-06 http://newnuy.com/?p=24
-
+# adam https://github.com/adam8157/dotfiles/blob/master/.muttrc
+# c00kiemon5ter https://github.com/c00kiemon5ter/dotfiles/blob/master/.mutt/muttrc
+# Stebalien https://github.com/Stebalien/dotfiles/tree/master/email
+# mutt 中级技巧 2009-02-11 http://hi.baidu.com/yunpengwu/blog/item/66922b2ee41247574fc22611.html
+# 张连成 #http://zhangliancheng.com/2011/03/use-mutt-to-receive-and-send-gmail/
 
 # }}}
 
@@ -15,7 +19,7 @@
 #--------------------------------------------
 
 # 邮件列表 / 附件 / 快捷键
-
+# 邮件 thread 折叠
 
 
 
@@ -26,22 +30,275 @@
 
 set mbox_type=Maildir
 
-set folder=~/mail
-# 启动 mutt 后默认显示的信箱文件
-set spoolfile=+inbox
-# 已发送邮件
-set record=+sent
+## [ POP3 ]# {{{
+##--------------------------------------------
+#
+#set folder=~/mail
+## 启动 mutt 后默认显示的信箱文件
+#set spoolfile=+inbox
+## 已发送邮件
+#set record=+sent
+##set record=/mnt/Docs/Mail/sent-`date +"%Y-%m"`
+##set record="~/mail/=sent-mail-`date +%Y-%m`"
+#
+## 草稿邮件
+#set postponed=+drafts
+## 已读信箱 [?]
+#set mbox=+read
+#
+## 按 c tab tab 列出监视是否有新邮件邮箱
+#mailboxes +inbox +drafts +cpyug +hzlug +trash
+#
+#
+## }}}
+
+# [ IMAP ]# {{{
+#--------------------------------------------
+# https://github.com/c00kiemon5ter/dotfiles/blob/master/.mutt/muttrc
+
+# arch 的mutt 原生的 offilineimap 支持
+# 不在本地保存邮件，mutt 已经內建了IMAP功能，所以缺省是不会下载 Email 来离线使用
+#set folder=imap[s]://imap.server.domain[:port]/[folder/]
+set folder=imaps://imap.gmail.com:993/
+
+#spoolfile 告诉Mutt从本地哪个目录来得到新Email。
+#你可能还想添加更多的 Spoolfiles，例如邮件列表（Mailing List）所在的目录。
+
+#set spoolfile=imaps://imap.gmail.com:993/[Gmail]/All\ Mail
+
 # 草稿邮件
-set postponed=+drafts
-# 已读信箱 [?]
-set mbox=+read
+#set postponed=+[Gmail]/Drafts
+
+#mailboxes +---GMail-- +[Gmail]/All\ Mail +[Gmail]/Sent\ Mail +[Gmail]/Drafts
+mailboxes +[Gmail] +INBOX +HZLUG +CPyUG
+
+#mailboxes +---GMail-- +[Gmail]/All\ Mail +[Gmail]/Sent\ Mail +[Gmail]/Drafts
+#mailboxes +[Gmail]/Bin +INBOX +AUEB +FOSS +Linux +Git +ArchLinux
+#mailboxes +Admin +ACM +Family +mrJesusSuperstar +PureAsxetos
+
+set imap_user=guodong
+set imap_user=volcanowill@gmail.com
+# 若不添加，会从交互提示输入
+#set imap_pass=
+
+## SMTP settings
+set smtp_url=smtps://${imap_user}:${imap_pass}@smtp.gmail.com
+set ssl_force_tls=yes
+
+## IMAP settings
+# allow mutt to open new imap connection automatically
+set imap_passive=no
+# keep imap connection alive by polling intermittently (time in seconds)
+set imap_keepalive=300
+# how often to check for new mail (time in seconds)
+set mail_check=120
+
+source ${HOME}/.me/gmail.offlineimap
+#set certificate_file=${HOME}/.mutt/certificates
+
+#+backup
+#+CPyUG
+#+HZLUG
+#+INBOX
+#+instance +learn
+#+problem +python.kwd
+#+架构 +毕业设计 +豆瓣
+#+django
+#+django-deploy
+#+
+#+[Gmail]/
+#+info
+#+linux
+#+notice
+#+signin
+#+twitter-gtalk
+#+vim-cn
+#+xme +已读邮件
+
+
+# }}}
+
+# [ 回收站 ]# {{{
+#--------------------------------------------
+# 默认值：no 设为yes，标记为被删除的邮件将被保存下来而不是被删除
+# 注：仅适用于 maildir 风格的邮箱。此设置将不会影响其他类型的信箱
+#set maildir_trash=no
+
+#set trash="~/.mail/trash/"
+
+# }}}
+
 #move mail from spool to mailbox when quiting ?
 set move=no
-# 对邮件头作了暂存，从而加速邮件的显示
-set header_cache=~/.hcache
 
-# 按 c tab tab 列出监视是否有新邮件邮箱
-mailboxes +inbox +cpyug +drafts
+# From : http://www.fwolf.com/blog/post/306
+# 指定的是一个目录，这样每个邮件目录都会在这个目录下建立一个缓存文件
+# 也可以直接指定一个独立的文件, 打开有几千封邮件的文件夹的时候，都要花费时间建立索引、排序
+set header_cache="~/mail/cache/"
+set message_cachedir=${HOME}/.mutt/cache/
+
+# c00kiemon5ter # offlineimap 使用 imap 收发邮件
+# 若没有创建文件，默认不会自动创建，若使用目录会自动创建缓存文件
+#set header_cache=${HOME}/.mutt/cache/headers
+#set message_cachedir=${HOME}/.mutt/cache/bodies
+
+# 禁止对已缓存内容的校验, 除了mutt 不会再用另外一个程序去修改mail目录下的内容
+set maildir_header_cache_verify=no
+
+
+
+
+# }}}
+
+# [ base 基本 ]# {{{
+#--------------------------------------------
+
+# 按q退出时，是否提示(ask-yes,ask-no)，还是直接就退出了(yes)，还是根本不理你(no)
+# yes, no, ask-yes, 或者 ask-no
+set quit=ask-yes
+
+# 外部程序退出时，是否要求用户按一个键才返回
+# 用于获取某些shell命令输出时, 防止输出瞬间消失
+set wait_key=yes
+
+# 默认：no
+#set beep_new=yes
+#set check_new=yes
+#do not resume postponed mail
+#set recall=no
+
+# 默认：yes，当没有阅读新邮件而退出信箱时，是否将这些未读邮件标记为旧的
+# yes，下次启动mutt，这些邮件在index菜单中将被标记为"O"，表示它们是旧的
+set nomark_old
+
+# 要把信件存到另一个信箱，而这个信箱已经存在时，是否提示附加
+set noconfirmappend
+
+
+
+
+
+
+# }}}
+
+# [ getmail ]# {{{
+#--------------------------------------------
+
+# 默认：10，在操作那些费时的大信箱时显示进度, 设为25，当mutt会在第25封时更新进度，然后在第50封时再更新一次
+#set read_inc=25
+
+# 设置指定一个命令来过滤邮件。当查看邮件时，邮件先通过标准输入到$display_filter，然后再从其标准输出被读取
+# 默认：空 [?]
+#set display_filter="tr '\240\204\223\226' ' \"\"-'"
+
+
+
+
+
+# }}}
+
+# [ index ]# {{{
+#--------------------------------------------
+
+# 使用箭头 "->" 指示当前选择的条目，而不是高亮整个条目
+#set arrow_cursor
+
+# 默认：no，有别名与发件人地址匹配，是否在index菜单中会显示别名的"个人"名称
+#set reverse_alias
+
+# 移动到最后一封邮件时，是否会重新移动到开始 [?]
+# 避免整页整页的翻页，一行一行的翻页
+set menu_scroll
+
+# 按 "t" 或者 "D" 之类的标记操作时，光标是否自动移动到下一封信件
+set resolve=yes
+
+#set sort=reverse-threads            # 新的在最上面，按thread归档
+set sort=threads            # 新的在最上面，按thread归档
+set sort_aux=last-date-received     # 同一个thread里面，最新的在最上面
+# [?] 文件浏览器中的条目。默认，alpha 字母 showing mbox list default to newest first
+#set sort_browser=reverse-date
+
+#set sort=threads
+#set sort_aux=reverse-last-date-received
+
+# thread based on regex 当以threads方式排序，且 $strict_threads 为no时，变量才有效
+set sort_re
+set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+
+# 当前的thread没有折叠，mutt 会跳转到下一封未读邮件
+# don't collapse on an unread message
+#set uncollapse_jump
+
+
+
+
+# }}}
+
+# [ pager ]# {{{
+#--------------------------------------------
+
+# 用 pager 看信件时，在 index 留出多少行显示邮件列表
+set pager_index_lines=5
+
+# 在 pager 中查看下一页或上一页时显示上下文的行数
+set pager_context=1
+
+# 最后一封信，无法继续翻页到第一封信
+set pager_stop
+
+# 到达邮件底部，显示 波浪号 提示
+set tilde=yes
+
+# 不显示断行行首标志符 +
+#unset markers
+
+# 不在单词中间断行
+set smart_wrap
+
+# 默认：0, （不推荐）相当于设置$wrap为一个负值，在倒数第 4 个字符处换行
+#set wrapmargin=4
+
+
+
+
+
+
+# }}}
+
+# [ accout 账号 ]# {{{
+#--------------------------------------------
+
+# 默认：yes，mutt 发送邮件时会生成 From: 字段。设为no，就不会生成 From: 字段，除非使用命名 my_hdr 指定一个
+set use_from=yes
+set realname='guodong'
+set from="guodong <volcanowill@gmail.com>"
+
+# 设置自己的邮件头
+#set hdrs
+#my_hdr From: guodong<volcanowill@gmail.com>
+#my_hdr Reply-To: guodong<volcanowill@gmail.com>
+#my_hdr X-PGP-Key-ID:3038867F
+#my_hdr X-Operating-System: gnu/linux
+# 可用来备份到收件箱
+#my_hdr Bcc: roylzuo+sent@gmail.com
+
+# 反解析姓名 # Set different from information
+alternates '^volcanowill@gmail.com$'
+#alternates 'royl(ez|zuo)@gmail.com|lzuo@(hkusua|graduate).hku.hk|z.le@uq.edu.au'
+set reverse_name=yes
+set reverse_realname=yes
+
+# From : newnuy
+## 对于多个发信账户（比如公司邮箱和私人邮箱），进行账户的切换
+# From : roylez add -f <from> to sendmail command line
+#set envelope_from = yes          # 导致可以切换发信账户
+## Alt+2 切换到公司邮箱账户
+#macro generic "<esc>2" ":set from='newnuy  <newnuy_7_realtek.com>'"
+## Alt+1 切换到gmail邮箱账户
+#macro generic "<esc>1" ":set from='newnuy  <newnuy_7_gmail.com>'"
+
+
 
 
 
@@ -54,22 +311,12 @@ mailboxes +inbox +cpyug +drafts
 # http://www.fwolf.com/blog/tag/mutt
 set sendmail="/usr/bin/msmtp"
 
-set from="guodong <volcanowill@gmail.com>"
-set use_from=yes
+# 将 $sendmail 放入 "后台" "之前" 等待的秒数，默认：0 一直等待到发送完成
+set sendmail_wait=-1
 
 # add -f <from> to sendmail command line
 # 把mutt发送的from域作为发送邮件的 sender(否则用user@localdomian)
 #set envelope_from=yes
-set sendmail_wait=0
-
-# From : newnuy
-## 对于多个发信账户（比如公司邮箱和私人邮箱），进行账户的切换
-#set envelope_from = yes          # 导致可以切换发信账户
-## Alt+2 切换到公司邮箱账户
-#macro generic "<esc>2" ":set from='newnuy  <newnuy_7_realtek.com>'"
-## Alt+1 切换到gmail邮箱账户
-#macro generic "<esc>1" ":set from='newnuy  <newnuy_7_gmail.com>'"
-
 
 # [ mutt 自带原生 SMTP 发送 ]# {{{
 #--------------------------------------------
@@ -90,6 +337,10 @@ set sendmail_wait=0
 # [ reply 回复 ]# {{{
 #--------------------------------------------
 
+# 默认：no，不会将自己视为收件人
+#unset metoo
+#unset reply_self
+
 set editor="vim"
 #set editor="vim -c 'set tw=72 et' '+/^$' "
 # 是否把邮件头也放在编辑器里可以修改
@@ -97,20 +348,45 @@ set edit_headers=yes
 #set header     = no          # 回信时不引用信件头
 set realname='guodong'
 
-# 回信时是引用原文
+# 默认：ask-yes，是否在回复时包含邮件原文
 set include=yes
 # 回信的引文之前符号标记
 set indent_str="> "
 
-#To character
-# 1. not directly adressed to me    # 2. addressed exclusively to me
-# 3. addressed to me and others     # 4. CC to me
-# 5. sent from me                   # 6. addressed to a mailinglist I am reading
+# 默认：no，同$edit_headers一起设置为yes时，mutt会跳过提示输入主题和收件人，立即开始编辑邮件
+# 当完成编辑邮件时发送菜单可能还会跳出来一次
+#set autoedit
 
-#set to_chars=" >=+<!"
+# yes，回复邮件时，会使用"Reply-to:"的地址作为要回复的地址 no ，使用"From:"字段中的地址
+# 当阅读一封设置了"Reply-To:"字段的邮件列表，想私下回复给邮件作者，这个变量就特别有用
+# 默认值：ask-yes
+#set reply_to
 
+# 默认值：ask-yes yes，编辑邮件时提示输入主题，不输入的话，编辑将中止。设置为no，将不会中止邮件的撰写
+set abort_nosubject=no
+set abort_unmodified=no
 
+# 按 "r" 回信时，就不会再提示输入回信地址和主题，直接进入编辑模式
+set fast_reply
 
+# 默认: yes，在 $signature 之前插入"-- "（注意末尾的空格）
+set sig_dashes
+
+# 默认：no，在发送邮件时提示你输入抄送地址（Cc）
+#set askcc
+
+# 回复邮件时这个字符串会放在最前面，默认：如下
+#set attribution="On %d, %n wrote:"
+
+# 默认：空，类似变量 $attribution，mutt 将字符串添加到正在回复到邮件后
+#set post_indent_string='---| quote end |---'
+
+# "编辑"菜单中状态栏显示的格式，默认值："-- Mutt: Compose [Approx. msg size: %l Atts: %a]%>-"
+#set compose_format="--+(%v) Compose [Approx. msg size: %l Atts: %a]%>-"
+# %a 附件总数
+# %h 本地主机名
+# %l 当前邮件的近似大小（以字节为单位）
+# %v Mutt版本
 
 # }}}
 
@@ -140,6 +416,7 @@ set send_charset="us-ascii:iso-8859-1:gb2312:utf-8"
 charset-hook ^us-ascii$ gb2312       # 用gb2312编码显示未设置编码的信件
 charset-hook ^big5$ big5             # 用big5编码显示繁体信件
 charset-hook !utf-8 gb2312           # 用gb2312编码显示非utf-8编码的信件
+charset-hook ^iso-8859-1$ gb2312     # 张连成
 set assumed_charset    = "gb2312"    # 用gb2312编码显示未经MIME编码的信件
 set rfc2047_parameters = yes         # 用gb2312编码显示中文附件名
 
@@ -148,10 +425,373 @@ set rfc2047_parameters = yes         # 用gb2312编码显示中文附件名
 # [ style 主题 ]# {{{
 #--------------------------------------------
 
-set index_format="%[%b-%d] %?X?%X& ? %-2e %-18.18L [%4c] %s"
-set status_format="-%r-Mutt: [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]----%>-(%P)---"
+# 默认：no，用纯ASCII字符取代默认的 ACS 字符显示thread和附件树型结构
+#set ascii_chars
+
+# 按下 "h" 键来切换到 "全部" 邮件头信息，忽略所有 header 域
+ignore *
+
+# 显示哪些邮件头字段
+#unignore From Subject Date To CC BCC Reply-To X-PGP-Key-ID
+#hdr_order From Subject Date To CC BCC Reply-To X-PGP-Key-ID
+
+#unignore From: To: Reply-To: Subject: Date: CC: BCC: X-Mailer: User-Agent:
+#hdr_order From: Reply-To: Date: To: Cc: Subject: User-Agent:
+
+#unignore Date: From: User-Agent: X-Mailer X-Operating-System To: \
+#Cc: Reply-To: Subject: Mail-Followup-To:
+#hdr_order Date: From: User-Agent: X-Mailer X-Operating-System To: \
+#Cc: Reply-To: Subject: Mail-Followup-To:
+
+unignore From: To: Cc:
+hdr_order From: To: Cc:
+
+# [ Format ]# {{{
+#--------------------------------------------
 set status_on_top=yes
 
+set status_format = "%v [ %r ] ---[ Folder: %f, msg: %m%?n? New: %n?%?d? Del: %d?%?t? Tag: %t?%?l? %l? ]%?p?---- .: %p waiting to send :. ?--%>- (%P) ---"
+
+#set status_format="[ %r ] mutt: [ msg :%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l? ] ---%>-(%P)---"
+
+#set status_format=" %r %b %f %n      Del %d      Msgs %m %l %> (%P)"
+# 默认值： " %4n %2f %t %-10a %r" 指定别名 菜单中数据显示的格式
+set alias_format = "%4n %t %-20a %r"
+
+# 默认：[%a: %s] 转发邮件时的默认主题。使用和变量$index_format相同的序列
+#set forward_format="Fwd: %s"
+
+# 默认值："%2C %t %N %F %2l %-8.8u %-8.8g %8s %d %f" 自定义的文件浏览器的显示风格
+set folder_format="%2C %t %8s %d %N %f"
+
+# 默认："-%Z- %C/%m: %-20.20n %s%* -- (%P)" pager 中邮件上面的"状态栏"信息
+#set pager_format="[ %Z %C/%m ] %b %n %a ---%>-(%P)--"
+set pager_format="[ %Z ] %C/%m %s %[ %Y-%m-%d %A %H:%M:%S ] ---%>-(%P)--"
+
+# 邮件编号 邮件状态标志 本地日期 邮件大小 作者名
+set index_format="%3C [%Z] %D %-15.15F [%4c] %s"
+# 数字 [?]
+#set index_format="%[%m-%d] %?X?%X& ? %-2e %-18.18L [%4c] %s"
+
+# date_format 替换 index_format 中的 %D 日期字符串，也可以直接在 index_format 中定义 %[日期字符串]
+# 前缀叹号，不根据 locale 解析月，星期名称
+#set date_format="!%m-%d %u %H:%M"      # 05-02 1 08:46
+set date_format="!%m-%d %a %H:%M"       # 05-02 Mon 08:46
+
+# }}}
+
+
+
+
+
+# }}}
+
+# [ regex 正则匹配 ]# {{{
+#--------------------------------------------
+
+# 邮件体中引文字段的正则表达式。命令<toggle-quoted>切换是否显示引文，或使用"color quoted"来标记颜色
+# 它查测引文深度的过程为，从匹配文本中移除最后一个字符，然后再递归执行这个过程直到不能匹配任何文本
+# 默认值："^([ \t]*[|>:}#])+"
+# 匹配检测可能会被变量 $smileys 所指定的正则表达式覆盖
+set quote_regexp="^ *[a-zA-Z]*[>|][>:|]*"
+set quote_regexp="^([A-Za-z ]+>|[]%>:|}-][]>:|}-]*)"
+
+# 默认："(>From )|(:[-^]?[][])(><){|/DP}){/0}"
+# 匹配 常见的 quote_regexp 错误匹配，大多数表情
+# 若匹配成功，不会将其视为 quoted 引用行
+#set smileys="^$"
+
+# 默认值："^(re([\[0-9\]+])*|aw):[ \t]*" 默认值对应英文的"Re:"与德文的"Aw:"
+# when threading and replying 识别回复信息正则表达式
+#set reply_regexp='^((re(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*'
+# From : roylez
+set reply_regexp="^(re([\[0-9\]+])*|aw|回复)(:[ \t]|：)"
+
+
+
+
+
+
+# }}}
+
+# [ mailist 邮件列表 ]# {{{
+#--------------------------------------------
+
+# From : Stebalien # 发送邮件时是否生成 Mail-Followup-To: 字段
+# 默认：yes 当回复到一个命令 subscribe 或 lists 指定的邮件列表时，mutt 会生成此字段
+#set followup_to = no
+#set honor_followup_to = no
+
+# Sets 'Mail-Followup-To' header
+#set followup_to=yes
+#set honor_followup_to=yes
+
+# See your own posts using fcc
+#fcc-hook mutt-user +mutt
+
+lists mutt-users
+subscribe mutt-users
+
+# for mailing lists
+lists ubuntu-users@lists.ubuntu.com
+lists ubuntu-devel@lists.ubuntu.com
+lists seasar-user@ml.seasar.org
+lists issue@seasar.org
+lists vim_use@googlegroups.com
+lists uclibc@uclibc.org
+
+subscribe ubuntu-users@lists.ubuntu.com
+subscribe ubuntu-devel@lists.ubuntu.com
+# 标记一个地址为邮件列表，用 "list" 命令。标记一个地址为你已经订阅的邮件列表，用"subscribe"命令
+subscribe python-cn@googlegroups.com hzlug@googlegroups.com
+
+
+
+
+
+# }}}
+
+# [ MIME 附件 mailcap ]# {{{
+#--------------------------------------------
+
+#set mailcap_path="${HOME}/.mutt/mailcap"
+
+#auto_view text/html
+#auto_view text/html application/msword
+
+# [ Reply-To ]# {{{
+#--------------------------------------------
+# 默认：no，转发的邮件将会被当作message/rfc822格式的附件，而不包含在邮件的正文中
+#unset mime_forward
+#set mime_forward=ask-no
+
+# 默认：yes，当转发 MIME 邮件中有多个附件时，一些不能被解码的附件将被添加到新的邮件中
+#set mime_forward_rest=yes
+
+# 默认：no，为yes，以正文方式转发邮件时（变量 $mime_forward 为 no）
+set forward_quote
+
+# 当转发 MIME 邮件，将其解码为text/plain格式，只在变量$mime_forward=no(默认)的时生效
+set forward_decode
+
+
+
+# }}}
+
+## 邮件头以及邮件体/附件会在 pipe 时
+#set pipe_decode
+
+## 邮件头以及邮件体/附件会在搜索前被解码
+#set thorough_search
+
+# 默认：yes，是否将已发邮件中的附件和邮件体一起保存
+#set fcc_attach
+
+# 默认：no，mutt会生成"format=flowed"，content type为"text/plain; format=flowed"的邮件体
+# 设为yes时，变量$indent_string会被忽略
+#set text_flowed
+
+# 设为 yes，对每一个没有定义内部显示的MIME附件，mutt会查找 mailcap 中对应的包含"copiousoutput"的条目
+# 默认值：no 如果找到这样的条目，mutt会使用这个条目中定义的浏览器将文件转换成文本形式
+#set implicit_autoview=yes
+
+
+
+
+
+# }}}
+
+# [ macro 宏 ]# {{{
+#--------------------------------------------
+
+macro index .G "!getmail\n" "Invoke getmail"
+#macro pager .G "!getmail\n" "Invoke getmail"
+
+## 切换收信箱和发件箱的快捷键
+macro index .. "c=\n" "Go to inbox"
+macro index I "c!\n" "Go to inbox"          # 列表页按Shift+I切换到inbox
+macro pager I "c!\n" "Go to inbox"          # 信件页按Shift+I切换到inbox
+macro index S "<change-folder>=sent\n" "Go to sent"
+macro pager S "<change-folder>=sent\n" "Go to sent"
+
+# 标记所有 New 邮件
+macro index .n "<tag-pattern>~N<enter><tag-prefix><clear-flag>N<clear-flag>" "Catchup all new messages"
+
+
+
+
+
+# }}}
+
+# [ key bind ]# {{{
+#--------------------------------------------
+
+## 注释掉了让人头痛的快捷键
+##bind index,pager \# noop
+##bind index i noop
+
+#bind pager i exit
+bind pager /        search
+bind pager <up>     previous-line
+bind pager <down>   next-line
+bind pager <        previous-line
+bind pager >        next-line
+bind pager k        previous-line
+bind pager j        next-line
+#bind pager K        previous-undeleted
+#bind pager J        next-undeleted
+bind pager gg       top
+bind pager G        bottom
+
+bind index [        previous-line
+bind index ]        next-line
+bind index \cf      next-page
+bind index \cb      previous-page
+bind index gg       first-entry
+bind index G       last-entry
+bind index K        previous-unread
+bind index J        next-unread
+
+bind index,pager R  group-reply
+bind index ,g       group-reply
+
+
+
+
+
+
+
+# }}}
+
+# [ hook ]# {{{
+#--------------------------------------------
+
+#folder-hook . "push \"l!(~s 'FOLDER INTERNAL DATA')\n*\""
+
+## 删除到trash目录
+#folder-hook . 'macro index d "~/mail/trash\r"'
+#folder-hook ~/mail/trash/ 'bind index d delete-message'
+
+# 垃圾箱
+folder-hook . 'macro index d "$folder/trash\r"'
+folder-hook $folder/trash 'bind index d delete-message'
+
+
+
+
+# }}}
+
+# [ abook / alias_file 地址簿 ]# {{{
+#--------------------------------------------
+
+# 按 a 可把地址加入地址簿
+set alias_file = ~/.me/mutt.a
+source ~/.me/mutt.a
+
+# 地址簿
+set query_command = "abook --mutt-query '%s'"
+
+# 打开 abook 地址博，联系人
+macro generic,index,pager A "<shell-escape>abook<return>" "launch abook"
+# 添加联系人到 abook
+macro index,pager a "<pipe-message>abook --add-email<return>" "add sender to abook"
+
+
+
+
+# }}}
+
+# [ gnupg abook 打印 siderbar ]# {{{
+#--------------------------------------------
+
+# 打印邮件
+# https://github.com/trapd00r/configs/blob/master/muttprintrc
+#set print_command="muttprint -r $HOME/muttprintrc"
+
+
+## [ GnuPG 加密 ]# {{{
+##--------------------------------------------
+## From : adam
+## https://github.com/Stebalien/dotfiles/blob/master/email/mutt/gnupg.muttrc
+## Specify key
+#set pgp_sign_as="D15CA3BE"
+#
+## PGP header
+#my_hdr X-PGP-Key-ID: D15CA3BE
+#
+## Autosign hook
+#send-hook ~A "set pgp_autosign"
+#send-hook ~u "set nopgp_autosign"
+#
+## If attempt to verify PGP/MIME signatures
+#set pgp_verify_sig=yes
+#
+## Don't store unencrypted and unsigned mail
+#set fcc_clear=no
+#
+## Encrypt replies to messages which are encrypted
+#set pgp_replyencrypt=yes
+#
+## During these time you will not needed to enter passparse again
+#set pgp_timeout=1800
+#
+## Set PGP commands
+#set pgp_decode_command="gpg --status-fd=2 %?p?--passphrase-fd 0? --no-verbose --quiet --batch --output - %f"
+#set pgp_verify_command="gpg --status-fd=2 --no-verbose --quiet --batch --output - --verify %s %f"
+#set pgp_decrypt_command="gpg --status-fd=2 %?p?--passphrase-fd 0? --no-verbose --quiet --batch --output - %f"
+#set pgp_sign_command="gpg --no-verbose --batch --quiet --output - %?p?--passphrase-fd 0? --armor --detach-sign --textmode %?a?-u %a? %f"
+#set pgp_clearsign_command="gpg --no-verbose --batch --quiet --output - %?p?--passphrase-fd 0? --armor --textmode --clearsign %?a?-u %a? %f"
+#set pgp_encrypt_only_command="/usr/lib/mutt/pgpewrap gpg --encrypt-to D15CA3BE --charset utf8 --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust -- -r %r -- %f"
+#set pgp_encrypt_sign_command="/usr/lib/mutt/pgpewrap gpg %?p?--passphrase-fd 0? --encrypt-to D15CA3BE --charset utf8 --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust -- -r %r -- %f"
+#set pgp_import_command="gpg --no-verbose --import %f"
+#set pgp_export_command="gpg --no-verbose --export --armor %r"
+#set pgp_verify_key_command="gpg --verbose --batch --fingerprint --check-sigs %r"
+#set pgp_list_pubring_command="gpg --no-verbose --batch --quiet --with-colons --list-keys %r"
+#set pgp_list_secring_command="gpg --no-verbose --batch --quiet --with-colons --list-secret-keys %r"
+#set pgp_getkeys_command="gpg --recv-keys %r > /dev/null 2>&1"
+#
+## Pattern for good signature
+#set pgp_good_sign="^\\[GNUPG:\\] GOODSIG"
+#
+## }}}
+
+## [ Sidebar ]# {{{
+##--------------------------------------------
+## debian mutt-ng
+
+#set sidebar_delim='\u2502'
+#set sidebar_visible=yes
+#set sidebar_width=15
+
+## colors
+#color sidebar_new brightyellow default
+
+## bindings
+#bind index,pager \CN sidebar-next
+#bind index,pager \CP sidebar-prev
+#bind index,pager \CO sidebar-open
+
+## }}}
+
+## [ Sidebar ]# {{{
+##--------------------------------------------
+## https://github.com/Stebalien/dotfiles/blob/master/email/mutt/sidebar.muttrc
+#
+#set sidebar_visible=yes
+#set sidebar_width=15
+#set sidebar_delim='|'
+## color of folders with new mail
+#color sidebar_new yellow default
+## ctrl-n, ctrl-p to select next, prev folder
+## ctrl-o to open selected folder
+#bind index <esc>k sidebar-prev
+#bind index <esc>j sidebar-next
+#bind index <esc>l sidebar-open
+#
+#message-hook ~A 'unset sidebar_visible; exec refresh'
+#macro pager q "<exit><enter-command>set sidebar_visible<return><refresh>"
+#
+## }}}
 
 
 # }}}
@@ -160,31 +800,47 @@ set status_on_top=yes
 #--------------------------------------------
 # https://github.com/Stebalien/dotfiles.git
 
-color hdrdefault green default
-color quoted red default
-color signature brightblack default
-color indicator brightgreen black
-color attachment black green
 color error red default
-color message cyan default
+color hdrdefault cyan default
+# 背景使用 brightgreen 字会闪烁 [?]
+color indicator black green
+# 命令输出提示，退出提示，切换邮箱提示
+color message brightcyan default
+# 搜索匹配高亮
 color search brightwhite magenta
-color status brightgreen default
-color tree red default
-color normal cyan default
+# 状态栏信息
+color status brightcyan default
+color tree magenta default
+color normal white default
+
+color attachment black green
+color signature brightblack default
+
+# 邮件引用内容标志符 > 颜色
+color quoted red default
+color quoted1 yellow default
+color quoted2 red default
+# 比较长的行断行行首标注 + 颜色
+color markers brightgreen default
+# 邮件结束标识符 波浪号 颜色
 color tilde green default
 color bold brightyellow default
-color markers yellow default
 
-color index yellow default ~O
-color index yellow default ~N
+# 旧邮件
+color index white default ~O
+# 新邮件
+color index brightyellow default ~N
+# 已知邮件列表的邮件
 color index blue default ~l
 color index brightblue default "~l ~N"
-color index brightblue default "~l ~O"
+color index white default "~l ~O"
+# 标记为重要的邮件
 color index brightred default ~F
+# 标记为删除的邮件
 color index brightblack default ~D
 
-color body brightwhite default ".*"
-
+# 邮件内容 加粗高亮 正则表达式，匹配所有邮件内容
+color body brightwhite default "^[^>].*"
 color header brightblue default "^(From|Subject):"
 
 
@@ -192,48 +848,34 @@ color header brightblue default "^(From|Subject):"
 
 # }}}
 
-macro index G "!getmail\n" "Invoke getmail"
-#macro pager G "!getmail\n" "Invoke getmail"
-
-# 按q退出时，是否提示(ask-yes,ask-no)，还是直接就退出了(yes)，还是根本不理你(no)
-# yes, no, ask-yes, 或者 ask-no
-set quit=ask-yes
-
-# Mutt 用 thread 方式显示时，是否用 ascii 表示树状列表
-set ascii_chars=yes
-
-# 最后一封信，无法继续翻页到第一封信
-set pager_stop
-
-# 按 "r" 回信时，就不会再提示输入回信地址和主题，直接进入编辑模式
-set fast_reply
-
-# 按 "t" 或者 "D" 之类的标记操作时，光标是否自动移动到下一封信件
-set resolve=yes
-
-# 外部程序退出时，是否要求用户按一个键才返回
-# 用于获取某些shell命令输出时, 防止输出瞬间消失
-set wait_key=yes
-
-# 要把信件存到另一个信箱，而这个信箱已经存在时，是否提示附加
-set noconfirmappend
-
-# 用 pager 看信件时，在 index 留出多少行显示邮件列表
-set pager_index_lines=5
-
-set sort=reverse-threads            # 新的在最上面，按thread归档
-set sort_aux=last-date-received     # 同一个thread里面，最新的在最上面
-
-## 切换收信箱和发件箱的快捷键
-#macro index I "c!\n" "Go to inbox"          # 列表页按Shift+I切换到inbox
-#macro pager I "c!\n" "Go to inbox"          # 信件页按Shift+I切换到inbox
-#macro index S "<change-folder>=sent\n" "Go to sent"
-#macro pager S "<change-folder>=sent\n" "Go to sent"
-
-
-source ~/.me/mutt.a
-# 按 a 可把地址加入
-set alias_file = ~/.me/mutt.a
-
-
+## [ 0 color ]# {{{
+##--------------------------------------------
+#
+#color hdrdefault green default
+#color quoted red default
+#color signature brightblack default
+#color indicator brightgreen black
+#color attachment black green
+#color error red default
+#color message cyan default
+#color search brightwhite magenta
+#color status brightgreen default
+#color tree red default
+#color normal cyan default
+#color tilde green default
+#color bold brightyellow default
+#color markers yellow default
+#
+#color index yellow default ~O
+#color index yellow default ~N
+#color index blue default ~l
+#color index brightblue default "~l ~N"
+#color index brightblue default "~l ~O"
+#color index brightred default ~F
+#color index brightblack default ~D
+#
+#color body brightwhite default ".*"
+#color header brightblue default "^(From|Subject):"
+#
+## }}}
 

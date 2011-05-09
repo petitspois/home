@@ -228,6 +228,8 @@ cabbrev gr  https://www.google.com/reader
 cabbrev gs  goosh.org
 cabbrev gt  translate.google.com/#en|zh-CN|
 cabbrev gv  video.google.com
+cabbrev gy  http://www.google.cn/music/homepage
+
 
 "cabbrev gd  www.google.com/dictionary
 " 中文 --> English
