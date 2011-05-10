@@ -56,7 +56,8 @@ xset b off
 
 #DEFAULTSESSION=openbox-session
 #DEFAULTSESSION=compiz
-DEFAULTSESSION=fvwm2
+#DEFAULTSESSION=fvwm2
+DEFAULTSESSION=musca
 
 case $1 in
 fvwm*)
