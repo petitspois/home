@@ -72,7 +72,7 @@
 # 使 screen 支持 256 色
 export TERM=xterm-256color
 
-export PATH="${PATH}:${HOME}/code/shell:${HOME}/.todo"
+export PATH="${PATH}:${HOME}/code/shell:${HOME}/.todo:${HOME}/code/pinax/bin/"
 export CDPATH='.:..:../..:~:~/text:~/public_html/:/home/download/'
 export MYSQL_PS1="[\\u@\\h \\d]"
 
@@ -82,6 +82,7 @@ export SHELL=`which zsh`
 export M2_HOME=/opt/apache-maven-3.0.3
 export PATH=$PATH:$M2_HOME/bin
 
+export PYTHONPATH="$PYTHONPATH:${HOME}/code/pinax/lib/python2.7/site-packages"
 
 # Emacs 中 fcitx 输入法激活
 #export LC_CTYPE=zh_CN.UTF-8

@@ -429,6 +429,9 @@ cno     xh      $HOME/text/arch/
 cno     xs      $HOME/text/soft/
 cno     xv      $HOME/text/vi.vim/
 cno     xf      $HOME/text/fvwm/
+cno     dd      /home/ink/django/
+cno     pp      /home/ink/code/pinax/
+cno     ss      /home/ink/code/pinax/lib/python2.7/site-packages/
 
 " 在编辑 php 时，要用到 html 的 snippet 补全，临时切换文件类型
 "nnoremap fh :setf html<cr>
