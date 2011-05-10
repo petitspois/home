@@ -123,7 +123,7 @@ window_strut none
 
 # window_type <type>         # set the EWMH-compatible window type; one of:
                              # desktop, dock, normal, toolbar, utility
-window_type dock
+window_type normal
 
 # xsync [<bool>]             # whether to operate on X server synchronously (SLOOOOW)
 xsync false

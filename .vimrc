@@ -25,7 +25,7 @@ set nobackup
 " 去除警示声
 set noerrorbells
 set novisualbell
-set vb t_vb=
+"set t_vb=
 
 " 除($，^，.，*)外的正则特殊符号需加"\"转义
 set magic
@@ -47,6 +47,7 @@ set encoding=utf-8
 
 " 新建/保存文件使用编码
 set fileencoding=utf-8
+
 
 " 文件编码匹配原则：由大到小（有利于找到合适编码）
 "set fencs=utf-8,usc-bom,euc-jp,gb18030,gbk,gb2312,cp936
@@ -83,7 +84,7 @@ set autochdir
 ":lcd %:p:h     " 所有操作系统
 "autocmd BufEnter * lcd %:p:h
 
-" ~/.viminfo 保存打开文件历史（书签、寄存器、命令行历史……）
+" $HOME/.viminfo 保存打开文件历史（书签、寄存器、命令行历史……）
 "set viminfo='5,f0,<0,s0,:5,h
 "set viminfo+=!
 set viminfo=
@@ -121,16 +122,16 @@ set t_Co=256
 
 " 色彩主题
 if(has("gui_running"))
-    colorscheme xemacs
+    colorscheme xoria256
     set cursorline
 else
     colorscheme wombat256
     "colorscheme xoria256
-    " 高亮选择的当前行/列，类似 瞄准线
-    set cursorline
-    "set cursorcolumn
 endif
 
+" 高亮选择的当前行/列，类似 瞄准线
+set cursorline
+"set cursorcolumn
 
 "colorscheme jellybeans
 "colorscheme xoria
@@ -191,7 +192,7 @@ set helplang=cn
 "endif
 
 " 自动读取 vim 配置，使之马上生效
-"autocmd! bufwritepost vimrc source ~/.vimrc
+"autocmd! bufwritepost vimrc source $HOME/.vimrc
 
 "取消每次退回到normal模式光标都退到当前光标前一个位置
 "inoremap <Esc> <C-O>mp<Esc>`p
@@ -250,8 +251,11 @@ set shiftwidth=4
 " vim 会尽量将 多个空格转换制表符，以减少存储字符数
 set softtabstop=4
 
-" 开关 行号 与 tab/空白 填充符，使用 setlocal，仅对当前 buffer 生效
-nnoremap <F10> :setl nu! list! paste!<CR>
+
+" 开关 行号 与 tab/空白 填充符"
+"nnoremap <F10> :set nu! list! paste!<CR>
+" setlocal 只对当前标签使用，不进行全局设置
+nnoremap <F10> :setlocal nu! list! paste!<CR>
 
 
 "}}}
@@ -268,6 +272,11 @@ set smartindent
 " C样式的缩进，开启会覆盖 smartindent !
 "set cindent
 
+" 解决：继承缩进后，添加注释，自动跳转到行首
+set smarttab
+set cindent
+
+
 "}}}
 
 " [ Tabpage 标签页 ]"{{{
@@ -283,7 +292,7 @@ nmap tp  :tabprev<CR>
 nmap tn  :tabnext<CR>
 nmap th  :tab help 
 nmap t.  :tabnew .<CR>
-"nmap tf  :tabnew ~/.vimrc<CR>
+"nmap tf  :tabnew $HOME/.vimrc<CR>
 
 nmap <F1>       :tabprev<CR>
 nmap <F2>       :tabnext<CR>
@@ -299,12 +308,19 @@ endfunction
 " 快捷键
 nmap tt :call SwitchLastUsedTab()<CR>
 
+" [ 标签页颜色 ]"{{{
+"--------------------------------------------
+" color     black   red     green   yellow  blue    magenta     cyan    white
+" normal    0       1       2       3       4       5           6       7
+" bold      8       9       10      11      12      13          14      15
 
 " fill 没有标签地方，sel 当前 活动的标签页 line 非活动的标签页
-highlight TabLineFill ctermfg=0
+" cterm 控制显示效果：下划线，加粗，斜体...
+highlight TabLineFill ctermbg=0 ctermfg=0 cterm=none
 highlight TabLine ctermfg=15 ctermbg=0 cterm=none
-highlight TabLineSel ctermfg=7 cterm=bold ctermbg=6
+highlight TabLineSel ctermfg=7 ctermbg=6 cterm=bold
 
+"}}}
 
 " [ 标签页样式 ]"{{{
 """""""""""""""""""""""""""""""""""""""""""""
@@ -389,9 +405,10 @@ nnoremap <leader>t :set filetype=conf
 nnoremap <leader>l :ls<cr>
 nnoremap <leader>d :bd<cr>
 
-" 空格开关折叠
+" 回车开关折叠
 "nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 nnoremap <space> za
+" 空格翻页
 nnoremap <CR> <C-f>
 ""nnoremap <space> <C-d>
 
@@ -406,12 +423,13 @@ nnoremap <CR> <C-f>
 
 " 命令行快捷键 cnoremap，可以实现比 :ca 命令行缩写 更快捷，自动展开，长目录定位
 " 打开 txt 文件时容易展开
-" cno     tx      ~/me/text/
-cno     xx      ~/me/text/
-cno     xh      ~/me/text/arch/
-cno     xs      ~/me/text/soft/
-cno     xv      ~/me/text/vi.vim/
-cno     xf      ~/me/text/fvwm/
+" cno     tx      $HOME/me/text/
+cno     kk      $HOME/kou/
+cno     xx      $HOME/text/
+cno     xh      $HOME/text/arch/
+cno     xs      $HOME/text/soft/
+cno     xv      $HOME/text/vi.vim/
+cno     xf      $HOME/text/fvwm/
 
 " 在编辑 php 时，要用到 html 的 snippet 补全，临时切换文件类型
 "nnoremap fh :setf html<cr>
@@ -423,10 +441,10 @@ nnoremap ,fp :set ft=php<cr>
 
 
 " 快速编辑 配置文件
-"map <leader>e :e! ~/.vimrc<cr>
-nnoremap <leader>e :tabnew ~/.vimrc<cr>
+"map <leader>e :e! $HOME/.vimrc<cr>
+nnoremap <leader>e :tabnew $HOME/.vimrc<cr>
 " 重载配置文件，立即生效，无须重启
-nnoremap <leader>s :source ~/.vimrc<cr>
+nnoremap <leader>s :source $HOME/.vimrc<cr>
 
 " 保持 root 权限的文件，Gvwm 要使用 -S 参数，以便读取密码
 nnoremap su :w !sudo tee %<cr>
@@ -447,13 +465,15 @@ nnoremap su :w !sudo tee %<cr>
 "cnoremap <A-B> <S-Left>
 "cnoremap <A-F> <S-Right>
 
-" 对包含多行的长段落使用 j/k 移动过度
+" 多行段落文本行间移动
+" >>> nmap 普通命令重命名，会引起递归调用，卡死 vim
 nnoremap j gj
 nnoremap k gk
 " C-g 显示文件的完整路径，不能使用 nmap 会发生递归
 nnoremap <C-g> 1<C-g>
 
-
+" escape for <ESC>
+imap jj <esc>
 
 
 
@@ -464,10 +484,25 @@ nnoremap <C-g> 1<C-g>
 
 " >>> 使用 Ctrl - ] 展开，而不是 回车
 "norea #r        # [  ]<CR><Esc>44i#<Esc>o<Esc>2kf]
-norea #r        # [  ]<CR><Esc>44a-<Esc>o<BS><Esc>2kf]
-norea ;r        ; [  ]<CR><Esc>44a-<Esc>o<BS><Esc>2kf]
+"norea #r        # [  ]<CR><Esc>44a-<Esc>o<BS><Esc>2kf]
+"norea ;r        ; [  ]<CR><Esc>44a-<Esc>o<BS><Esc>2kf]
+"norea "r        " [  ]<CR><Esc>44i"<Esc>kf]
+" 折叠块
 
-norea "r        " [  ]<CR><Esc>44i"<Esc>kf]
+norea #r        # [  ]<CR><Esc>44a-<Esc>o<Esc>0Dyy6p3kzf7j
+norea ;r        ; [  ]<CR><Esc>44a-<Esc>o<Esc>0Dyy6p3kzf7j
+norea "r        " [  ]<CR><Esc>44a-<Esc>o<Esc>0Dyy6p3kzf7j
+" 注释分割线
+norea #c        # [  ]<CR><Esc>44a-<Esc>o<Esc>0D2kwl
+norea ;c        ; [  ]<CR><Esc>44a-<Esc>o<Esc>0D2kwl
+norea "c        " [  ]<CR><Esc>44a-<Esc>o<Esc>0D2kwl
+
+norea #x        # [ XXX ]<CR><Esc>44a-<Esc>o<Esc>0D2kJ<Esc>j
+norea #u        # coding:utf8<Esc>
+
+
+
+
 "norea #r        # [ ]<CR><Esc>44i#<Esc>o<Esc>3k    "可以移动到正确的行首
 "norea #r        # [ ]<CR><Esc>44i#<Esc>o<Esc>3kf]  "无法移动到正确的行首
 "
@@ -476,14 +511,18 @@ norea /v        // vim:set et ft=conf fdm=marker sw=4 sts=4 ts=4 nopaste :<Esc>0
 norea /*v       /* vim:set et ft=conf fdm=marker sw=4 sts=4 ts=4 nopaste : */<Esc>0f=
 "norea #m        #vim:set expandtab filetype= foldmethod=marker nopaste softtabstop=4 shiftwidth=4 tabstop=4 :
 
+" python /edjango 文件 使用 utf8 解析"
+norea #d        # vim:set et ft=django fdm=marker sw=4 sts=4 ts=4 nopaste : coding:utf8<Esc>0f=
+norea #p        # vim:set et ft=python fdm=marker sw=4 sts=4 ts=4 nopaste : coding:utf8<Esc>0f=
+
 norea hphp      header("content-type:text/html;charset=utf8");
 
 " 命令行 缩写，使用于常用目录，可以节省，少打写字，快捷高效
-"cnorea tx       ~/me/text/
-"cnorea ta       ~/me/text/arch/
-"cnorea ts       ~/me/text/soft/
-"cnorea tv       ~/me/text/vi.vim/
-"cnorea tf       ~/me/text/fvwm/
+"cnorea tx       $HOME/me/text/
+"cnorea ta       $HOME/me/text/arch/
+"cnorea ts       $HOME/me/text/soft/
+"cnorea tv       $HOME/me/text/vi.vim/
+"cnorea tf       $HOME/me/text/fvwm/
 
 
 
@@ -575,7 +614,7 @@ highlight Folded  ctermfg=7
 " C++ 将每个函数折叠：
 "// vim:fdm=expr:foldexpr=getline(v\:lnum)=~'^\\S.*{'?'>1'\:1
 
-"使用" --------------------------- 作为分隔线（在块的最后一行）的折叠：
+" 使用" --------------------------- 作为分隔线（在块的最后一行）的折叠：
 " vim:fdm=expr:fde=getline(v\:lnum-1)=~'\\v"\\s*-{20,}'?'>1'\:1
 
 "}}}
@@ -608,81 +647,18 @@ autocmd FileType Makefile set noexpandtab
 ""autocmd! BufNewFile,BufReadPost  *.cpp nmap < F5 > < ESC >:w< cr >:!clear && g++ < c -R >% -o test && ./test< cr >
 ""autocmd! BufNewFile,BufReadPost  *.c   nmap < F5 > < ESC >:w< cr >:!clear && gcc < c -R >% -o test && ./test< cr >
 
-" Tab = 两个空格
-autocmd FileType css,html inoremap <Tab> <Space><Space>
+" css / html 文件 tab 两个空格缩进，删除时单个删除
+"autocmd FileType css,html inoremap <buffer> <tab> <space><space>
 
+" snippet django 补全扩展文件类型设置
+"autocmd FileType python set ft=django
+autocmd FileType python set ft=python.django
+autocmd FileType html set ft=htmldjango.html
 
 "}}}
 
 " [ Function 功能函数 ]"{{{
 """"""""""""""""""""""""""""""""""""""""""""
-
-" [ 光标颜色 ]"{{{
-"""""""""""""""""""""""""""""""""""""""""""""
-
-" Ubuntu中文论坛：在screen里面动态改变光标颜色
-" 第一句  进入 vim时候，光标变成红的
-" 第二句  进入插入模式，光标变成蓝色
-" 第三句  插入模式结束，光标变回红的
-" 第四句  退出 vim之后，光标变成绿色
-
-" 在xterm里的screen里的vim里面
-if &term =~ "xterm"
-    silent !echo -ne "\e]12;OliveDrab1\007"
-    let &t_SI="\e]12;violet\007"
-    let &t_EI="\e]12;OliveDrab1\007"
-    autocmd VimLeave * :!echo -ne "\e]12;LightSteelBlue\007"
-
-"elseif &term =~ "screen"    " screen in urxvt or xterm
-"    :silent !echo -ne "\eP\e]12;IndianRed2\007\e\\"
-"    let &t_SI=\eP\e]12;RoyalBlue1\007\e\\"
-"    let &t_EI=\eP\e]12;IndianRed2\007\e\\"
-"    autocmd VimLeave * :!echo -ne "\eP\e]12;green\007\e\\"
-
-endif
-
-
-"}}}
-
-" [ 定时执行 ]"{{{
-"""""""""""""""""""""""""""""""""""""""""""""
-"let s:count= 0
-"function! s:TestFunction()
-"  echo 'Counting: ' . s:count
-"  let s:count= s:count + 1
-"  call feedkeys("ma", 't')
-"endfunction
-"set updatetime=1000    " 1 second
-"autocmd! CursorHold *    call s:TestFunction()
-
-"}}}
-
-" [ Tab 智能/自动补全 ]"{{{
-"""""""""""""""""""""""""""""""""""""""""""""
-
-"function! CleverTab()
-"    if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-"        return "\<Tab>"
-"    else
-"        return "\<C-N>"
-"endfunction
-"inoremap <Tab> <C-R>=CleverTab()<CR>
-
-"Tab 智能补全tags
-
-"fun! KeywordComplete()
-"let left = strpart(getline('.'), col('.') - 2, 1)
-"if left =~ "^$"
-"    return "\<Tab>"
-"elseif left =~ ' $'
-"    return "\<Tab>"
-"else
-"    return "\<C-N>"
-"endfun
-"
-"inoremap <silent> <Tab> <C-R>=KeywordComplete()<CR>
-
-"}}}
 
 " [ PHP 字典补全 ]"{{{
 """""""""""""""""""""""""""""""""""""""""""""
@@ -695,7 +671,7 @@ endif
 autocmd FileType php call Phpcmp()
 function! Phpcmp()
 
-    "set dictionary-=~/.vim/dictionary/php_funclist.txt dictionary+=~/.vim/dictionary/php_funclist.txt
+    "set dictionary-=$HOME/.vim/dictionary/php_funclist.txt dictionary+=$HOME/.vim/dictionary/php_funclist.txt
     "set complete-=k complete +=k
 
     " Vim 7.3 支持 PHP 函数补全 C-X C-O
@@ -723,28 +699,6 @@ endfunction
 
 "}}}
 
-" [ 导出为 Html ]"{{{
-"""""""""""""""""""""""""""""""""""""""""""""
-" 转换为 html 格式化 命令
-":source $VIMRUNTIME/syntax/2html.vim
-":runtime! syntax/2html.vim
-
-" From : http://vim.wikia.com/wiki/Pasting_code_with_syntax_coloring_in_emails
-"function MyToHtml(line1,line2)
-"    " 使用 css 渲染
-"    let html_use_css=1
-"    " 对 pre 格式化 空格/换行 为 " "和 br
-"    let html_no_pre=1
-"    " 使用 xhtml 标准
-"    let use_xhtml=1
-"    exec a:line1.','.a:line2.'TOhtml'
-"endfunction
-"" 通过 输入 :MyToHtml 命令来进行转换
-"command -range=% MyToHtml :call MyToHtml(<line1>,<line2>)
-
-
-"}}}
-
 " [ PHP 语法检查 ]"{{{
 """""""""""""""""""""""""""""""""""""""""""""
 "
@@ -769,59 +723,27 @@ endfunction
 
 "}}}
 
-" [ 在两个不同的 vim 之间复制文本 ]"{{{
+" [ 导出为 Html ]"{{{
 """""""""""""""""""""""""""""""""""""""""""""
-
-""transfer/read and write one block of text between vim sessions
-" Usage:
-" `from' session:
-"     ma
-"     move to end-of-block
-"     xw
-"
-" `to' session:
-"     move to where I want block inserted
-"     xr
-
+" See : ~/text/vi.vim/comment.vimrc.txt
+"查看帮助：:help 2html
+":10,40TOhtml
 "}}}
 
-" [ vim 配置文件位置判断 ]"{{{
-"""""""""""""""""""""""""""""""""""""""""""""
-"if has("unix")
-"    nmap xr   :r $HOME/.vimxfer<CR>
-"    nmap xw   :'a,.w! $HOME/.vimxfer<CR>
-"    vmap xr   c<esc>:r $HOME/.vimxfer<CR>
-"    vmap xw   :w! $HOME/.vimxfer<CR>
-"else
-"    nmap xr   :r c:/.vimxfer<CR>
-"    nmap xw   :'a,.w! c:/.vimxfer<CR>
-"    vmap xr   c<esc>:r c:/.vimxfer<cr>
-"    vmap xw   :w! c:/.vimxfer<CR>
-"endif"
+" [ 自动更新 时间戳 ]
+"--------------------------------------------
+" See : ~/text/vi.vim/comment.vimrc.txt
+":r! date "+%Y-%m-%d %H:%M:%S"
 
-"}}}
 
-" [ 创建 js 文件时自动生成 头注释 ]"{{{
-"""""""""""""""""""""""""""""""""""""""""""""
-"command -nargs=0 Addreadme :call Addreadme()
-"function Addreadme()
-"call setline(1,"/**")
-"call append(1," * @require : none")
-"call append(2," * @author : someone@bluehua.org")
-"call append(3," * @date : " . strftime("%Y-%m-%d"))
-"call append(4," * @description : this is a new file ")
-"call append(5," */")
-"endf
-":au BufNewFile *.js :Addreadme
 
-"}}}
 
 "}}}
 
 " [ Plugins 插件 ]"{{{
 """"""""""""""""""""""""""""""""""""""""""""
 
-" [ Taglist.vim ]"{{{
+" [ Taglist.vim ]"{{{vim 
 """""""""""""""""""""""""""""""""""""""""""""
 
 " 按照名称排序
@@ -856,45 +778,45 @@ let Tlist_Inc_Winwidth=0
 
 "}}}
 
-" [ NERD Tree ]"{{{
-"""""""""""""""""""""""""""""""""""""""""""""
-
-nnoremap <leader>f :NERDTreeToggle
-nnoremap  <F4> :NERDTreeToggle<CR>
-imap <F4> <ESC>:NERDTreeToggle<CR>
-"nnoremap <A-f> <ESC>:NERDTreeToggle<CR>
-
-" 窗口位置（'left' or 'right'）
-let NERDTreeWinPos='left'
-" 窗口宽
-let NERDTreeWinSize=30
-" 指定鼠标模式（1.双击打开；2.单目录双文件；3.单击打开）
-let NERDTreeMouseMode=2
-" 是否默认显示书签列表
-let NERDTreeShowBookmarks=1
-" 显示行号
-let NERDTreeShowLineNumbers=1
-" 高亮显示光标所在行
-"let NERDTreeHighlightCursorline=1
-" 窗口状态栏
-let NERDTreeStatusline=1
-" Default: $HOME/.NERDTreeBookmarks
-let NERDTreeBookmarksFile=$HOME.'/.vim/NERDBookmarks.txt'
-
-" 让Tree把自己给装饰得多姿多彩漂亮点
-"let NERDChristmasTree=1
-" 控制当光标移动超过一定距离时，自动将焦点调整到屏中心
-"let NERDTreeAutoCenter=1
-
-"NERDTreeSortOrder           排序规则
-"NERDTreeCaseSensitiveSort   排序时大小写不敏感 
-"NERDTreeBookmarksFile       指定书签文件
-"NERDTreeChDirMode           确定是否改变Vim的CWD
-"NERDTreeHijackNetrw         是否使用:edit命令时打开NerdTree，替代默认的netrw
-"NERDTreeQuitOnOpen          打开文件后是否关闭NerdTree窗口
-
-
-"}}}
+"" [ NERD Tree ]"{{{
+""""""""""""""""""""""""""""""""""""""""""""""
+"
+"nnoremap <leader>f :NERDTreeToggle
+"nnoremap  <F4> :NERDTreeToggle<CR>
+"imap <F4> <ESC>:NERDTreeToggle<CR>
+""nnoremap <A-f> <ESC>:NERDTreeToggle<CR>
+"
+"" 窗口位置（'left' or 'right'）
+"let NERDTreeWinPos='left'
+"" 窗口宽
+"let NERDTreeWinSize=30
+"" 指定鼠标模式（1.双击打开；2.单目录双文件；3.单击打开）
+"let NERDTreeMouseMode=2
+"" 是否默认显示书签列表
+"let NERDTreeShowBookmarks=1
+"" 显示行号
+"let NERDTreeShowLineNumbers=1
+"" 高亮显示光标所在行
+""let NERDTreeHighlightCursorline=1
+"" 窗口状态栏
+"let NERDTreeStatusline=1
+"" Default: $HOME/.NERDTreeBookmarks
+"let NERDTreeBookmarksFile=$HOME.'/.vim/NERDBookmarks.txt'
+"
+"" 让Tree把自己给装饰得多姿多彩漂亮点
+""let NERDChristmasTree=1
+"" 控制当光标移动超过一定距离时，自动将焦点调整到屏中心
+""let NERDTreeAutoCenter=1
+"
+""NERDTreeSortOrder           排序规则
+""NERDTreeCaseSensitiveSort   排序时大小写不敏感 
+""NERDTreeBookmarksFile       指定书签文件
+""NERDTreeChDirMode           确定是否改变Vim的CWD
+""NERDTreeHijackNetrw         是否使用:edit命令时打开NerdTree，替代默认的netrw
+""NERDTreeQuitOnOpen          打开文件后是否关闭NerdTree窗口
+"
+"
+""}}}
 
 " [ zencoding ]"{{{
 """""""""""""""""""""""""""""""""""""""""""""
@@ -919,75 +841,34 @@ let g:user_zen_settings = {
 
 "}}}
 
-" [ vimwiki viki ]"{{{
+" [ netrw vim 自带文件管理器 ]
 """""""""""""""""""""""""""""""""""""""""""""
-" viki 依赖于 tlib 插件
-" From : http://www.gtdstudy.com/?p=1350
+let g:netrw_winsize = 30
+nmap <silent> <leader>o :Sexplore!<cr>
 
-"let g:vimwiki_use_mouse = 1
-"
-""     文件保存时自动输出html，保存大词条比较慢，启用的话就把这一行添加到下面
-""     \ 'auto_export': 1,
-"let g:vimwiki_list = [{'path': '~/vimwiki/',
-"            \ 'path_html': '~/vimwiki/html/',
-"            \ 'html_header': '~/vimwiki/template/header.tpl',}]
-"
-"" From :http://wiki.ktmud.com/tips/vim/vimwiki-guide.html
-"" 不需要驼峰英文成为维基词条
-"let g:vimwiki_camel_case = 0
-"
-"" 标记为完成的 checklist 项目颜色
-"let g:vimwiki_hl_cb_checked = 1
-"
-"" vimwiki 菜单项 为空
-"let g:vimwiki_menu = ''
-"
-"" 是否开启按语法折叠，大文件比较慢
-""let g:vimwiki_folding = 1
-"
-"" 是否在计算字串长度时用特别考虑中文字符
-"let g:vimwiki_CJK_length = 1
-"
-"" 详见下文...
-"let g:vimwiki_valid_html_tags='b,i,s,u,sub,sup,kbd,del,br,hr,div,code,h1'
-
-
-
-
-"}}}
-
-" [ Buftabs.vim ]
+" [ template.vim ]
 """""""""""""""""""""""""""""""""""""""""""""
+" 取消自动载入模板
+let g:template_autoload = 0
 
-" 仅显示 buffer 对应的文件名，不显示路径
-let g:buftabs_only_basename=1
-
-" [ html autoclose ]
+" [ xmledit ]
 """""""""""""""""""""""""""""""""""""""""""""
-
+" xmledit 插件 .vim/fplugin/xml.vim
 " \5 匹配标签对，光标移到标签任意位置即可
-" xmledit 插件 -- xml.vim 
+
+" 全局开启开关
+let loaded_xmledit = 0
+
 " 自动关闭 xhtml 单标签 <br /> <img />
 let xml_use_xhtml = 1
-
-" autocmd 使 html_autoclose.vim 作用于xtml,xml文件
-" "au FileType xhtml,xml so ~/.vim/ftplugin/html_autoclosetag.vim
+"let xml_no_html = 0
 
 " [ autoclose.vim ]
 """""""""""""""""""""""""""""""""""""""""""""
-
 "let g:loaded_AutoClose = 1
-
-
-" [ matchit.vim ]
-"""""""""""""""""""""""""""""""""""""""""""""
-
-" 默认在 /usr/share/vim/vim7/macros/matchit.vim
-
 
 " [ jquery.vim syntax 插件 ]
 """""""""""""""""""""""""""""""""""""""""""""
-
 "js语法高亮脚本的设置
 "let g:javascript_enable_domhtmlcss=1
 
@@ -997,18 +878,20 @@ au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 "au BufRead,BufNewFile *.js set syntax=jquery
 
 
-
-
 "}}}
 
 "   [ Gvim Gui ]"{{{
 """"""""""""""""""""""""""""""""""""""""""""
 if(has("gui_running"))
 
-    " Linux   下字体设置
+    " Linux 字体设置
     set guifont=Envy\ Code\ R\ 10
+    " 中文双字节字符所用字体
+    "set guifontwide=FZXingKai\-S04\ 18
+    " Windows 字体设置
+    "set guifont=Envy_Code_R:h10
 
-    "窗口位置大小,会使 Tilda 打开无法填满窗口
+    " 窗口位置大小,会使 Tilda 打开无法填满窗口
     set lines=31
     set columns=110
 
@@ -1017,25 +900,15 @@ if(has("gui_running"))
     " 去除闪屏
     set novisualbell
     " 完全隐藏工具栏、菜单栏、左右滚动条
-    set guioptions-=T
-    set guioptions-=m
-    set guioptions-=r
-    set guioptions-=l
+    set guioptions-=Tmrl
 
     " 关闭 Alt 激活菜单
     set winaltkeys=no
 
-    " 设置双字节字符所使用的字体--中文
-    "set guifontwide=FZXingKai\-S04\ 18
-    " Windows 下字体设置
-    "set guifont=Envy_Code_R:h10
-
-    "查询相关设置：
-    " set options?
-    " set guifont?
-    "查看更多 Gvim 选项
-    "help guioptions
-
+    "解决consle输出乱码
+    language messages zh_CN.utf-8
+    "解决中文菜单乱码
+    ""set langmenu=zh_CN.utf-8
 
 " <F2> 开关 菜单栏 / 工具栏
 "noremap <silent> <F2> :if &guioptions =~# 'T' <Bar>
@@ -1046,6 +919,89 @@ if(has("gui_running"))
 "    \set guioptions+=m <Bar>
 "    \endif<CR>
 
+
 endif
 
 "}}}
+
+"查询相关设置：
+" set options?
+" set guifont?
+"查看更多 Gvim 选项
+"help guioptions
+
+" [ django ]"{{{
+"--------------------------------------------
+
+" [ django apps 文件打开 快捷键 ]"{{{
+"--------------------------------------------
+" From : http://code.djangoproject.com/wiki/UsingVimWithDjango
+
+let g:last_relative_dir = ''
+nnoremap \1 :call RelatedFile ("models.py")<cr>
+nnoremap \2 :call RelatedFile ("views.py")<cr>
+nnoremap \3 :call RelatedFile ("urls.py")<cr>
+nnoremap \4 :call RelatedFile ("admin.py")<cr>
+nnoremap \5 :call RelatedFile ("tests.py")<cr>
+nnoremap \6 :call RelatedFile ( "templates/" )<cr>
+nnoremap \7 :call RelatedFile ( "templatetags/" )<cr>
+nnoremap \8 :call RelatedFile ( "management/" )<cr>
+nnoremap \0 :e settings.py<cr>
+nnoremap \9 :e urls.py<cr>
+
+fun! RelatedFile(file)
+    #This is to check that the directory looks djangoish
+    if filereadable(expand("%:h"). '/models.py') || isdirectory(expand("%:h") . "/templatetags/")
+        exec "edit %:h/" . a:file
+        let g:last_relative_dir = expand("%:h") . '/'
+        return ''
+    endif
+    if g:last_relative_dir != ''
+        exec "edit " . g:last_relative_dir . a:file
+        return ''
+    endif
+    echo "Cant determine where relative file is : " . a:file
+    return ''
+endfun
+
+fun SetAppDir()
+    if filereadable(expand("%:h"). '/models.py') || isdirectory(expand("%:h") . "/templatetags/")
+        let g:last_relative_dir = expand("%:h") . '/'
+        return ''
+    endif
+endfun
+autocmd BufEnter *.py call SetAppDir()
+
+
+
+"}}}
+
+" [ snippet ]
+"--------------------------------------------
+" 设置文件类型 :set ft=python.django :set ft=htmldjango.html
+"autocmd FileType python set ft=python.django
+"autocmd FileType html set ft=htmldjango.html
+
+" [ templates 文件添加 大括号标签 ]"{{{
+"--------------------------------------------
+"" template 文件添加 包围的 大括号标签，依赖 surround.vim 插件 [?]
+"" 在 visual 模式，使用
+"" 'sb' for block
+"" 'si' if statement
+"" 'sw' with statement
+"" 'sc' comment
+"" 'sf' for statement
+"let g:surround_{char2nr("b")} = "{% block\1 \r..*\r &\1%}\r{% endblock %}"
+"let g:surround_{char2nr("i")} = "{% if\1 \r..*\r &\1%}\r{% endif %}"
+"let g:surround_{char2nr("w")} = "{% with\1 \r..*\r &\1%}\r{% endwith %}"
+"let g:surround_{char2nr("c")} = "{% comment\1 \r..*\r &\1%}\r{% endcomment %}"
+"let g:surround_{char2nr("f")} = "{% for\1 \r..*\r &\1%}\r{% endfor %}"
+
+"}}}
+
+
+
+"}}}
+
+
+

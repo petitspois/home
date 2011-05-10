@@ -1,0 +1,88 @@
+# 配置文件路径 # /etc/maildroprc # $HOME/.mailfilter
+
+# [ refer ]# {{{
+#--------------------------------------------
+# 2010-5-9 # Mutt & Friends # http://darksair.org/wiki/mutt.html#sec6
+
+
+# }}}
+
+#SHELL="/bin/zsh"
+#REG_CASE = no
+
+# [ 路径配置 ]# {{{
+#--------------------------------------------
+
+# 可以在后面过滤路径中，使用 $MAILDIR 引用路径
+MAILDIR = "$HOME/mail"
+
+# 没有匹配过滤规则的，邮件保存位置，XXX 注意路径后面的斜扛
+# XXX 若使用 maildir 邮件格式，要遵循其规定的目录结构
+# inbox 目录下要有 cur / tmp / new 3个子目录
+#DEFAULT="$MAILDIR/inbox"
+DEFAULT = "$HOME/mail/inbox"
+
+logfile "$HOME/mail/log/maildroplog"
+
+
+# }}}
+
+# [ 邮件列表 ]# {{{
+#--------------------------------------------
+# To: python-cn@googlegroups.com
+# To: 
+# Subject: Re: [CPyUG]
+# XXX @ 要不要反斜扛 转义 [?]
+#if ((/^To:.*python-cn@googlegroups\.com/) || (/^Subject: \[CPyUG\] .*/))
+if ( /^To:.*python-cn@googlegroups\.com/ )
+{
+    exception {
+    to "$MAILDIR/cpyug/"
+    }
+}
+
+# HZLUG 小组
+if ( /^To:.*hzlug@googlegroups\.com/ )
+{
+    exception {
+    to "$MAILDIR/cpyug/"
+    }
+}
+
+
+
+
+# }}}
+
+# [ 参考配置 ]# {{{
+#--------------------------------------------
+
+# 默认没有匹配的邮件存放文件夹，若，XXX 不是文件夹，会使用单个文件
+#to "$MAILDIR/inbox/"
+
+## From : gentoo maildrop wiki
+#if (  /^To:.*devel@gentoo-wiki\.com/   || /^Reply-To:.*users@gentoo-wiki\.com/ )
+#{
+#    exception { to $DEFAULT/gentoo-wiki/ }
+#}
+#
+## .courier-maildrop
+#if (/^List-Post:.*courier-maildrop*/ )
+#{
+#    exception { to $DEFAULT/.list.courier-maildrop/ }
+#}
+
+# Using mutt with ssmtp, getmail and maildrop
+# http://www.linuxforums.org/articles/using-mutt-with-ssmtp-getmail-and-maildrop_56.html?src=rss
+# Run everything through SpamAssassin xfilter "/usr/bin/spamassassin"
+#if (/^X-Spam-Level: ****/) to Mail/Spam
+#if (/^To: .*list1/) to Mail/list1
+#if (/^To: .*list2/) to Mail/list2
+#if (/^(From|To|Reply-to|bcc): .*list1/) to Mail/list1
+
+
+
+# }}}
+
+
+

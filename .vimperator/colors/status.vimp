@@ -1,2 +1,0 @@
-highlight StatusLine color:white; background:#555555;font-weight: normal;font-family: monospace;padding-left: 4px;
-highlight CmdLine color:black; background:#CCCCCC;

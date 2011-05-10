@@ -11,12 +11,32 @@ own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 
 #alignment top_left
 alignment bl
-gap_x 100
+
+# [ 1680 X 1050 ]# {{{
+#--------------------------------------------
+
+## 左下角 坐标
+#gap_x 100
+## 下边距 margin-bottom
+#gap_y 0
+#minimum_size 1560 20
+## 下边距 margin-bottom
+#maximum_width 1580
+
+# }}}
+
+# [ 1366 X 786 ]# {{{
+#--------------------------------------------
+
+# 左下角 坐标
+gap_x 0
 # 下边距 margin-bottom
 gap_y 0
-minimum_size 1560 20
+minimum_size 1060 20
 # 下边距 margin-bottom
-maximum_width 1580
+maximum_width 1360
+
+# }}}
 
 draw_shades no
 draw_outline no
@@ -55,5 +75,7 @@ color1 dddddd
 #${image /root/conky/bg/30.png -p 0,0 -s 1560x20} ${goto 20}SF Square Head:Aerial: # --020--CPU1--140--CPU2--130--MEM--130--ROOT--030--/--100--Down--100--UP--000--WEATHER--000--TIME--000--DATE--000--
 # 时间格式 man strftime
 #$color${font Zero Threes:size=9}
+# 1680 X 1050
+#${voffset 4}${offset 20}${color1}CPU1    ${color}${cpugraph cpu1 10,50 FFFFFF FF4444}   ${cpu cpu1}${goto 145}% ${goto 170}${color1}CPU2     ${color}${cpugraph cpu2 10,50 FFFFFF B3E828}   ${cpu cpu2}${goto 293}% ${goto 315}	${color1}RAM		${color}${goto 360}${mem} / ${memperc}%    ${goto 450}${color1}/   ${color} ${fs_used /} / ${fs_size /} ${goto 570}${color1}Down  ${color} ${downspeedf eth0} ${goto 650}k/s ${goto 685}${color1}UP  ${color} ${upspeedf eth0} ${goto 745}k/s    ${goto 1300} ${time %H : %M : %S}  ${goto 1380}$color${font snap}${time %m. %d/ %u}
 TEXT
-${voffset 4}${offset 20}${color1}CPU1    ${color}${cpugraph cpu1 10,50 FFFFFF FF4444}   ${cpu cpu1}${goto 145}% ${goto 170}${color1}CPU2     ${color}${cpugraph cpu2 10,50 FFFFFF B3E828}   ${cpu cpu2}${goto 293}% ${goto 315}	${color1}RAM		${color}${goto 360}${mem} / ${memperc}%    ${goto 450}${color1}/   ${color} ${fs_used /} / ${fs_size /} ${goto 570}${color1}Down  ${color} ${downspeedf eth0} ${goto 650}k/s ${goto 685}${color1}UP  ${color} ${upspeedf eth0} ${goto 745}k/s    ${goto 1300} ${time %H : %M : %S}  ${goto 1380}$color${font snap}${time %m. %d/ %u}
+${voffset 4}${offset 100}${color1}CPU1    ${color}${cpugraph cpu1 10,50 FFFFFF FF4444}   ${cpu cpu1}${goto 225}% ${goto 250}${color1}CPU2     ${color}${cpugraph cpu2 10,50 FFFFFF B3E828}   ${cpu cpu2}${goto 373}% ${goto 395}	${color1}RAM		${color}${goto 440}${mem} / ${memperc}%    ${goto 530}${color1}/   ${color} ${fs_used /} / ${fs_size /} ${goto 650}${color1}Down  ${color} ${downspeedf eth0} ${goto 730}k/s ${goto 765}${color1}UP  ${color} ${upspeedf eth0} ${goto 825}k/s    ${goto 1150} ${time %H : %M : %S}  ${goto 1230}$color${font snap}${time %m. %d/ %u}

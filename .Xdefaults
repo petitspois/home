@@ -1,61 +1,15 @@
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!      Customed
-!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!*color0:     rgb:00/00/00
-!!*color8:     rgb:66/66/66
-!!Black
-!!*color0:     rgb:33/33/33
-!! 使 tmux，screen 的状态栏，可以和终端的背景色一直
-!*color0:     rgb:22/22/22
-!*color8:     rgb:4d/4d/4d
-!
-!!Red
-!*color1:     rgb:cd/5c/5c
-!*color9:     rgb:ff/6a/6a
-!
-!!Green
-!*color2:     rgb:ae/ce/92
-!*color10:    rgb:c5/f7/79
-!
-!!Yellow
-!!*color3:     rgb:e7/e1/8c
-!*color3:     rgb:cf/c4/4e
-!*color11     rgb:ff/f7/96
-!
-!!Blue
-!!*color4:     rgb:87/ce/eb
-!!*color4:     rgb:50/85/af
-!*color4:     rgb:33/55/dd
-!!*color12:    rgb:a2/bb/ff
-!! for screen 2010.6.26
-!*color12:    rgb:77/99/ff
-!
-!!Magnta
-!!*color5:     rgb:9a/70/b2
-!!*color13:    rgb:ad/73/ba
-!!*color13:    rgb:ad/73/ba
-!*color5:       rgb:9e/88/f0
-!*color13:      rgb:9e/88/f0
-!
-!!Cyan
-!*color6:     rgb:92/b2/f8
-!!*color14:    rgb:ba/cd/f8
-!!*color14:     rgb:33/55/dd
-!*color14:     rgb:4e/4e/ff
-!
-!!White
-!*color7:     rgb:be/be/be
-!*color15:    rgb:ff/ff/ff
-
-! ############################################
-! #         自定义
-! ############################################
-!           black   red     green   yellow  blue    magenta     cyan    white
+! ##############################################################################
+!           black   red     green   yellow  blue    magenta洋红 cyan    white
 ! normal    0       1       2       3       4       5           6       7
 ! bold      8       9       10      11      12      13          14      15
 ! 补色器    ：http://colorschemedesigner.com/
 !             http://www.colourlovers.com/copaso/ColorPaletteSoftware#
+! ##############################################################################
+
+! [ mycolor ]! {{{
+!-------------------------------------------
+
 !red
 *color1     :       #fe3f44
 !*color9     :       #f21616
@@ -76,8 +30,6 @@
 !*color12    :       #5969f7
 !*color12    :       #3a5cFF
 *color12    :       #7992ff
-
-
 !*color12: #6495ED
 
 !
@@ -100,7 +52,46 @@
 *color0     :       #171717
 *color8     :       #505354
 
+!*}}}
 
+!! [ 荧光色系 ]! {{{
+!!-------------------------------------------
+!
+!! Defaults
+!*background:             #262729
+!*foreground:             #f8f8f2
+!! Black
+!*color0:                 #262729
+!*color8:                 #554444
+!! Red
+!*color1:                 #f92671
+!*color9:                 #ff669d
+!! Green
+!*color2:                 #a6e22e
+!*color10:                #beed5f
+!! Yellow
+!*color3:                 #fd971f
+!*color11:                #e6db74
+!! Blue
+!*color4:                 #34bdef
+!*color12:                #66d9ef
+!! Magenta
+!*color5:                 #9e6ffe
+!*color13:                #df92f6
+!! Cyan
+!*color6:                 #5e7175
+!*color14:                #a3babf
+!! White
+!*color7:                 #ccccc6
+!*color15:                #f8f8f2
+!! Cursor
+!*cursorColor:            #b5d2dd
+!*cursorBlink:            true
+!
+!!*}}}
+
+! [ 暗 荧光色系 ]! {{{
+!-------------------------------------------
 
 !!*color0: #5A5A5A
 !*color0: #262729
@@ -122,18 +113,46 @@
 !*color15: #DEDEDE
 
 
+!*}}}
 
-!*color5: #ce5c00
-!*color13: #f57900
-!*color6: #3399ff
-!*color14: #99ccff
+!! [ 荧光色系 ]!*{{{
+!!-------------------------------------------
+!! 在线制作 颜色主题的 js web 页
+!! From : http://theywillknow.us/termcolor/
+!*foreground:#a0a0a0
+!*background:#1b1d1e
+!!black
+!*color0:#1b1d1e
+!*color8:#505354
+!!red
+!*color1:#f92672
+!*color9:#ff5995
+!!green
+!*color2:#82b414
+!*color10:#b6e354
+!!yellow
+!*color3:#fd971f
+!*color11:#feed6c
+!!blue
+!*color4:#56c2d6
+!*color12:#8cedff
+!!magenta
+!*color5:#8c54fe
+!*color13:#9e6ffe
+!!cyan
+!*color6:#465457
+!*color14:#899ca1
+!!white
+!*color7:#ccccc6
+!*color15:#f8f8f2
+!
+!!*}}}
 
 
-! ############################################
-!           xterm
-! ############################################
+! [ Font ]! {{{
+!--------------------------------------------
 
-! [ 点阵字体 ]
+! [ 点阵 ]
 !-------------------------------------------
 !XTerm*font: -misc-fixed-medium-r-normal-*-18-120-100-100-c-90-iso10646-1
 !XTerm*wideFont: -misc-fixed-medium-r-normal-*-18-120-100-100-c-180-iso10646-1
@@ -147,45 +166,15 @@
 ! 使中文字体间距缩小,与英文一致
 !XTerm*VT100*cjkWidth: true
 
-! 等价于 xterm -fa 'Envy Code R' -fs 10
-!XTerm*faceName:  Terminus
-!XTerm*faceName:  Envy Code R
-!XTerm*faceSize:  10
-
 ! 中文字体 设置
 !xterm*faceNameDoublesize: wenquanyi bitmap song:pixelsize=16:antialias=True
 !xterm*faceNameDoublesize: Microsoft Yahei:pixelsize=13
 
-!! fixed 字体 窗口大小设置
-!!XTerm*geometry                         : 80x26
-!XTerm*geometry                          : 119x34
-!XTerm*background                        : #1a1a1a
-!XTerm*foreground                        : white
-!XTerm*cursorColor                       : LightSteelBlue1
-!XTerm*scrollBar                         : false
-!!XTerm*scrollKey                            : true
-!!XTerm*mutiScroll                       : true
-!XTerm*saveLines                         : 5000
-!XTerm*multiClickTime                    : 250
-!XTerm*borderless                        : 1
-!XTerm*internalBorder                    : 3
-!!XTerm*loginShell                       : true
-!!XTerm*pointerColorBackground           : black
-!!XTerm.zIconBeep                        : 0
 
-! irssi alt 数字键 为上标数字，而非切换窗口
-!XTerm*eightBitInput                        : false
+!*}}}
 
-! man keyword  gin-press(l/L/m/M/r/R) 
-!# Scrolling on wheel mouse: half a page normally, line per line with shift
-!XTerm.vt100.translations: #override\n\
-!       Shift<Btn4Down>,<Btn4Up>:scroll-back(1,line)\n\
-!       Shift<Btn5Down>,<Btn5Up>:scroll-forw(1,line)\n\
-!       Ctrl<Btn4Down>,<Btn4Up>:scroll-back(1,page)\n\
-!       Ctrl<Btn5Down>,<Btn5Up>:scroll-forw(1,page)\n\
-!       <Btn4Down>,<Btn4Up>:scroll-back(1,halfpage)\n\
-!       <Btn5Down>,<Btn5Up>:scroll-forw(1,halfpage)\n\
-
+! [ new xterm ]! {{{
+!-------------------------------------------
 
 ! [ Font 字体 ]
 !-------------------------------------------
@@ -197,24 +186,26 @@ XTerm*utf8Title:    true
 !xterm*fontMenu*fontdefault*Label:Default
 XTerm*xftAntialias: true
 Xterm.cjkWidth:     true
+
+! 等价于 xterm -fa 'Envy Code R' -fs 10
 XTerm*faceName                          : Envy Code R-10
 XTerm*faceNameDoublesize                : WenQuanYi Micro Hei-10
 
 XTerm*ttyModes:     erase   ^?
 
+! man keyword  gin-press(l/L/m/M/r/R)
+! Scrolling on wheel mouse: half a page normally, line per line with shift
 XTerm*VT100.Translations:#override          \
     <Key>BackSpace: string(0x7f)            \n\
     <Key>Delete:    string(0x1b)    string("[3~")   \n\
     Meta<Key>K: scroll-back(1,halfpage)     \n\
     Meta<Key>J: scroll-forw(1,halfpage)
-! JK Keys done at 2010-06-13T13:08:00+08:00
 
 
 ! [ Style 样式 ]
 !--------------------------------------------
 
 !XTerm*termName:     xterm
-
 XTerm*saveLines                         : 5000
 XTerm*multiClickTime                    : 250
 XTerm*borderless                        : 1
@@ -245,18 +236,20 @@ XTerm*oldXtermFKeys:    true
 XTerm*rightScrollBar:   true
 XTerm*underLine:    true
 
+XTerm*visualBell:    false
 
 ! [ Alt / Ctrl 快捷键可用 ]
 !--------------------------------------------
 ! 修复 Alt 输入
+! irssi alt 数字键 为上标数字，而非切换窗口
 XTerm*altSendsEscape:   true
 XTerm*eightBitInput:    false
 
 
+!*}}}
 
-! ############################################
-!           urxvt
-! ############################################
+! [ urxvt ]# {{{
+!--------------------------------------------
 
 !URxvt*font: -misc-fixed-medium-r-normal-*-18-120-100-100-c-90-iso10646-1, \
 !           xft:Envy Code R:pixelsize=10:autohint=true, \
@@ -290,9 +283,15 @@ URxvt.matcher.button                    : 1
 !URxvt.urgentOnBell: True
 
 
+
+
+! }}}
+
 ! [ Emacs ]
 !-------------------------------------------
-Emacs.geometry: 100x35+0+0
+!Emacs.geometry: 100x35+0+0
 
-!From : http://forum.ubuntu.org.cn/viewtopic.php?t=40005
+
+
+
 
