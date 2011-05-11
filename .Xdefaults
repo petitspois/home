@@ -7,52 +7,86 @@
 !             http://www.colourlovers.com/copaso/ColorPaletteSoftware#
 ! ##############################################################################
 
-! [ mycolor ]! {{{
-!-------------------------------------------
-
-!red
-*color1     :       #fe3f44
-!*color9     :       #f21616
-*color9    :       #db1b1b
-
-!green
-*color2     :       #bbf73e
-!*color10   :       #a2ef00
-*color10    :       #90d112
-
-!yellow
-*color3     :       #ffe200
-*color11    :       #ff8b00
-
-!blue
-!*color4     :       #4c59d8
-*color4     :       #505ff1
-!*color12    :       #5969f7
-!*color12    :       #3a5cFF
-*color12    :       #7992ff
-!*color12: #6495ED
-
+!! [ mycolor ]! {{{
+!!-------------------------------------------
 !
-!magenta    洋红
-*color5     :       #ff427e
-*color13    :       #db003a
+!!red
+!*color1     :       #fe3f44
+!!*color9     :       #f21616
+!*color9    :       #db1b1b
+!
+!!green
+!*color2     :       #bbf73e
+!!*color10   :       #a2ef00
+!*color10    :       #90d112
+!
+!!yellow
+!*color3     :       #ffe200
+!*color11    :       #ff8b00
+!
+!!blue
+!!*color4     :       #4c59d8
+!*color4     :       #505ff1
+!!*color12    :       #5969f7
+!!*color12    :       #3a5cFF
+!*color12    :       #7992ff
+!!*color12: #6495ED
+!
+!!
+!!magenta    洋红
+!*color5     :       #ff427e
+!*color13    :       #db003a
+!
+!!purple     紫
+!!*color4    :       #808cff
+!!*color12   :       #5462e3
+!!cyan       萤光蓝
+!*color6     :       #42bdff
+!*color14    :       #00a8db
+!
+!!white
+!*color7     :       #e1e1e1
+!*color15    :       #f8f8f2
+!!!black
+!!*color0     :       #1e1e1e
+!*color0     :       #171717
+!*color8     :       #505354
+!
+!!*}}}
 
-!purple     紫
-!*color4    :       #808cff
-!*color12   :       #5462e3
-!cyan       萤光蓝
-*color6     :       #42bdff
-*color14    :       #00a8db
-
-!white
-*color7     :       #e1e1e1
-*color15    :       #f8f8f2
+!! [ bl1nk v0.2 ]!*{{{
+!!-------------------------------------------
+!! http://bl1nks.deviantart.com/art/Yes-I-m-alive-166903490
+!
+!*foreground:              #a0a0a0
+!!*background:              #1B1D1E
+!*background:              #121212
 !!black
-!*color0     :       #1e1e1e
-*color0     :       #171717
-*color8     :       #505354
-
-!*}}}
+!*color0:                  #1B1D1E
+!*color8:                  #505354
+!!red
+!*color1:                  #F92672
+!*color9:                  #FF5995
+!!green
+!*color2:                  #82B414
+!*color10:                 #B6E354
+!!yellow
+!*color3:                  #FD971F
+!*color11:                 #FEED6C
+!!blue
+!*color4:                  #56C2D6
+!*color12:                 #8CEDFF
+!!magenta
+!*color5:                  #8C54FE
+!*color13:                 #9E6FFE
+!!cyan
+!*color6:                  #465457
+!*color14:                 #899CA1
+!!white
+!*color7:                  #CCCCC6
+!*color15:                 #F8F8F2
+!
+!!*}}}
 
 !! [ 荧光色系 ]! {{{
 !!-------------------------------------------
@@ -260,6 +294,34 @@ URxvt.matcher.button                    : 1
 !-------------------------------------------
 !Emacs.geometry: 100x35+0+0
 
+! tangoesque scheme
+! http://v4arg.deviantart.com/art/Subtle-WM-flanker-195105799
+*background: #151617
+*foreground: #d6d9ba
+! Black (not tango) + DarkGrey
+*color0:  #111111
+*color8:  #555753
+! DarkRed + Red
+*color1:  #d74005
+*color9:  #d76d05
+! DarkGreen + Green
+*color2:  #93d44f
+*color10: #c8e7a8
+! DarkYellow + Yellow
+*color3:  #d3e13b
+*color11: #dee566
+! DarkBlue + Blue
+*color4:  #23abd2
+*color12: #23c8d2
+! DarkMangenta + Mangenta
+*color5:  #de1629
+*color13: #dc3343
+!DarkCyan + Cyan (both not tango)
+*color6:  #89b6e2
+*color14: #46a4ff
+! LightGrey + White
+*color7:  #b8b8b8
+*color15: #ffffff
 
 
 
