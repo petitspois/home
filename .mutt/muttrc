@@ -137,6 +137,9 @@ set move=no
 set header_cache="~/mail/cache/"
 set message_cachedir=${HOME}/.mutt/cache/
 
+# 编辑邮件时，vim 临时文件存放位置
+set tmpdir=${HOME}/mail/tmp
+
 # c00kiemon5ter # offlineimap 使用 imap 收发邮件
 # 若没有创建文件，默认不会自动创建，若使用目录会自动创建缓存文件
 #set header_cache=${HOME}/.mutt/cache/headers
@@ -213,9 +216,9 @@ set menu_scroll
 # 按 "t" 或者 "D" 之类的标记操作时，光标是否自动移动到下一封信件
 set resolve=yes
 
-#set sort=reverse-threads            # 新的在最上面，按thread归档
-set sort=threads            # 新的在最上面，按thread归档
-set sort_aux=last-date-received     # 同一个thread里面，最新的在最上面
+set sort=reverse-threads            # 新的在最上面，按thread归档
+#set sort=threads            # 新的在最上面，按thread归档
+#set sort_aux=last-date-received     # 同一个thread里面，最新的在最上面
 # [?] 文件浏览器中的条目。默认，alpha 字母 showing mbox list default to newest first
 #set sort_browser=reverse-date
 

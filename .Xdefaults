@@ -54,40 +54,40 @@
 !
 !!*}}}
 
-! [ bl1nk v0.2 ]!*{{{
-!-------------------------------------------
-! http://bl1nks.deviantart.com/art/Yes-I-m-alive-166903490
-
-*foreground:              #a0a0a0
-!*background:              #1B1D1E
-*background:              #121212
-!black
-*color0:                  #1B1D1E
-*color8:                  #505354
-!red
-*color1:                  #F92672
-*color9:                  #FF5995
-!green
-*color2:                  #82B414
-*color10:                 #B6E354
-!yellow
-*color3:                  #FD971F
-*color11:                 #FEED6C
-!blue
-*color4:                  #56C2D6
-*color12:                 #8CEDFF
-!magenta
-*color5:                  #8C54FE
-*color13:                 #9E6FFE
-!cyan
-*color6:                  #465457
-*color14:                 #899CA1
-!white
-*color7:                  #CCCCC6
-*color15:                 #F8F8F2
-
-!*}}}
-
+!! [ bl1nk v0.2 ]!*{{{
+!!-------------------------------------------
+!! http://bl1nks.deviantart.com/art/Yes-I-m-alive-166903490
+!
+!*foreground:              #a0a0a0
+!!*background:              #1B1D1E
+!*background:              #121212
+!!black
+!*color0:                  #1B1D1E
+!*color8:                  #505354
+!!red
+!*color1:                  #F92672
+!*color9:                  #FF5995
+!!green
+!*color2:                  #82B414
+!*color10:                 #B6E354
+!!yellow
+!*color3:                  #FD971F
+!*color11:                 #FEED6C
+!!blue
+!*color4:                  #56C2D6
+!*color12:                 #8CEDFF
+!!magenta
+!*color5:                  #8C54FE
+!*color13:                 #9E6FFE
+!!cyan
+!*color6:                  #465457
+!*color14:                 #899CA1
+!!white
+!*color7:                  #CCCCC6
+!*color15:                 #F8F8F2
+!
+!!*}}}
+!
 !! [ tangoesque ] ! {{{
 !!-------------------------------------------
 !! http://v4arg.deviantart.com/art/Subtle-WM-flanker-195105799
@@ -160,24 +160,24 @@
 ! [ 暗 荧光色系 ]! {{{
 !-------------------------------------------
 
-!!*color0: #5A5A5A
-!*color0: #262729
-!!*color8: #554444
-!*color8: #3E3E3E
-!*color1: #FF4747
-!*color9: #FF6767
-!*color2: #AFC81C
-!*color10: #BFC81C
-!*color3: #FDD338
-!*color11: #F4D461
-!*color4: #619AF4
-!*color12: #5496FF
-!*color5: #5F5A90
-!*color13: #826AB1
-!*color6: #47E0FF
-!*color14: #2ED9FB
-!*color7: #FFFFFF
-!*color15: #DEDEDE
+!*color0: #5A5A5A
+*color0: #262729
+!*color8: #554444
+*color8: #3E3E3E
+*color1: #FF4747
+*color9: #FF6767
+*color2: #AFC81C
+*color10: #BFC81C
+*color3: #FDD338
+*color11: #F4D461
+*color4: #619AF4
+*color12: #5496FF
+*color5: #5F5A90
+*color13: #826AB1
+*color6: #47E0FF
+*color14: #2ED9FB
+*color7: #FFFFFF
+*color15: #DEDEDE
 
 
 !*}}}
