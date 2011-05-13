@@ -12,6 +12,8 @@
 # roylez    # From : https://github.com/roylez/dotfiles/raw/master/.zshrc
 # gogonkt   # From : https://github.com/gogonkt/dotG/blob/master/.zshrc
 
+# typester  # http://unknownplace.org/memo/2008/02/04/
+
 # [ man ]# {{{
 #--------------------------------------------
 # setopt <选项>     -->     man zshoptions
@@ -157,22 +159,55 @@ function precmd {
     vcs_info 'prompt'
 }
 
+#function lprompt {
+    #local brackets=$1
+    #local color1=$2
+    #local color2=$3
+
+    #local bracket_open="${color1}${brackets[1]}${PR_RESET}"
+    #local bracket_close="${color1}${brackets[2]}"
+
+    #local git='$vcs_info_msg_0_'
+    ## 相对目录，空格添加在此处
+    ##local cwd="${color3} %B%1~%b "
+    #local cwd="${color3} %B%d%b "
+
+    ##PROMPT="${PR_RESET}${bracket_open}${git}${cwd}${bracket_close}○%# ${PR_RESET}"
+    ##PROMPT="${PR_RESET}${bracket_open}${git}${PR_YELLOW}${cwd}${bracket_close}${PR_RED}○ ${PR_RESET}"
+    #PROMPT="${PR_RESET}${PR_YELLOW}${cwd}
+#${bracket_open}${git}${bracket_close}${PR_RED}· ${PR_RESET}"
+
+#}
+
 function lprompt {
-    local brackets=$1
-    local color1=$2
-    local color2=$3
-
-    local bracket_open="${color1}${brackets[1]}${PR_RESET}"
-    local bracket_close="${color1}${brackets[2]}"
-
     local git='$vcs_info_msg_0_'
     # 相对目录，空格添加在此处
-    local cwd="${color3} %B%1~%b "
+    #local cwd="${color3} %B%1~%b "
+    local cwd=" %B%d%b "
 
     #PROMPT="${PR_RESET}${bracket_open}${git}${cwd}${bracket_close}○%# ${PR_RESET}"
     #PROMPT="${PR_RESET}${bracket_open}${git}${PR_YELLOW}${cwd}${bracket_close}${PR_RED}○ ${PR_RESET}"
-    PROMPT="${PR_RESET}${bracket_open}${git}${PR_YELLOW}${cwd}${bracket_close}${PR_RED}· ${PR_RESET}"
+    PROMPT="${PR_RESET}${PR_YELLOW}${cwd}
+${git}${PR_RED}· ${PR_RESET}"
+
 }
+## From : typester
+#function lprompt {
+
+    #local git='$vcs_info_msg_0_'
+    ## 相对目录，空格添加在此处
+    #local cwd="%B%1~%b "
+
+## 缩进，会出现在效果中
+#PROMPT='
+#%(?..exit %?)
+#%{[33m%}%~%{[m%}
+#$(pwd)%{[m%}
+#%{[91m%}${git} %{[38m%}%(!.#.$)%{[m%}%{m%} '
+
+#RPROMPT='%{[38m%}[ %n @ %m ]%{m%}%{[00m%}'
+
+#}
 
 # [ 右侧：提示 ： (ink@king:~/) ]# {{{
 #--------------------------------------------
@@ -968,6 +1003,9 @@ hash -d pkg="/var/cache/pacman/pkg"
 #hash -d X="/etc/X11"
 
 #}}}
+
+# 目录堆栈 [?] # From : typester
+alias gd='dirs -v; echo -n "select number: "; read newdir; cd -"$newdir"'
 
 
 
