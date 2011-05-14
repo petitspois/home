@@ -63,7 +63,7 @@ encoding utf-8 utf-8
 
 # 将快捷键默认 C-a 设为 C-x / [不行]反斜杠 \ 因为不常用
 # C - x 不能使用来回切换之前停留到 tab
-escape ^xx
+escape ^bb
 #escape \\
 # vim 的鼠标上滚有问题
 #escape ``
