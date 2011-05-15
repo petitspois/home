@@ -65,7 +65,8 @@ set move=no
 set folder=imaps://imap.gmail.com:993/
 set spoolfile = "+INBOX"
 set postponed ="+[Gmail]/Drafts"
-set trash = "imaps://imap.gmail.com/[Gmail]/Trash"
+# 没有 trash 变量，提示报错
+#set trash = "imaps://imap.gmail.com/[Gmail]/Trash"
 
 # spoolfile 告诉Mutt从本地哪个目录来得到新 Email
 # 想添加更多的 Spoolfiles，例如邮件列表（Mailing List）所在的目录
