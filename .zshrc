@@ -188,7 +188,7 @@ function lprompt {
     #PROMPT="${PR_RESET}${bracket_open}${git}${cwd}${bracket_close}○%# ${PR_RESET}"
     #PROMPT="${PR_RESET}${bracket_open}${git}${PR_YELLOW}${cwd}${bracket_close}${PR_RED}○ ${PR_RESET}"
     PROMPT="${PR_RESET}${PR_YELLOW}${cwd}
-${git}${PR_RED}· ${PR_RESET}"
+${git}${PR_RED} · ${PR_RESET}"
 
 }
 ## From : typester
