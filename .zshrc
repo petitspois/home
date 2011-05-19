@@ -708,15 +708,17 @@ alias ..5="cd ../../../../.."
 alias ga='git add'
 alias gc='git commit '
 alias gca='git commit -a -m'
+alias gcl='git config -l'
+alias gce='git config -e'
 alias gl='git ls-files'
 alias go='git log'
 alias gs='git status'
 alias gb='git branch'
 alias gbc='git checkout'
 
-alias gph="git push home master"
-alias gpe="git push etc master"
 alias gpo="git push origin master"
+alias gp2="git push origin2 master"
+alias gp3="git push origin3 master"
 
 
 # alias gh='git pull git@github.com:lvii/home.git master'
