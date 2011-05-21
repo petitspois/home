@@ -18,7 +18,6 @@
 # [ todo ]# {{{
 #--------------------------------------------
 
-# 邮件列表 / 附件 / 快捷键
 # 邮件 thread 折叠
 
 
@@ -595,7 +594,7 @@ set forward_decode
 # [ macro 宏 ]# {{{
 #--------------------------------------------
 
-macro index .G "!getmail\n" "Invoke getmail"
+#macro index .G "!getmail\n" "Invoke getmail"
 #macro pager .G "!getmail\n" "Invoke getmail"
 
 ## 切换收信箱和发件箱的快捷键
@@ -648,9 +647,19 @@ bind index ,g       group-reply
 
 # From : adam8157
 # 刷新 邮箱 将标记为删除的邮件，从邮箱中去除
-bind index \Cx sync-mailbox
+#bind index \Cx sync-mailbox
 bind index,pager L group-reply
 bind editor <space> noop
+
+# macros
+#macro pager \cb <pipe-entry>'urlview'<enter> 'Follow links with urlview'
+macro index \Cr "<tag-prefix><clear-flag>N" "mark tagged messages as read"
+macro index B "<limit>~b " "search message bodies"
+macro index I "<change-folder>!<enter>" "go to Inbox"
+
+# save a decoded copy in ~
+macro index P "<pipe-message>cat > ~/" "save message as"
+macro index y "<change-folder>?<toggle-mailboxes>
 
 #macro pager \cu |urlview\n
 # IMAP Gmail 邮箱操作
@@ -663,7 +672,7 @@ macro index,pager H "<save-message>=INBOX<enter>" "Mark message as ham"
 macro index,pager S "<save-message>=[Gmail]/Spam<enter>" "Mark message as spam"
 
 # XXX 将删除的邮件移动到 gmail 回收站 [?]
-folder-hook . 'macro index,pager d "<save-message>=[Gmail]/Trash<enter>" "Mark message as trash"'
+folder-hook . 'macro index,pager d "<save-message>=[Gmail]/Trash<enter>" "trash"'
 folder-hook 'Spam|Trash' 'bind index,pager d delete-message'
 
 # [ POP3 hook [?] ]
@@ -680,6 +689,7 @@ folder-hook 'Spam|Trash' 'bind index,pager d delete-message'
 ## 垃圾箱
 #folder-hook . 'macro index d "$folder/trash\r"'
 #folder-hook $folder/trash 'bind index d delete-message'
+
 
 
 
