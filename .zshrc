@@ -715,13 +715,16 @@ alias ..5="cd ../../../../.."
 alias ga='git add'
 alias gc='git commit '
 alias gca='git commit -a -m'
+alias gcl='git config -l'
+alias gce='git config -e'
 alias gl='git ls-files'
 alias go='git log'
 alias gs='git status'
 
 alias gph="git push home master:fedora"
-alias gpe="git push etc master"
-alias gpo="git push origin master"
+alias gpo="git push origin master:fedora"
+alias gp2="git push origin2 master:fedora"
+alias gp3="git push origin3 master:fedora"
 
 
 # alias gh='git pull git@github.com:lvii/home.git master'
