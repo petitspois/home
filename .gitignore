@@ -115,4 +115,16 @@ yue
 
 # }}}
 
+0.nginx.conf
+imap.mutt
+imap.muttrc
+nginx.conf.default
+temp.ngix.conf
+mail/
+dot.emacs/
+parametric/
+sent/
+to.back/
+to.remove/
+vimfiles/
 

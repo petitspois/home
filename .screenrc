@@ -120,7 +120,7 @@ termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
 #caption always "%{=b}%{b}%{G}[%H]%{-}  %+07=%-w%7L>%{b .y}*%n %t%{-}%+w%-014<  %-012=%{b m}%m/%d %c "
 
 # 全局粗体，蓝色字体，绿色用户名，取消之前属性，窗口列表举例7像素，当前聚焦窗口为黄色，最后的窗口举例时间14像素
-caption always "%{=b k}%{c}[ %H ] %{-}  %+07=%-w%7L>%{g}%n %t%{-}%+w%-014<  %-012=%{b y}%m/%d %c "
+caption always "%{=b k}%{c}[ %H ] %{-}%L=%-w%7L>%{g}%n %t%{-}%+w%-014<  %-012=%{b y}%m/%d %c "
 # 状态栏, 不用Hardstatus实现, 因为要把xterm的title伪装成Hardstatus
 
 # Sessions
