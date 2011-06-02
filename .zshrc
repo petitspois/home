@@ -721,8 +721,8 @@ alias gl='git ls-files'
 alias go='git log'
 alias gs='git status'
 
-alias gph="git push home master:fedora"
-alias gpo="git push origin master:fedora"
+alias gph="git push origin master:fedora"
+alias gpo="git push origin master"
 alias gp2="git push origin2 master:fedora"
 alias gp3="git push origin3 master:fedora"
 

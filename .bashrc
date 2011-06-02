@@ -114,7 +114,7 @@ alias mysshd='sudo /etc/rc.d/sshd'
 #--------------------------------------------
 
 # bash 使用 vi 风格的行编辑
-set -o vi
+#set -o vi
 
 ## Bash下Vi输入模式重设 Ctrl-N, Ctrl-P, Ctrl-L等快捷
 ## 默认是保存到 .inputrc 文件
