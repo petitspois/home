@@ -1,47 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<openbox_menu xmlns="http://openbox.org/"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://openbox.org/
-                file:///usr/share/openbox/menu.xsd">
+<openbox_menu xmlns="http://openbox.org/3.4/menu">
 
-<menu id="root-menu" label="Openbox 3">
-  <item label="xterm">
-    <action name="Execute"><execute>x-terminal-emulator</execute></action>
+<!-- Applications 子菜单 -->
+<!--{{{-->
+<menu id="apps-menu" label="Applications">
+  <item label="PCManFM">
+    <action name="Execute">
+    <startupnotify><enabled>yes</enabled><icon>pcmanfm</icon></startupnotify>
+    <command>pcmanfm</command></action>
   </item>
-  <item label="firefox">
-    <action name="Execute"><execute>x-www-browser</execute></action>
+  <item label="Xterm">
+    <action name="Execute"><command>xterm</command></action>
   </item>
-  <item label="Run">
-    <action name="Execute"><execute>gmrun</execute></action>
+  <item label="Firefox">
+    <action name="Execute"><command>firefox</command></action>
   </item>
-  <item label="pcmanfm">
-    <action name="Execute"><execute>pcmanfm</execute></action>
-  </item>
-  <item label="leafpad">
-    <action name="Execute"><execute>leafpad</execute></action>
-  </item>
-  <item label="mtpaint">
-    <action name="Execute"><execute>leafpad</execute></action>
-  </item>
-  <!-- This requires the presence of the 'menu' package to work -->
-  <menu id="Debian" />
+</menu>
+<!--}}}-->
+
+<menu id="root-menu" label="LXDE">
+  <separator label="LXDE" />
+
+  <!-- 常用程序 -->
+        <item label="xterm">
+            <action name="Execute"><execute>xterm</execute></action>
+        </item>
+        <item label="firefox">
+            <action name="Execute"><execute>firefox</execute></action>
+        </item>
+        <item label="Run">
+            <action name="Execute"><execute>gmrun</execute></action>
+        </item>
+        <item label="pcmanfm">
+            <action name="Execute"><execute>pcmanfm</execute></action>
+        </item>
+        <item label="leafpad">
+            <action name="Execute"><execute>leafpad</execute></action>
+        </item>
+        <item label="mtpaint">
+            <action name="Execute"><execute>mtpaint</execute></action>
+        </item>
+
+  <!-- Applications 子菜单 -->
+  <menu id="apps-menu" />
   <separator />
   <menu id="client-list-menu" />
   <separator />
-  <item label="ObConf">
-    <action name="Execute"><execute>obconf</execute></action>
+
+  <!-- 动态添加 / 删除 虚拟桌面 -->
+  <item label="Desktop Settings">
+    <action name="Execute">
+      <startupnotify><enabled>yes</enabled></startupnotify>
+      <command>pcmanfm --desktop-pref</command>
+    </action>
   </item>
-  <item label="Reconfigure">
+
+  <!-- Openbox 配置 -->
+  <item label="Openbox Settings">
+    <action name="Execute">
+      <startupnotify><enabled>yes</enabled><icon>openbox</icon></startupnotify>
+      <command>obconf</command>
+    </action>
+  </item>
+  <item label="Reload Config">
     <action name="Reconfigure" />
   </item>
+  <separator />
+
   <item label="Restart">
     <action name="Restart" />
   </item>
-  <separator />
   <item label="Exit">
-    <action name="Exit" />
+    <action name="Execute"><command>lxde-logout</command></action>
   </item>
+  <!--
+        <item label="ObConf">
+            <action name="Execute"><execute>obconf</execute></action>
+        </item>
+        <item label="Exit">
+            <action name="Exit" />
+        </item>
+  -->
 </menu>
 
 </openbox_menu>

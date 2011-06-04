@@ -155,7 +155,8 @@ Xterm.cjkWidth:     true
 
 ! 等价于 xterm -fa 'Envy Code R' -fs 10
 XTerm*faceName                          : Envy Code R-10
-XTerm*faceNameDoublesize                : WenQuanYi Micro Hei-10
+xterm*faceNameDoublesize: Microsoft Yahei:pixelsize=13
+!XTerm*faceNameDoublesize                : WenQuanYi Micro Hei-10
 
 XTerm*ttyModes:     erase   ^?
 

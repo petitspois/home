@@ -255,7 +255,7 @@ set softtabstop=4
 " 开关 行号 与 tab/空白 填充符"
 "nnoremap <F10> :set nu! list! paste!<CR>
 " setlocal 只对当前标签使用，不进行全局设置
-nnoremap <F10> :setlocal nu! list! paste!<CR>
+nnoremap <F7> :setlocal nu! list! paste!<CR>
 
 
 "}}}

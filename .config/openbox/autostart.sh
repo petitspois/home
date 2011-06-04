@@ -46,13 +46,13 @@ fi
 # 阴影效果对比明显，无窗口/菜单渐隐
 #xcompmgr -l -5 -t -5 -r 5 -o 0.60 -c
 #feh --bg-scale ~/pic/wall/glass.jpg
-stalonetray &
+#stalonetray &
 #xmodmap ~/.xmodmaprc
 
 # 含有窗口渐隐
-#xcompmgr -c -t-5 -l-5 -r4.2 -o.52 -C -f -F &
+xcompmgr -c -t-5 -l-5 -r4.2 -o.52 -C -f -F &
 #(sleep 40 && conky -c ~/conky/big_conky) &
-#tint2 -c /root/.tint2/tint2rc &
+#tint2 -c $HOME/.tint2/tint2rc &
 #(sleep 8 && wbar -bpress -above-desk -vbar -isize 40.0 -idist 5.0 -zoomf 1.5 -pos top-left) &
 #transset 0.8
 
