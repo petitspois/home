@@ -524,14 +524,8 @@ subscribe mutt-users
 
 # for mailing lists
 lists ubuntu-users@lists.ubuntu.com
-lists ubuntu-devel@lists.ubuntu.com
-lists seasar-user@ml.seasar.org
-lists issue@seasar.org
 lists vim_use@googlegroups.com
-lists uclibc@uclibc.org
 
-subscribe ubuntu-users@lists.ubuntu.com
-subscribe ubuntu-devel@lists.ubuntu.com
 # 标记一个地址为邮件列表，用 "list" 命令。标记一个地址为你已经订阅的邮件列表，用"subscribe"命令
 subscribe python-cn@googlegroups.com hzlug@googlegroups.com
 

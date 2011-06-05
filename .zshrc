@@ -928,7 +928,8 @@ alias -g C="|wc"
 alias -g E="|sed"
 alias -g G="|egrep"
 alias -g H="|head -n $(($LINES-2))"
-alias -g L="|less"
+# less -R 可以解析 ls / grep 等颜色转义字符
+alias -g L="|less -R"
 alias -g P="|column -t"
 alias -g R="|tac"
 alias -g S="|sort"
@@ -1175,11 +1176,11 @@ export LESS_TERMCAP_us=$'\E[1;32m'    # begin underline
 # From : https://github.com/ginatrapani/todo.txt-cli/wiki/Tips-and-Tricks
 function t() { 
   if [ $# -eq 0 ]; then
-    #todo.sh -d $HOME/.todo/config ls
-    todo.sh -d /home/ink/todo/todo.cfg ls
+    todo.sh -d $HOME/.todo/todo.cfg ls
+    #todo.sh -d /home/ink/todo/todo.cfg ls
   else
-    #todo.sh -d /path/to/your/todo.cfg $* 
-    todo.sh -d /home/ink/todo/todo.cfg $* 
+    todo.sh -d $HOME/.todo/todo.cfg $* 
+    #todo.sh -d /home/ink/todo/todo.cfg $* 
   fi
 }
 
