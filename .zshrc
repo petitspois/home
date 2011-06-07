@@ -981,14 +981,14 @@ for i in avi rmvb wmv; alias -s $i=mplayer
 #--------------------------------------------
 # 使用 cd ~XXX 快速进入自定义目录
 
-hash -d a="/home/ink/.config/awesome/"
-hash -d b="/home/ink/book/"
-hash -d x="/home/ink/text/"
-hash -d c="/home/ink/code/"
-hash -d d="/home/ink/code/django/"
+hash -d a="${HOME}/.config/awesome/"
+hash -d b="${HOME}/book/"
+hash -d x="${HOME}/text/"
+hash -d c="${HOME}/code/"
+hash -d d="${HOME}/code/django/"
 hash -d m="/home/download/m"
 hash -d o="/var/log/"
-hash -d p="/home/ink/pic/"
+hash -d p="${HOME}/pic/"
 hash -d u="/mnt/usb/"
 hash -d pkg="/var/cache/pacman/pkg"
 
