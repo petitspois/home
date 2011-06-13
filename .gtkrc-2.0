@@ -1,9 +1,10 @@
 # DO NOT EDIT! This file will be overwritten by LXAppearance.
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
-gtk-theme-name="Murrina X3"
+gtk-theme-name="mymurrina"
 gtk-icon-theme-name="myicon"
 gtk-font-name="Sans 10"
+gtk-cursor-theme-name="ATER-yellow"
 gtk-cursor-theme-size=0
 gtk-toolbar-style=GTK_TOOLBAR_ICONS
 gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR

@@ -8,7 +8,7 @@
 filesystem_charset  "UTF-8"
 id3v1_encoding      "gbk"
 #user                "mpd"
-user                "ink"
+user                "king"
 log_level           "default"
 
 # 可以通过 ncmpcpp 里面的 u 命令更新 数据库
@@ -18,12 +18,12 @@ port                "6600"
 
 # 使用 自定义的 mpd 相关位置，省去每次更新导至的权限还原问题
 # 在 yuer 目录下面新建 ： mpd/ 和 playlist/ 目录
-music_directory     "~/yuer"
-playlist_directory  "~/yuer/playlist/"
-db_file             "~/yuer/mpd/mpd.db"
-pid_file            "~/yuer/mpd/mpd.pid"
-state_file          "~/yuer/mpd/mpdstate"
-log_file            "~/yuer/mpd/mpd.log"
+music_directory     "~/me/yuer"
+playlist_directory  "~/me/yuer/playlist/"
+db_file             "~/me/yuer/mpd/mpd.db"
+pid_file            "~/me/yuer/mpd/mpd.pid"
+state_file          "~/me/yuer/mpd/mpdstate"
+log_file            "~/me/yuer/mpd/mpd.log"
 #error_file          "~/me/yuer/mpd/error.log"
 
 
