@@ -27,6 +27,12 @@
 # [ path 路径 ]# {{{
 #--------------------------------------------
 
+# [ 路径相关选项 ]
+#--------------------------------------------
+#set certificate_file
+#set header_cache
+#set message_cachedir
+
 set mbox_type=Maildir
 
 #move mail from spool to mailbox when quiting ?
@@ -85,7 +91,7 @@ set imap_user=guodong
 set imap_user=volcanowill@gmail.com
 
 set ssl_force_tls=yes
-set certificate_file=${HOME}/.mutt/certificates
+set certificate_file=${HOME}/.me/mutt.certificates
 
 ## IMAP settings
 # allow mutt to open new imap connection automatically
@@ -133,8 +139,8 @@ source ${HOME}/.me/gmail.offlineimap
 # From : http://www.fwolf.com/blog/post/306
 # 指定的是一个目录，这样每个邮件目录都会在这个目录下建立一个缓存文件
 # 也可以直接指定一个独立的文件, 打开有几千封邮件的文件夹的时候，都要花费时间建立索引、排序
-set header_cache="~/mail/cache/"
-set message_cachedir=${HOME}/.mutt/cache/
+set header_cache="~/.mail/cache/head"
+set message_cachedir=${HOME}/.mail/cache/message
 
 # [?] 编辑邮件时，vim 临时文件存放位置
 #set tmpdir=${HOME}/mail/tmp

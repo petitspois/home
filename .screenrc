@@ -158,7 +158,8 @@ termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
 
 # 0.05 0.05 0.05 | 0 ~  1 /tmp  [ 2 top ]                                           05/21 16:10
 #caption always "%{=b k}%{c} %l | %{k}%L=%-w%7>%{g}[ %n %t ]%{-}%+w%-014< %-012=%{b y}%m/%d %c "
-caption always "%{=b k}%{c} %l | %{k}%L=%-w%7>%{g}%n %t%{-}%+w%-014< %-012=%{b y}%m/%d %c "
+#caption always "%{=b k}%{c} %l | %{k}%L=%-w%7>%{g}%n %t%{-}%+w%-014< %-012=%{b y}%m/%d %c "
+caption always "%{=b k}%{b y} %m-%d %c | %{k}%L=%-w%7>%{g}%n %t%{-}%+w%-014< %-016=%{c} %l "
 
 # %{k}%L=%-w%7
 # 背景色黑色 左对齐 窗口标题 7像素宽
