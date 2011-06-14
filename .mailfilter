@@ -27,7 +27,7 @@ logfile "$HOME/mail/log/maildroplog"
 
 # }}}
 
-# [ CPyUG 邮件列表 ]# {{{
+# [ 邮件列表 ]# {{{
 #--------------------------------------------
 # To: python-cn@googlegroups.com
 # To: 
@@ -40,6 +40,18 @@ if ( /^To:.*python-cn@googlegroups\.com/ )
     to "$MAILDIR/cpyug/"
     }
 }
+
+# HZLUG 小组
+if ( /^To:.*hzlug@googlegroups\.com/ )
+{
+    exception {
+    to "$MAILDIR/cpyug/"
+    }
+}
+
+
+
+
 # }}}
 
 # [ 参考配置 ]# {{{

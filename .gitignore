@@ -35,6 +35,9 @@ dock.fvwm/
 l.fvwm/
 simple.fvwm/
 xp.fvwm/
+sent/
+mail/
+old.text/
 
 # [ debian ]
 #--------------------------------------------
@@ -152,4 +155,5 @@ tiger.gif
 
 # }}}
 
+roylz.zshrc
 

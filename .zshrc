@@ -74,6 +74,10 @@ export TERM=xterm-256color
 
 export PATH="${PATH}:${HOME}/code/shell:${HOME}/todo"
 export CDPATH='.:..:../..:~:~/text:~/public_html/:/home/download/'
+
+# pinax 下载的 django 插件添加到 PYTHONPATH 中，其他程序也可以调用
+export PYTHONPATH="$PYTHONPATH:${HOME}/code/pinax/lib/python2.7/site-packages"
+
 export MYSQL_PS1="[\\u@\\h \\d]"
 
 export SHELL=`which zsh`
@@ -151,22 +155,53 @@ function precmd {
     vcs_info 'prompt'
 }
 
+#function lprompt {
+    #local brackets=$1
+    #local color1=$2
+    #local color2=$3
+
+    #local bracket_open="${color1}${brackets[1]}${PR_RESET}"
+    #local bracket_close="${color1}${brackets[2]}"
+
+    #local git='$vcs_info_msg_0_'
+    ## 相对目录，空格添加在此处
+    #local cwd="${color3} %B%1~%b "
+
+    ##PROMPT="${PR_RESET}${bracket_open}${git}${cwd}${bracket_close}○%# ${PR_RESET}"
+    ##PROMPT="${PR_RESET}${bracket_open}${git}${PR_YELLOW}${cwd}${bracket_close}${PR_RED}○ ${PR_RESET}"
+    #PROMPT="${PR_RESET}${bracket_open}${git}${PR_YELLOW}${cwd}${bracket_close}${PR_RED}· ${PR_RESET}"
+#}
+
 function lprompt {
-    local brackets=$1
-    local color1=$2
-    local color2=$3
-
-    local bracket_open="${color1}${brackets[1]}${PR_RESET}"
-    local bracket_close="${color1}${brackets[2]}"
-
     local git='$vcs_info_msg_0_'
     # 相对目录，空格添加在此处
-    local cwd="${color3} %B%1~%b "
+    #local cwd="${color3} %B%1~%b "
+    local cwd=" %B%d%b "
 
     #PROMPT="${PR_RESET}${bracket_open}${git}${cwd}${bracket_close}○%# ${PR_RESET}"
     #PROMPT="${PR_RESET}${bracket_open}${git}${PR_YELLOW}${cwd}${bracket_close}${PR_RED}○ ${PR_RESET}"
-    PROMPT="${PR_RESET}${bracket_open}${git}${PR_YELLOW}${cwd}${bracket_close}${PR_RED}· ${PR_RESET}"
+    PROMPT="${PR_RESET}${PR_YELLOW}${cwd}
+${git}${PR_RED} · ${PR_RESET}"
+
 }
+## From : typester
+#function lprompt {
+
+    #local git='$vcs_info_msg_0_'
+    ## 相对目录，空格添加在此处
+    #local cwd="%B%1~%b "
+
+## 缩进，会出现在效果中
+#PROMPT='
+#%(?..exit %?)
+#%{[33m%}%~%{[m%}
+#$(pwd)%{[m%}
+#%{[91m%}${git} %{[38m%}%(!.#.$)%{[m%}%{m%} '
+
+#RPROMPT='%{[38m%}[ %n @ %m ]%{m%}%{[00m%}'
+
+#}
+
 
 # [ 右侧：提示 ： (ink@king:~/) ]# {{{
 #--------------------------------------------
@@ -673,13 +708,18 @@ alias ..5="cd ../../../../.."
 alias ga='git add'
 alias gc='git commit '
 alias gca='git commit -a -m'
+alias gcl='git config -l'
+alias gce='git config -e'
+alias gd='git diff'
 alias gl='git ls-files'
 alias go='git log'
 alias gs='git status'
+alias gb='git branch'
+alias gbc='git checkout'
 
-alias gph="git push home master"
-alias gpe="git push etc master"
 alias gpo="git push origin master"
+alias gp2="git push origin2 master"
+alias gp3="git push origin3 master"
 
 
 # alias gh='git pull git@github.com:lvii/home.git master'
@@ -725,7 +765,7 @@ alias exit="clear; exit"
 alias c='clear'
 alias m='mutt'
 alias p='pwd'
-#alias t='tmux'
+alias tx='tmux'
 alias s='screen'
 alias sS='screen -S '
 alias sl='screen -ls'
@@ -740,6 +780,8 @@ alias mm="sudo mentohust"
 alias bb="bitlbee -c ~/.bitlbee.conf"
 alias zz="source ~/.zshrc"
 
+# wicd 无线连接
+alias ww="wicd-curses"
 
 
 
@@ -748,8 +790,8 @@ alias zz="source ~/.zshrc"
 
 # [ keychain ssh rsync 同步 ]# {{{
 #--------------------------------------------
-alias kk='keychain .ssh/me/id_dsa_10.11.1'
-alias ks='source .keychain/king-sh'
+alias kk='keychain $HOME/.ssh/me/id_dsa_10.11.1'
+alias ks='source $HOME/.keychain/$HOSTNAME-sh'
 # 统一同步目录路径，local --> remote
 alias lru='rsync -altvz --delete -e ssh /home/ink/text/ ubuntu:~/.wen/text'
 alias lrc='rsync -altvz --delete -e ssh /home/ink/text/ cjb:~/.wen/text'
@@ -886,7 +928,8 @@ alias -g C="|wc"
 alias -g E="|sed"
 alias -g G="|egrep"
 alias -g H="|head -n $(($LINES-2))"
-alias -g L="|less"
+# less -R 可以解析 ls / grep 等颜色转义字符
+alias -g L="|less -R"
 alias -g P="|column -t"
 alias -g R="|tac"
 alias -g S="|sort"
@@ -938,14 +981,14 @@ for i in avi rmvb wmv; alias -s $i=mplayer
 #--------------------------------------------
 # 使用 cd ~XXX 快速进入自定义目录
 
-hash -d a="/home/ink/.config/awesome/"
-hash -d b="/home/ink/book/"
-hash -d x="/home/ink/text/"
-hash -d c="/home/ink/code/"
-hash -d d="/home/ink/code/django/"
+hash -d a="${HOME}/.config/awesome/"
+hash -d b="${HOME}/book/"
+hash -d x="${HOME}/text/"
+hash -d c="${HOME}/code/"
+hash -d d="${HOME}/code/django/"
 hash -d m="/home/download/m"
 hash -d o="/var/log/"
-hash -d p="/home/ink/pic/"
+hash -d p="${HOME}/pic/"
 hash -d u="/mnt/usb/"
 hash -d pkg="/var/cache/pacman/pkg"
 
@@ -1133,11 +1176,11 @@ export LESS_TERMCAP_us=$'\E[1;32m'    # begin underline
 # From : https://github.com/ginatrapani/todo.txt-cli/wiki/Tips-and-Tricks
 function t() { 
   if [ $# -eq 0 ]; then
-    #todo.sh -d $HOME/.todo/config ls
-    todo.sh -d /home/ink/todo/todo.cfg ls
+    todo.sh -d $HOME/.todo/todo.cfg ls
+    #todo.sh -d /home/ink/todo/todo.cfg ls
   else
-    #todo.sh -d /path/to/your/todo.cfg $* 
-    todo.sh -d /home/ink/todo/todo.cfg $* 
+    todo.sh -d $HOME/.todo/todo.cfg $* 
+    #todo.sh -d /home/ink/todo/todo.cfg $* 
   fi
 }
 

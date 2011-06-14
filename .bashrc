@@ -2,29 +2,27 @@ if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
+source $HOME/.alias
+
 # [ PS1 color style ]# {{{
 #--------------------------------------------
 
-# 右上角 用户名
-#PS1="\[\e[1;31m\][\W]\$\[\e[s\]\[\e[1;\$((COLUMNS-4))f\]\[\e[1;32m\]\$(whoami)\[\e[u\]\[\e[0m\]"
-#PS1="\[\e[1;31m\]\W \$\[\e[s\]\[\e[1;\$((COLUMNS-5))f\]\[\e[1;32m\]\$(whoami)\[\e[u\]\[\e[0m\]"
-
+# 简洁 传统 的 prompt
 #PS1='\[\033[34m\]\t\[\033[1;31m\][\u@\h]\[\033[1;32m\]\w\[\033[m\]\$'
 #PS1='\[\033[1;31m\][ \u·\W ] > \[\033[m\]'
+<<<<<<< HEAD
 
 #PS1='\[\033[1;32m\]\u @ \[\033[1;34m\]\w \[\033[1;33m\][ \d \t ] \n[ h:\! l:\# ]\[\033[1;31m\] $ \[\033[0;39m\]'
 PS1='\[\033[1;32m\]\u @ \[\033[1;34m\]\w \[\033[1;33m\] \n\[\033[1;31m\] $ \[\033[0;39m\]'
+=======
+>>>>>>> 948f4ea634595b764e0d753265dc1d6375c4d280
 
-#PS1='\[\033[34m\]\t\[\033[1;31m\][\u@\h]\[\033[1;32m\]\w\[\033[m\]\$'
-#PS1='\[\033[34m\]\t\[\033[m\]\[\033[36m\][\u@\[\033[m\]\[\033[36m\]\h]\[\033[m\]\[\033[31;1m\]\w\[\033[m\]\$'
+# 换行 绝对路径
+#PS1='\[\033[1;32m\]\u @ \[\033[1;34m\]\w \[\033[1;33m\][ \d \t ] \n[ h:\! l:\# ]\[\033[1;31m\] $ \[\033[0;39m\]'
+PS1='\[\033[1;32m\]\u @ \[\033[1;34m\]\w \[\033[1;33m\] \n\[\033[1;31m\] $ \[\033[0;39m\]'
 
-#Black  0;30
-#Red    0;31
-#Green  0;32
-#Brown  0;33
-#Blue   0;34
-#Purple 0;35
-#Cyan   0;36
+# 用户名 只在右上角
+#PS1="\[\e[1;31m\] \W \$ \[\e[s\]\[\e[1;\$((COLUMNS-5))f\]\[\e[1;32m\]\$(whoami)\[\e[u\]\[\e[0m\]"
 
 # }}}
 
@@ -47,68 +45,6 @@ export MYSQL_PS1="[\\u@\\h \\d]"
 
 
 # }}}
-
-# [ alias 别名 ]#{{{
-#--------------------------------------------
-
-# ls color set
-export LS_OPTIONS='--color=auto'
-eval "`dircolors`"
-
-# 颜色，文件类型标志符，横向排列
-alias ls='ls $LS_OPTIONS -Fx'
-
-# 下面的别名都会将 ls 使用上面的代替，无须在重复相应参数
-#alias ll='ls $LS_OPTIONS -lFh'
-#alias la='ls $LS_OPTIONS -A'
-#alias lla="ls -alFh --color=auto"
-#alias ll='ls -lh --time-style=long-iso'
-alias l='ls -1X'
-# + 按照 date 格式自定义时间格式，去掉 24 小时时间
-alias ll='ls -lh --time-style=+%Y-%m-%d'
-alias la='ls -A'
-alias lla="ls -Alh"
-
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
-alias ln='ln -i'
-alias tee='tee -a'
-alias grep='grep -i --color'
-
-alias c="clear"
-# todo.sh 使用该 别名了
-#alias t="tmux"
-alias Vim="sudo vim"
-alias exit="clear; exit"
-alias halt="sudo halt"
-alias reboot="sudo reboot"
-
-# 多级目录回溯
-alias ..="cd .."
-alias ..2="cd ../.."
-alias ..3="cd ../../.."
-alias ..4="cd ../../../.."
-alias ..5="cd ../../../../.."
-
-# U 盘挂载
-alias Uin="sudo mount -t vfat -o iocharset=utf8,uid=1000,gid=100 /dev/sdb4 /mnt/usb/"
-alias Uout="sudo umount /mnt/usb/"
-alias mym="sudo mount -o iocharset=utf8,uid=1000,gid=100 "
-alias myu="sudo umount "
-
-alias myhttpd='sudo /etc/rc.d/httpd'
-alias mymysqld='sudo /etc/rc.d/mysqld'
-alias mysshd='sudo /etc/rc.d/sshd'
-
-
-
-
-
-
-
-
-#}}}
 
 # [ bash set 变量设置 ]# {{{
 #--------------------------------------------
@@ -199,42 +135,6 @@ esac
 
 
 
-
-# }}}
-
-# [ arch pacman alias ]# {{{
-#--------------------------------------------
-
-alias P="pacman"
-alias Y="yaourt"
-
-# 在 后面添加 空格，可以实现自动补全
-alias pac="sudo pacman -S "
-alias pacs="pacman -Ss "
-alias pq='pacman -Q '
-alias pm='sudo pacman -Rsun '
-alias pu="sudo pacman -Su"
-alias py="sudo pacman -Sy"
-
-alias yao="sudo yaourt -S "
-alias ys="yaourt -Ss "
-alias yq="yaourt -Q "
-alias yu="sudo yaourt -Su"
-alias yy="sudo yaourt -Sy"
-
-#lets you search through all available packages simply using 'pacsearch packagename'
-#alias pacsearch="pacman -Sl | cut -d' ' -f2 | grep "
-
-# colorized pacman output with pacs alias:
-#alias pacs="pacsearch"
-#pacsearch()
-#{
-#   echo -e "$(pacman -Ss $@ | sed \
-#   -e 's#core/.*#\\033[1;31m&\\033[0;37m#g' \
-#   -e 's#extra/.*#\\033[0;32m&\\033[0;37m#g' \
-#   -e 's#community/.*#\\033[1;35m&\\033[0;37m#g' \
-#   -e 's#^.*/.* [0-9].*#\\033[0;36m&\\033[0;37m#g' )"
-#}
 
 # }}}
 

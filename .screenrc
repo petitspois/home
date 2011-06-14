@@ -112,45 +112,15 @@ termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
 # 修复 rxvt-unicode 256 色 问题
 #terminfo rxvt-unicode 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 
-
 # 定制 底部标题栏 caption / hardstatus(最底部) | man 手册里面的 STRING ESCAPES
-
-# 背景颜色与终端相同,无高亮，全部用颜色标注，都为粗体
-# [king] 0 bash  *1 bash                                                   06-26 11:06 
-#caption always "%{=b}%{b}%{G}[%H]%{-}  %+07=%-w%7L>%{b .y}*%n %t%{-}%+w%-014<  %-012=%{b m}%m/%d %c "
-
-# 全局粗体，蓝色字体，绿色用户名，取消之前属性，窗口列表举例7像素，当前聚焦窗口为黄色，最后的窗口举例时间14像素
-caption always "%{=b k}%{c}[%H]%{-}  %+07=%-w%7L>%{g}%n %t%{-}%+w%-014<  %-012=%{b y}%m/%d %c "
-# 状态栏, 不用Hardstatus实现, 因为要把xterm的title伪装成Hardstatus
-
-# Sessions
-#screen
-#screen -t mutt mutt
-#screen -t irssi irssi
-#有个bug, debian sid中这里如果只用screen多开窗口, PS1什么的都对, 但是只能动态显示路径为title, 程序不行, C-a c新建的没问题, 欢迎反馈!!!
-#更新: session的配置放到最后就OK了, 但是这也算个bug吧, 毕竟其他的设置没有因为session的写的位置有过影响
 
 # [ Color VARIABLES - Strings ]# {{{
 #--------------------------------------------
 # From : https://github.com/px/screenrc/blob/master/.screenrc
-
 # COLOR: colors codes are combinations of
 # [attribute modifier] [color description]
 # the manual talks of "attribute/color modifiers".
-# see the manual, section "STRING ESCAPES".
-#
-# Color table:
-# 0 Black . leave color unchanged
-# 1 Red b blue
-# 2 Green c cyan
-# 3 Brown / yellow d default color
-# 4 Blue g green b bold
-# 5 Purple k blacK B blinking
-# 6 Cyan m magenta d dim
-# 7 White r red r reverse
-# 8 unused/illegal w white s standout
-# 9 transparent y yellow u underline
-
+# man 手册 "STRING ESCAPES".
 # k      black
 # r      red
 # g      green
@@ -161,23 +131,54 @@ caption always "%{=b k}%{c}[%H]%{-}  %+07=%-w%7L>%{g}%n %t%{-}%+w%-014<  %-012=%
 # w      white
 # d      default color
 # .      leave color unchanged
-
 # %h     king@king:~
-
+# %l     loadavg 负载
 # }}}
 
-
 # 大括号里面为颜色组合
-#------------------- advanced ----------------------
+# [ caption 状态栏 ]# {{{
+#--------------------------------------------
+# XXX [?] 状态栏, 不用 Hardstatus 实现, 因为要把 xterm 的 title 伪装成 Hardstatus
+
+# 当前聚焦窗口不使用背景色是因为：背景色只能作用于文字部分，空白间距不能渲染，看起来不舒服
+# 相反 tmux 背景色可以应用于空白间隔，可以使用中括号，等标记标志
+
+# 背景颜色与终端相同,无高亮，全部用颜色标注，都为粗体
+# [king] 0 bash  *1 bash                                                   06-26 11:06
+#caption always "%{=b}%{b}%{G}[%H]%{-}  %+07=%-w%7L>%{b .y}*%n %t%{-}%+w%-014<  %-012=%{b m}%m/%d %c "
+
+# 全局粗体，蓝色字体，绿色用户名，取消之前属性，窗口列表举例7像素，当前聚焦窗口为黄色，最后的窗口举例时间14像素
+# [king] 0 irssi  1 vim  2 vim                                                       05/21 10:21
+#caption always "%{=b k}%{c}[%H] %{-}  %+07=%-w%7L>%{g}%n %t%{-}%+w%-014<  %-012=%{b y}%m/%d %c "
+# %+07=%-w%7L
+# XXX 窗口列表从第 7 个字符处开始，会覆盖前面的超过 7 个字符的信息
+
+# [ king ]  0 /tmp  1 /boot                                              05/21 16:23
+#caption always "%{=b k}%{c}[ %H ] %{-} %L=%-w%7L>%{g}%n %t%{-}%+w%-014<  %-012=%{b y}%m/%d %c "
+
+# 0.05 0.05 0.05 | 0 ~  1 /tmp  [ 2 top ]                                           05/21 16:10
+#caption always "%{=b k}%{c} %l | %{k}%L=%-w%7>%{g}[ %n %t ]%{-}%+w%-014< %-012=%{b y}%m/%d %c "
+caption always "%{=b k}%{c} %l | %{k}%L=%-w%7>%{g}%n %t%{-}%+w%-014< %-012=%{b y}%m/%d %c "
+
+# %{k}%L=%-w%7
+# 背景色黑色 左对齐 窗口标题 7像素宽
+# >%{g}%n %t%{-}%+w%-014<
+# 聚焦的窗口标题背景色 绿色 样式：编号 名称 最大宽度 14 字符宽度
+
+#  0.00 0.01 0.05 | 0 vim  1 top  2 /tmp                                            05/21 16:07
+#caption always "%{=b k}%?%F%{c}%:%? %l | %?%F%{k}%?%L=%-w%45>%{g}%n %t%{-}%+w%-014< %-012=%{b y}%m/%d %c "
+
+# king | 0.01 0.00 0.00 | 06-25 12:25 |0$* bash
+#caption always "%?%F%{-b 4w}%:%{-b bb}%? %H | %l | %m-%d %c |%?%F%{-b 4w}%?%L=%-Lw%45>%{-b w4}%n%f* %t%{-}%+Lw%-0<"
+
 # 单一窗口 无窗口列表，最后为窗口编号
 # 10:37AM Sat 26-06-2010  bash                                                         0
 #caption always "%?%F%{= Bk}%? %C%A %D %d-%m-%Y %{= kB} %t%= %?%F%{= Bk}%:%{= wk}%? %n "
 
-# king | 0.01 0.00 0.00 | 06-25 12:25 |0$* bash
-#caption always "%?%F%{-b 4w}%:%{-b bb}%? %H | %l | %m-%d %c |%?%F%{-b 4w}%?%L=%-Lw%45>%{-b w4}%n%f* %t%{-}%+Lw%-0<"
 # king|12:33|25Jun|0*$bash 多背景色 窗口标题 有先后 * - 标志
 #hardstatus alwayslastline "%{rw}%H%{wk}|%{wr}%c%{wk}|%d%M|%?%-Lw%?%{wb}%n*%f%t%?(%u)%?%{wk}%?%+Lw%?" 
 
+#caption always "%{= kw}%-w%{= kG}%{+b}[%n %t]%{-b}%{= kw}%+w %=%d %M %0c %{g}%H%{-}"
 
 #------------------- compilex ----------------------
 # [ king ][               0$ bash  (1*$bash)  2-$ bash                 ][ 25/06 12:32 ]
@@ -196,4 +197,17 @@ caption always "%{=b k}%{c}[%H]%{-}  %+07=%-w%7L>%{g}%n %t%{-}%+w%-014<  %-012=%
 
 # 背景色 当前高亮色 时间 当前窗口无任何修饰符
 #caption always "%{= kw}%-w%{= bY}%n %t%{-}%+w %-= %c"
+
+
+
+
+# }}}
+
+# Sessions
+#screen
+#screen -t mutt mutt
+#screen -t irssi irssi
+#有个bug, debian sid中这里如果只用screen多开窗口, PS1什么的都对, 但是只能动态显示路径为title, 程序不行, C-a c新建的没问题, 欢迎反馈!!!
+#更新: session的配置放到最后就OK了, 但是这也算个bug吧, 毕竟其他的设置没有因为session的写的位置有过影响
+
 
