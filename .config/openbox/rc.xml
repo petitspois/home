@@ -6,14 +6,13 @@
     <strength>10</strength>
     <screen_edge_strength>20</screen_edge_strength>
   </resistance>
-
   <!-- 窗口 聚焦 -->
-<!--{{{-->
+  <!--{{{-->
   <focus>
     <focusNew>yes</focusNew>
     <!-- always try to focus new windows when they appear. other rules do
        apply -->
-    <followMouse>no</followMouse>
+    <followMouse>yes</followMouse>
     <!-- move focus to a window when you move the mouse into it -->
     <focusLast>yes</focusLast>
     <!-- focus the last used window when changing desktops, instead of the one
@@ -27,10 +26,9 @@
     <!-- when followMouse is enabled, and a window is given focus by moving the
        mouse into it, also raise the window -->
   </focus>
-<!--}}}-->
-
+  <!--}}}-->
   <!-- 窗口 摆放 -->
-<!--{{{-->
+  <!--{{{-->
   <placement>
     <policy>Smart</policy>
     <!-- 'Smart' or 'UnderMouse' -->
@@ -42,10 +40,9 @@
        on: 'Any' - any monitor, 'Mouse' - where the mouse is, 'Active' - where
        the active window is -->
   </placement>
-<!--}}}-->
-
+  <!--}}}-->
   <!-- 主题 / 字体 -->
-<!--{{{-->
+  <!--{{{-->
   <theme>
     <name>Elegant for Rent</name>
     <titleLayout>NLIMC</titleLayout>
@@ -107,10 +104,9 @@
       <!-- 'italic' or 'normal' -->
     </font>
   </theme>
-<!--}}}-->
-
+  <!--}}}-->
   <!-- 虚拟桌面 -->
-<!--{{{-->
+  <!--{{{-->
   <desktops>
     <!-- this stuff is only used at startup, pagers allow you to change them
        during a session
@@ -132,10 +128,9 @@
     <!-- The number of milliseconds to show the popup for when switching
        desktops.  Set this to 0 to disable the popup. -->
   </desktops>
-<!--}}}-->
-
+  <!--}}}-->
   <!-- 大小缩放 -->
-<!--{{{-->
+  <!--{{{-->
   <resize>
     <drawContents>yes</drawContents>
     <popupShow>Nonpixel</popupShow>
@@ -152,10 +147,9 @@
          distance from bottom edge, or 'Center' -->
     </popupFixedPosition>
   </resize>
-<!--}}}-->
-
+  <!--}}}-->
   <!-- margin / dock 留白 -->
-<!--{{{-->
+  <!--{{{-->
   <!-- You can reserve a portion of your screen where windows will not cover when
      they are maximized, or when they are initially placed.
      Many programs reserve space automatically, but you can use this in other
@@ -166,7 +160,6 @@
     <left>0</left>
     <right>0</right>
   </margins>
-
   <dock>
     <position>TopLeft</position>
     <!-- (Top|Bottom)(Left|Right|)|Top|Bottom|Left|Right|Floating -->
@@ -185,14 +178,13 @@
     <moveButton>Middle</moveButton>
     <!-- 'Left', 'Middle', 'Right' -->
   </dock>
-<!--}}}-->
-
+  <!--}}}-->
   <!-- keybind 快捷键 -->
-<!--{{{-->
+  <!--{{{-->
   <keyboard>
     <chainQuitKey>C-g</chainQuitKey>
     <!-- 虚拟桌面 切换 -->
-<!--{{{-->
+    <!--{{{-->
     <keybind key="C-A-Left">
       <action name="DesktopLeft">
         <dialog>no</dialog>
@@ -241,11 +233,9 @@
         <wrap>no</wrap>
       </action>
     </keybind>
-<!--}}}-->
-
-
+    <!--}}}-->
     <!-- 虚拟桌面 win + F1... 快速切换 -->
-<!--{{{-->
+    <!--{{{-->
     <keybind key="W-F1">
       <action name="Desktop">
         <desktop>1</desktop>
@@ -266,11 +256,9 @@
         <desktop>4</desktop>
       </action>
     </keybind>
-
-<!--}}}-->
-
+    <!--}}}-->
     <!-- 窗口 聚焦 关闭 菜单 -->
-<!--{{{-->
+    <!--{{{-->
     <keybind key="A-F4">
       <action name="Close"/>
     </keybind>
@@ -284,18 +272,15 @@
         <menu>client-menu</menu>
       </action>
     </keybind>
-<!--}}}-->
-
+    <!--}}}-->
     <!-- 显示桌面 / 窗口焦点-->
-<!--{{{-->
-
+    <!--{{{-->
     <keybind key="W-d">
       <action name="ToggleShowDesktop"/>
     </keybind>
     <keybind key="C-A-d">
       <action name="ToggleShowDesktop"/>
     </keybind>
-
     <keybind key="A-Tab">
       <action name="NextWindow"/>
     </keybind>
@@ -308,13 +293,11 @@
         <desktop>yes</desktop>
       </action>
     </keybind>
-<!--}}}-->
-
+    <!--}}}-->
     <!-- 全屏 隐藏菜单 -->
     <keybind key="F10">
       <action name="ToggleFullscreen"/>
     </keybind>
-
     <!-- 程序 -->
     <!--{{{-->
     <keybind key="W-e">
@@ -326,7 +309,6 @@
         <command>pcmanfm</command>
       </action>
     </keybind>
-
     <!-- Run 运行 启动程序 -->
     <keybind key="W-r">
       <action name="Execute">
@@ -345,14 +327,12 @@
       </action>
     </keybind>
     -->
-
     <!-- 任务管理器 Ctrl+Alt+Del -->
     <keybind key="A-C-Delete">
       <action name="Execute">
         <command>lxtask</command>
       </action>
     </keybind>
-
     <!--
     <keybind key="">
       <action name="Execute">
@@ -360,9 +340,8 @@
       </action>
     </keybind>
     -->
-
-<!-- win 快捷键 运行 程序 -->
-<!--{{{-->
+    <!-- win 快捷键 运行 程序 -->
+    <!--{{{-->
     <keybind key="W-l">
       <action name="Execute">
         <command>leafpad</command>
@@ -378,21 +357,12 @@
         <command>xterm</command>
       </action>
     </keybind>
-<!--}}}-->
-
-
-
-
-
-
-<!--}}}-->
-
+    <!--}}}-->
+    <!--}}}-->
   </keyboard>
-
-<!--}}}-->
-
+  <!--}}}-->
   <!-- 鼠标 -->
-<!--{{{-->
+  <!--{{{-->
   <mouse>
     <dragThreshold>8</dragThreshold>
     <!-- number of pixels the mouse must move before a drag begins -->
@@ -402,11 +372,9 @@
     <!-- Time before changing desktops when the pointer touches the edge of the
        screen while moving a window, in milliseconds (1000 = 1 second).
        Set this to 0 to disable warping -->
-
     <!-- openbox 默认 mouse 动作 -->
-
     <!-- 窗口中 -->
-<!--{{{-->
+    <!--{{{-->
     <context name="Frame">
       <mousebind button="A-Left" action="Press">
         <action name="Focus"/>
@@ -451,20 +419,19 @@
       </mousebind>
       <!-- Ctrl + 鼠标滚轮 调节窗口透明度 -->
       <mousebind button="C-Up" action="Click">
-         <action name= "Execute" >
-             <execute>transset-df -p .1 --inc  </execute>
-         </action>
+        <action name="Execute">
+          <execute>transset-df -p .1 --inc  </execute>
+        </action>
       </mousebind>
       <mousebind button="C-Down" action="Click">
-          <action name= "Execute" >
-              <execute>transset-df -p .1 --dec </execute>
-          </action>
+        <action name="Execute">
+          <execute>transset-df -p .1 --dec </execute>
+        </action>
       </mousebind>
     </context>
-<!--}}}-->
-
+    <!--}}}-->
     <!-- Titlebar 标题栏 -->
-<!--{{{-->
+    <!--{{{-->
     <context name="Titlebar">
       <mousebind button="Left" action="Press">
         <action name="Focus"/>
@@ -500,10 +467,9 @@
         </action>
       </mousebind>
     </context>
-<!--}}}-->
-
+    <!--}}}-->
     <!-- Border 窗口边框 -->
-<!--{{{-->
+    <!--{{{-->
     <context name="Top">
       <mousebind button="Left" action="Press">
         <action name="Focus"/>
@@ -516,7 +482,6 @@
         </action>
       </mousebind>
     </context>
-
     <context name="Left">
       <mousebind button="Left" action="Press">
         <action name="Focus"/>
@@ -528,7 +493,6 @@
         </action>
       </mousebind>
     </context>
-
     <context name="Right">
       <mousebind button="Left" action="Press">
         <action name="Focus"/>
@@ -540,7 +504,6 @@
         </action>
       </mousebind>
     </context>
-
     <context name="Bottom">
       <mousebind button="Left" action="Press">
         <action name="Focus"/>
@@ -564,10 +527,9 @@
         </action>
       </mousebind>
     </context>
-<!--}}}-->
-
+    <!--}}}-->
     <!-- Coner 窗口四角 -->
-<!--{{{-->
+    <!--{{{-->
     <context name="BLCorner">
       <mousebind button="Left" action="Press">
         <action name="Focus"/>
@@ -577,7 +539,6 @@
         <action name="Resize"/>
       </mousebind>
     </context>
-
     <context name="BRCorner">
       <mousebind button="Left" action="Press">
         <action name="Focus"/>
@@ -587,7 +548,6 @@
         <action name="Resize"/>
       </mousebind>
     </context>
-
     <context name="TLCorner">
       <mousebind button="Left" action="Press">
         <action name="Focus"/>
@@ -598,7 +558,6 @@
         <action name="Resize"/>
       </mousebind>
     </context>
-
     <context name="TRCorner">
       <mousebind button="Left" action="Press">
         <action name="Focus"/>
@@ -609,10 +568,9 @@
         <action name="Resize"/>
       </mousebind>
     </context>
-<!--}}}-->
-
+    <!--}}}-->
     <!-- 未知 -->
-<!--{{{-->
+    <!--{{{-->
     <context name="AllDesktops">
       <mousebind button="Left" action="Press">
         <action name="Focus"/>
@@ -623,7 +581,6 @@
         <action name="ToggleOmnipresent"/>
       </mousebind>
     </context>
-
     <context name="Client">
       <mousebind button="Left" action="Press">
         <action name="Focus"/>
@@ -638,10 +595,9 @@
         <action name="Raise"/>
       </mousebind>
     </context>
-<!--}}}-->
-
+    <!--}}}-->
     <!-- 标题栏 图标 / 卷起 -->
-<!--{{{-->
+    <!--{{{-->
     <context name="Icon">
       <mousebind button="Left" action="Press">
         <action name="Focus"/>
@@ -658,22 +614,19 @@
           <menu>client-menu</menu>
         </action>
       </mousebind>
-
-     <!-- transset 透明 ArchWiki Openbox -->
-     <!-- 鼠标滚轮 调节透明度 -->
-     <mousebind button="Up" action="Click">
-       <action name= "Execute" >
-       <execute>transset-df -p .1 --inc  </execute>
-       </action>
-     </mousebind>
-     <mousebind button="Down" action="Click">
-       <action name= "Execute" >
-       <execute>transset-df -p .1 --dec </execute>
-       </action>
-     </mousebind>
-
+      <!-- transset 透明 ArchWiki Openbox -->
+      <!-- 鼠标滚轮 调节透明度 -->
+      <mousebind button="Up" action="Click">
+        <action name="Execute">
+          <execute>transset-df -p .1 --inc  </execute>
+        </action>
+      </mousebind>
+      <mousebind button="Down" action="Click">
+        <action name="Execute">
+          <execute>transset-df -p .1 --dec </execute>
+        </action>
+      </mousebind>
     </context>
-
     <context name="Shade">
       <mousebind button="Left" action="Press">
         <action name="Focus"/>
@@ -683,11 +636,9 @@
         <action name="ToggleShade"/>
       </mousebind>
     </context>
-
-<!--}}}-->
-
+    <!--}}}-->
     <!-- 按钮-->
-<!--{{{-->
+    <!--{{{-->
     <context name="Iconify">
       <mousebind button="Left" action="Press">
         <action name="Focus"/>
@@ -697,7 +648,6 @@
         <action name="Iconify"/>
       </mousebind>
     </context>
-
     <context name="Maximize">
       <mousebind button="Left" action="Press">
         <action name="Focus"/>
@@ -724,7 +674,6 @@
         <action name="ToggleMaximizeHorz"/>
       </mousebind>
     </context>
-
     <context name="Close">
       <mousebind button="Left" action="Press">
         <action name="Focus"/>
@@ -735,11 +684,9 @@
         <action name="Close"/>
       </mousebind>
     </context>
-
-<!--}}}-->
-
+    <!--}}}-->
     <!-- 桌面 -->
-<!--{{{-->
+    <!--{{{-->
     <context name="Desktop">
       <mousebind button="Up" action="Click">
         <action name="DesktopPrevious"/>
@@ -768,10 +715,9 @@
         <action name="Raise"/>
       </mousebind>
     </context>
-<!--}}}-->
-
+    <!--}}}-->
     <!-- 桌面 没有窗口的位置 -->
-<!--{{{-->
+    <!--{{{-->
     <context name="Root">
       <!-- Menus -->
       <mousebind button="Middle" action="Press">
@@ -785,10 +731,9 @@
         </action>
       </mousebind>
     </context>
-<!--}}}-->
-
+    <!--}}}-->
     <!-- 窗口尺寸调节 -->
-<!--{{{-->
+    <!--{{{-->
     <context name="MoveResize">
       <mousebind button="Up" action="Click">
         <action name="DesktopPrevious"/>
@@ -803,13 +748,11 @@
         <action name="DesktopNext"/>
       </mousebind>
     </context>
-<!--}}}-->
-
+    <!--}}}-->
   </mouse>
-<!--}}}-->
-
+  <!--}}}-->
   <!-- 菜单 -->
-<!--{{{-->
+  <!--{{{-->
   <menu>
     <!-- You can specify more than one menu file in here and they are all loaded,
        just don't make menu ids clash or, well, it'll be kind of pointless -->
@@ -818,7 +761,6 @@
     <file>/usr/share/lxde/openbox/menu.xml</file>
     -->
     <file>$HOME/.config/openbox/</file>
-
     <hideDelay>200</hideDelay>
     <!-- if a press-release lasts longer than this setting (in milliseconds), the
        menu is hidden again -->
@@ -832,11 +774,9 @@
     <manageDesktops>yes</manageDesktops>
     <!-- show the manage desktops section in the client-list-(combined-)menu -->
   </menu>
-<!--}}}-->
-
-
+  <!--}}}-->
   <!-- 自定义程序 设置 -->
-<!--{{{-->
+  <!--{{{-->
   <applications>
     <!--
   # this is an example with comments through out. use these to make your
@@ -910,8 +850,5 @@
   # end of the example
 -->
   </applications>
-<!--}}}-->
-
-
-
+  <!--}}}-->
 </openbox_config>

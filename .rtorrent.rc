@@ -23,18 +23,18 @@ upload_rate = 160
 #--------------------------------------------
 
 # 默认下载目录
-directory =/home/fun/m
+directory =/home/ink/movie
 
 # Default session directory. Make sure you don't run multiple instance
 # of rtorrent using the same session directory. Perhaps using a
 # relative path?
 # session 临时文件目录
-session = /home/fun/m/bt.tmp
+session = /home/ink/movie/bt.tmp
 
 # Watch a directory for new torrents, and stop those that have been
 # deleted.
 # 通过samba或scp往这个目录传种子，就会自动开始下载
-schedule = watch_directory,5,5,load_start=/home/fun/m/bt.peers/*.torrent
+schedule = watch_directory,5,5,load_start=/home/ink/movie/bt.peers/*.torrent
 # */
 # schedule = untied_directory,5,5,stop_untied=
 
