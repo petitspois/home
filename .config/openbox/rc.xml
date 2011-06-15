@@ -257,6 +257,29 @@
       </action>
     </keybind>
     <!--}}}-->
+    <!-- 虚拟桌面 win + 1... 快速切换 -->
+    <!--{{{-->
+    <keybind key="W-1">
+      <action name="Desktop">
+        <desktop>1</desktop>
+      </action>
+    </keybind>
+    <keybind key="W-2">
+      <action name="Desktop">
+        <desktop>2</desktop>
+      </action>
+    </keybind>
+    <keybind key="W-3">
+      <action name="Desktop">
+        <desktop>3</desktop>
+      </action>
+    </keybind>
+    <keybind key="W-4">
+      <action name="Desktop">
+        <desktop>4</desktop>
+      </action>
+    </keybind>
+    <!--}}}-->
     <!-- 窗口 聚焦 关闭 菜单 -->
     <!--{{{-->
     <keybind key="A-F4">
