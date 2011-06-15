@@ -1,0 +1,326 @@
+
+# [ alias 别名 ]
+#--------------------------------------------
+
+# [ cp / mv / rm / ln 覆盖提示 ]# {{{
+#--------------------------------------------
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm -i'
+alias ln='ln -i'
+# }}}
+
+# [ ls ]# {{{
+#--------------------------------------------
+# XXX [?] 下面的别名都会将 ls 使用上面的代替，无须在重复相应参数
+
+# 颜色，文件类型标志符，横向排列
+alias ls='ls -Fx --color=auto'
+
+# x 按行排列，X 按文件扩展名字母顺序排序
+# alias ls='ls -xXF --color=auto'
+
+alias l='ls -1X'
+#alias ll='ls -lh --time-style=+%Y-%m-%d'
+#alias ll='ls -lh --time-style=long-iso'
+# XXX 注意，开头的 $ 符号转义。时间戳 颜色 格式化 From : roylez
+#alias ll=$'ls -lh --color=auto -X --time-style="+\e[33m[ \e[36m%Y-%m-%d \e[35m%k:%M\e[33m ]\e[m"'
+alias ll=$'ls -lh --color=auto -X --time-style="+\e[35m[ \e[36m%Y-%m-%d \e[35m]\e[m"'
+alias la='ls -A'
+alias lx='ls -xX'
+
+# 同时显示隐藏目录
+#alias ld='ls -d *(-/DN)'
+# From：linuxgem.is-programmer.com/2007/10/4/list-only-directories-and-count-them.5107.html
+# 不显示隐藏目录
+alias ld='ls -d */'
+# 显示隐藏目录
+alias lhd='ls -d .*/'
+alias lla='ls -Alh --time-style=+%Y-%m-%d'
+
+
+
+# }}}
+
+# [ git ]# {{{
+#--------------------------------------------
+alias ga='git add'
+alias gc='git commit '
+alias gca='git commit -a -m'
+alias gcl='git config -l'
+alias gce='git config -e'
+alias gd='git diff'
+alias gl='git ls-files'
+alias go='git log'
+alias gs='git status'
+alias gb='git branch'
+alias gbc='git checkout'
+
+alias gpo="git push origin master"
+alias gp2="git push origin2 master"
+alias gp3="git push origin3 master"
+
+
+# alias gh='git pull git@github.com:lvii/home.git master'
+# git pull git@github.com:lvii/ink.git debian:master
+
+# }}}
+
+alias exit="clear; exit"
+alias grep='grep --color=auto -i'
+# less -R 解析 ASCII 颜色字符
+alias less='less -R'
+alias info='info --vi-keys'
+alias tee='tee -a'
+
+# [ 系统 ]# {{{
+#--------------------------------------------
+
+## show directories size
+#alias dud='du -s *(/)'
+
+# From : http://git.sysphere.org/dotfiles/tree/zshrc?h=public
+
+# size 使用 M / G 标记 文件系统类型( ext4 / swap ...)
+alias df="df -hT"
+# XXX -c 参数会递归检索当前目录，特别当前目录有好多文件
+alias du="du -h"
+alias dus="du -S | sort -n"
+
+alias psg="ps auxw | grep -i "
+alias psptree="ps auxwwwf"
+
+# 弹出 / 收回光驱
+alias eject="eject -v "
+alias retract="eject -t -v "
+
+alias vuser="fuser -v "
+
+
+# }}}
+
+alias sch='find . -name '
+#alias tree="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
+
+# [ soft ]# {{{
+#--------------------------------------------
+
+alias ee='emacsclient -t'
+
+
+alias c='clear'
+alias m='mutt'
+alias p='pwd'
+alias tx='tmux'
+
+alias s='screen'
+alias sl='screen -ls'
+alias sS='screen -S '
+alias sr='screen -r'
+
+# XXX for 循环定义 [?]
+alias sa='screen -S a'
+alias sb='screen -S b'
+alias sc='screen -S c'
+
+alias mm="sudo mentohust"
+alias bb="bitlbee -c ~/.bitlbee.conf"
+alias zz="source ~/.zshrc"
+alias b.="source ~/.bashrc"
+
+# wicd 无线连接
+alias ww="wicd-curses"
+
+
+
+
+# }}}
+
+# [ keychain ssh rsync 同步 ]# {{{
+#--------------------------------------------
+alias kk='keychain $HOME/.ssh/me/id_dsa_10.11.1'
+alias ks='source $HOME/.keychain/$HOSTNAME-sh'
+
+# 统一同步目录路径，local --> remote
+alias lru='rsync -altvz --delete -e ssh /home/ink/text/ ubuntu:~/.wen/text'
+alias lrc='rsync -altvz --delete -e ssh /home/ink/text/ cjb:~/.wen/text'
+alias lrct='rsync -altvz --delete -e ssh /home/ink/todo/ cjb:~/.wen/todo'
+
+# 后面不带 XXX 绝对路径 cp 复制远程目录到本地 HOME 家目录，[?] scp 时间戳
+#alias rlu=' rsync -altvz --delete -e ssh ubuntu:~/.wen/text ~'
+#alias rlc=' rsync -altvz --delete -e ssh cjb:~/.wen/text ~'
+
+alias cgfw="ssh -CNTfnq -D 7070 57wsqh@216.194.70.6"
+alias ygfw="ssh -CNTfnq -D 7070 yuanhui@204.74.211.169"
+
+
+
+
+# }}}
+
+# [ server ]# {{{
+#--------------------------------------------
+
+alias myhttpd='sudo /etc/rc.d/httpd'
+alias mymysqld='sudo /etc/rc.d/mysqld'
+alias mysshd='sudo /etc/rc.d/sshd'
+alias myftpd='sudo /etc/rc.d/vsftpd'
+
+
+
+# }}}
+
+# [ Sudo ]# {{{
+#--------------------------------------------
+alias Cp="sudo cp"
+alias Mv="sudo mv"
+alias Rm="sudo rm"
+alias Vim="sudo vim"
+alias halt="sudo halt"
+alias reboot="sudo reboot"
+
+
+
+# }}}
+
+# [ U 盘挂载 ]# {{{
+#--------------------------------------------
+alias Uin="sudo mount -t vfat -o iocharset=utf8,uid=1000,gid=100 /dev/sdc1 /mnt/"
+alias Uout="sudo umount /mnt/"
+alias mym="sudo mount -o iocharset=utf8,uid=1000,gid=100 "
+alias myu="sudo umount "
+
+
+
+# }}}
+
+# [ code ]# {{{
+#--------------------------------------------
+alias vv="source ~/code/pinax/bin/activate"
+
+# 系统使用的是 python2，使用 python 提示没有这个命令。但 pinax 虚拟开发环境，可以使用 python
+# XXX 要提前加载 虚拟开发环境
+alias pmr="python manage.py runserver"
+alias pms="python manage.py syncdb"
+
+alias p2mr="python2 manage.py runserver"
+alias p2ms="python2 manage.py syncdb"
+
+
+# }}}
+
+# [ archlinux pacman ]# {{{
+#--------------------------------------------
+
+alias P="pacman"
+alias Y="yaourt"
+
+# 在 后面添加 空格，可以实现自动补全
+alias spm='sudo pacman'
+alias pac="sudo pacman -S "
+alias pq='pacman -Q '
+alias pi='pacman -Qi '
+alias pl='pacman -Ql '
+alias pm='sudo pacman -Rsun '
+alias pu="sudo pacman -Su"
+alias py="sudo pacman -Sy"
+
+alias yao="sudo yaourt -S "
+alias ys="yaourt -Ss "
+# 若要实现 yaourt 查询软件包，可以取消注释 /etc/yaourtrc 
+# AURUPGRADE=0
+# AURSEARCH=0
+# 使用额外的 --aur 指定查询 AUR 里面的软件包，其他类似 pacman
+alias yq="yaourt -Q "
+alias yu="sudo yaourt -Su"
+alias yy="sudo yaourt -Sy"
+
+# 使用 'pacsearch packagename' 查找pkg，只列出软件包的名称，版本号，没有描述信息
+#alias pacsearch="pacman -Sl | cut -d' ' -f2 | grep "
+
+# pacman 查找 输出彩色
+#alias pacs="pacman -Ss "
+alias pacs="pacsearch"
+pacsearch()
+{
+    echo -e "$(pacman -Ss $@ | sed \
+    -e 's#core/.*#\\033[1;31m&\\033[0;37m#g' \
+    -e 's#extra/.*#\\033[0;32m&\\033[0;37m#g' \
+    -e 's#community/.*#\\033[1;35m&\\033[0;37m#g' \
+    -e 's#^.*/.* [0-9].*#\\033[0;36m&\\033[0;37m#g' )"
+}
+
+
+
+
+
+# }}}
+
+# 查看 窗口 class 属性 / 名称 # From : Archwiki Openbox
+alias xp='xprop | grep "WM_WINDOW_ROLE\|WM_CLASS" && echo "WM_CLASS(STRING) = \"NAME\", \"CLASS\""'
+
+# 历史命令 top10
+alias top10='print -l  ${(o)history%% *} | uniq -c | sort -nr | head -n 10'
+
+alias openports='netstat -nape --inet'
+alias port='netstat -ntlp'      #opening ports
+
+# todo.sh 使用该 别名了
+#alias t="tmux"
+alias Vim="sudo vim"
+alias halt="sudo halt"
+alias reboot="sudo reboot"
+
+# 多级目录回溯
+alias ~='cd ~'
+alias ..="cd .."
+alias ..2="cd ../.."
+alias ..3="cd ../../.."
+alias ..4="cd ../../../.."
+alias ..5="cd ../../../../.."
+
+# U 盘挂载
+alias Uin="sudo mount -t vfat -o iocharset=utf8,uid=1000,gid=100 "
+alias Uout="sudo umount "
+alias mym="sudo mount -o iocharset=utf8,uid=1000,gid=100 "
+
+alias cr='ctags -R --fields=+lS && cscope -Rbq'
+alias df='df -h'
+alias dt='dmesg | tail -n 20'
+alias du='du -sh'
+alias dx='xset s off && xset dpms 0 0 0'
+alias ga='git add -A'
+alias gc='git commit -a'
+alias gd='git difftool'
+alias gl='git log --graph'
+alias gp='git push'
+alias grep='grep --color=auto'
+alias gs='git status'
+alias gu='git pull'
+alias hb='sudo pm-hibernate'
+alias ht='sudo halt'
+alias la='ls -lA --color=auto'
+alias lh='ls -lAh --color=auto'
+alias ll='ls -l --color=auto'
+alias m='md5sum'
+alias ntp='sudo ntpdate pool.ntp.org && sudo hwclock --systohc'
+alias off='sudo poff'
+alias on='sudo pon dsl-provider'
+alias rb='sudo reboot'
+alias sp='sudo pm-suspend'
+alias sr='screen -R'
+alias s='sha1sum'
+alias x='startx'
+
+
+#alias iodrag="ionice -c3 nice -n19"
+
+
+
+
+
+
+
+
+
+
