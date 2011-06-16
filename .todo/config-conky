@@ -1,0 +1,51 @@
+# From : https://github.com/ginatrapani/todo.txt-cli/wiki/Linux-with-Conky
+# todo.txt configuration for Conky highlighting. 
+# ~/.todo/config 里面默认的颜色配置，要注释掉，否则会覆盖一下颜色
+# 配置文件读取/执行顺序 : todo.sh → config-conky → config
+
+# [ 默认配色 ]# {{{
+#--------------------------------------------
+
+#export BLACK='${color black}'
+#export RED='${color red}'
+#export GREEN='${color green}'
+#export BROWN='${color brown}'
+#export BLUE='${color blue}'
+#export PURPLE='${color purple}'
+#export CYAN='${color cyan}'
+#export LIGHT_GREY='${color LightGrey}'
+#export DARK_GREY='${color DarkGrey}'
+#export LIGHT_RED='${color LightRed}'
+#export LIGHT_GREEN='${color LightGreen}'
+#export YELLOW='${color yellow}'
+#export LIGHT_BLUE='${color LightBlue}'
+#export LIGHT_PURPLE='${color LightPurple}'
+#export LIGHT_CYAN='${color LightCyan}'
+#export WHITE='${color white}'
+#export DEFAULT='${color}'
+
+# }}}
+
+export BLACK='${color black}'
+export RED='${color firebrick2}'
+export GREEN='${color green4}'
+export BROWN='${color brown}'
+export BLUE='${color blue1}'
+export PURPLE='${color purple}'
+export CYAN='${color cyan}'
+export LIGHT_GREY='${color LightGrey}'
+export DARK_GREY='${color DarkGrey}'
+export LIGHT_RED='${color LightRed}'
+export LIGHT_GREEN='${color LightGreen}'
+export YELLOW='${color GreenYellow}'
+export LIGHT_BLUE='${color LightBlue}'
+export LIGHT_PURPLE='${color LightPurple}'
+export LIGHT_CYAN='${color LightCyan}'
+export WHITE='${color white}'
+export DEFAULT='${color}'
+
+# Adapt this to wherever your todo.txt configuration is located.
+source ~/.todo/todo.cfg
+
+
+

@@ -18,7 +18,6 @@
 # [ todo ]# {{{
 #--------------------------------------------
 
-# 邮件列表 / 附件 / 快捷键
 # 邮件 thread 折叠
 
 
@@ -28,45 +27,135 @@
 # [ path 路径 ]# {{{
 #--------------------------------------------
 
+# [ 路径相关选项 ]
+#--------------------------------------------
+#set certificate_file
+#set header_cache
+#set message_cachedir
+
 set mbox_type=Maildir
 
-set folder=~/mail
-# 启动 mutt 后默认显示的信箱文件
-set spoolfile=+inbox
-# 已发送邮件
-set record=+sent
-#set record=/mnt/Docs/Mail/sent-`date +"%Y-%m"`
-#set record="~/mail/=sent-mail-`date +%Y-%m`"
-
-# 草稿邮件
-set postponed=+drafts
-# 已读信箱 [?]
-set mbox=+read
 #move mail from spool to mailbox when quiting ?
 set move=no
 
+## [ POP3 ]# {{{
+##--------------------------------------------
+#
+#set folder=~/mail
+## 启动 mutt 后默认显示的信箱文件
+#set spoolfile=+inbox
+## 已发送邮件
+#set record=+sent
+##set record=/mnt/Docs/Mail/sent-`date +"%Y-%m"`
+##set record="~/mail/=sent-mail-`date +%Y-%m`"
+#
+## 草稿邮件
+#set postponed=+drafts
+## 已读信箱 [?]
+#set mbox=+read
+#
+## 按 c tab tab 列出监视是否有新邮件邮箱
+#mailboxes +inbox +drafts +cpyug +hzlug +trash
+#
+#
+## }}}
+
+# [ IMAP ]# {{{
+#--------------------------------------------
+# https://github.com/c00kiemon5ter/dotfiles/blob/master/.mutt/muttrc
+
+# arch 的mutt 原生的 offilineimap 支持
+# 不在本地保存邮件，mutt 已经內建了IMAP功能，所以缺省是不会下载 Email 来离线使用
+#set folder=imap[s]://imap.server.domain[:port]/[folder/]
+set folder=imaps://imap.gmail.com:993/
+set spoolfile = "+INBOX"
+set postponed ="+[Gmail]/Drafts"
+# 没有 trash 变量，提示报错
+#set trash = "imaps://imap.gmail.com/[Gmail]/Trash"
+
+# spoolfile 告诉Mutt从本地哪个目录来得到新 Email
+# 想添加更多的 Spoolfiles，例如邮件列表（Mailing List）所在的目录
+#set spoolfile=imaps://imap.gmail.com:993/[Gmail]/All\ Mail
+
+# 草稿邮件
+#set postponed=+[Gmail]/Drafts
+
+#mailboxes +---GMail-- +[Gmail]/All\ Mail +[Gmail]/Sent\ Mail +[Gmail]/Drafts
+mailboxes +[Gmail] +INBOX +HZLUG +CPyUG
+
+#mailboxes +---GMail-- +[Gmail]/All\ Mail +[Gmail]/Sent\ Mail +[Gmail]/Drafts
+#mailboxes +[Gmail]/Bin +INBOX +AUEB +FOSS +Linux +Git +ArchLinux
+#mailboxes +Admin +ACM +Family +mrJesusSuperstar +PureAsxetos
+
+set imap_user=guodong
+set imap_user=volcanowill@gmail.com
+
+set ssl_force_tls=yes
+set certificate_file=${HOME}/.me/mutt.certificates
+
+## IMAP settings
+# allow mutt to open new imap connection automatically
+set imap_passive=no
+# keep imap connection alive by polling intermittently (time in seconds)
+set imap_keepalive=300
+# how often to check for new mail (time in seconds)
+set mail_check=120
+
+# [ mutt 原生 SMTP 发送 ]# {{{
+#--------------------------------------------
+# pacman 中的 mutt 支持原生的 SMTP 协议
+# XXX 若使用 外部 SMTP 客户端 如 msmtp / SSMTP 要注释下面配置
+
+#set my_pass='password'
+#set my_user=volcanowill@gmail.com
+#set smtp_url=smtps://$my_user:$my_pass@smtp.gmail.com
+
+#set smtp_url=smtps://${imap_user}:${imap_pass}@smtp.gmail.com:587
+set smtp_url = "smtp://volcanowill@smtp.gmail.com:587/"
+
+# }}}
+
+# gmail 账户密码读取文件 # 若不添加，会从交互提示输入
+# set imap_pass= "yourpassword"
+# set smtp_pass = "yourpassword"
+source ${HOME}/.me/gmail.offlineimap
+
+
+# }}}
+
+# [ 回收站 ]# {{{
+#--------------------------------------------
 # 默认值：no 设为yes，标记为被删除的邮件将被保存下来而不是被删除
 # 注：仅适用于 maildir 风格的邮箱。此设置将不会影响其他类型的信箱
 #set maildir_trash=no
 
 #set trash="~/.mail/trash/"
 
+# }}}
+
+# [ cache 缓存 ]# {{{
+#--------------------------------------------
+
 # From : http://www.fwolf.com/blog/post/306
 # 指定的是一个目录，这样每个邮件目录都会在这个目录下建立一个缓存文件
 # 也可以直接指定一个独立的文件, 打开有几千封邮件的文件夹的时候，都要花费时间建立索引、排序
-#set header_cache=~/.hcache
-set header_cache="~/mail/cache/"
-# 禁止对已缓存内容的校验, 除了mutt 不会再用另外一个程序去修改mail目录下的内容
-set maildir_header_cache_verify=no
+set header_cache="~/.mail/cache/head"
+set message_cachedir=${HOME}/.mail/cache/message
 
-# c00kiemon5ter
+# [?] 编辑邮件时，vim 临时文件存放位置
+#set tmpdir=${HOME}/mail/tmp
+# TODO 打开 gmail 远程邮箱时会创建临时文件，好像不是发邮件使用的
+# Could not create temporary file /home/ink/mail/tmp/mutt-king-1000-18490-20044707291329754121
+
+# c00kiemon5ter # offlineimap 使用 imap 收发邮件
+# 若没有创建文件，默认不会自动创建，若使用目录会自动创建缓存文件
 #set header_cache=${HOME}/.mutt/cache/headers
 #set message_cachedir=${HOME}/.mutt/cache/bodies
 
-# 按 c tab tab 列出监视是否有新邮件邮箱
-mailboxes +inbox +drafts +cpyug +hzlug +trash
+# 禁止对已缓存内容的校验, 除了mutt 不会再用另外一个程序去修改mail目录下的内容
+set maildir_header_cache_verify=no
 
-
+# }}}
 
 
 # }}}
@@ -135,7 +224,8 @@ set menu_scroll
 set resolve=yes
 
 set sort=reverse-threads            # 新的在最上面，按thread归档
-set sort_aux=last-date-received     # 同一个thread里面，最新的在最上面
+#set sort=threads            # 新的在最上面，按thread归档
+#set sort_aux=last-date-received     # 同一个thread里面，最新的在最上面
 # [?] 文件浏览器中的条目。默认，alpha 字母 showing mbox list default to newest first
 #set sort_browser=reverse-date
 
@@ -186,18 +276,8 @@ set smart_wrap
 
 # }}}
 
-# [ send 发送 ]# {{{
+# [ accout 账号 ]# {{{
 #--------------------------------------------
-
-# http://www.fwolf.com/blog/tag/mutt
-set sendmail="/usr/bin/msmtp"
-
-# 将 $sendmail 放入 "后台" "之前" 等待的秒数，默认：0 一直等待到发送完成
-set sendmail_wait=-1
-
-# add -f <from> to sendmail command line
-# 把mutt发送的from域作为发送邮件的 sender(否则用user@localdomian)
-#set envelope_from=yes
 
 # 默认：yes，mutt 发送邮件时会生成 From: 字段。设为no，就不会生成 From: 字段，除非使用命名 my_hdr 指定一个
 set use_from=yes
@@ -229,19 +309,24 @@ set reverse_realname=yes
 #macro generic "<esc>1" ":set from='newnuy  <newnuy_7_gmail.com>'"
 
 
-# [ mutt 自带原生 SMTP 发送 ]# {{{
-#--------------------------------------------
-# pacman 中的 mutt 支持原生的 SMTP 协议
-# 若使用 外部 SMTP 客户端 如 msmtp / SSMTP 要注释下面配置
 
-# Gmail 帐号设置
-#set my_pass='password'
-#set my_user=volcanowill@gmail.com
-#set smtp_url=smtps://$my_user:$my_pass@smtp.gmail.com
-#set ssl_force_tls = yes
+
+
 
 # }}}
 
+# [ send 发送 ]# {{{
+#--------------------------------------------
+
+# http://www.fwolf.com/blog/tag/mutt
+set sendmail="/usr/bin/msmtp"
+
+# 将 $sendmail 放入 "后台" "之前" 等待的秒数，默认：0 一直等待到发送完成
+set sendmail_wait=-1
+
+# add -f <from> to sendmail command line
+# 把mutt发送的from域作为发送邮件的 sender(否则用user@localdomian)
+#set envelope_from=yes
 
 # }}}
 
@@ -445,14 +530,8 @@ subscribe mutt-users
 
 # for mailing lists
 lists ubuntu-users@lists.ubuntu.com
-lists ubuntu-devel@lists.ubuntu.com
-lists seasar-user@ml.seasar.org
-lists issue@seasar.org
 lists vim_use@googlegroups.com
-lists uclibc@uclibc.org
 
-subscribe ubuntu-users@lists.ubuntu.com
-subscribe ubuntu-devel@lists.ubuntu.com
 # 标记一个地址为邮件列表，用 "list" 命令。标记一个地址为你已经订阅的邮件列表，用"subscribe"命令
 subscribe python-cn@googlegroups.com hzlug@googlegroups.com
 
@@ -515,7 +594,7 @@ set forward_decode
 # [ macro 宏 ]# {{{
 #--------------------------------------------
 
-macro index .G "!getmail\n" "Invoke getmail"
+#macro index .G "!getmail\n" "Invoke getmail"
 #macro pager .G "!getmail\n" "Invoke getmail"
 
 ## 切换收信箱和发件箱的快捷键
@@ -549,8 +628,10 @@ bind pager <        previous-line
 bind pager >        next-line
 bind pager k        previous-line
 bind pager j        next-line
-#bind pager K        previous-undeleted
-#bind pager J        next-undeleted
+# XXX 用来移动，不会跳过标记为删除的邮件
+# next-unread previous-undeleted next-undeleted
+bind pager K        previous-entry
+bind pager J        next-entry
 bind pager gg       top
 bind pager G        bottom
 
@@ -560,32 +641,61 @@ bind index \cf      next-page
 bind index \cb      previous-page
 bind index gg       first-entry
 bind index G       last-entry
-bind index K        previous-unread
-bind index J        next-unread
 
 bind index,pager R  group-reply
 bind index ,g       group-reply
 
+# From : adam8157
+# 刷新 邮箱 将标记为删除的邮件，从邮箱中去除
+#bind index \Cx sync-mailbox
+bind index,pager L group-reply
+bind editor <space> noop
 
+# macros
+#macro pager \cb <pipe-entry>'urlview'<enter> 'Follow links with urlview'
+macro index \Cr "<tag-prefix><clear-flag>N" "mark tagged messages as read"
+macro index B "<limit>~b " "search message bodies"
+macro index I "<change-folder>!<enter>" "go to Inbox"
 
+# save a decoded copy in ~
+macro index P "<pipe-message>cat > ~/" "save message as"
+macro index y "<change-folder>?<toggle-mailboxes>
 
+#macro pager \cu |urlview\n
+# IMAP Gmail 邮箱操作
+macro index gi "<change-folder>=INBOX<enter>" "Go to inbox"
+macro index ga "<change-folder>=[Gmail]/All Mail<enter>" "Go to all mail"
+macro index gd "<change-folder>=[Gmail]/Drafts<enter>" "Go to drafts"
+macro index gs "<change-folder>=[Gmail]/Spam<enter>" "Go to spam"
+macro index gt "<change-folder>=[Gmail]/Trash<enter>" "Go to trash"
+macro index,pager H "<save-message>=INBOX<enter>" "Mark message as ham"
+macro index,pager S "<save-message>=[Gmail]/Spam<enter>" "Mark message as spam"
 
+# XXX 将删除的邮件移动到 gmail 回收站 [?]
+folder-hook . 'macro index,pager d "<save-message>=[Gmail]/Trash<enter>" "trash"'
+folder-hook 'Spam|Trash' 'bind index,pager d delete-message'
 
-
-# }}}
-
-# [ hook ]# {{{
+# [ POP3 hook [?] ]
 #--------------------------------------------
 
 #folder-hook . "push \"l!(~s 'FOLDER INTERNAL DATA')\n*\""
+
+# XXX TODO 是否只是 POP3 的配置
 
 ## 删除到trash目录
 #folder-hook . 'macro index d "~/mail/trash\r"'
 #folder-hook ~/mail/trash/ 'bind index d delete-message'
 
-# 垃圾箱
-folder-hook . 'macro index d "$folder/trash\r"'
-folder-hook $folder/trash 'bind index d delete-message'
+## 垃圾箱
+#folder-hook . 'macro index d "$folder/trash\r"'
+#folder-hook $folder/trash 'bind index d delete-message'
+
+
+
+
+
+
+
 
 
 
@@ -789,5 +899,4 @@ color header brightblue default "^(From|Subject):"
 #color header brightblue default "^(From|Subject):"
 #
 ## }}}
-
 

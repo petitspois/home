@@ -48,7 +48,7 @@ mixer_type          "software"
 audio_output {
     type            "oss"
     name            "My OSS Device"
-    mixer_control   "PCM"       # optional
+#mixer_control   "PCM"       # optional
     #format          "44100:16:2"    # optional
 
     # 默认配置
@@ -57,7 +57,7 @@ audio_output {
 
     # From ArchWiki OSS
     device          "/dev/oss/oss_hdaudio0/pcm0"
-    mixer_device    "/dev/oss/oss_hdaudio0/mix0"
+#mixer_device    "/dev/oss/oss_hdaudio0/mix0"
 }
 
 
