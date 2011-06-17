@@ -215,6 +215,8 @@ export LESS_TERMCAP_ue=$'\E[0m'       # end underline
 export LESS_TERMCAP_us=$'\E[1;32m'    # begin underline
 #}}}
 
+export TERM=xterm-256color
+
 # [ tmux 256 color 提示符 ]# {{{
 #--------------------------------------------
 

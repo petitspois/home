@@ -254,13 +254,13 @@ XTerm*utf8Title:    true
 XTerm*xftAntialias: true
 Xterm.cjkWidth:     true
 
-!XTerm*faceName                          : Envy Code R:pixelsize=12
-!XTerm*faceNameDoublesize                : WenQuanYi Micro Hei Mono:pixelsize=12
+XTerm*faceName                          : Envy Code R:pixelsize=13
+XTerm*faceNameDoublesize                : WenQuanYi Micro Hei Mono:pixelsize=13
 
 ! 等价于 xterm -fa 'Envy Code R' -fs 10
-! Fedora / Debian 下不能生效
-XTerm*faceName                          : Envy Code R-10
-XTerm*faceNameDoublesize                : WenQuanYi Micro Hei-10
+! XXX Fedora / Debian 下不能生效
+!XTerm*faceName                          : Envy Code R-10
+!XTerm*faceNameDoublesize                : WenQuanYi Micro Hei-10
 
 XTerm*ttyModes:     erase   ^?
 
