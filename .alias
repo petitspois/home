@@ -124,7 +124,7 @@ alias sb='screen -S b'
 alias sc='screen -S c'
 
 alias mm="sudo mentohust"
-alias bb="bitlbee -c ~/.bitlbee.conf"
+alias bb="sudo bitlbee -c ~/.bitlbee.conf"
 alias zz="source ~/.zshrc"
 alias b.="source ~/.bashrc"
 

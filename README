@@ -1,48 +1,95 @@
 # vim:set et ft=conf fdm=marker sw=4 sts=4 ts=4 nopaste :
 
+.xinitrc
 .Xdefaults
-.aria2/aria2.conf
 .bashrc
-.bitlbee.conf
-.config/fcitx/config
+.screenrc           # xterm 标题栏 / 256 色
+.tmux.conf          # xterm 标题栏 / 256 色
+.vimrc
+.zshrc
 
-# openbox
-.config/openbox/autostart.sh
-.config/openbox/menu.xml
-.config/openbox/rc.xml
-
-.conkyrc
-.fonts.conf
-.fvwm/config
-.fvwm/fvwm.dock
-# git
 .gitconfig
 .gitignore
 
-.gtkrc-2.0
-.lftprc
-.mpdconf
-.musca_start
-.muttrc
-.my.cnf
-.ncmpcpp/config
-.pentadactylrc
-# pidgin
-.purple/prefs.xml
-.rtorrent.rc
-.screenrc
-.stalonetrayrc
-.tmux.conf
+# [ 路径相关 ]# {{{
+#--------------------------------------------
+
+.bitlbee.conf       # 用户名 / 配置文件路径 [权限]
+
+.config/openbox/autostart.sh    # wall / tint2 / conky 配置
+.config/openbox/rc.xml          # menu.xml 路径 (使用 $HOME 可否 [?])
+.config/openbox/menu.xml
+
+.gtk-bookmarks      # mnt tmp pic | book yuer text bt.peers
+
+.mpdconf            # log / pid / playlist
+
+.mailfilter         # mail 目录
+.mutt/muttrc        # .mail 目录/ 证书 / 密码
+.mutt/mailcap       # 通用
+
+.ncmpcpp/config     # yuer 目录
+
+
+
+
+# }}}
+
+# [ 通用 ]# {{{
+#--------------------------------------------
+
+.alias
+.aria2/aria2.conf
+.config/fcitx/config
+.fonts.conf
+.musca_start        # XXX 不是最新
+
+.todo/config-conky
+.todo/todo.cfg
+.todo/todo.conkyrc
+.todo/todo.sh
+
+.xmodmap
+
+
+
+# }}}
+
+# [ 环境 ]# {{{
+#--------------------------------------------
+
+.conkyrc            # 分辨率 / 字体
+
+.fvwm/config        # feh ...
+.fvwm/fvwm.dock
+
+.gtkrc-2.0          # gtk / icon / curor / font / 特殊变量
+.lftprc             # ==> .lft/rc
+.my.cnf             # mysql 版本
+
+.pentadactylrc      # 搜索引擎 / source .me/penta.url
+
+.rtorrent.rc        # peer / 下载 路径
+.stalonetrayrc      # 位置 / 背景色 / 内嵌 fvwmbutton
 .toprc
 
-.vimrc
-.xinitrc
-.xmodmap
-.zshrc
-README
-
 # 删除 git rm --cache
-.vimperator/colors/status.vimp
-.vimperator/colors/sweets.vimp
-.vimperatorrc
+.vimperatorrc                   # 搜索引擎 / source .me/penta.url
+.vimperator/colors/status.vimp  # 合并进 vimperatorrc
+
+
+
+# }}}
+
+# [ 删除 ]
+#--------------------------------------------
+.purple/prefs.xml
+
+# [ to.do ]
+#--------------------------------------------
+
+getmail / msmtp 专属目录
+mplayer
+
+
 

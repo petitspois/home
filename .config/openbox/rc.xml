@@ -782,8 +782,9 @@
     <!-- default menu file (or custom one in $HOME/.config/openbox/) -->
     <!--
     <file>/usr/share/lxde/openbox/menu.xml</file>
+    <file>/home/ink/.config/openbox/menu.xml</file>
     -->
-    <file>$HOME/.config/openbox/</file>
+    <file>$HOME/.config/openbox/menu.xml</file>
     <hideDelay>200</hideDelay>
     <!-- if a press-release lasts longer than this setting (in milliseconds), the
        menu is hidden again -->

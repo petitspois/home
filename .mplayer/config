@@ -1,0 +1,37 @@
+[default]
+# Write your default config options here!
+#vo=gl
+expand=0:-50:0:0 
+# x11 默认不支持自动调整屏幕，要使用zoom 参数
+vo=x11
+# 支持 截图 [按 s 键 截图]
+vf=screenshot
+#msglevel=all=5
+ao=oss
+#subcp=utf8 #支持中文字幕
+subcp=cp936 #支持中文字幕
+# 字体名称要使用 fc-list 列表里面的，注意特殊符号转义 
+font='Microsoft Yahei'
+subfont-text-scale=2
+sub-fuzziness=2 #设定字幕自动加载的识别
+slang=Chinese,chi,zh
+#font=/usr/share/fonts/微软雅黑.ttf
+zoom=yes #支持缩放
+#subfont-autoscale=2 #字幕占屏幕的大小
+#subfont-text-scale=3 #设置字幕文本的自动缩放系数(屏幕尺寸的百分比)，值范围为0～100，默认值为5
+#subfont-osd-scale=8 #OSD字幕的自动缩放系统(屏幕尺寸的百分比)，值范围为0～100，默认值为6
+#overlapsub=1 #支持多语言字幕
+#slang=chs
+
+#osdlevel=3 #在屏幕的左上角显示相应时间等
+#vf=expand=:::::4/3:2 #如果是16:9的影片,字幕可以放在下面的黑框中 
+#sub-fuzziness有三个值可以设置
+#0: 代表完全匹配,字幕名字和影片名字必须完全匹配,比如:xxx.avi,xxx.srt
+#1: 代表部分匹配,字幕名字完全包含影片名字就可以自动加载,比如:xxx.avi,xxx.chs.srt
+#2: 代表影片目录下的所有字幕都会被加载
+
+#[gnome-mplayer]
+#msglevel=all=5
+##subcp=utf8
+#vo=gl2
+#ao=alsa
