@@ -315,8 +315,8 @@ set passkeys=https:'//mail.google.comcom|www.google.com/reader/:jk'
 
 "style -name=status-bar chrome://* #status-bar {font-family: monospace !important; font-weight: normal !important;} #dactyl-statusline-field-container {padding-right: 5px !important;}
 
-hi StatusLine color: white !important; background: #444444 !important;
-hi StatusLineNormal color: white !important; background: #444444 !important;
+"hi StatusLine color: white !important; background: #444444 !important;
+"hi StatusLineNormal color: white !important; background: #444444 !important;
 hi CmdCmdLine color: black !important; background: #8a8a8a !important;
 "hi StatusLineBroken background:#f0f0f0 !important;
 "hi StatusLineSecure background:#f0f0f0 !important;

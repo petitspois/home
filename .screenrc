@@ -76,13 +76,13 @@ escape ^ll
 #bind o focus
 
 # F7 to create a new screen
-bindkey -k k7 screen
+#bindkey -k k7 screen
 
 # F8 to kill current screen window
 bindkey -k k8 kill
 
 # F9 to detach screen session
-bindkey -k k9 detach
+bindkey -k k9 screen
 
 # F11/F12 to "move to previous window"
 bindkey -k F1 prev
