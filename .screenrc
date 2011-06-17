@@ -1,18 +1,19 @@
-############################
-# 关闭启动画面
-startup_message off                     # default: on
+# vim:set et ft=screen fdm=marker sw=4 sts=4 ts=4 nopaste :
+
+# 关闭启动画面 default: on
+startup_message off
 
 # [ 刷新窗口 ]
 #--------------------------------------------
-# 和 redisplay 一同刷新窗口，仅刷新当前激活窗口，默认：no
-#partial on
 # 刷新全部窗口
 #allpartial on
 
+# 和 redisplay 一同刷新窗口，仅刷新当前激活窗口，默认：on
+#partial on
 #redisplay
 
-# 当 terminal 关闭时，screen 自动挂起
-autodetach on                           # default: on
+# 当 terminal 关闭时，screen 自动挂起 default: on
+autodetach on
 
 # 不使用 响铃 beep 提示，而使用 闪屏
 vbell off
@@ -46,28 +47,35 @@ encoding utf-8 utf-8
 # 使 screen 在 xterm 里面可以使用滚动条 scrollbar
 #termcapinfo xterm ti@:te@
 
-### ====== 键绑定 ======
+# [ key 快捷键 ]# {{{
+#--------------------------------------------
 
-# bind F1 to select 1
-# bind F7 to detach screen session from this terminal
-# bind F8 to kill current screen window.
-# bind F9 to create a new screen
-# bind F10 to rename current screen window
-# bind F11 to move to previous window
-# bind F12 to move to next window
-#bindkey -k k1 select 1
-#bindkey -k k7 detach
-#bindkey -k k8 kill
-#bindkey -k k9 screen
-#bindkey -k k; title
-
-# 将快捷键默认 C-a 设为 C-x / [不行]反斜杠 \ 因为不常用
-# C - x 不能使用来回切换之前停留到 tab
+# 默认前缀快捷键 C-a
+# 尝试过：C-b( vim 滚屏 )，C-x(无法切换上次聚焦窗口)，\\ `` 不方便
 escape ^ll
 #escape \\
-# vim 的鼠标上滚有问题
 #escape ``
 
+# F1 to select 1
+#bindkey -k k1 select 1
+
+# F7 to detach screen session
+#bindkey -k k7 detach
+
+# F8 to kill current screen window
+#bindkey -k k8 kill
+
+# F9 to create a new screen
+bindkey -k k9 screen
+
+# F10 to rename current screen window
+#bindkey -k k; title
+
+# F11/F12 to "move to previous window"
+bindkey -k F1 prev
+bindkey -k F2 next
+
+# }}}
 
 # 定制 region 函数键与Emacs一致
 #bind 0 remove
@@ -75,22 +83,12 @@ escape ^ll
 #bind 2 split
 #bind o focus
 
-# F7 to create a new screen
-#bindkey -k k7 screen
-
-# F8 to kill current screen window
-bindkey -k k8 kill
-
-# F9 to detach screen session
-bindkey -k k9 screen
-
-# F11/F12 to "move to previous window"
-bindkey -k F1 prev
-bindkey -k F2 next
-
 # 指定 shell
 #shell bash
 shell /bin/zsh
+
+# [ title ]
+#--------------------------------------------
 
 # 动态 标题栏
 #shelltitle '% | zsh'
@@ -106,13 +104,22 @@ termcapinfo rxvt 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
 termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
 #terminfo xterm* 'XT:hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
 
+
+
+# [ 256 color ]# {{{
+#--------------------------------------------
+
 # screen 如何设置颜色：AB = 背景色，AF = 前景色
 ##terminfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 
 # 修复 rxvt-unicode 256 色 问题
 #terminfo rxvt-unicode 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 
-# 定制 底部标题栏 caption / hardstatus(最底部) | man 手册里面的 STRING ESCAPES
+
+# }}}
+
+# 底部标题栏 caption / hardstatus(最底部)
+# 转义字符：man 手册里面的 STRING ESCAPES
 
 # [ Color VARIABLES - Strings ]# {{{
 #--------------------------------------------
