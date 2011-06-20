@@ -272,11 +272,12 @@ XTerm*VT100.Translations:#override          \
     Meta<Key>K: scroll-back(1,halfpage)     \n\
     Meta<Key>J: scroll-forw(1,halfpage)
 
-
 ! [ Style 样式 ]
 !--------------------------------------------
 
-!XTerm*termName:     xterm
+! 默认的 $TERM 变量，在 screen / tmux 中实现 256 色
+! 也可以在 .bashrc / .zshrc 中添加 export TERM=xterm-256color
+xterm*termName                          : xterm-256color
 XTerm*saveLines                         : 5000
 XTerm*multiClickTime                    : 250
 XTerm*borderless                        : 1
@@ -288,7 +289,11 @@ XTerm*geometry                          : 115x34
 XTerm*background                        : #1a1a1a
 XTerm*foreground                        : white
 XTerm*cursorColor                       : LightSteelBlue1
-XTerm*scrollBar                         : false
+!XTerm*scrollBar                         : True
+!XTerm*scrollBar*thickness               : 4
+!XTerm*scrollBar*background              : #1a1a1a
+!XTerm*scrollBar*foreground              : #7BA2D2
+!xterm*rightScrollBar                    : True
 
 XTerm*scrollKey:    true
 XTerm*scrollTtyOutput:  false
@@ -330,11 +335,11 @@ URxvt*font: xft:Envy Code R:pixelsize=13:autohint=true, \
                 xft:Microsoft Yahei:pixelsize=13
 
 URxvt*depth                             : 32
-URxvt*termName                          : rxvt-unicode
+URxvt*termName                          : xterm-256color
 ! fixed 字体所对应的 窗口尺寸
 !URxvt*geometry                         : 92x32
 URxvt*geometry                          : 119x34
-URxvt*scrollBar                         : false
+URxvt*scrollBar                         : true
 URxvt*saveLines                         : 5000
 ! 中括号里面的数字控制透明的百分比
 !URxvt*background                        : [50]#000000

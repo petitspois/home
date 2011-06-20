@@ -1,16 +1,9 @@
 # vim:set et ft=screen fdm=marker sw=4 sts=4 ts=4 nopaste :
 
+# [ Style ]# {{{
+#--------------------------------------------
 # 关闭启动画面 default: on
 startup_message off
-
-# [ 刷新窗口 ]
-#--------------------------------------------
-# 刷新全部窗口
-#allpartial on
-
-# 和 redisplay 一同刷新窗口，仅刷新当前激活窗口，默认：on
-#partial on
-#redisplay
 
 # 当 terminal 关闭时，screen 自动挂起 default: on
 autodetach on
@@ -19,18 +12,26 @@ autodetach on
 vbell off
 #vbell_msg " Wuff ---- Wuff!! "
 
-## Set messages timeout to 5 second:
-#msgwait 5
-#msgminwait 2
-#pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
-
-#nethack style messages
-#nethack on
-# Disable login
-#deflogin off
-
 # 退出相关程序(vim,htop...)，自动刷新屏幕
 altscreen on
+
+# 刷新全部窗口
+#allpartial on
+
+# 和 redisplay 一同刷新窗口，仅刷新当前激活窗口，默认：on
+#partial on
+#redisplay
+
+
+
+# }}}
+
+# [ base ]# {{{
+#--------------------------------------------
+
+# 指定 shell
+#shell bash
+#shell /bin/zsh
 
 # 默认开始路径
 # chdir
@@ -44,8 +45,8 @@ encoding utf-8 utf-8
 # Utf-8 handling
 #defutf8 on
 
-# 使 screen 在 xterm 里面可以使用滚动条 scrollbar
-#termcapinfo xterm ti@:te@
+
+# }}}
 
 # [ key 快捷键 ]# {{{
 #--------------------------------------------
@@ -74,47 +75,6 @@ bindkey -k k9 screen
 # F11/F12 to "move to previous window"
 bindkey -k F1 prev
 bindkey -k F2 next
-
-# }}}
-
-# 定制 region 函数键与Emacs一致
-#bind 0 remove
-#bind 1 only
-#bind 2 split
-#bind o focus
-
-# 指定 shell
-#shell bash
-shell /bin/zsh
-
-# [ title ]
-#--------------------------------------------
-
-# 动态 标题栏
-#shelltitle '% | zsh'
-
-# xterm 标题栏, %t 为当前 window 标题
-#hardstatus string "Screen - %t"
-
-# xterm 中的 screen 可以使用滚动条和滚轮
-#terminfo xterm*|rxvt ti@:te@
-
-# 定制 title bar
-termcapinfo rxvt 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
-termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
-#terminfo xterm* 'XT:hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
-
-
-
-# [ 256 color ]# {{{
-#--------------------------------------------
-
-# screen 如何设置颜色：AB = 背景色，AF = 前景色
-##terminfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
-
-# 修复 rxvt-unicode 256 色 问题
-#terminfo rxvt-unicode 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
-
 
 # }}}
 
@@ -166,7 +126,9 @@ termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
 # 0.05 0.05 0.05 | 0 ~  1 /tmp  [ 2 top ]                                           05/21 16:10
 #caption always "%{=b k}%{c} %l | %{k}%L=%-w%7>%{g}[ %n %t ]%{-}%+w%-014< %-012=%{b y}%m/%d %c "
 #caption always "%{=b k}%{c} %l | %{k}%L=%-w%7>%{g}%n %t%{-}%+w%-014< %-012=%{b y}%m/%d %c "
-caption always "%{=b k}%{b y} %m-%d %c | %{k}%L=%-w%7>%{g}%n %t%{-}%+w%-014< %-016=%{c} %l "
+
+#  06-20 11:59 | 0 su  1 irssi  2 vim  5 ~                                    0.10 0.04 0.00
+caption always "%{=b k}%{b y} %m-%d %c / %{k}%L=%-w%7>%{g}%n %t%{-}%+w%-014< %-016=%{c} %l "
 
 # %{k}%L=%-w%7
 # 背景色黑色 左对齐 窗口标题 7像素宽
@@ -211,11 +173,63 @@ caption always "%{=b k}%{b y} %m-%d %c | %{k}%L=%-w%7>%{g}%n %t%{-}%+w%-014< %-0
 
 # }}}
 
-# Sessions
-#screen
+# [ XXX ] #--------------------------------------------
+
+# 定制 region 函数键与Emacs一致
+#bind 0 remove
+#bind 1 only
+#bind 2 split
+#bind o focus
+
+# 使 screen 在 xterm 里面可以使用滚动条和滚轮 scrollbar
+#terminfo xterm*|rxvt ti@:te@
+termcapinfo xterm ti@:te@
+
+# [ title ]
+#--------------------------------------------
+
+# 将所运行程序的名称作为screen的title的功能, 默认bash
+# "$" ==> 命令的第一个字符段
+shelltitle '$ | bash'
+#shelltitle '% | zsh'
+
+## Set xterm's title
+hardstatus off
+hardstatus string "screen(@%H): %t"
+## 把 xterm 的 titlebar 当作 screen 的hardstatus
+termcapinfo xterm* 'hs:ts=\E]0;:fs=\007:ds=\E]0;\007'
+
+# [ termcapinfo ]
+#--------------------------------------------
+
+## 定制 title bar
+#termcapinfo rxvt 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+#termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+##terminfo xterm* 'XT:hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+
+# screen 如何设置颜色：AB = 背景色，AF = 前景色
+##terminfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+
+# 修复 rxvt-unicode 256 色 问题
+#terminfo rxvt-unicode 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+
+
+
+
+# 为特定的命令指定 title
 #screen -t mutt mutt
 #screen -t irssi irssi
-#有个bug, debian sid中这里如果只用screen多开窗口, PS1什么的都对, 但是只能动态显示路径为title, 程序不行, C-a c新建的没问题, 欢迎反馈!!!
-#更新: session的配置放到最后就OK了, 但是这也算个bug吧, 毕竟其他的设置没有因为session的写的位置有过影响
+
+## Set messages timeout to 5 second:
+#msgwait 5
+#msgminwait 2
+#pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
+
+#nethack style messages
+#nethack on
+# Disable login
+#deflogin off
+
+
 
 

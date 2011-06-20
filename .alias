@@ -1,6 +1,11 @@
 
-# [ alias 别名 ]
-#--------------------------------------------
+# 多级目录回溯
+alias ~='cd ~'
+alias ..="cd .."
+alias ..2="cd ../.."
+alias ..3="cd ../../.."
+alias ..4="cd ../../../.."
+alias ..5="cd ../../../../.."
 
 # [ cp / mv / rm / ln 覆盖提示 ]# {{{
 #--------------------------------------------
@@ -45,17 +50,21 @@ alias lla='ls -Alh --time-style=+%Y-%m-%d'
 # [ git ]# {{{
 #--------------------------------------------
 alias ga='git add'
+#alias ga='git add -A'
 alias gc='git commit '
 alias gca='git commit -a -m'
 alias gcl='git config -l'
 alias gce='git config -e'
 alias gd='git diff'
 alias gl='git ls-files'
-alias go='git log'
+#alias go='git log'
+alias go='git log --graph'
 alias gs='git status'
 alias gb='git branch'
 alias gbc='git checkout'
 
+alias gp='git push'
+alias gu='git pull'
 alias gpo="git push origin master"
 alias gp2="git push origin2 master"
 alias gp3="git push origin3 master"
@@ -66,6 +75,9 @@ alias gp3="git push origin3 master"
 
 # }}}
 
+# [ 系统 ]# {{{
+#--------------------------------------------
+
 alias exit="clear; exit"
 alias grep='grep --color=auto -i'
 # less -R 解析 ASCII 颜色字符
@@ -73,8 +85,15 @@ alias less='less -R'
 alias info='info --vi-keys'
 alias tee='tee -a'
 
-# [ 系统 ]# {{{
-#--------------------------------------------
+alias sch='find . -name '
+
+# 查看 窗口 class 属性 / 名称 # From : Archwiki Openbox
+alias xp='xprop | grep "WM_WINDOW_ROLE\|WM_CLASS" && echo "WM_CLASS(STRING) = \"NAME\", \"CLASS\""'
+
+#alias tree="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
+
+alias openports='netstat -nape --inet'
+alias port='netstat -ntlp'      #opening ports
 
 ## show directories size
 #alias dud='du -s *(/)'
@@ -99,19 +118,16 @@ alias vuser="fuser -v "
 
 # }}}
 
-alias sch='find . -name '
-#alias tree="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
-
 # [ soft ]# {{{
 #--------------------------------------------
 
 alias ee='emacsclient -t'
 
-
 alias c='clear'
 alias m='mutt'
 alias p='pwd'
 alias tx='tmux'
+#alias tmux='tmux -2 '  # 256 colors
 
 alias s='screen'
 alias sl='screen -ls'
@@ -151,7 +167,6 @@ alias lrct='rsync -altvz --delete -e ssh /home/ink/todo/ cjb:~/.wen/todo'
 #alias rlc=' rsync -altvz --delete -e ssh cjb:~/.wen/text ~'
 
 alias cgfw="ssh -CNTfnq -D 7070 57wsqh@216.194.70.6"
-alias ygfw="ssh -CNTfnq -D 7070 yuanhui@204.74.211.169"
 
 
 
@@ -178,6 +193,10 @@ alias Rm="sudo rm"
 alias Vim="sudo vim"
 alias halt="sudo halt"
 alias reboot="sudo reboot"
+alias ht='sudo halt'
+alias rb='sudo reboot'
+# 休眠
+#alias sp='sudo pm-suspend'
 
 
 
@@ -185,10 +204,12 @@ alias reboot="sudo reboot"
 
 # [ U 盘挂载 ]# {{{
 #--------------------------------------------
-alias Uin="sudo mount -t vfat -o iocharset=utf8,uid=1000,gid=100 /dev/sdc1 /mnt/"
-alias Uout="sudo umount /mnt/"
+# U 盘挂载
+alias Uin="sudo mount -t vfat -o iocharset=utf8,uid=1000,gid=100 "
+alias Uout="sudo umount "
 alias mym="sudo mount -o iocharset=utf8,uid=1000,gid=100 "
 alias myu="sudo umount "
+
 
 
 
@@ -256,64 +277,26 @@ pacsearch()
 
 # }}}
 
-# 查看 窗口 class 属性 / 名称 # From : Archwiki Openbox
-alias xp='xprop | grep "WM_WINDOW_ROLE\|WM_CLASS" && echo "WM_CLASS(STRING) = \"NAME\", \"CLASS\""'
-
 # 历史命令 top10
 alias top10='print -l  ${(o)history%% *} | uniq -c | sort -nr | head -n 10'
 
-alias openports='netstat -nape --inet'
-alias port='netstat -ntlp'      #opening ports
+# [ XXX ] #--------------------------------------------
 
-# todo.sh 使用该 别名了
-#alias t="tmux"
-alias Vim="sudo vim"
-alias halt="sudo halt"
-alias reboot="sudo reboot"
-
-# 多级目录回溯
-alias ~='cd ~'
-alias ..="cd .."
-alias ..2="cd ../.."
-alias ..3="cd ../../.."
-alias ..4="cd ../../../.."
-alias ..5="cd ../../../../.."
-
-# U 盘挂载
-alias Uin="sudo mount -t vfat -o iocharset=utf8,uid=1000,gid=100 "
-alias Uout="sudo umount "
-alias mym="sudo mount -o iocharset=utf8,uid=1000,gid=100 "
-
-alias cr='ctags -R --fields=+lS && cscope -Rbq'
-alias df='df -h'
-alias dt='dmesg | tail -n 20'
-alias du='du -sh'
-alias dx='xset s off && xset dpms 0 0 0'
-alias ga='git add -A'
-alias gc='git commit -a'
-alias gd='git difftool'
-alias gl='git log --graph'
-alias gp='git push'
-alias grep='grep --color=auto'
-alias gs='git status'
-alias gu='git pull'
-alias hb='sudo pm-hibernate'
-alias ht='sudo halt'
-alias la='ls -lA --color=auto'
-alias lh='ls -lAh --color=auto'
-alias ll='ls -l --color=auto'
-alias m='md5sum'
-alias ntp='sudo ntpdate pool.ntp.org && sudo hwclock --systohc'
-alias off='sudo poff'
-alias on='sudo pon dsl-provider'
-alias rb='sudo reboot'
-alias sp='sudo pm-suspend'
-alias sr='screen -R'
-alias s='sha1sum'
-alias x='startx'
-
-
-#alias iodrag="ionice -c3 nice -n19"
+#alias cr='ctags -R --fields=+lS && cscope -Rbq'
+#alias dt='dmesg | tail -n 20'
+## 关闭屏保，在看电影时防止屏幕进入屏保
+#alias dx='xset s off && xset dpms 0 0 0'
+#alias m='md5sum'
+#alias s='sha1sum'
+#alias x='startx'
+#
+#alias ntp='sudo ntpdate pool.ntp.org && sudo hwclock --systohc'
+#
+##alias iodrag="ionice -c3 nice -n19"
+#
+## 为执行时间比较长的命令添加别名，如： sleep 10; alert
+## 依赖于 libnotify-bin 软件包
+#alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 
 

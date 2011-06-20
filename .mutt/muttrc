@@ -68,6 +68,13 @@ set move=no
 # 不在本地保存邮件，mutt 已经內建了IMAP功能，所以缺省是不会下载 Email 来离线使用
 #set folder=imap[s]://imap.server.domain[:port]/[folder/]
 set folder=imaps://imap.gmail.com:993/
+
+# 每封已发送的邮件，都会将一份拷贝保存到远程服务器。造成冗余
+#set record="+[Gmail]/Sent Mail"
+# 默认 set record="~/Sent" 让mutt不保存已发送邮件
+# From : http://zhuwenhao.com/385/技术/服务器和网站类/自动备份数据库并发送到电子邮箱的脚本/
+set record="/dev/null"
+
 set spoolfile = "+INBOX"
 set postponed ="+[Gmail]/Drafts"
 # 没有 trash 变量，提示报错
@@ -87,11 +94,13 @@ mailboxes +[Gmail] +INBOX +HZLUG +CPyUG
 #mailboxes +[Gmail]/Bin +INBOX +AUEB +FOSS +Linux +Git +ArchLinux
 #mailboxes +Admin +ACM +Family +mrJesusSuperstar +PureAsxetos
 
-set imap_user=guodong
+set imap_user=if_else
 set imap_user=volcanowill@gmail.com
 
 set ssl_force_tls=yes
-set certificate_file=${HOME}/.me/mutt.certificates
+set certificate_file=~/.me/mutt.certificates
+
+set ssl_ca_certificates_file = '/etc/ssl/certs/ca-certificates.crt'
 
 ## IMAP settings
 # allow mutt to open new imap connection automatically
@@ -111,7 +120,7 @@ set mail_check=120
 #set smtp_url=smtps://$my_user:$my_pass@smtp.gmail.com
 
 #set smtp_url=smtps://${imap_user}:${imap_pass}@smtp.gmail.com:587
-set smtp_url = "smtp://volcanowill@smtp.gmail.com:587/"
+set smtp_url = "smtp://volcanowill@smtp.gmail.com"
 
 # }}}
 
@@ -141,6 +150,7 @@ source ${HOME}/.me/gmail.offlineimap
 # 也可以直接指定一个独立的文件, 打开有几千封邮件的文件夹的时候，都要花费时间建立索引、排序
 set header_cache="~/.mail/cache/head"
 set message_cachedir=${HOME}/.mail/cache/message
+set message_cache_clean=yes
 
 # [?] 编辑邮件时，vim 临时文件存放位置
 #set tmpdir=${HOME}/mail/tmp
@@ -234,7 +244,8 @@ set sort=reverse-threads            # 新的在最上面，按thread归档
 
 # thread based on regex 当以threads方式排序，且 $strict_threads 为no时，变量才有效
 set sort_re
-set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+#set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+set reply_regexp="^(re([\[0-9\]+])*|aw|回复|答复)[:：][ \t]*"
 
 # 当前的thread没有折叠，mutt 会跳转到下一封未读邮件
 # don't collapse on an unread message
@@ -315,7 +326,7 @@ set reverse_realname=yes
 
 # }}}
 
-# [ send 发送 ]# {{{
+# [ msmtp send 发送 ]# {{{
 #--------------------------------------------
 
 # http://www.fwolf.com/blog/tag/mutt
@@ -367,6 +378,12 @@ set fast_reply
 
 # 默认: yes，在 $signature 之前插入"-- "（注意末尾的空格）
 set sig_dashes
+
+## mutt强大的hook规则 # http://www.adam8157.info/blog/2010/05/mutt-hook/
+## 默认自动签名
+#send-hook ~A "set pgp_autosign"
+## 匹配To:或Cc:中包含linux-kernel@zh-kernel.org 邮件, 取消自动签名
+#send-hook "~C linux-kernel@zh-kernel.org" "set nopgp_autosign"
 
 # 默认：no，在发送邮件时提示你输入抄送地址（Cc）
 #set askcc
@@ -740,10 +757,6 @@ macro index,pager a "<pipe-message>abook --add-email<return>" "add sender to abo
 ## PGP header
 #my_hdr X-PGP-Key-ID: D15CA3BE
 #
-## Autosign hook
-#send-hook ~A "set pgp_autosign"
-#send-hook ~u "set nopgp_autosign"
-#
 ## If attempt to verify PGP/MIME signatures
 #set pgp_verify_sig=yes
 #
@@ -817,58 +830,58 @@ macro index,pager a "<pipe-message>abook --add-email<return>" "add sender to abo
 
 # }}}
 
-# [ color ]# {{{
-#--------------------------------------------
-# https://github.com/Stebalien/dotfiles.git
-
-color error red default
-color hdrdefault cyan default
-# 背景使用 brightgreen 字会闪烁 [?]
-color indicator black green
-# 命令输出提示，退出提示，切换邮箱提示
-color message brightcyan default
-# 搜索匹配高亮
-color search brightwhite magenta
-# 状态栏信息
-color status brightcyan default
-color tree magenta default
-color normal white default
-
-color attachment black green
-color signature brightblack default
-
-# 邮件引用内容标志符 > 颜色
-color quoted red default
-color quoted1 yellow default
-color quoted2 red default
-# 比较长的行断行行首标注 + 颜色
-color markers brightgreen default
-# 邮件结束标识符 波浪号 颜色
-color tilde green default
-color bold brightyellow default
-
-# 旧邮件
-color index white default ~O
-# 新邮件
-color index brightyellow default ~N
-# 已知邮件列表的邮件
-color index blue default ~l
-color index brightblue default "~l ~N"
-color index white default "~l ~O"
-# 标记为重要的邮件
-color index brightred default ~F
-# 标记为删除的邮件
-color index brightblack default ~D
-
-# 邮件内容 加粗高亮 正则表达式，匹配所有邮件内容
-color body brightwhite default "^[^>].*"
-color header brightblue default "^(From|Subject):"
-
-
-
-
-# }}}
-
+## [ color ]# {{{
+##--------------------------------------------
+## https://github.com/Stebalien/dotfiles.git
+#
+#color error red default
+#color hdrdefault cyan default
+## 背景使用 brightgreen 字会闪烁 [?]
+#color indicator black green
+## 命令输出提示，退出提示，切换邮箱提示
+#color message brightcyan default
+## 搜索匹配高亮
+#color search brightwhite magenta
+## 状态栏信息
+#color status brightcyan default
+#color tree magenta default
+#color normal white default
+#
+#color attachment black green
+#color signature brightblack default
+#
+## 邮件引用内容标志符 > 颜色
+#color quoted red default
+#color quoted1 yellow default
+#color quoted2 red default
+## 比较长的行断行行首标注 + 颜色
+#color markers brightgreen default
+## 邮件结束标识符 波浪号 颜色
+#color tilde green default
+#color bold brightyellow default
+#
+## 旧邮件
+#color index white default ~O
+## 新邮件
+#color index brightyellow default ~N
+## 已知邮件列表的邮件
+#color index blue default ~l
+#color index brightblue default "~l ~N"
+#color index white default "~l ~O"
+## 标记为重要的邮件
+#color index brightred default ~F
+## 标记为删除的邮件
+#color index brightblack default ~D
+#
+## 邮件内容 加粗高亮 正则表达式，匹配所有邮件内容
+#color body brightwhite default "^[^>].*"
+#color header brightblue default "^(From|Subject):"
+#
+#
+#
+#
+## }}}
+#
 ## [ 0 color ]# {{{
 ##--------------------------------------------
 #
@@ -899,4 +912,76 @@ color header brightblue default "^(From|Subject):"
 #color header brightblue default "^(From|Subject):"
 #
 ## }}}
+
+# [ color 2 ]# {{{
+#--------------------------------------------
+# http://lun-b612.blogspot.com/2010/02/mutt.html
+
+# set default
+  color normal     white         default
+
+# main colors
+  color status     green         default
+  color indicator  brightwhite   default
+  color tree       blue          default
+  color error      brightred     default
+  color message    brightyellow  default
+
+# color all ML mails
+#  color index      blue          default "~u"
+
+# uncolor certain messages
+uncolor index "~P"
+uncolor index "~C @.com"
+uncolor index "~N ~u"
+uncolor index "~N !~u"
+uncolor index "~T"
+uncolor index "~D"
+
+# and recolor them appropriately
+  color index      brightblack   default "~P"
+  color index      green         default "~C @.com"
+  color index      brightcyan    default "~N ~u"  # new ML mail
+  color index      brightyellow  default "~N !~u" # new non-ML mail
+  color index      brightgreen   default "~T"
+  color index      brightred     default "~D"
+
+# set up the headers
+  color header     brightyellow  default "^from:"
+  color header     yellow        default "^to:"
+  color header     yellow        default "^cc:"
+  color header     blue          default "^date:"
+  color header     brightblue    default "^subject:"
+
+# message bodies
+  color attachment brightblack   default
+  color search     red           brightblack
+  color signature  cyan          default
+  color tilde      blue          default
+
+# urls
+  color body       brightblue    default "(^|<| )mailto:[^ ]+@[^ ]( |>|$)"
+  color body       brightblue    default "(^|<| )(http|https|ftp|file|telnet|news|finger)://[^ ]+( |>|$)"
+
+# smileys, the right way and the backward-ass euro way
+  color body       brightmagenta default "(^| )+(|[<>|])[8;:](|[^ ])[)(/|DOPS]( |$)+"
+  color body       brightmagenta default "(^| )+[)(/|DOPS](|[^ ])[8;:](|[<>|])( |$)+"
+
+# *bold*, _underline_, and /italic/
+  color body       brightcyan    default "(^| )\\*[^ ]+\\*( |$)"
+  color body       brightcyan    default "(^| )_[^ ]+_( |$)"
+  color body       brightcyan    default "(^| )/[^ ]+/( |$)"
+
+# quote blocks
+  color quoted     magenta       default
+  color quoted1    cyan          default
+  color quoted2    green         default
+  color quoted3    magenta       default
+  color quoted4    cyan          default
+  color quoted5    green         default
+  color quoted6    magenta       default
+  color quoted7    cyan          default
+
+# }}}
+
 

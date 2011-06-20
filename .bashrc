@@ -6,9 +6,59 @@ if [ -f $HOME/.alias ]; then
     source $HOME/.alias
 fi
 
-# 为执行时间比较长的命令添加别名，如： sleep 10; alert
-# 依赖于 libnotify-bin 软件包
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+# [ export 环境变量 ]# {{{
+#--------------------------------------------
+
+export PATH=$PATH:~/code/shell
+#export CDPATH='.:..:../..:~/links:~:~/projects:/var/www/virtual_hosts'
+export CDPATH='.:..:../..:~:~/text:~/public_html/'
+export MYSQL_PS1="[\\u@\\h \\d]"
+
+# go-office gtk2 set
+#export OOO_FORCE_DESKTOP=gnome
+#export OOO_FORCE_DESKTOP=gnome
+
+# xterm urxvt 256 color [tmux]
+# 默认 debian
+# 没有进入 screen TERM=xterm
+#     进入 screen TERM=screen
+#export TERM=xterm-256color
+
+# XXX 不行 进入 screen 后，默认 TERM 为 screen，若进入 screen 则修改 TERM
+#[[ $TERM == "screen" ]] && export TERM="xterm-256color"
+
+# XXX 在 .Xdefaults 中设置：xterm*termName: xterm-256color
+# 不用在 .bashrc / .zshrc 中同时设置 $TERM
+
+
+
+
+
+# }}}
+
+# [ Prompt PS1 提示符 ]#{{{
+#--------------------------------------------
+
+# debian 默认 PS1：ink@king:~$
+# ${debian_chroot:+($debian_chroot)}\u@\h:\w\$
+# XXX 可以在 screen 中标题显示为 相对路径
+#\[\ek\e\\\]\[\ek\W\e\\\]${debian_chroot:+($debian_chroot)}\u@\h:\w\$
+
+# [ PS1 no git ]# {{{
+#--------------------------------------------
+
+# 简洁 传统 的 prompt
+#PS1='\[\033[34m\]\t\[\033[1;31m\][\u@\h]\[\033[1;32m\]\w\[\033[m\]\$'
+#PS1='\[\033[1;31m\][ \u·\W ] > \[\033[m\]'
+
+# 换行 绝对路径
+#PS1='\[\033[1;32m\]\u @ \[\033[1;34m\]\w \[\033[1;33m\][ \d \t ] \n[ h:\! l:\# ]\[\033[1;31m\] $ \[\033[0;39m\]'
+#PS1='\[\033[1;32m\]\u @ \[\033[1;34m\]\w \[\033[1;33m\] \n\[\033[1;31m\] $ \[\033[0;39m\]'
+
+# 用户名 只在右上角
+#PS1="\[\e[1;31m\] \W \$ \[\e[s\]\[\e[1;\$((COLUMNS-5))f\]\[\e[1;32m\]\$(whoami)\[\e[u\]\[\e[0m\]"
+
+# }}}
 
 # 原生的 git 分支提示
 #PS1='[\u@\h`__git_ps1` \W]\$ '
@@ -77,6 +127,7 @@ function _git_prompt() {
 }
 function _prompt_command() {
     PS1="`_git_prompt`"'\[\e[1;34m\]\w \n \$\[\e[0m\] '
+    #PS1="`_git_prompt`"'${debian_chroot:+($debian_chroot)}\[\e[1;34m\]\w \n \$\[\e[0m\] '
 }
 PROMPT_COMMAND=_prompt_command
 
@@ -140,41 +191,11 @@ PROMPT_COMMAND=_prompt_command
 #
 ##}}}
 #
-# [ PS1 color style ]# {{{
-#--------------------------------------------
-
-# 简洁 传统 的 prompt
-#PS1='\[\033[34m\]\t\[\033[1;31m\][\u@\h]\[\033[1;32m\]\w\[\033[m\]\$'
-#PS1='\[\033[1;31m\][ \u·\W ] > \[\033[m\]'
-
-# 换行 绝对路径
-#PS1='\[\033[1;32m\]\u @ \[\033[1;34m\]\w \[\033[1;33m\][ \d \t ] \n[ h:\! l:\# ]\[\033[1;31m\] $ \[\033[0;39m\]'
-#PS1='\[\033[1;32m\]\u @ \[\033[1;34m\]\w \[\033[1;33m\] \n\[\033[1;31m\] $ \[\033[0;39m\]'
-
-# 用户名 只在右上角
-#PS1="\[\e[1;31m\] \W \$ \[\e[s\]\[\e[1;\$((COLUMNS-5))f\]\[\e[1;32m\]\$(whoami)\[\e[u\]\[\e[0m\]"
-
-# }}}
-
-# [ export 环境变量 ]# {{{
-#--------------------------------------------
-
-export PATH=$PATH:~/code/shell
-#export CDPATH='.:..:../..:~/links:~:~/projects:/var/www/virtual_hosts'
-export CDPATH='.:..:../..:~:~/text:~/public_html/'
-export MYSQL_PS1="[\\u@\\h \\d]"
-
-# go-office gtk2 set
-#export OOO_FORCE_DESKTOP=gnome
-#export OOO_FORCE_DESKTOP=gnome
 
 
 
 
-
-
-
-# }}}
+#}}}
 
 # [ bash set 变量设置 ]# {{{
 #--------------------------------------------
@@ -215,44 +236,25 @@ export LESS_TERMCAP_ue=$'\E[0m'       # end underline
 export LESS_TERMCAP_us=$'\E[1;32m'    # begin underline
 #}}}
 
-export TERM=xterm-256color
-
-# [ tmux 256 color 提示符 ]# {{{
+# [ screen / tmux 标题栏 ]# {{{
 #--------------------------------------------
+# terminal, bash和screen的配合
+# http://www.adam8157.info/blog/2010/05/terminal-bash-screen/
 
-# tmux 256 support
-#[[ $TERM == "screen" ]] && export -p TERM="screen-256color"
-#export -p TERM="screen-256color"
-
-# /etc/bash.bashrc 里面的 终端标题设置,注释之后即可使Fvwm里面的xterm 标题使用 xterm
-# 而非以下定义的( ascii 007 \a 代表报警响铃 )
-# if test "$TERM" = "xterm" -o \
-#         "$TERM" = "xterm-color" -o \
-#         "$TERM" = "xterm-256color" -o \
-# 
-#         "$TERM" = "rxvt" -o \
-#         "$TERM" = "rxvt-unicode" -o \
-#         "$TERM" = "xterm-xfree86"; then
-#     PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\007"'
-#     export PROMPT_COMMAND
-# fi
-
-##alias tmux='tmux -2 '  # 256 colors
-## xterm urxvt 256 color [tmux]
-#export TERM=xterm-256color
-#
-## xterm title 标题栏,PROMPT_COMMAND 会在 PS1 随执行，报警声，bell
+## 和默认 $PS1 可以实现 虚拟路径标题 + 应用程序标题栏 [?]
 #case $TERM in
 #    xterm*)
-#        PROMPT_COMMAND='echo -ne "\033]0;xterm -> ${PWD}\007"'
-#        export PROMPT_COMMAND
+#        #PROMPT_COMMAND='echo -ne "\033]0;xterm @ ${PWD}\007"'
+#        #export PROMPT_COMMAND
+#        #PS1="${PS1}"
 #        ;;
-#    #screen*)
-#    #   # 以下为 自定义 变量
-#    #   PATHTITLE='\[\ek\W\e\\\]'
-#    #   PROGRAMTITLE='\[\ek\e\\\]'
-#    #   PS1="${PROGRAMTITLE}${PATHTITLE}${PS1}"
-#    #   ;;
+#    screen*)
+#        # 路径标题
+#        PATHTITLE='\[\ek\W\e\\\]'
+#        # 程序标题
+#        PROGRAMTITLE='\[\ek\e\\\]'
+#        PS1="${PROGRAMTITLE}${PATHTITLE}${PS1}"
+#        ;;
 #    rxvt)
 #        PROMPT_COMMAND='echo -ne "\033]0;urxvt : ${PWD}\007"'
 #        export PROMPT_COMMAND
@@ -260,13 +262,6 @@ export TERM=xterm-256color
 #    *)
 #        ;;
 #esac
-
-
-
-
-
-
-
 
 # }}}
 
