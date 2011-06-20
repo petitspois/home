@@ -1,11 +1,12 @@
 
-# 多级目录回溯
-alias ~='cd ~'
+# [ cd .. 多级目录回溯 ]# {{{
+#--------------------------------------------
 alias ..="cd .."
 alias ..2="cd ../.."
 alias ..3="cd ../../.."
 alias ..4="cd ../../../.."
 alias ..5="cd ../../../../.."
+# }}}
 
 # [ cp / mv / rm / ln 覆盖提示 ]# {{{
 #--------------------------------------------
@@ -65,6 +66,7 @@ alias gbc='git checkout'
 
 alias gp='git push'
 alias gu='git pull'
+alias gpa="git push origin all:all"
 alias gpo="git push origin master"
 alias gp2="git push origin2 master"
 alias gp3="git push origin3 master"
@@ -95,7 +97,7 @@ alias xp='xprop | grep "WM_WINDOW_ROLE\|WM_CLASS" && echo "WM_CLASS(STRING) = \"
 alias openports='netstat -nape --inet'
 alias port='netstat -ntlp'      #opening ports
 
-## show directories size
+## XXX 只适用于 zsh show directories size
 #alias dud='du -s *(/)'
 
 # From : http://git.sysphere.org/dotfiles/tree/zshrc?h=public
