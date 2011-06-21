@@ -182,20 +182,22 @@ caption always "%{=b k}%{b y} %m-%d %c / %{k}%L=%-w%7>%{g}%n %t%{-}%+w%-014< %-0
 #bind o focus
 
 # 使 screen 在 xterm 里面可以使用滚动条和滚轮 scrollbar
+#termcapinfo xterm ti@:te@
 #terminfo xterm*|rxvt ti@:te@
-termcapinfo xterm ti@:te@
 
 # [ title ]
 #--------------------------------------------
 
 # 将所运行程序的名称作为screen的title的功能, 默认bash
 # "$" ==> 命令的第一个字符段
-shelltitle '$ | bash'
-#shelltitle '% | zsh'
+shelltitle '$ |bash'
+#shelltitle '% |zsh'
 
-## Set xterm's title
+# screen中动态设置标题
+# http://www.adam8157.info/blog/2011/04/screen-dynamic-titles/
 hardstatus off
-hardstatus string "screen(@%H): %t"
+# %H hostname 当在远程启动 screen 时才变得有效
+hardstatus string "Screen@%H: %t"
 ## 把 xterm 的 titlebar 当作 screen 的hardstatus
 termcapinfo xterm* 'hs:ts=\E]0;:fs=\007:ds=\E]0;\007'
 
@@ -212,9 +214,6 @@ termcapinfo xterm* 'hs:ts=\E]0;:fs=\007:ds=\E]0;\007'
 
 # 修复 rxvt-unicode 256 色 问题
 #terminfo rxvt-unicode 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
-
-
-
 
 # 为特定的命令指定 title
 #screen -t mutt mutt

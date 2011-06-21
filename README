@@ -29,6 +29,7 @@
 .mutt/mailcap       # 通用
 
 .ncmpcpp/config     # yuer 目录
+.rtorrent.rc        # peer / 下载 路径
 
 
 
@@ -69,7 +70,6 @@
 
 .pentadactylrc      # 搜索引擎 / source .me/penta.url
 
-.rtorrent.rc        # peer / 下载 路径
 .stalonetrayrc      # 位置 / 背景色 / 内嵌 fvwmbutton
 .toprc
 

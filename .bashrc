@@ -55,6 +55,8 @@ export MYSQL_PS1="[\\u@\\h \\d]"
 #PS1='\[\033[1;32m\]\u @ \[\033[1;34m\]\w \[\033[1;33m\][ \d \t ] \n[ h:\! l:\# ]\[\033[1;31m\] $ \[\033[0;39m\]'
 #PS1='\[\033[1;32m\]\u @ \[\033[1;34m\]\w \[\033[1;33m\] \n\[\033[1;31m\] $ \[\033[0;39m\]'
 
+#PS1='\[\e[1;34m\]\w \n \$\[\e[0m\] '
+
 # 用户名 只在右上角
 #PS1="\[\e[1;31m\] \W \$ \[\e[s\]\[\e[1;\$((COLUMNS-5))f\]\[\e[1;32m\]\$(whoami)\[\e[u\]\[\e[0m\]"
 
@@ -69,7 +71,7 @@ export MYSQL_PS1="[\\u@\\h \\d]"
 #
 ##showing git branches in bash prompt
 #function parse_git_branch {
-#  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+#  GIT BRANCH --NO-COLOR 2> /DEV/NULL | SED -E '/^[^*]/D' -E 'S/* \(.*\)/(\1)/'
 #}
 #
 #function proml {
@@ -98,13 +100,14 @@ export MYSQL_PS1="[\\u@\\h \\d]"
 #proml
 #
 ##}}}
-
+#
 # [ 色块 color 标记 git 状态 ]#{{{
 #--------------------------------------------
 # Colorful bash prompt reflecting Git status
 # From : http://opinionated-programmer.com/2011/01/colorful-bash-prompt-reflecting-git-status/
 
 function _git_prompt() {
+
     local git_status="`git status -unormal 2>&1`"
     if ! [[ "$git_status" =~ Not\ a\ git\ repo ]]; then
         if [[ "$git_status" =~ nothing\ to\ commit ]]; then
@@ -122,14 +125,23 @@ function _git_prompt() {
             branch="(`git describe --all --contains --abbrev=4 HEAD 2> /dev/null ||
                 echo HEAD`)"
         fi
-        echo -n '\[\e[0;37;'"$ansi"';1m\]'"$branch"'\[\e[0m\] '
+#        echo -n '\[\e[0;37;'"$ansi"';1m\]'"$branch"'\[\e[0m\] '
+        echo -n '\e[0;37;'"$ansi"';1m'"$branch"'\e[0m '
     fi
 }
-function _prompt_command() {
-    PS1="`_git_prompt`"'\[\e[1;34m\]\w \n \$\[\e[0m\] '
-    #PS1="`_git_prompt`"'${debian_chroot:+($debian_chroot)}\[\e[1;34m\]\w \n \$\[\e[0m\] '
-}
-PROMPT_COMMAND=_prompt_command
+
+#PS1="`_git_prompt`"'\[\e[1;34m\]\w \n \$\[\e[0m\] '
+
+    #PS1="`_git_prompt`"
+    PS1="`_git_prompt`"'\e[1;34m\w \n \$\e[0m '
+
+#function _prompt_command() {
+#    #PS1="`_git_prompt`"'\e[1;34m\w \n \$\e[0m '
+#    #PS1="`_git_prompt`"'\w \n \$ '
+#    PS1="`_git_prompt`"
+#    #PS1="`_git_prompt`"'${debian_chroot:+($debian_chroot)}\[\e[1;34m\]\w \n \$\[\e[0m\] '
+#}
+#PROMPT_COMMAND=_prompt_command
 
 #}}}
 
@@ -241,27 +253,27 @@ export LESS_TERMCAP_us=$'\E[1;32m'    # begin underline
 # terminal, bash和screen的配合
 # http://www.adam8157.info/blog/2010/05/terminal-bash-screen/
 
-## 和默认 $PS1 可以实现 虚拟路径标题 + 应用程序标题栏 [?]
-#case $TERM in
-#    xterm*)
-#        #PROMPT_COMMAND='echo -ne "\033]0;xterm @ ${PWD}\007"'
-#        #export PROMPT_COMMAND
-#        #PS1="${PS1}"
-#        ;;
-#    screen*)
-#        # 路径标题
-#        PATHTITLE='\[\ek\W\e\\\]'
-#        # 程序标题
-#        PROGRAMTITLE='\[\ek\e\\\]'
-#        PS1="${PROGRAMTITLE}${PATHTITLE}${PS1}"
-#        ;;
-#    rxvt)
-#        PROMPT_COMMAND='echo -ne "\033]0;urxvt : ${PWD}\007"'
-#        export PROMPT_COMMAND
-#        ;;
-#    *)
-#        ;;
-#esac
+## 和默认 $PS1 可以实现 虚拟路径标题 + 应用程序题栏 [?]
+case $TERM in
+    xterm*)
+        #PROMPT_COMMAND='echo -ne "\033]0;xterm @ ${PWD}\007"'
+        #export PROMPT_COMMAND
+        #PS1="${PS1}"
+        ;;
+    screen*)
+        # 路径标题
+        PATHTITLE='\[\ek\W\e\\\]'
+        # 程序标题
+        PROGRAMTITLE='\[\ek\e\\\]'
+        PS1="${PROGRAMTITLE}${PATHTITLE}${PS1}"
+        ;;
+    rxvt)
+        PROMPT_COMMAND='echo -ne "\033]0;urxvt : ${PWD}\007"'
+        export PROMPT_COMMAND
+        ;;
+    *)
+        ;;
+esac
 
 # }}}
 

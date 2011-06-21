@@ -10,6 +10,8 @@
 ! [ mycolor ]! {{{
 !-------------------------------------------
 
+*background                        : #1a1a1a
+*foreground                        : white
 !red
 *color1     :       #fe3f44
 !*color9     :       #f21616
