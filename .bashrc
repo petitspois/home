@@ -256,16 +256,56 @@ export LESS_TERMCAP_us=$'\E[1;32m'    # begin underline
 ## 和默认 $PS1 可以实现 虚拟路径标题 + 应用程序题栏 [?]
 case $TERM in
     xterm*)
+
         #PROMPT_COMMAND='echo -ne "\033]0;xterm @ ${PWD}\007"'
         #export PROMPT_COMMAND
         #PS1="${PS1}"
+
+        # GNU Screen auto title on gentoo
+        # http://www.devhands.com/2008/08/gnu-screen-auto-title-on-gentoo/
+        #PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\007"'
+
+        #PATHTITLE='\[\ek\W\e\\\]'
+        ## 程序标题
+        #PROGRAMTITLE='\[\ek\e\\\]'
+        #PS1="${PROGRAMTITLE}${PATHTITLE}${PS1}"
+
         ;;
     screen*)
+
+        #unset PROMPT_COMMAND
+        #PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\033\\"'
+        #PS1='\[\033k\033\\\]'$PS1
+
         # 路径标题
         PATHTITLE='\[\ek\W\e\\\]'
         # 程序标题
         PROGRAMTITLE='\[\ek\e\\\]'
         PS1="${PROGRAMTITLE}${PATHTITLE}${PS1}"
+
+        # 重定义 ssh 在 screen 标题栏显示为主机名，而非单调的 ssh
+        # GNU/screen and dynamic titles for SSH
+        # http://dischord.org/blog/2006/11/22/gnuscreen-and-dynamic-titles-for-ssh/
+        #function ssh() {
+        #echo -n -e "\033k$1\033\134″"
+        #/usr/bin/ssh $@
+        #echo -n -e "\033k`hostname -s`\033\134″"
+        #}
+
+        function ssh() {
+        echo -n -e "\033k@`echo $1|sed 's:.*@::'`\033\134″"
+        /usr/bin/ssh $@
+        # [?] 这句何时打印
+        #echo -n -e "\033k`hostname -s`\033\134″"
+        #echo -n -e "\033k`echo $@|sed 's:.*@::'`\033\134″"
+        }
+
+        #function telnet() {
+        #echo -n -e "\033k$1\033\134″"
+        #/usr/bin/telnet $@
+        #echo -n -e "\033k`hostname -s`\033\134″"
+        #}
+
         ;;
     rxvt)
         PROMPT_COMMAND='echo -ne "\033]0;urxvt : ${PWD}\007"'
@@ -325,9 +365,20 @@ export HISTCONTROL=erasedups
 
 # }}}
 
+# [ SSH AUTH SOCK 连接 ]#{{{
+#--------------------------------------------
+# SSH agent forwarding versus GNU screen
+# http://onetom.posterous.com/ssh-agent-forwarding-versus-gnu-screen
 
+# XXX 对 rsync / git / darcs 等使用 ssh 作为传输层的程序
+# 需要判断是否是 交互式 ssh ( interactive session )
 
+# 如果已经 建立链接文件 或是 rsync 链接调用 ssh 不会建立链接文件
+if [ "$SSH_TTY" -a "$SSH_AUTH_SOCK" != ~/.screen.sock ]; then
+    ln -sfn $SSH_AUTH_SOCK ~/.screen.sock
+    export SSH_AUTH_SOCK=~/.screen.sock
+fi
 
-
+#}}}
 
 
