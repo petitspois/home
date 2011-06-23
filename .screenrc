@@ -190,7 +190,8 @@ caption always "%{=b k}%{b y} %m-%d %c / %{k}%L=%-w%7>%{g}%n %t%{-}%+w%-014< %-0
 
 # 将所运行程序的名称作为screen的title的功能, 默认bash
 # "$" ==> 命令的第一个字符段
-shelltitle '$ |bash'
+#shelltitle '$ |bash'
+shelltitle '] |bash'
 #shelltitle '% |zsh'
 
 # screen中动态设置标题

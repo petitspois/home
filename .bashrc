@@ -65,6 +65,47 @@ export MYSQL_PS1="[\\u@\\h \\d]"
 # 原生的 git 分支提示
 #PS1='[\u@\h`__git_ps1` \W]\$ '
 
+# [ 色块 color 标记 git 状态 ]#{{{
+#--------------------------------------------
+# Colorful bash prompt reflecting Git status
+# From : http://opinionated-programmer.com/2011/01/colorful-bash-prompt-reflecting-git-status/
+
+function _git_prompt() {
+
+    local git_status="`git status -unormal 2>&1`"
+    if ! [[ "$git_status" =~ Not\ a\ git\ repo ]]; then
+        if [[ "$git_status" =~ nothing\ to\ commit ]]; then
+            local ansi=42
+        elif [[ "$git_status" =~ nothing\ added\ to\ commit\ but\ untracked\ files\ present ]]; then
+            local ansi=43
+        else
+            local ansi=45
+        fi
+        if [[ "$git_status" =~ On\ branch\ ([^[:space:]]+) ]]; then
+            branch=${BASH_REMATCH[1]}
+            test "$branch" != master || branch=' '
+        else
+            # Detached HEAD.  (branch=HEAD is a faster alternative.)
+            branch="(`git describe --all --contains --abbrev=4 HEAD 2> /dev/null ||
+                echo HEAD`)"
+        fi
+        echo -n '\[\e[0;37;'"$ansi"';1m\]'"$branch"'\[\e[0m\] '
+    fi
+}
+
+PS1="`_git_prompt`"'\[\e[1;34m\]\w \n \$\[\e[0m\] '
+#PS1="`_git_prompt`"'\w \n \$ '
+
+
+#function _prompt_command() {
+#    PS1="`_git_prompt`"'\w \n \$ '
+#    #PS1="`_git_prompt`"
+#    #PS1="`_git_prompt`"'${debian_chroot:+($debian_chroot)}\[\e[1;34m\]\w \n \$\[\e[0m\] '
+#}
+#PROMPT_COMMAND=_prompt_command
+
+#}}}
+
 ## [ bash git branch prompt ]#{{{
 ##--------------------------------------------
 ## http://nuts-and-bolts-of-cakephp.com/2010/11/27/show-git-branch-in-your-bash-prompt/
@@ -101,50 +142,6 @@ export MYSQL_PS1="[\\u@\\h \\d]"
 #
 ##}}}
 #
-# [ 色块 color 标记 git 状态 ]#{{{
-#--------------------------------------------
-# Colorful bash prompt reflecting Git status
-# From : http://opinionated-programmer.com/2011/01/colorful-bash-prompt-reflecting-git-status/
-
-function _git_prompt() {
-
-    local git_status="`git status -unormal 2>&1`"
-    if ! [[ "$git_status" =~ Not\ a\ git\ repo ]]; then
-        if [[ "$git_status" =~ nothing\ to\ commit ]]; then
-            local ansi=42
-        elif [[ "$git_status" =~ nothing\ added\ to\ commit\ but\ untracked\ files\ present ]]; then
-            local ansi=43
-        else
-            local ansi=45
-        fi
-        if [[ "$git_status" =~ On\ branch\ ([^[:space:]]+) ]]; then
-            branch=${BASH_REMATCH[1]}
-            test "$branch" != master || branch=' '
-        else
-            # Detached HEAD.  (branch=HEAD is a faster alternative.)
-            branch="(`git describe --all --contains --abbrev=4 HEAD 2> /dev/null ||
-                echo HEAD`)"
-        fi
-#        echo -n '\[\e[0;37;'"$ansi"';1m\]'"$branch"'\[\e[0m\] '
-        echo -n '\e[0;37;'"$ansi"';1m'"$branch"'\e[0m '
-    fi
-}
-
-#PS1="`_git_prompt`"'\[\e[1;34m\]\w \n \$\[\e[0m\] '
-
-    #PS1="`_git_prompt`"
-    PS1="`_git_prompt`"'\e[1;34m\w \n \$\e[0m '
-
-#function _prompt_command() {
-#    #PS1="`_git_prompt`"'\e[1;34m\w \n \$\e[0m '
-#    #PS1="`_git_prompt`"'\w \n \$ '
-#    PS1="`_git_prompt`"
-#    #PS1="`_git_prompt`"'${debian_chroot:+($debian_chroot)}\[\e[1;34m\]\w \n \$\[\e[0m\] '
-#}
-#PROMPT_COMMAND=_prompt_command
-
-#}}}
-
 ## [ bash git 箭头 / 雷电字符 ]#{{{
 ##--------------------------------------------
 ## From : https://gist.github.com/634750
@@ -215,8 +212,6 @@ function _git_prompt() {
 # bash 使用 vi 风格的行编辑
 #set -o vi
 
-## Bash下Vi输入模式重设 Ctrl-N, Ctrl-P, Ctrl-L等快捷
-## 默认是保存到 .inputrc 文件
 #set editing-mode vi
 #set show-all-if-ambiguous on
 #set completion-ignore-case on
@@ -225,14 +220,6 @@ function _git_prompt() {
 #set output-meta on
 #set bell-style visible
 
-# 使用 bind -p 列出相应操作所对应的按键
-#"\C-l": clear-screen
-#"\C-n": next-history
-#"\C-p": previous-history
-#"\C-a": beginning-of-line
-#"\C-e": end-of-line
-#"\C-f": forward-char
-#"\C-b": backward-char
 
 # }}}
 
@@ -247,75 +234,6 @@ export LESS_TERMCAP_so=$'\E[1;33;40m' # begin standout-mode - info box
 export LESS_TERMCAP_ue=$'\E[0m'       # end underline
 export LESS_TERMCAP_us=$'\E[1;32m'    # begin underline
 #}}}
-
-# [ screen / tmux 标题栏 ]# {{{
-#--------------------------------------------
-# terminal, bash和screen的配合
-# http://www.adam8157.info/blog/2010/05/terminal-bash-screen/
-
-## 和默认 $PS1 可以实现 虚拟路径标题 + 应用程序题栏 [?]
-case $TERM in
-    xterm*)
-
-        #PROMPT_COMMAND='echo -ne "\033]0;xterm @ ${PWD}\007"'
-        #export PROMPT_COMMAND
-        #PS1="${PS1}"
-
-        # GNU Screen auto title on gentoo
-        # http://www.devhands.com/2008/08/gnu-screen-auto-title-on-gentoo/
-        #PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\007"'
-
-        #PATHTITLE='\[\ek\W\e\\\]'
-        ## 程序标题
-        #PROGRAMTITLE='\[\ek\e\\\]'
-        #PS1="${PROGRAMTITLE}${PATHTITLE}${PS1}"
-
-        ;;
-    screen*)
-
-        #unset PROMPT_COMMAND
-        #PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\033\\"'
-        #PS1='\[\033k\033\\\]'$PS1
-
-        # 路径标题
-        PATHTITLE='\[\ek\W\e\\\]'
-        # 程序标题
-        PROGRAMTITLE='\[\ek\e\\\]'
-        PS1="${PROGRAMTITLE}${PATHTITLE}${PS1}"
-
-        # 重定义 ssh 在 screen 标题栏显示为主机名，而非单调的 ssh
-        # GNU/screen and dynamic titles for SSH
-        # http://dischord.org/blog/2006/11/22/gnuscreen-and-dynamic-titles-for-ssh/
-        #function ssh() {
-        #echo -n -e "\033k$1\033\134″"
-        #/usr/bin/ssh $@
-        #echo -n -e "\033k`hostname -s`\033\134″"
-        #}
-
-        function ssh() {
-        echo -n -e "\033k@`echo $1|sed 's:.*@::'`\033\134″"
-        /usr/bin/ssh $@
-        # [?] 这句何时打印
-        #echo -n -e "\033k`hostname -s`\033\134″"
-        #echo -n -e "\033k`echo $@|sed 's:.*@::'`\033\134″"
-        }
-
-        #function telnet() {
-        #echo -n -e "\033k$1\033\134″"
-        #/usr/bin/telnet $@
-        #echo -n -e "\033k`hostname -s`\033\134″"
-        #}
-
-        ;;
-    rxvt)
-        PROMPT_COMMAND='echo -ne "\033]0;urxvt : ${PWD}\007"'
-        export PROMPT_COMMAND
-        ;;
-    *)
-        ;;
-esac
-
-# }}}
 
 # [ history 历史记录 ]# {{{
 #--------------------------------------------
@@ -365,20 +283,147 @@ export HISTCONTROL=erasedups
 
 # }}}
 
-# [ SSH AUTH SOCK 连接 ]#{{{
+## [ SSH AUTH SOCK 连接 ]#{{{
+##--------------------------------------------
+## SSH agent forwarding versus GNU screen
+## http://onetom.posterous.com/ssh-agent-forwarding-versus-gnu-screen
+#
+## XXX 对 rsync / git / darcs 等使用 ssh 作为传输层的程序
+## 需要判断是否是 交互式 ssh ( interactive session )
+#
+## 如果已经 建立链接文件 或是 rsync 链接调用 ssh 不会建立链接文件
+#if [ "$SSH_TTY" -a "$SSH_AUTH_SOCK" != ~/.screen.sock ]; then
+#    ln -sfn $SSH_AUTH_SOCK ~/.screen.sock
+#    export SSH_AUTH_SOCK=~/.screen.sock
+#fi
+#
+##}}}
+#
+# [ screen / tmux 标题栏 ]# {{{
 #--------------------------------------------
-# SSH agent forwarding versus GNU screen
-# http://onetom.posterous.com/ssh-agent-forwarding-versus-gnu-screen
+# terminal, bash和screen的配合
+# http://www.adam8157.info/blog/2010/05/terminal-bash-screen/
 
-# XXX 对 rsync / git / darcs 等使用 ssh 作为传输层的程序
-# 需要判断是否是 交互式 ssh ( interactive session )
+## 和默认 $PS1 可以实现 虚拟路径标题 + 应用程序题栏 [?]
+case $TERM in
+    xterm*)
 
-# 如果已经 建立链接文件 或是 rsync 链接调用 ssh 不会建立链接文件
-if [ "$SSH_TTY" -a "$SSH_AUTH_SOCK" != ~/.screen.sock ]; then
-    ln -sfn $SSH_AUTH_SOCK ~/.screen.sock
-    export SSH_AUTH_SOCK=~/.screen.sock
-fi
+        #PROMPT_COMMAND='echo -ne "\033]0;xterm @ ${PWD}\007"'
+        #export PROMPT_COMMAND
+        #PS1="${PS1}"
 
-#}}}
+        # GNU Screen auto title on gentoo
+        # http://www.devhands.com/2008/08/gnu-screen-auto-title-on-gentoo/
+        #PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\007"'
+
+        #PATHTITLE='\[\ek\W\e\\\]'
+        ## 程序标题
+        #PROGRAMTITLE='\[\ek\e\\\]'
+        #PS1="${PROGRAMTITLE}${PATHTITLE}${PS1}"
+
+        ;;
+    screen*)
+
+        #unset PROMPT_COMMAND
+        #PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\033\\"'
+        #PS1='\[\033k\033\\\]'$PS1
+
+        # 路径标题
+        PATHTITLE='\[\ek\W\e\\\]'
+        # 程序标题
+        PROGRAMTITLE='\[\ek\e\\\]'
+        PS1="${PROGRAMTITLE}${PATHTITLE}${PS1}"
+
+        # 重定义 ssh 在 screen 标题栏显示为主机名，而非单调的 ssh
+        # GNU/screen and dynamic titles for SSH
+        # http://dischord.org/blog/2006/11/22/gnuscreen-and-dynamic-titles-for-ssh/
+        #function ssh() {
+        #echo -n -e "\033k$1\033\134″"
+        #/usr/bin/ssh $@
+        #echo -n -e "\033k`hostname -s`\033\134″"
+        #}
+
+        function ssh() {
+        # XXX 未知 \134
+        echo -n -e "\033k@`echo $1|sed 's:.*@::'`\033\134″"
+        /usr/bin/ssh $@
+        # [?] 这句何时打印
+        #echo -n -e "\033k`hostname -s`\033\134″"
+        #echo -n -e "\033k`echo $@|sed 's:.*@::'`\033\134″"
+        }
+
+        #function telnet() {
+        #echo -n -e "\033k$1\033\134″"
+        #/usr/bin/telnet $@
+        #echo -n -e "\033k`hostname -s`\033\134″"
+        #}
+
+        ;;
+    rxvt)
+        PROMPT_COMMAND='echo -ne "\033]0;urxvt : ${PWD}\007"'
+        export PROMPT_COMMAND
+        ;;
+    *)
+        ;;
+esac
+
+# }}}
+
+## [ RED HAT /etc/bashrc ]#{{{
+##--------------------------------------------
+#
+#if [ "$PS1" ]; then
+#    case $TERM in
+#        xterm*) 
+#                if [ -e /etc/sysconfig/bash-prompt-xterm ]; then
+#                        PROMPT_COMMAND=/etc/sysconfig/bash-prompt-xterm
+#                else
+#                PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}"; echo -ne "\007"'
+#                fi
+#                ;;
+#        screen) 
+#                if [ -e /etc/sysconfig/bash-prompt-screen ]; then
+#                        PROMPT_COMMAND=/etc/sysconfig/bash-prompt-screen
+#                else
+#                PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}"; echo -ne "\033\\"'
+#                fi
+#                ;;
+#        *)  
+#                [ -e /etc/sysconfig/bash-prompt-default ] && PROMPT_COMMAND=/etc/sysconfig/bash-prompt-default
+#            ;;  
+#    esac
+#    # Turn on checkwinsize
+#    shopt -s checkwinsize
+#    [ "$PS1" = "\\s-\\v\\\$ " ] && PS1="[\u@\h \W]\\$ "
+#fi  
+#
+##}}}
+#
+## [ vim wiki ]#{{{
+##--------------------------------------------
+## http://vim.wikia.com/wiki/Automatically_set_screen_title
+## 可以 PROMPT_COMMAND 没有被覆盖，可以实现动态修改标题栏
+## 但是会在 $PS1 前输出 134 ，\134 表示意义未知
+#
+#case $TERM in
+#    xterm*|rxvt*)
+#        PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}[`basename ${PWD}`]\007"'
+#        ;;
+#    screen*)
+#        PROMPT_COMMAND='echo -ne "\033k\033\134\033k[`basename ${PWD}`]\033\134"'
+#        ;;
+#    *)
+#        ;;
+#esac
+#
+##}}}
+#
+
+
+
+
+
+
+
 
 
