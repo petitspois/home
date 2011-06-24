@@ -98,7 +98,7 @@ set imap_user=if_else
 set imap_user=volcanowill@gmail.com
 
 set ssl_force_tls=yes
-set certificate_file=~/.me/mutt.certificates
+set certificate_file=~/.mutt/certificates
 
 set ssl_ca_certificates_file = '/etc/ssl/certs/ca-certificates.crt'
 

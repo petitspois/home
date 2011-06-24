@@ -14,15 +14,15 @@
 #--------------------------------------------
 
 # 可以在后面过滤路径中，使用 $MAILDIR 引用路径
-MAILDIR = "$HOME/mail"
+MAILDIR = "$HOME/.mail"
 
 # 没有匹配过滤规则的，邮件保存位置，XXX 注意路径后面的斜扛
 # XXX 若使用 maildir 邮件格式，要遵循其规定的目录结构
 # inbox 目录下要有 cur / tmp / new 3个子目录
 #DEFAULT="$MAILDIR/inbox"
-DEFAULT = "$HOME/mail/inbox"
+DEFAULT = "$HOME/.mail/inbox"
 
-logfile "$HOME/mail/log/maildroplog"
+logfile "$HOME/.mail/log/maildroplog"
 
 
 # }}}

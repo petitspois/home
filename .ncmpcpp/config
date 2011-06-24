@@ -3,6 +3,8 @@
 ## ~/.ncmpcpp/config 用户个人配置文件位置         ##
 ####################################################
 
+#mpd_music_dir = "~/yuer/"
+
 # [ Setting ]# {{{
 #--------------------------------------------
 
@@ -14,7 +16,7 @@ mpd_host = "localhost"
 
 mpd_port = "6600"
 
-mpd_music_dir = "~/yuer/"
+#mpd_music_dir = "~/yuer/"
 
 #mpd_connection_timeout = "5"
 #

@@ -15,6 +15,9 @@
 #--------------------------------------------
 
 .bitlbee.conf       # 用户名 / 配置文件路径 [权限]
+# arch.old
+    # user = king
+    # ConfigDir = /home/king/.bitlbee
 
 .config/openbox/autostart.sh    # wall / tint2 / conky 配置
 .config/openbox/rc.xml          # menu.xml 路径 (使用 $HOME 可否 [?])
@@ -22,15 +25,59 @@
 
 .gtk-bookmarks      # mnt tmp pic | book yuer text bt.peers
 
-.mpdconf            # log / pid / playlist
+    file:///home/download/m/bt.peers
+    file:///home/king/me/pic
+    file:///home/king/me/book
+    file:///home/king/me/yuer
 
-.mailfilter         # mail 目录
+    file:///home/ink/movie/bt.peers
+    file:///home/ink/pic
+    file:///home/ink/book
+    file:///home/ink/yuer
+
+    file:///home/fun/m/bt.peers
+    file:///home/ink/pic
+    file:///home/ink/book
+    file:///home/ink/yuer
+
+.mpdconf            # log / pid / playlist XXX oss / alsa 声卡驱动
+# arch.old
+    #user                "king"
+    #music_directory     "~/me/yuer"
+    #playlist_directory  "~/me/yuer/playlist/"
+    #db_file             "~/me/yuer/mpd/mpd.db"
+    #pid_file            "~/me/yuer/mpd/mpd.pid"
+    #state_file          "~/me/yuer/mpd/mpdstate"
+    #log_file            "~/me/yuer/mpd/mpd.log"
+
+.mailfilter         # mail 目录 
+# 统一
+# $HOME/.mail
+
 .mutt/muttrc        # .mail 目录/ 证书 / 密码
-.mutt/mailcap       # 通用
+# 证书统一
+# set certificate_file=~/.mutt/certificates
 
 .ncmpcpp/config     # yuer 目录
-.rtorrent.rc        # peer / 下载 路径
+# arch.old
+# mpd_music_dir = "~/me/yuer/"
+# mpd_music_dir = "~/yuer/"
 
+
+.rtorrent.rc        # peer / 下载 路径
+# arch.old
+
+    directory =/home/download/m
+    session = /home/download/bt.tmp
+    schedule = watch_directory,5,5,load_start=/home/download/m/bt.peers/*.torrent
+
+    directory =/home/ink/movie
+    session = /home/ink/movie/bt.tmp
+    schedule = watch_directory,5,5,load_start=/home/ink/movie/bt.peers/*.torrent
+
+    directory =/home/fun/m
+    session = /home/fun/m/bt.tmp
+    schedule = watch_directory,5,5,load_start=/home/fun/m/bt.peers/*.torrent
 
 
 
@@ -43,7 +90,10 @@
 .aria2/aria2.conf
 .config/fcitx/config
 .fonts.conf
+.lftprc             # ==> .lft/rc
 .musca_start        # XXX 不是最新
+.mutt/mailcap       # 通用
+.mplayer/config
 
 .todo/config-conky
 .todo/todo.cfg
@@ -64,8 +114,6 @@
 .fvwm/config        # feh ...
 .fvwm/fvwm.dock
 
-.gtkrc-2.0          # gtk / icon / curor / font / 特殊变量
-.lftprc             # ==> .lft/rc
 .my.cnf             # mysql 版本
 
 .pentadactylrc      # 搜索引擎 / source .me/penta.url
@@ -81,15 +129,33 @@
 
 # }}}
 
-# [ 删除 ]
+# [ 删除 ]# {{{
 #--------------------------------------------
 .purple/prefs.xml
+
+.gtkrc-2.0          # XXX gtk / icon / curor / font / 特殊变量
+    gtk-theme-name="mymurrina"
+    gtk-icon-theme-name="myicon"
+    gtk-font-name="Sans 10"
+    gtk-cursor-theme-name="ATER-yellow"
+    gtk-cursor-theme-size=0
+    gtk-toolbar-style=GTK_TOOLBAR_ICONS
+    gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
+    gtk-button-images=1
+    gtk-menu-images=1
+    gtk-enable-event-sounds=1
+    gtk-enable-input-feedback-sounds=1
+    include "/home/king/.gtkrc-2.0.mine"
+
+
+
+
+# }}}
 
 # [ to.do ]
 #--------------------------------------------
 
 getmail / msmtp 专属目录
-mplayer
 
 
 
