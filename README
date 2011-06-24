@@ -50,6 +50,9 @@
     #state_file          "~/me/yuer/mpd/mpdstate"
     #log_file            "~/me/yuer/mpd/mpd.log"
 
+.mplayer/config     # XXX 显卡支持 解码格式 / 声音驱动 oss | alsa
+
+
 .mailfilter         # mail 目录 
 # 统一
 # $HOME/.mail
@@ -93,7 +96,6 @@
 .lftprc             # ==> .lft/rc
 .musca_start        # XXX 不是最新
 .mutt/mailcap       # 通用
-.mplayer/config
 
 .todo/config-conky
 .todo/todo.cfg
