@@ -918,35 +918,6 @@ export LESS_TERMCAP_us=$'\E[1;32m'    # begin underline
 
 # }}}
 
-# [ todo.sh ]# {{{
-#--------------------------------------------
-
-# From : https://github.com/ginatrapani/todo.txt-cli/wiki/Tips-and-Tricks
-function t() { 
-  if [ $# -eq 0 ]; then
-    todo.sh -d $HOME/.todo/todo.cfg ls
-    #todo.sh -d /home/ink/todo/todo.cfg ls
-  else
-    todo.sh -d $HOME/.todo/todo.cfg $* 
-    #todo.sh -d /home/ink/todo/todo.cfg $* 
-  fi
-}
-
-# From : https://github.com/roylez/dotfiles/blob/master/.zshrc.stalker
-#alias t='todo.sh'
-alias ts='todo.sh show'
-alias ta='t a'
-alias tp='t p'
-alias td='t do'
-alias tw='t wait'
-alias tc='t continue'
-# [?]
-#compdef t=todo.sh
-
-
-
-# }}}
-
 # [ XXX ] #--------------------------------------------
 
 # [ 杂项  ] #{{{

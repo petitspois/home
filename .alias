@@ -232,6 +232,35 @@ alias p2ms="python2 manage.py syncdb"
 
 # }}}
 
+# [ todo.sh ]# {{{
+#--------------------------------------------
+
+# From : https://github.com/ginatrapani/todo.txt-cli/wiki/Tips-and-Tricks
+function t() { 
+  if [ $# -eq 0 ]; then
+    todo.sh -d $HOME/.todo/todo.cfg ls
+    #todo.sh -d /home/ink/todo/todo.cfg ls
+  else
+    todo.sh -d $HOME/.todo/todo.cfg $* 
+    #todo.sh -d /home/ink/todo/todo.cfg $* 
+  fi
+}
+
+# From : https://github.com/roylez/dotfiles/blob/master/.zshrc.stalker
+#alias t='todo.sh'
+alias ts='todo.sh show'
+alias ta='t a'
+alias tp='t p'
+alias td='t do'
+alias tw='t wait'
+alias tc='t continue'
+# [?]
+#compdef t=todo.sh
+
+
+
+# }}}
+
 # [ archlinux pacman ]# {{{
 #--------------------------------------------
 
@@ -300,6 +329,13 @@ alias top10='print -l  ${(o)history%% *} | uniq -c | sort -nr | head -n 10'
 ## 依赖于 libnotify-bin 软件包
 #alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
+
+# [ fedora ]
+#--------------------------------------------
+
+
+alias vx="vimx"
+alias vim="vimx"
 
 
 

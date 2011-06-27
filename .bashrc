@@ -9,9 +9,8 @@ fi
 # [ export 环境变量 ]# {{{
 #--------------------------------------------
 
-export PATH=$PATH:~/code/shell
-#export CDPATH='.:..:../..:~/links:~:~/projects:/var/www/virtual_hosts'
-export CDPATH='.:..:../..:~:~/text:~/public_html/'
+export PATH=$PATH:${HOME}/code/shell:${HOME}/.todo
+export CDPATH='.:..:../..:~:~/text:~/code:~/pic:~/yuer:~/public_html/'
 export MYSQL_PS1="[\\u@\\h \\d]"
 
 # go-office gtk2 set

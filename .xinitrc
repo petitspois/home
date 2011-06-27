@@ -74,7 +74,7 @@ xmodmap ~/.xmodmap
 #DEFAULTSESSION=compiz
 #DEFAULTSESSION=fvwm2
 DEFAULTSESSION=musca
-=======
+
 # [ Window Manager 窗口管理器 ]# {{{
 #--------------------------------------------
 #openbox-session

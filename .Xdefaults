@@ -291,7 +291,7 @@ XTerm*geometry                          : 115x34
 XTerm*background                        : #1a1a1a
 XTerm*foreground                        : white
 XTerm*cursorColor                       : LightSteelBlue1
-!XTerm*scrollBar                         : True
+XTerm*scrollBar                         : False
 !XTerm*scrollBar*thickness               : 4
 !XTerm*scrollBar*background              : #1a1a1a
 !XTerm*scrollBar*foreground              : #7BA2D2
@@ -311,7 +311,6 @@ XTerm*backarrowKey: false
 XTerm*deleteIsDEL:  false
 XTerm*dynamicColors:    true
 XTerm*oldXtermFKeys:    true
-XTerm*rightScrollBar:   true
 XTerm*underLine:    true
 
 XTerm*visualBell:    false
