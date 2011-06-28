@@ -1,3 +1,6 @@
+# 配置文件参数介绍
+# /usr/share/fcitx/data/config.desc
+
 [Program]
 # Font
 Font=
@@ -34,7 +37,7 @@ SendTextWhenSwitchEng=False
 # Candidate Word Number
 CandidateWordNumber=5
 # 主窗口，自动隐藏 默认 : Auto
-MainWindowHideMode=True
+MainWindowHideMode=Hide
 # Show Input Window In the center of screen
 CenterInputWindow=False
 # Show Input Window After Trigger Input Mode
@@ -67,8 +70,8 @@ HideMainWindowKey=CTRL_ALT_H
 VKSwitchKey=CTRL_ALT_K
 # 繁体字
 TraditionalChnSwitchKey=CTRL_ALT_F
-# 联想模式
-LegendSwitchKey=CTRL_L
+# 联想模式，快捷键与 screen 前缀(Ctrl-L)冲突
+LegendSwitchKey=CTRL_ALT_L
 # Hotkey of Looking up the Corresponding pinyin of Word.
 LookupPinyinKey=CTRL_ALT_E
 # 全角

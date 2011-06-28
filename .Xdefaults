@@ -256,8 +256,8 @@ XTerm*utf8Title:    true
 XTerm*xftAntialias: true
 Xterm.cjkWidth:     true
 
-XTerm*faceName                          : Envy Code R:pixelsize=13
-XTerm*faceNameDoublesize                : WenQuanYi Micro Hei Mono:pixelsize=13
+XTerm*faceName                          : Envy Code R:pixelsize=12.5
+XTerm*faceNameDoublesize                : WenQuanYi Micro Hei Mono:pixelsize=12.5
 
 ! 等价于 xterm -fa 'Envy Code R' -fs 10
 ! XXX Fedora / Debian 下不能生效
@@ -288,9 +288,10 @@ XTerm*internalBorder                    : 3
 ! 1650X1050 刚好可以并排两个窗口
 !XTerm*geometry                          : 119x34
 XTerm*geometry                          : 115x34
-XTerm*background                        : #1a1a1a
-XTerm*foreground                        : white
+!XTerm*background                        : #1a1a1a
+!XTerm*foreground                        : white
 XTerm*cursorColor                       : LightSteelBlue1
+
 XTerm*scrollBar                         : False
 !XTerm*scrollBar*thickness               : 4
 !XTerm*scrollBar*background              : #1a1a1a
@@ -321,7 +322,10 @@ XTerm*visualBell:    false
 ! irssi alt 数字键 为上标数字，而非切换窗口
 XTerm*altSendsEscape:   true
 XTerm*eightBitInput:    false
-
+! 启用 Meta(Alt) 发送 Escape 选项
+! 修正 xterm 下，irssi / alt + . 补全
+! https://wiki.archlinux.org/index.php/Xterm
+xterm*metaSendsEscape: true
 
 !*}}}
 

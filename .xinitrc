@@ -79,8 +79,6 @@ DEFAULTSESSION=musca
 #--------------------------------------------
 #openbox-session
 
-DEFAULTSESSION=fvwm
-
 case $1 in
 fvwm*)
 #	exec fvwm2

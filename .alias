@@ -335,7 +335,7 @@ alias top10='print -l  ${(o)history%% *} | uniq -c | sort -nr | head -n 10'
 
 
 alias vx="vimx"
-alias vim="vimx"
+#alias vim="vimx"
 
 
 
