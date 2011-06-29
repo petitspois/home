@@ -264,8 +264,6 @@ XTerm*faceNameDoublesize                : WenQuanYi Micro Hei Mono:pixelsize=12.
 !XTerm*faceName                          : Envy Code R-10
 !XTerm*faceNameDoublesize                : WenQuanYi Micro Hei-10
 
-XTerm*ttyModes:     erase   ^?
-
 ! man keyword  gin-press(l/L/m/M/r/R)
 ! Scrolling on wheel mouse: half a page normally, line per line with shift
 XTerm*VT100.Translations:#override          \
@@ -310,11 +308,27 @@ XTerm*backarrowKey: false
 !XTerm*borderLess:   false
 !XTerm*cursorBlink:  true
 XTerm*deleteIsDEL:  false
+! 转义字符高亮
 XTerm*dynamicColors:    true
 XTerm*oldXtermFKeys:    true
 XTerm*underLine:    true
 
 XTerm*visualBell:    false
+
+! [ Emacs ] {{{
+!-------------------------------------------
+
+!Emacs.geometry: 100x35+0+0
+
+! emacs 中 ^H 不能当作删除字符,用作帮助快捷键
+!XTerm*backarrowKey: false
+! 使用 ^? 在 emacs 删除字符
+!XTerm*ttyModes: erase   ^?
+
+!*}}}
+
+
+
 
 ! [ Alt / Ctrl 快捷键可用 ]
 !--------------------------------------------
@@ -329,7 +343,7 @@ xterm*metaSendsEscape: true
 
 !*}}}
 
-! [ urxvt ]# {{{
+! [ urxvt ] {{{
 !--------------------------------------------
 
 !URxvt*font: -misc-fixed-medium-r-normal-*-18-120-100-100-c-90-iso10646-1, \
@@ -368,9 +382,12 @@ URxvt.matcher.button                    : 1
 
 ! }}}
 
-! [ Emacs ]
-!-------------------------------------------
-!Emacs.geometry: 100x35+0+0
+
+
+
+
+
+
 
 
 

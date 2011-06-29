@@ -62,7 +62,10 @@ xcompmgr -l -5 -t -5 -r 5 -o 0.60 -c &
 feh --bg-scale ~/pic/wall/glass.jpg
 
 # 关闭X下响铃
-#xset b off
+xset b off
+
+# 加载 dmenu 使用 X11 核心字体路径
+xset +fp /usr/share/fonts/myfont/pix.square
 
 # 键盘 键位 置换
 xmodmap ~/.xmodmap
@@ -109,6 +112,5 @@ awesome)
 esac
 
 # }}}
-
 
 
