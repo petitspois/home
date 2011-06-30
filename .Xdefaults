@@ -272,6 +272,9 @@ XTerm*VT100.Translations:#override          \
     Meta<Key>K: scroll-back(1,halfpage)     \n\
     Meta<Key>J: scroll-forw(1,halfpage)
 
+! 不启用改选项，vim 中 退格删除会变成 ^?
+XTerm*ttyModes: erase   ^?
+
 ! [ Style 样式 ]
 !--------------------------------------------
 
@@ -296,7 +299,7 @@ XTerm*scrollBar                         : False
 !XTerm*scrollBar*foreground              : #7BA2D2
 !xterm*rightScrollBar                    : True
 
-XTerm*scrollKey:    true
+XTerm*scrollKey                          :    true
 XTerm*scrollTtyOutput:  false
 !XTerm*scrollTtyKeypress:true
 XTerm*loginShell:   true
@@ -322,8 +325,6 @@ XTerm*visualBell:    false
 
 ! emacs 中 ^H 不能当作删除字符,用作帮助快捷键
 !XTerm*backarrowKey: false
-! 使用 ^? 在 emacs 删除字符
-!XTerm*ttyModes: erase   ^?
 
 !*}}}
 

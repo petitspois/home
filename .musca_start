@@ -1,6 +1,9 @@
 # vim:set et ft=conf fdm=marker sw=4 sts=4 ts=4 nopaste :
 
-# unset all default Musca keybindings.
+# [ 默认 / Arch Wiki ]# {{{
+#--------------------------------------------
+
+# unset all default Musca keybindings
 # 关闭所有 musca 默认快捷键绑定
 #bind off all
 
@@ -63,50 +66,83 @@
 #bind on Mod4+Shift+8 move 8
 #bind on Mod4+Shift+9 move 9
 
+# }}}
 
-# dmenu 设置
-set dmenu dmenu -b -i -nb grey20 -nf '#a1b5cd' -fn '-*-dina-medium-r-normal-*-*-*-*-*-*-*-*-*'
-#set dmenu dmenu -b -i -nb '#0A0A0A' -nf '#A0A0A0' -fn 'helvetica 9' -sb '#285577' -sf '#FFFFFF'
+# [ setting ]# {{{
+#--------------------------------------------
 
+# 告诉 musca 不要管理 conky 和 stalonetray 窗口
+#manage off conky
+#manage off tint2
+#manage off trayer
+#manage off stalonetray
 
-# 告诉musca不要管理conky和trayer的窗口
-  manage off stalonetray
-  manage off Conky 
-
-  set window_open_frame empty
-  set window_open_focus 0
-  set group_close_empty 1 
-
-#  exec stalonetray
-#  exec xbindkeys
-  exec conky 
-
-#  vsplit 40%
-#  hsplit 20%
-
-#exec trayer --edge top --align right --widthtype request --height 20 --SetDockType true --transparent true --alpha 255 --tint 0x00ff00
-
-# 设定聚焦帧的边框颜色为橘黄，我喜欢的颜色
+# 设定聚焦帧的边框颜色为橘黄
 set border_focus Orange
-# 如果有空帧，则新启动的程序会自动在空帧中打开，这点很方便
+
+# 如果是 current，新窗口在聚焦帧打开，如果是empty，试图找一个空帧打开新窗口
 set window_open_frame empty
-# 不需要单击，鼠标经过的时候窗口就聚焦
+
+# 无需要单击，鼠标经过聚焦窗口
 set focus_follow_mouse 1
-# 设置dmenu的启动命令，我用的是自己编译的支持xft的dmenu
-#set dmenu /usr/local/bin/dmenu -i -b -fa Sans-12 -p $
 
-# 因为我没有xterm，所以重新绑定Mod4+t启动系统的默认终端
-#bind off Mod4+t
-#bind on Mod4+t exec x-terminal-emulator
+# 当一个空组失去焦点，1:改组自动关闭；0：依然保持
+set group_close_empty 0
 
-# 按Mod4+q退出musca，不知道为什么不管用
-bind on Mod4+q quit
+# 屏幕最下方预留 20像素给 conky 和 trayer
+pad 0 0 0 25
+hook on ^add pad 0 0 0 25
 
-# 按Mod1(我这里是Alt) + 方向键移动选定的窗口
-bind on Mod1+Left slide left
-bind on Mod1+Right slide right
-bind on Mod1+Up slide up
-bind on Mod1+Down slide down
+#set border_focus #1994d1
+#set border_width 2
+
+#hook on ^add pad 0 0 20 20
+
+#vsplit 40%
+#hsplit 20%
+
+
+
+# }}}
+
+# [ apps ]# {{{
+#--------------------------------------------
+
+# dmenu 设置 / Mod4 + x 执行 Run
+#set dmenu dmenu -b -i -nb '#0A0A0A' -nf '#A0A0A0' -fn '' -sb '#285577' -sf '#FFFFFF'
+set dmenu dmenu -b -i -nb grey20 -nf '#a1b5cd' -fn "-*-snap-*-*-*-*-*-*-*-*-*-*-*-*"
+
+#exec stalonetray
+#exec xbindkeys
+#exec conky
+exec feh –bg-scale ~/pic/wall/fedora.15.png
+
+#exec trayer --edge top --align right \
+#--widthtype request --height 20 --SetDockType true \
+#--transparent true --alpha 255 --tint 0x00ff00
+
+
+
+
+# }}}
+
+# [ key ]# {{{
+#--------------------------------------------
+
+# 按 Mod4+q 退出 musca
+#bind on Mod4+q quit
+
+# Alt + j/k/h/l 聚焦窗口
+bind on Mod1+j focus down
+bind on Mod1+k focus up
+bind on Mod1+h focus left
+bind on Mod1+l focus right
+
+# 按 Mod1(Alt) + 方向键 XXX "移动" 选定的窗口
+bind on Mod1+Left   slide left
+bind on Mod1+Right  slide right
+bind on Mod1+Up     slide up
+bind on Mod1+Down   slide down
 
 # 按Mod4 + 数字键快速地切换工作组
 bind on Mod4+1 use 0
@@ -115,150 +151,105 @@ bind on Mod4+3 use 2
 bind on Mod4+4 use 3
 bind on Mod4+5 use 4
 
-# 确定每个工作组的活跃范围，屏幕上留出20像素给conky和trayer
-pad 0 0 0 25
-hook on ^add pad 0 0 0 25
-# 添加一个叫web的工作组，并加载我导出的窗口布局，上网用
-add web
-load .mweb
-# 切换到原来第一个工作组
-use 0
-load .mdefault
+#bind off all
+#bind on Mod4+i hsplit 1/2
+#bind on Mod4+o vsplit 1/2
+#bind on Mod4+x remove
+#bind on Mod4+f only
+#bind on Mod1+F4 kill
+#bind on Mod1+k cycle next
+#bind on Mod1+j cycle prev
+#bind on Mod4+w switch window
+#bind on Mod4+g switch group
+#bind on Mod4+r shell
+#bind on Mod4+c command
+#bind on Mod4+a dedicate flip
+#bind on Mod4+s catchall flip
+#bind on Mod4+u undo
+#bind on Mod4+space stack flip
+#bind on Mod4+h focus left
+#bind on Mod4+l focus right
+#bind on Mod4+k focus up
+#bind on Mod4+j focus down
+#bind on Mod4+n use (next)
+#bind on Mod4+p use (prev)
+#bind on Mod4+Tab screen (next)
+#bind on Mod4+Control+h resize left
+#bind on Mod4+Control+l resize right
+#bind on Mod4+Control+k resize up
+#bind on Mod4+Control+j resize down
+#bind on Mod4+Shift+h swap left
+#bind on Mod4+Shift+l swap right
+#bind on Mod4+Shift+k swap up
+#bind on Mod4+Shift+j swap down
+#bind on Mod4+1 use 0
+#bind on Mod4+2 use 1
+#bind on Mod4+Shift+1 move 0
+#bind on Mod4+Shift+2 move 1
 
-    manage off tint2
-    manage off conky
-    exec conky
-    exec tint2
-    exec feh –bg-scale ~/files/bg.jpg
-
-    set border_focus Orange
-    set window_open_frame empty
-    set focus_follow_mouse 1
-
-    bind off Mod4+t
-    bind on Mod4+t exec urxvt
-
-    bind on Mod4+q quit
-
-    bind on Mod1+j focus down
-    bind on Mod1+k focus up
-    bind on Mod1+h focus left
-    bind on Mod1+l focus right
-
-    bind on Mod4+1 use 0
-    bind on Mod4+2 use 1
-    bind on Mod4+3 use 2
-    bind on Mod4+4 use 3
-    bind on Mod4+5 use 4
-
-  set window_open_frame empty
-  set window_open_focus 0
-  set group_close_empty 1 
-
-#  exec stalonetray
-#  exec xbindkeys
-  exec conky 
-
-#  vsplit 40%
-#  hsplit 20%
-
-
-# 设定聚焦帧的边框颜色为橘黄，我喜欢的颜色
-set border_focus Orange
-# 如果有空帧，则新启动的程序会自动在空帧中打开，这点很方便
-set window_open_frame empty
-# 不需要单击，鼠标经过的时候窗口就聚焦
-set focus_follow_mouse 1
-# 设置dmenu的启动命令，我用的是自己编译的支持xft的dmenu
-#set dmenu /usr/local/bin/dmenu -i -b -fa Sans-12 -p $
-
-# 因为我没有xterm，所以重新绑定Mod4+t启动系统的默认终端
+# 没有xterm，所以重新绑定 Mod4+t 启动系统默认终端
 #bind off Mod4+t
 #bind on Mod4+t exec x-terminal-emulator
 
-# 按Mod4+q退出musca，不知道为什么不管用
-bind on Mod4+q quit
 
-# 按Mod1(我这里是Alt) + 方向键移动选定的窗口
-bind on Mod1+Left slide left
-bind on Mod1+Right slide right
-bind on Mod1+Up slide up
-bind on Mod1+Down slide down
+# }}}
 
-# 按Mod4 + 数字键快速地切换工作组
-bind on Mod4+1 use 0
-bind on Mod4+2 use 1
-bind on Mod4+3 use 2
-bind on Mod4+4 use 3
-bind on Mod4+5 use 4
+# [ layout ]# {{{
+#--------------------------------------------
 
-# 确定每个工作组的活跃范围，屏幕上留出20像素给conky和trayer
-pad 0 0 0 25
-hook on ^add pad 0 0 0 25
-# 添加一个叫web的工作组，并加载我导出的窗口布局，上网用
+# 添加名为 web 的工作组，并加载导出的窗口布局
 add web
 load .mweb
+
 # 切换到原来第一个工作组
 use 0
 load .mdefault
 
+#name main
+#pad 0 0 20 20
 
-bind off all
-bind on Mod4+i hsplit 1/2
-bind on Mod4+o vsplit 1/2
-bind on Mod4+x remove
-bind on Mod4+f only
-bind on Mod1+F4 kill
-bind on Mod1+k cycle next
-bind on Mod1+j cycle prev
-bind on Mod4+w switch window
-bind on Mod4+g switch group
-bind on Mod4+r shell
-bind on Mod4+c command
-bind on Mod4+a dedicate flip
-bind on Mod4+s catchall flip
-bind on Mod4+u undo
-bind on Mod4+space stack flip
-bind on Mod4+h focus left
-bind on Mod4+l focus right
-bind on Mod4+k focus up
-bind on Mod4+j focus down
-bind on Mod4+n use (next)
-bind on Mod4+p use (prev)
-bind on Mod4+Tab screen (next)
-bind on Mod4+Control+h resize left
-bind on Mod4+Control+l resize right
-bind on Mod4+Control+k resize up
-bind on Mod4+Control+j resize down
-bind on Mod4+Shift+h swap left
-bind on Mod4+Shift+l swap right
-bind on Mod4+Shift+k swap up
-bind on Mod4+Shift+j swap down
-bind on Mod4+1 use 0
-bind on Mod4+2 use 1
-bind on Mod4+Shift+1 move 0
-bind on Mod4+Shift+2 move 1
+#add misc
+#use main
 
-manage off conky
-manage off tint2
-manage off trayer
+# }}}
 
-set border_focus #1994d1
-set border_width 2
-set dmenu dmenu -i -b -nb '#000000' -nf '#1994d1'
-set focus_follow_mouse 1
-set window_open_frame empty
+# [ set 变量 ]# {{{
+#--------------------------------------------
 
-hook on ^add pad 0 0 20 20
-
-name main
-pad 0 0 20 20
-add misc
-use main
+#border_focus    Blue                    聚焦时的边框颜色
+#border_unfocus  Dim Gray                失去焦点时的边框颜色
+#border_dedicate_focus Red               专用帧聚焦时的颜色
+#border_dedicate_unfocus Dark Red        专用帧失去焦点时的颜色
+#border_catchall_focus Green             catchall 帧聚焦时的颜色
+#border_catchall_unfocus Dark Green      catchall 帧失去焦点时的颜色
+#border_width    1                       边框宽度，最小为0
+#
+#frame_min_wh    100                     帧和受管窗口的最小宽度和高度
+#frame_resize    20                      帧调整大小时的步长
+#
+#switch_window   sed 's/^/raise/' | $MUSCA -i    在dmenu中选中窗口时执行的命令
+#switch_group    sed 's/^/use/' | $MUSCA -i  在dmenu中选中一个窗口组时执行的命令
+#
+#run_musca_command   $MUSCA -i           当用户通过dmenu输入一个命令时的处理方法
+#run_shell_command   sed 's/^/ exec /' | $MUSCA -i   当用户通过dmenu输入一个shell命令时的处理方法
+#
+#notify  echo cat                        向用户显示消息的方法，默认是显示在标准输出
+#stack_mouse_modifier    Mod4            stacking 模式修改键，鼠标左键移动和右键调整大小
+#
+#window_open_focus   1                   新窗口获得焦点，设为0则阻止
+#window_size_hints   1                   设为0则忽略X 尺寸提示
+#
+## 0：空帧保持空；1：自动显示可用的隐藏窗口；2：自动显示在该帧显示过的窗口
+#frame_display_hidden    1
+#
+## 分割帧后， current：焦点保持在原帧；new：聚焦于新帧
+#frame_split_focus   new
+#
+## 启动 pidgin 自动换为 stacking 模式
+#hook on pidgin stack on
 
 
-
-
+# }}}
 
 
 
