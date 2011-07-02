@@ -110,7 +110,7 @@ manage off stalonetray
 # flip 值不知什么意思
 #set border on
 set border flip
-set border_width 0
+#set border_width 1
 
 # 设定聚焦帧的边框颜色为橘黄
 #set border_focus #1994d1
