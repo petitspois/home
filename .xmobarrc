@@ -1,21 +1,114 @@
 -- vim:set et ft=haskell fdm=marker sw=4 sts=4 ts=4 nopaste :
-Config { font = "-*-snap-*-*-*-*-10-*-*-*-*-*-*-*"
-    --font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
-       , bgColor = "black"
-       , fgColor = "grey"
+-- manual : http://projects.haskell.org/xmobar/#system-monitor-plugins
+-- From : http://martin.elwin.com/blog/2008/05/dcop-and-xmobar/
+-- From : https://bbs.archlinux.org/viewtopic.php?pid=570780
+-- 需要打补丁支持 load 模块
+-- From : http://www.scss.tcd.ie/~flawler/wm/xmobarrc.txt
+
+Config {
+        --font = "-*-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
+        --font = "-*-terminus-*-*-*-*-10-*-*-*-*-*-*-*"
+        font = "xft:snap-9"
+        --font = "xft:terminus-10"
+        --font = "xft:Envy Code R:size=10:antialias=true"
+       , bgColor = "grey20"
+       -- 草绿色
+       , fgColor = "#789e2d"
+
+       -- 四种定位方式：
+       -- Top/Bottom | TopW/BottomW <align> <percent.width>
+       -- TopSize/BottomSize <align> <percent.width> <max.width> | Static (X geometry 自定义)
+
+       --, position = BottomW L 90
+       --, position = Bottom
        , position = Top
+
+       -- 从终端启动，提示：
+       -- Fields missing from config defaulted: border,borderColor
        , lowerOnStart = True
-       , commands = [ Run Weather "EGPF" ["-t","<station>: <tempC>C","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 36000
-                    , Run Network "eth0" ["-L","0","-H","32","--normal","green","--high","red"] 10
-                    , Run Network "eth1" ["-L","0","-H","32","--normal","green","--high","red"] 10
-                    , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
-                    , Run Memory ["-t","Mem: <usedratio>%"] 10
-                    , Run Swap [] 10
-                    , Run Com "uname" ["-s","-r"] "" 36000
-                    , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+       -- 注释上面的 lowerOnStart 会提示如下：
+       -- Fields missing from config defaulted: border,borderColor,lowerOnStart
+
+       , commands = [
+
+                    -- 修改默认样式，需要使用 -t 来修改显示模板中的样式
+                    Run Cpu ["-L","3","-H","50","--normal","#429942","--high","#A36666","-t","cpu: <total> %"] 10
+                    , Run Memory ["-t","mem: <fc=#0b8bff><usedratio></fc> % / <fc=#0b8bff><cache></fc> M"] 54
+                    --, Run Network "eth0" ["-L","0","-H","32","--normal","#429942","--high","#A36666"] 10
+                    --, Run Date "%Y-%m-%d  %a  %H:%M" "date" 30
+                    , Run Date "%m-%d  %a  %H:%M" "date" 30
+
+                    -- From : arch wiki 不能用
+                    --, Run MPD ["-t", "<state>: <artist> - <track>"] 10
+
+                    -- 颜色替换
+                    -- , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 52
+                    -- , Run Network "eth0" ["-L","0","-H","32","--normal","green","--high","red"] 50
+
+                    -- 本机 IP 地址
+                    , Run Com "ifconfig" ["eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'"] "ipaddr" 10
+
+                    -- 窗口列表，musca 中无法使用内置的，只能通过脚本实现
+                    --, Run StdinReader
+
+                    --, Run Com "sh" ["-c", "\"ls ~/Maildir/new | wc -l\""] "mailcount" 600
+                    --, Run Com "dcop" ["kxkb", "kxkb", "getCurrentLayout"] "kbd" 20
+                    --, Run Com "dcop" ["kmix", "Mixer0", "masterMute"] "mute" 20
+
+                    -- 笔记本 laptop
+                    --, Run Battery ["-t", "Batt: <left>"] 10
+                    --, Run Network "wlan0" ["-L","0","-H","32","--normal","#429942","--high","#A36666"] 10
+                    --, Run Network "wlan0" ["-L","0","-H","32","--normal","green","--high","red"] 51
+                    --, Run Com "iwgetid" ["-r"] "essid" 50
+
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%cpu% | %memory% * %swap% | %eth0% - %eth1% }{ <fc=#ee9a00>%date%</fc>| %EGPF% | %uname%"
-       }
+
+       --, template = " %eth0% - %wlan0% } %StdinReader% { Mail: %mailcount% | Kbd: %kbd% | Mute: %mute%"
+       --, template = " ip: %ipaddr% | } %StdinReader% { | %cpu% | %memory% | %eth0% | <fc=#ee9a00>%date%</fc> "
+       --, template = " ip: %ipaddr% | } %StdinReader% { | %cpu% | %memory% | <fc=#ee9a00>%date%</fc> "
+       -- }{ 之间如果没有其他变量，之间不能有空白，否则提示 no excute template
+       --, template = " ip: %ipaddr% | }{ | %cpu% | %memory% | <fc=#ee9a00>%date%</fc> "
+       , template = " %cpu% }{ %memory% | ip: <fc=#0b8bff>%ipaddr%</fc> | <fc=#ee9a00>%date%</fc> "
+
+
+-- <fc=#0b8bff></fc>
+
+        --, template = " %StdinReader% }{
+
+        -- <fc=#0b8bff>[</fc>
+        -- %mpd%
+        -- <fc=#0b8bff>]</fc>
+
+        -- <fc=#0b8bff>[</fc>
+        -- %battery%
+        -- <fc=#0b8bff>]</fc>
+
+        -- <fc=#0b8bff>[</fc>
+        -- %cpu%
+        -- <fc=#0b8bff>]</fc>
+
+        -- <fc=#0b8bff>[</fc>
+        -- %memory%
+        -- <fc=#0b8bff>]</fc>
+
+        -- <fc=#0b8bff>[</fc>
+        -- %wlan0
+        -- %<fc=#0b8bff>]</fc>
+
+        -- <fc=#0b8bff>[</fc>
+        -- ip: %ipaddr%
+        -- <fc=#0b8bff>]</fc>
+        -- --
+        -- <fc=#0b8bff>[</fc>
+        -- %date%
+        -- <fc=#0b8bff>]</fc>"
+
+       --, Run Com "uname" ["-s","-r"] "" 36000
+       --, Run Weather "EGPF" ["-t","<station>: <tempC>C","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 36000
+       --, template = "%EGPF% | %uname%"
+
+       --, Run Com "sh" ["/home/david/mpd.sh"] "mpd" 10
+       --, Run Thermal "THM" ["-t", "<temp>C"] 30
 

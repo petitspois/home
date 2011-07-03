@@ -1,49 +1,5 @@
 # vim:set et ft=conf fdm=marker sw=4 sts=4 ts=4 nopaste :
 
-# [ 默认 / Arch Wiki ]# {{{
-#--------------------------------------------
-
-# unset all default Musca keybindings
-# 关闭所有 musca 默认快捷键绑定
-#bind off all
-
-# musca 默认快捷键绑定
-#bind on Mod4+Shift+h hsplit 1/2
-#bind on Mod4+Shift+v vsplit 1/2
-#bind on Mod4+Shift+r remove
-#bind on Mod4+Shift+o only
-#bind on Mod4+Shift+k kill
-#bind on Mod1+F4 kill
-#bind on Mod4+Shift+c cycle
-#bind on Mod1+Tab cycle
-#bind on Mod4+Left focus left
-#bind on Mod4+Right focus right
-#bind on Mod4+Up focus up
-#bind on Mod4+Down focus down
-#bind on Mod4+Tab use (next)
-#bind on Mod4+Shift+Tab use (prev)
-#bind on Mod4+Shift+w switch window
-#bind on Mod4+Shift+g switch group
-#bind on Mod4+x shell
-#bind on Mod4+Shift+x command
-#bind on Mod4+Shift+d dedicate flip
-#bind on Mod4+Shift+a catchall flip
-#bind on Mod4+Shift+u undo
-#bind on Mod4+Shift+s stack flip
-#bind on Mod4+Shift+Left swap left
-#bind on Mod4+Shift+Right swap right
-#bind on Mod4+Shift+Up swap up
-#bind on Mod4+Shift+Down swap down
-#bind on Mod4+Control+Left resize left
-#bind on Mod4+Control+Right resize right
-#bind on Mod4+Control+Up resize up
-#bind on Mod4+Control+Down resize down
-#bind on Mod4+Shift+q quit
-#bind on Mod4+Shift+b border flip
-
-
-# }}}
-
 # [ 虚拟桌面 ]# {{{
 #--------------------------------------------
 
@@ -95,6 +51,9 @@ bind on Mod4+Shift+7 move 7
 bind on Mod4+Shift+8 move 8
 bind on Mod4+Shift+9 move 9
 
+use 1
+drop default
+
 # }}}
 
 # [ setting ]# {{{
@@ -107,20 +66,31 @@ manage off tint2
 manage off trayer
 manage off stalonetray
 
-# flip 值不知什么意思
-#set border on
-set border flip
-#set border_width 1
+# XXX flip ==> 在 on / off 之间切换，而不是 仅仅 on 或 off
+set border on
+set border_width 0
 
 # 设定聚焦帧的边框颜色为橘黄
 #set border_focus #1994d1
 set border_focus Orange
 
-# 对话框是否填充现在 frame
-client hints off
+# 对当前窗口是否 respect X 尺寸 hints
+client hints on
 
 # 如果是 current，新窗口在聚焦帧打开，如果是empty，试图找一个空帧打开新窗口
 set window_open_frame empty
+
+# 新窗口获得焦点，设为 0 则阻止
+#window_open_focus   0
+
+# 设为 0 则忽略 X 尺寸提示
+#window_size_hints   0
+
+## 0：空帧保持空；1：自动显示可用的隐藏后台的窗口；2：自动显示之前在该帧显示过的窗口
+frame_display_hidden    1
+
+## 分割帧后，current：焦点保持在原帧；new：聚焦于新帧
+#frame_split_focus   new
 
 # 无需要单击，鼠标经过聚焦窗口
 set focus_follow_mouse 1
@@ -128,13 +98,13 @@ set focus_follow_mouse 1
 # 当一个空组失去焦点，1:改组自动关闭；0：依然保持
 set group_close_empty 0
 
-# 屏幕最下方预留 20 像素给 conky 和 trayer
+# 屏幕最上方预留 15 像素给 xmobar (conky trayer...)
 # pad <left> <right> <top> <bottom>
-pad 0 0 0 25
+pad 0 0 15 0
 
 # hook <on|off> <name> <command>
 # 绑定 musca 命令到 已命名的 hook
-hook on ^(add|use) pad 0 0 0 25
+hook on ^(add|use) pad 0 0 15 0
 
 
 
@@ -153,7 +123,8 @@ set dmenu dmenu -b -i -nb grey20 -nf '#a1b5cd' -fn "-*-snap-*-*-*-*-*-*-*-*-*-*-
 #exec conky
 #exec stalonetray
 #exec xbindkeys
-exec feh --bg-scale ~/pic/wall/fedora.15.png
+#exec feh --bg-scale ~/pic/wall/fedora.15.png
+exec feh --bg-center ~/pic/wall/Le.Corbusier.Tree.png
 
 
 
@@ -163,9 +134,65 @@ exec feh --bg-scale ~/pic/wall/fedora.15.png
 
 # [ key ]# {{{
 #--------------------------------------------
+##bind off all
+
+# [ Arch Wiki ]# {{{
+#--------------------------------------------
+
+# musca 默认快捷键绑定
+#bind on Mod4+Shift+h hsplit 1/2
+#bind on Mod4+Shift+v vsplit 1/2
+
+#bind on Mod4+Shift+r remove
+#bind on Mod4+Shift+o only
+
+#bind on Mod4+Shift+k kill
+#bind on Mod1+F4 kill
+
+#bind on Mod4+Shift+c cycle
+#bind on Mod1+Tab cycle
+
+#bind on Mod4+Tab use (next)
+#bind on Mod4+Shift+Tab use (prev)
+
+#bind on Mod4+Shift+w switch window
+#bind on Mod4+Shift+g switch group
+
+#bind on Mod4+x shell
+#bind on Mod4+Shift+x command
+
+#bind on Mod4+Shift+d dedicate flip
+#bind on Mod4+Shift+a catchall flip
+
+
+# }}}
 
 # 按 Mod4+q 退出 musca
-#bind on Mod4+Shift+q quit
+bind on Mod4+Shift+q quit
+
+bind on Mod4+f only
+bind off Mod4+o
+
+bind on Mod4+o vsplit 1/2
+bind on Mod4+i hsplit 1/2
+
+# 逗号 / 句号
+bind on Mod4+comma             height 50%
+bind on Mod4+period            width 50%
+
+bind off Mod4+k
+bind on Mod1+F4 kill
+#bind on Mod1+Shift+k kill
+
+bind on Mod4+space stack flip
+bind on Mod4+Shift+b border flip
+
+#bind off Mod4+r
+#bind on Mod4+r shell
+
+# 切换相邻的虚拟桌面
+bind on Mod4+n use (next)
+bind on Mod4+p use (prev)
 
 # Alt + j/k/h/l 聚焦窗口
 bind on Mod1+j focus down
@@ -179,44 +206,36 @@ bind on Mod1+Right  slide right
 bind on Mod1+Up     slide up
 bind on Mod1+Down   slide down
 
-#bind off all
+bind on Mod4+Shift+h swap left
+bind on Mod4+Shift+l swap right
+bind on Mod4+Shift+k swap up
+bind on Mod4+Shift+j swap down
 
-bind on Mod4+f only
-bind off Mod4+o
-bind on Mod4+o vsplit 1/2
-bind on Mod4+i hsplit 1/2
+bind on Mod4+Control+h resize left
+bind on Mod4+Control+l resize right
+bind on Mod4+Control+k resize up
+bind on Mod4+Control+j resize down
 
-#bind on Mod4+x remove
-bind on Mod1+F4 kill
+# 切换到另一个显示器
+#bind on Mod4+Tab screen (next)
 
-bind off Mod4+r
-bind on Mod4+r shell
+# 没有 xterm，绑定 Mod4+t 到系统默认终端
+#bind off Mod4+t
+#bind on Mod4+t exec x-terminal-emulator
 
 #bind on Mod4+c command
 #bind on Mod4+a dedicate flip
 #bind on Mod4+s catchall flip
-#bind on Mod4+u undo
-#bind on Mod4+space stack flip
 
-#bind on Mod4+n use (next)
-#bind on Mod4+p use (prev)
-#bind on Mod4+Tab screen (next)
-#bind on Mod4+Control+h resize left
-#bind on Mod4+Control+l resize right
-#bind on Mod4+Control+k resize up
-#bind on Mod4+Control+j resize down
-#bind on Mod4+Shift+h swap left
-#bind on Mod4+Shift+l swap right
-#bind on Mod4+Shift+k swap up
-#bind on Mod4+Shift+j swap down
-#bind on Mod4+1 use 0
-#bind on Mod4+2 use 1
-#bind on Mod4+Shift+1 move 0
-#bind on Mod4+Shift+2 move 1
+# [ apps ] #--------------------------------------------
 
-# 没有xterm，所以重新绑定 Mod4+t 启动系统默认终端
-#bind off Mod4+t
-#bind on Mod4+t exec x-terminal-emulator
+#bind on Mod1+Control+l exec leafpad
+#bind on Mod1+Control+r exec rox
+#bind on Mod1+Control+w exec firefox
+#bind on Mod1+Control+x exec xterm
+
+
+
 
 
 # }}}
@@ -235,15 +254,7 @@ bind on Mod4+r shell
 
 # }}}
 
-#window_open_focus   1                   新窗口获得焦点，设为0则阻止
-#window_size_hints   1                   设为0则忽略X 尺寸提示
-#
-## 0：空帧保持空；1：自动显示可用的隐藏后台的窗口；2：自动显示之前在该帧显示过的窗口
-frame_display_hidden    1
-#
-## 分割帧后， current：焦点保持在原帧；new：聚焦于新帧
-#frame_split_focus   new
-#
+
 ## 启动 pidgin 自动换为 stacking 模式
 #hook on pidgin stack on
 
