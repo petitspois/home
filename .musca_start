@@ -68,7 +68,7 @@ manage off stalonetray
 
 # XXX flip ==> 在 on / off 之间切换，而不是 仅仅 on 或 off
 set border on
-set border_width 0
+set border_width 1
 
 # 设定聚焦帧的边框颜色为橘黄
 #set border_focus #1994d1
@@ -125,7 +125,7 @@ set dmenu dmenu -b -i -nb grey20 -nf '#a1b5cd' -fn "-*-snap-*-*-*-*-*-*-*-*-*-*-
 #exec xbindkeys
 #exec feh --bg-scale ~/pic/wall/fedora.15.png
 exec feh --bg-center ~/pic/wall/Le.Corbusier.Tree.png
-
+exec xmobar
 
 
 

@@ -865,6 +865,128 @@ bin-exist() {[[ -x `whence -cp $1 2>/dev/null` ]]}
 
 # }}}
 
+# [ 借鉴 ]# {{{
+#--------------------------------------------
+
+# https://github.com/Barrucadu/home/blob/master/config/zsh/functions
+
+# System
+function start()
+{
+    for arg in "${*[@]}"; do
+        sudo /etc/rc.d/$arg start
+    done
+}
+
+function stop()
+{
+    for arg in "${*[@]}"; do
+        sudo /etc/rc.d/$arg stop
+    done
+}
+
+function restart()
+{
+    for arg in "${*[@]}"; do
+sudo /etc/rc.d/$arg restart
+    done
+}
+
+function reprobe()
+{
+    for arg in "${*[@]}"; do
+sudo modprobe -r $arg
+        sudo modprobe $arg
+    done
+}
+
+function maintain()
+{
+    # Update
+    sudo pacman -Syu
+    sudo abs
+
+    # Clean
+    sudo pacman -Rsc $(pacman -Qtdq)
+    sudo localepurge
+    sudo pacman -Scc
+
+    # Generale maintenence
+    sudo pacman-optimize
+    sudo mandb
+    sudo ldconfig -v
+    sudo updatedb
+    sudo sync
+}
+
+function shutdownhost()
+{
+    if ping -c1 $1 &>/dev/null; then
+        ssh $1 "sudo shutdown -hP now"
+    fi
+}
+
+# Running programs
+function r()
+{
+    $* &>/dev/null &
+    disown %%
+}
+
+function re()
+{
+    $* &>/dev/null &
+    disown %%
+    exit
+}
+
+
+# Misc
+function extract ()
+{
+    case $1 in
+        *.tar.xz)
+            tar xvJf $1;;
+        *.tar.bz2)
+            tar xvjf $1;;
+        *.tar.gz)
+            tar xvzf $1;;
+        *.xz)
+            unxz $1;;
+        *.bz2)
+            bunzip2 $1;;
+        *.gz)
+            gunzip $1;;
+        *.tar)
+            tar xvf $1;;
+        *.tbz2)
+            tar xvjf $1;;
+        *.tgz)
+            tar xvzf $1;;
+        *.Z)
+            uncompress $1;;
+        *.zip)
+            unzip $1;;
+        *)
+            echo "don't know how to extract '$1'...";;
+    esac
+}
+
+function sign ()
+{
+    KEY=$1;
+    KEYSERVER='keyserver.ubuntu.com';
+    
+    [[ "$2" != "" ]] && KEYSERVER=$2
+    
+    gpg --keyserver $KEYSERVER --recv-keys $KEY
+    gpg --yes --ask-cert-level --sign-key $KEY
+    gpg --keyserver $KEYSERVER --send-keys $KEY
+}
+
+# }}}
+
+
 
 # }}}
 
@@ -1548,6 +1670,101 @@ _force_rehash() {
 
 
 # }}}
+
+# https://github.com/milomouse/dotfiles/blob/master/zsh/functions
+
+# check ownership of given argument, as determined by pacman:
+function owns {
+  if [[ -n $(for each in ${PATH//:\\\n}; do
+             find ${each}/$1 2>/dev/null ; done) ]]
+  then pacman -Qo $(which -p $1)
+  else pacman -Qo $1 ; fi
+}
+
+# jump to previous directory by integer or reg-exp, also list dirs,
+# else jump to last visited directory if no argument supplied:
+function back {
+  if [[ $# == 1 ]]; then
+    case $1 {
+      <->) pushd -q +$1 2>/dev/null ;;
+      --) dirs -lpv|sed '2s|$| \[last\]|' ;;
+      *) [[ -n $(dirs -lpv|grep -i $1|grep -v ${PWD}) ]] && \
+              pushd -q +${$(dirs -lpv|grep -i $1|grep -v ${PWD})[1]}
+    }
+  else pushd -q - 2>/dev/null ; fi
+}
+
+# go up Nth amount of directories:
+function up {
+  local arg=${1:-1};
+  while [ ${arg} -gt 0 ]; do
+    cd .. >&/dev/null;
+    arg=$((${arg} - 1));
+  done
+}
+
+# show ps information with simple output for scripts, quick views, etc:
+function psi {
+  if [[ ${#${@:/$0}} -ge 2 ]]; then
+    case $1 {
+      '-C'|'-c') ps -C $2 hopid,args ;; # by- command name
+      '-G'|'-g') ps -G $2 hopid,args ;; # by- real group id (RGID)/name
+      '-U'|'-u') ps -U $2 hopid,args ;; # by- effective user ID (EUID)/name
+      '-P'|'-p') ps -p $2 hoargs ;; # by- pid
+      '-S'|'-s') ps -s $2 hopid,args ;; # by- session id
+      '-T'|'-t') ps -t $2 hopid,args ;; # by- tty
+      *) print "invalid selection. read: man ps (section: process selection by list)"
+    }
+  else
+        << EOP
+(show process information by .. )
+psi -c ARG | command name
+psi -g ARG | group id
+psi -u ARG | user id
+psi -p ARG | pid
+psi -s ARG | session id
+psi -t ARG | tty
+EOP
+  fi
+}
+
+# one-liners/micro functions:
+#function flashproc { for f (${$(file /proc/$(pidof luakit)/fd/*|gawk '/\/tmp\/Flash/ {print $1}')//:}){print - "$f"} }
+function lss { ls -- ${1:-.}/*(D.om) }
+#function rc { [[ -n $1 ]] && sudo /etc/rc.d/$1 ${@:/$1} }
+#function alv { <${${$(command find ${H:-/howl}/othe/archive/installed_*)}[${1:--1}]}|w3m -o pagerline=1000 -o confirm_qq=0 }
+function mkcd { command mkdir -p "$@" && cd "$@" }
+#function pubip { curl -m 30 http://automation.whatismyip.com/n09230945.asp }
+#function newmail { print - ${(Fw)#$(find /howl/mail/*/*/new -type f)} }
+#function qdep { pacman-color -Q $@ $(pacman-color -Qi $@|grep Depends|cut -d: -f2-|sed -E 's|>\S+\>||g') }
+#function timec { print "$(date +'%T %Y-%m-%d')" ; while sleep 1 ; do printf '\r%s ' "$(date +'%T %Y-%m-%d')" ; done }
+#function dropcache { sync && command su -s /bin/zsh -c 'echo 1 > /proc/sys/vm/drop_caches && echo 2 > /proc/sys/vm/drop_caches' root }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -76,7 +76,7 @@ xmodmap ~/.xmodmap
 #DEFAULTSESSION=openbox-session
 #DEFAULTSESSION=compiz
 #DEFAULTSESSION=fvwm2
-DEFAULTSESSION=musca
+DEFAULTSESSION=subtle
 
 # [ Window Manager 窗口管理器 ]# {{{
 #--------------------------------------------
@@ -95,6 +95,9 @@ musca)
 	;;	  
 i3)
 #	exec i3
+	;;	  
+subtle)
+	exec subtle
 	;;	  
 compiz)
 	sh /usr/local/bin/start-fusion.sh

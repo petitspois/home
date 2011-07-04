@@ -13,7 +13,8 @@ Config {
         --font = "xft:Envy Code R:size=10:antialias=true"
        , bgColor = "grey20"
        -- 草绿色
-       , fgColor = "#789e2d"
+       --, fgColor = "#789e2d"
+       , fgColor = "#A2B84C"
 
        -- 四种定位方式：
        -- Top/Bottom | TopW/BottomW <align> <percent.width>
@@ -32,8 +33,8 @@ Config {
        , commands = [
 
                     -- 修改默认样式，需要使用 -t 来修改显示模板中的样式
-                    Run Cpu ["-L","3","-H","50","--normal","#429942","--high","#A36666","-t","cpu: <total> %"] 10
-                    , Run Memory ["-t","mem: <fc=#0b8bff><usedratio></fc> % / <fc=#0b8bff><cache></fc> M"] 54
+                    Run Cpu ["-L","3","-H","50","--normal","#D94C3D","--high","#A36666","-t","cpu: <total> %"] 10
+                    , Run Memory ["-t","mem: <fc=#90B7FE><usedratio></fc> % / <fc=#90B7FE><cache></fc> M"] 54
                     --, Run Network "eth0" ["-L","0","-H","32","--normal","#429942","--high","#A36666"] 10
                     --, Run Date "%Y-%m-%d  %a  %H:%M" "date" 30
                     , Run Date "%m-%d  %a  %H:%M" "date" 30
@@ -70,7 +71,7 @@ Config {
        --, template = " ip: %ipaddr% | } %StdinReader% { | %cpu% | %memory% | <fc=#ee9a00>%date%</fc> "
        -- }{ 之间如果没有其他变量，之间不能有空白，否则提示 no excute template
        --, template = " ip: %ipaddr% | }{ | %cpu% | %memory% | <fc=#ee9a00>%date%</fc> "
-       , template = " %cpu% }{ %memory% | ip: <fc=#0b8bff>%ipaddr%</fc> | <fc=#ee9a00>%date%</fc> "
+       , template = " %cpu% }{ %memory% | ip: <fc=#90B7FE>%ipaddr%</fc> | <fc=#ee9a00>%date%</fc> "
 
 
 -- <fc=#0b8bff></fc>
