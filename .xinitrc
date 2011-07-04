@@ -94,7 +94,7 @@ musca)
 #	exec musca
 	;;	  
 i3)
-#	exec i3
+	exec i3
 	;;	  
 subtle)
 	exec subtle

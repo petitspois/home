@@ -51,8 +51,8 @@ bind on Mod4+Shift+7 move 7
 bind on Mod4+Shift+8 move 8
 bind on Mod4+Shift+9 move 9
 
-use 1
 drop default
+use 1
 
 # }}}
 
