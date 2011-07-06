@@ -89,6 +89,8 @@ mpd_port = "6600"
 #
 #progressbar_look = "=>"
 progressbar_look = "-<·"
+# 模拟进度条
+progressbar_look = "─━ "
 #
 #default_place_to_search_in = "database" (database/playlist)
 #

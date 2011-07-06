@@ -52,7 +52,21 @@ bind on Mod4+Shift+8 move 8
 bind on Mod4+Shift+9 move 9
 
 drop default
+#use 1
+
+# [ layout ]# {{{
+#--------------------------------------------
+
+# 添加名为 web 的工作组，并加载导出的窗口布局
+# 窗口布局使用 dump 命令导出，细节参考 man
+#use 2
+load .firefox.musca
+
+# 切换到原来第一个工作组
 use 1
+load .xterm.musca
+
+# }}}
 
 # }}}
 
@@ -237,20 +251,6 @@ bind on Mod4+Control+j resize down
 
 
 
-
-# }}}
-
-# [ layout ]# {{{
-#--------------------------------------------
-
-# 添加名为 web 的工作组，并加载导出的窗口布局
-# 窗口布局使用 dump 命令导出，细节参考 man
-#add web
-#load .mweb
-
-# 切换到原来第一个工作组
-#use 0
-#load .mdefault
 
 # }}}
 

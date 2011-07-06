@@ -76,7 +76,8 @@ xmodmap ~/.xmodmap
 #DEFAULTSESSION=openbox-session
 #DEFAULTSESSION=compiz
 #DEFAULTSESSION=fvwm2
-DEFAULTSESSION=subtle
+#DEFAULTSESSION=subtle
+DEFAULTSESSION=musca
 
 # [ Window Manager 窗口管理器 ]# {{{
 #--------------------------------------------
@@ -98,6 +99,7 @@ i3)
 	;;	  
 subtle)
 	exec subtle
+#    exec /usr/bin/subtle &> $HOME/.config/subtle/logs/subtle-$(date +"%F-%k-%M").log
 	;;	  
 compiz)
 	sh /usr/local/bin/start-fusion.sh

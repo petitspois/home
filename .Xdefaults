@@ -9,9 +9,11 @@
 
 ! [ mycolor ]! {{{
 !-------------------------------------------
-
+! fg and bg might be overwritten by an imported colorscheme
+! 可能会被颜色主题覆盖
 *background                        : #1a1a1a
 *foreground                        : white
+
 !red
 *color1     :       #fe3f44
 !*color9     :       #f21616
@@ -217,6 +219,19 @@
 !
 !!*}}}
 
+!! [ Xft ] {{{
+!!-------------------------------------------
+!! https://github.com/crshd/dots/blob/master/xresources/xresources
+!
+!Xft.autohint: 0
+!Xft.lcdfilter: lcddefault
+!Xft.hintstyle: hintfull
+!Xft.hinting: 1
+!Xft.antialias: 1
+!Xft.dpi: 96
+!Xft.rgba: rgb
+!
+!!}}}
 
 ! [ Font ]! {{{
 !--------------------------------------------
@@ -250,7 +265,7 @@
 !
 XTerm*locale:       true
 !!!! Warning: Cannot convert string "true" to type Int
-XTerm*utf8:     1
+XTerm*utf8:         1
 XTerm*utf8Title:    true
 !xterm*fontMenu*fontdefault*Label:Default
 XTerm*xftAntialias: true
@@ -328,9 +343,6 @@ XTerm*visualBell:    false
 
 !*}}}
 
-
-
-
 ! [ Alt / Ctrl 快捷键可用 ]
 !--------------------------------------------
 ! 修复 Alt 输入
@@ -351,23 +363,19 @@ xterm*metaSendsEscape: true
 !           xft:Envy Code R:pixelsize=10:autohint=true, \
 !           xft:Microsoft Yahei:pixelsize=13
 
-URxvt*font: xft:Envy Code R:pixelsize=13:autohint=true, \
-                xft:Microsoft Yahei:pixelsize=13
+URxvt*font:     xft:Envy Code R:pixelsize=13:autohint=true, \
+                xft:WenQuanYi Micro Hei Mono:pixelsize=13
 
-URxvt*depth                             : 32
 URxvt*termName                          : xterm-256color
 ! fixed 字体所对应的 窗口尺寸
-!URxvt*geometry                         : 92x32
 URxvt*geometry                          : 119x34
-URxvt*scrollBar                         : true
-URxvt*saveLines                         : 5000
+
 ! 中括号里面的数字控制透明的百分比
-!URxvt*background                        : [50]#000000
-URxvt*background                        : [95]#191919
+URxvt*background                        : [90]#191919
 URxvt*foreground                        : [100]#ffffff
-URxvt*borderless                        : 1
-URxvt.urlLauncher                       : firefox
-URxvt.matcher.button                    : 1
+
+!URxvt*borderless                        : 1
+
 !   Tabs Close 关闭标签页
 !URxvt.perl-ext-common                  : default,matcher
 !   Tabs Open 开启标签页
@@ -379,12 +387,102 @@ URxvt.matcher.button                    : 1
 !URxvt.urgentOnBell: True
 
 
+! https://github.com/Jorick/config/blob/master/Xdefaults
+
+!internal whitespace
+URxvt*internalBorder: 0
+!fade text n% upon unfocus
+URxvt*fading: 20
+!darken=(0 to 100) lighten=(-1 to -100)
+URxvt*shading: 0
+!tint background with this color
+URxvt*tintColor: black
+
+!! 真透明
+!! set to 32-bit for real transparency and 24-bit for pseudo-transparency
+URxvt*depth: 32
+!URxvt*background: rgba:0000/0000/0000/bbbb
+
+!URxvt*inheritPixmap: true
+!URxvt*transparent: true
+
+!set color for bold, italic, underlined
+!URxvt*colorBD: color4
+!URxvt*colorIT: color3
+!URxvt*colorUL: color7
+
+!save n lines of scrollback buffer
+URxvt*saveLines: 32767
+!flash screen for attention
+URxvt*visualBell: false
+!jump to bottom (prompt) on keypress
+URxvt*scrollTtyKeypress: true
+!jump to bottom (prompt) when tty gets new lines
+URxvt*scrollWithBuffer: false
+!jump to bottom (prompt) on tty output
+URxvt*scrollTtyOutput: false
+
+!toggle scrollbar
+URxvt*scrollBar: true
+!scrollbar styles: rxvt, plain, next or xterm
+URxvt*scrollstyle: plain
+!scrollbar alignment
+URxvt*scrollBar_right: true
+URxvt*scrollColor: #2a2a2a
+URxvt*cursorColor: #d6d9ba
+
+!set default directory to home
+URxvt*chdir: /home/ink/
+
+!enable tabs
+URxvt*perl-ext-common: default,matcher,tabbed
+URxvt*tabbed*tabbar-fg: 7
+URxvt*tabbed*tabbar-bg: -1
+URxvt*tabbed*tab-fg: -1
+URxvt*tabbed*tab-bg: 7
+
+!!screen dump settings
+!URxvt*print-pipe: cat > $(echo URxvt.dump.$(date +'%Y%M%d%H%m%S'))
+!!secondary screen scroll (default enabled)
+!URxvt*secondaryScroll: true
+!!de-iconify (map) on receipt of a bell character
+!URxvt*mapAlert: true
+!!inhibit writing record into the system log file utmp
+!URxvt*utmpInhibit: true
+!
+!!! urlLauncher 浏览器
+!URxvt.perl-ext-common:  default,matcher
+!URxvt*urlLauncher: /usr/bin/firefox
+!URxvt*matcher.button: 1
+!!! END urlLauncher settings !!
+
+!URxvt*perl-lib: /usr/lib/URxvt/perl/
 
 
 ! }}}
 
 
 
+! Global
+
+
+
+
+URxvt*buffered: true
+URxvt*cursorBlink: false
+URxvt*cursorUnderline: false
+
+!URxvt*iconFile: /home/crshd/.icons/kare/32x32/apps/terminal.png
+
+
+
+! [ C O L O R S ]
+!-------------------------------------------
+
+!# include ".config/xresources/railscast_colors"
+!# include ".config/xresources/nucolors"
+!# include ".config/xresources/dotshare"
+!# include ".config/xresources/getfresh"
 
 
 
