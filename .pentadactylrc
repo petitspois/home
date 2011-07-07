@@ -31,7 +31,7 @@ set titlestring="Firefox -- ink"
 " 使用 :open 命令打开参数时，若参数不是URL，调用的搜索引擎。默认：google，
 " 搜索引擎关键词，使用 :dialog searchengines 查看搜索引擎对应的关键字
 "set defsearch=google
-"set defsearch=ssl
+set defsearch=ssl
 
 
 

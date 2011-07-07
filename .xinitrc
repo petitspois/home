@@ -70,6 +70,12 @@ xset +fp /usr/share/fonts/myfont/pix.square
 # 键盘 键位 置换
 xmodmap ~/.xmodmap
 
+#/usr/bin/urxvtd -q -o -f &
+
+#mpd ~/.mpdconf
+
+#wicd-client &
+#lxsession &
 
 # }}}
 

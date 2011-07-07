@@ -660,6 +660,10 @@ autocmd FileType Makefile set noexpandtab
 autocmd FileType python set ft=python.django
 autocmd FileType html set ft=htmldjango.html
 
+" 打开 后缀名为 rst 文件，指定文件格式为 rst
+au BufNewFile,BufRead *.vst  set ft=rst
+
+
 "}}}
 
 " [ Function 功能函数 ]"{{{
