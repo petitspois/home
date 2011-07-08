@@ -433,8 +433,8 @@ cno     xh      $HOME/text/arch/
 cno     xs      $HOME/text/soft/
 cno     xv      $HOME/text/vi.vim/
 cno     xf      $HOME/text/fvwm/
-cno     pp      $HOME/code/pinax/lib/python2.7/site-packages/pinax/
-cno     ss      $HOME/code/pinax/lib/python2.7/site-packages/
+cno     ppp      $HOME/code/pinax/lib/python2.7/site-packages/pinax/
+cno     ssp      $HOME/code/pinax/lib/python2.7/site-packages/
 
 " 在编辑 php 时，要用到 html 的 snippet 补全，临时切换文件类型
 "nnoremap fh :setf html<cr>
@@ -480,6 +480,13 @@ nnoremap <C-g> 1<C-g>
 " escape for <ESC>
 imap jj <esc>
 
+" http://blog.yjl.im/2010/01/key-control-code-issue-in-between-vim.html
+" urxvt 中 Shift-方向键，无效解决方法
+" 不同终端对按键解析不同，使用 cat -v 在 xterm / urxvt 中查看按键编码
+"inoremap ^[[c <S-Right>
+"inoremap ^[[d <S-Left>
+inoremap [c <S-Right>
+inoremap [d <S-Left>
 
 
 "}}}

@@ -56,7 +56,8 @@ fcitx &
 #xcompmgr &
 
 # 阴影效果对比明显，无窗口/菜单渐隐
-xcompmgr -l -5 -t -5 -r 5 -o 0.60 -c &
+# XXX 会导致 musca 虚拟桌面不能及时刷新 [?]
+#xcompmgr -l -5 -t -5 -r 5 -o 0.60 -c &
 
 # wallpaper 壁纸
 feh --bg-scale ~/pic/wall/glass.jpg

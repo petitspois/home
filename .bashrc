@@ -92,9 +92,12 @@ function _git_prompt() {
     fi
 }
 
-PS1="`_git_prompt`"'\[\e[1;34m\]\w \n \$\[\e[0m\] '
+#PS1="`_git_prompt`"'\[\e[1;34m\]\w \n \$\[\e[0m\] '
 #PS1="`_git_prompt`"'\w \n \$ '
 
+# 命令输入加粗
+PS1="`_git_prompt`"'\[\e[1;34m\]\w \n \$\[\033[1;32m\] '
+trap 'echo -ne "\e[0m"' DEBUG
 
 #function _prompt_command() {
 #    PS1="`_git_prompt`"'\w \n \$ '
@@ -199,9 +202,24 @@ PS1="`_git_prompt`"'\[\e[1;34m\]\w \n \$\[\e[0m\] '
 #
 ##}}}
 #
-
-
-
+## [ 命令输入 粗体 ]#{{{
+##--------------------------------------------
+#
+## Make OS X Terminal commands I type BOLD
+## http://www.softwaretalk.info/make-os-x-terminal-commands-i-type-bold.htm
+#BOLD="\[\033[1m\]"
+#OFF="\[\033[m\]"
+#PS1="${OFF}\u@\h:\w \$${BOLD}"
+##PS2="> ${BOLD}"
+##trap 'echo -ne "${OFF}" > $(tty)' DEBUG
+#
+## https://wiki.archlinux.org/index.php/Color_Bash_Prompt#Different_colors_for_text_entry_and_console_output
+## 在 PS1 后面的命令按下回车键后
+## 在命令执行前输入关闭之前的样式/颜色
+#trap 'echo -ne "\e[0m"' DEBUG
+#
+##}}}
+#
 
 #}}}
 

@@ -414,9 +414,10 @@ URxvt*scrollBar                         : false
 
 
 URxvt*perl-lib                          : /usr/lib/urxvt/perl/
-! Tabs Close 关闭标签页
+!! Tabs Close 关闭标签页
 URxvt.perl-ext-common                   : default,matcher
-! Tabs Open 开启标签页
+
+!!! Tabs Open 开启标签页
 !URxvt.perl-ext-common                   : tabbed
 !URxvt*perl-ext-common                   : default,matcher,tabbed
 !URxvt*tabbed*tabbar-fg                  : 7
@@ -428,7 +429,11 @@ URxvt.perl-ext-common                   : default,matcher
 URxvt.urgentOnBell                      : True
 URxvt*visualBell                        : false
 !!de-iconify (map) on receipt of a bell character
-URxvt.mapAlert                      : true
+URxvt.mapAlert                          : true
+
+!! urxvt 中 vim Alt 键解析问题：vim 中 :h :map-alt-key
+!! XXX 没用啊啊
+!URxvt.meta                              : true
 
 !URxvt*buffered                     : true
 ! shell 的默认路径，绝对路径且存在
