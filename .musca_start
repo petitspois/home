@@ -76,9 +76,12 @@ load .xterm.musca
 # 告诉 musca 不要管理 conky 和 stalonetray 窗口
 manage off conky
 manage off fcitx
+# mplayer 支持全屏 [?]
+manage off mplayer
 manage off tint2
 manage off trayer
 manage off stalonetray
+manage off xmessage
 
 # XXX flip ==> 在 on / off 之间切换，而不是 仅仅 on 或 off
 set border on
@@ -141,8 +144,11 @@ set dmenu dmenu -b -i -nb grey20 -nf '#a1b5cd' -fn "-*-snap-*-*-*-*-*-*-*-*-*-*-
 exec feh --bg-center ~/pic/wall/Le.Corbusier.Tree.png
 exec xmobar
 
+# unclutter 用来隐藏 X 鼠标/光标
+#exec unclutter -idle 2
 
-
+# 设置 背景色 / 光标
+#exec xsetroot -solid black -cursor_name left_ptr
 
 # }}}
 
@@ -208,6 +214,9 @@ bind on Mod4+Shift+b border flip
 bind on Mod4+n use (next)
 bind on Mod4+p use (prev)
 
+#bind on Mod4+c cycle
+bind on Mod4+o cycle local
+
 # Alt + j/k/h/l 聚焦窗口
 bind on Mod1+j focus down
 bind on Mod1+k focus up
@@ -230,14 +239,18 @@ bind on Mod4+Control+l resize right
 bind on Mod4+Control+k resize up
 bind on Mod4+Control+j resize down
 
-# 切换到另一个显示器
+# XXX 切换到另一个 "显示器"
 #bind on Mod4+Tab screen (next)
 
-# 没有 xterm，绑定 Mod4+t 到系统默认终端
-#bind off Mod4+t
-#bind on Mod4+t exec x-terminal-emulator
 
+bind on Mod4+` shell
+
+bind on Mod4+Return exec xterm
+#bind on Mod4+Return exec urxvt -e screen -m
+
+#bind on KP_Subtract command
 #bind on Mod4+c command
+
 #bind on Mod4+a dedicate flip
 #bind on Mod4+s catchall flip
 
@@ -262,8 +275,60 @@ bind on Mod4+Control+j resize down
 # <relative> 可以是 百分比 75% 或 分数 3/4
 
 
-# 需要安装 notify-send 软件包
-#set notify notify-send -t 500 "Musca" "`cat`"
+# Musca/dzen2 tips and tricks – Part 1
+# http://aperturefever.wordpress.com/2009/06/08/musca-tips-and-tricks/
+# 创建 自定义 musca 命令(使用 Mod4-m 执行)
+# 使 gimp 启动时，自动启用 stack 浮动模式
+alias g1mp exec gimp
+hook on ^g1mp stack on
+
+# XXX ==> 等价于 :
+# 如果配置好 gimp 的布局，可以使用下面 hook 加载
+#hook on ^g1mp load gimpfoo
+
+# 结合 dzen2 自定义的查看相关信息的 musca 扩展命令
+
+alias dfh exec (echo Disk Usage; df -h ; sleep 4) | dzen2 -l 17 -fg white -bg grey10 -w 400 -fn '-*-dina-medium-r-normal-*-*-*-*-*-*-*-*-*' -e 'onstart=uncollapse'
+
+alias weatherget exec (echo Weather Report; weatherget -s GRXX0004 --metric ; sleep 4) | dzen2 -l 17 -fg white -bg grey10 -w 400 -fn '-*-dina-medium-r-normal-*-*-*-*-*-*-*-*-*' -e 'onstart=uncollapse'
+
+
+# 需要安装 notify-send 软件包 # From : man musca
+#set notify notify-send -t 3000 Musca "$(cat)"
+
+# 使用 xmessage 作为 提示 对话框，设置显示时间为 2s 之后自动关闭
+# 要使 xmessage 居中生效，XXX 需要 manage off xmessage
+set notify xmessage -center -timeout 2 -file -
+
+# http://ks-kb.blogspot.com/2010/03/musca-manual-tiling-x-window-manager.html
+bind on Mod4+Control+9 musca "dump $HOME/.musca-9"
+bind on Mod4+Control+8 musca "dump $HOME/.musca-8"
+bind on Mod4+Control+7 musca "dump $HOME/.musca-7"
+
+bind on Mod4+Shift+9 musca "load $HOME/.musca-9"
+bind on Mod4+Shift+8 musca "load $HOME/.musca-8"
+bind on Mod4+Shift+7 musca "load $HOME/.musca-7"
+
+# semicolon 分号
+bind on Mod4+Shift+semicolon command
+bind on Mod4+semicolon shell
+
+#silent set notify echo "$(cat)" | dzen2 -p 4 -bg \#D00 -fg white -fn '-misc-fixed-medium-r-normal--15-*-*-*-*-*-iso10646'
+
+bind on Mod4+Control+Shift+z exec R=$(echo -e 'poweroff\nreboot\nmusca -c quit' | eval $(musca -c 'silent show settings' | sed -ne '/set dmenu /s///p')) && $R
+
+#bind on Mod4+t musca "say $(date +'%H:%M  %a %_d %b %Y')"
+
+
+
+
+
+
+
+
+
+
+
 
 
 
