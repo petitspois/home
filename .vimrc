@@ -1039,6 +1039,10 @@ inoremap <C-u>4 <esc>yypVr-A
 noremap  <C-u>5 yypVr^
 inoremap <C-u>5 <esc>yypVr^A
 
+"" http://www.programmerq.net/rsttricks.html
+"" 使用 @h 作为 header 宏，之后再按 - ~ = 生产 标题标记
+let @h = "yypVr"
+
 "}}}
 
 

@@ -128,49 +128,42 @@ PR_RESET="%{${reset_color}%}";
 # %R - repository path          版本路径
 # %S - path in the repository   在版本库中到路径
 
-# 为 版本库左右添加 空格
-FMT_BRANCH="${PR_BRIGHT_GREEN} %b${PR_CYAN}%u${PR_WHITE}%c${PR_RESET}"    # e.g. master¹²
-FMT_ACTION="[${PR_CYAN}%a${PR_RESET}%]"              # e.g. (rebase-i)
+# XXX 版本库左右添加 空格
+FMT_BRANCH="${PR_BRIGHT_RED}%b${PR_CYAN}%u${PR_WHITE}%c${PR_RESET}"    # e.g. master¹²
+#FMT_ACTION="(${PR_CYAN}%a${PR_RESET}%)"              # e.g. (rebase-i)
+FMT_ACTION="[${PR_CYAN}%a${PR_RESET}]"              # e.g. (rebase-i)
 # 右边的 ：(ink@king:~/)
 FMT_PATH="%R${PR_YELLOW}/%S"                         # e.g. ~/repo/subdir
 
-# 检查更新，对于比较大到版本库，可能会影响速度，可以禁用
-zstyle ':vcs_info:*:prompt:*' check-for-changes true
+# 关闭对 不常用的 版本控制系统的支持
+# 使用 vcs_info_printsys 可以查看 支持/不支持 的版本控制系统
+zstyle ':vcs_info:*' disable bzr cdv darcs fossil mtn p4 svk tla
+zstyle ':vcs_info:*' enable cvs git hg svn
 
-#zstyle ':vcs_info:*:prompt:*' unstagedstr '¹'  # display ¹ if there are unstaged changes
-#zstyle ':vcs_info:*:prompt:*' stagedstr '²'    # display ² if there are staged changes
-#zstyle ':vcs_info:*:prompt:*' actionformats "${FMT_BRANCH}${FMT_ACTION}//" "${FMT_PATH}"
-#zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}//"              "${FMT_PATH}"
+# :vcs_info:<vcs-string>:<user-context>:<repo-root-name>
+# vcs-string 版本控制系统名称
+# user-context 作为 vcs_info 可选的，自由的配置选项
+# repo-root-name 是 zstyle 要匹配的 repository
+
+# 时事检查更新，才能使 stagedstr / unstagedstr 生效，对于比较大到版本库，可能会影响速度
+zstyle ':vcs_info:*:prompt:*' check-for-changes true
 zstyle ':vcs_info:*:prompt:*' unstagedstr '°'  # display ° if there are unstaged changes
 zstyle ':vcs_info:*:prompt:*' stagedstr   '"'  # display " if there are staged changes
-# 有  git 的目录，git 状态，和 本地目录之间 空格 间隔
+
+# 当前版本库，触发特定操作 (交互式 rebase 变基 / 合并冲突)
+# XXX 本地目录之间 空格 间隔
 zstyle ':vcs_info:*:prompt:*' actionformats "${FMT_BRANCH}${FMT_ACTION}"  "${FMT_PATH}"
-# 没有 git 的目录
+# 一般状态样式
 zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}"               "${FMT_PATH}"
-# [?]
+
+# 没有版本控制 或 禁用版本控制的目录 格式字符串
+# 用于结束 prompt 提示中的 vcs_info 信息
 zstyle ':vcs_info:*:prompt:*' nvcsformats   ""                             "%~"
 
 # [?] zsh 函数定义格式
 function precmd {
     vcs_info 'prompt'
 }
-
-#function lprompt {
-    #local brackets=$1
-    #local color1=$2
-    #local color2=$3
-
-    #local bracket_open="${color1}${brackets[1]}${PR_RESET}"
-    #local bracket_close="${color1}${brackets[2]}"
-
-    #local git='$vcs_info_msg_0_'
-    ## 相对目录，空格添加在此处
-    #local cwd="${color3} %B%1~%b "
-
-    ##PROMPT="${PR_RESET}${bracket_open}${git}${cwd}${bracket_close}○%# ${PR_RESET}"
-    ##PROMPT="${PR_RESET}${bracket_open}${git}${PR_YELLOW}${cwd}${bracket_close}${PR_RED}○ ${PR_RESET}"
-    #PROMPT="${PR_RESET}${bracket_open}${git}${PR_YELLOW}${cwd}${bracket_close}${PR_RED}· ${PR_RESET}"
-#}
 
 function lprompt {
     local git='$vcs_info_msg_0_'
@@ -179,56 +172,22 @@ function lprompt {
     local cwd=" %B%d%b "
 
     #PROMPT="${PR_RESET}${bracket_open}${git}${cwd}${bracket_close}○%# ${PR_RESET}"
-    #PROMPT="${PR_RESET}${bracket_open}${git}${PR_YELLOW}${cwd}${bracket_close}${PR_RED}○ ${PR_RESET}"
-    PROMPT="${PR_RESET}${PR_YELLOW}${cwd}
-${git}${PR_RED} · ${PR_RESET}"
+
+    # XXX promt 中的换行符使用 $prompt_newline
+    #PROMPT="${PR_RESET}${PR_BLUE}${cwd}$prompt_newline ${git}${PR_RED} · ${PR_RESET}"
+
+    # 需要使用 $'\n' 来分隔/断开 prompt 的双引号
+    PROMPT="${PR_RESET}${PR_BLUE}${cwd} "$'\n'" ${git}${PR_RED} · ${PR_RESET}"
 
 }
-## From : typester
-#function lprompt {
 
-    #local git='$vcs_info_msg_0_'
-    ## 相对目录，空格添加在此处
-    #local cwd="%B%1~%b "
-
-## 缩进，会出现在效果中
-#PROMPT='
-#%(?..exit %?)
-#%{[33m%}%~%{[m%}
-#$(pwd)%{[m%}
-#%{[91m%}${git} %{[38m%}%(!.#.$)%{[m%}%{m%} '
-
-#RPROMPT='%{[38m%}[ %n @ %m ]%{m%}%{[00m%}'
-
-#}
-
-
-# [ 右侧：提示 ： (ink@king:~/) ]# {{{
-#--------------------------------------------
-#function rprompt {
-#    local brackets=$1
-#    local color1=$2
-#    local color2=$3
-#
-#    local bracket_open="${color1}${brackets[1]}${PR_RESET}"
-#    local bracket_close="${color1}${brackets[2]}${PR_RESET}"
-#    local colon="${color1}:"
-#    local at="${color1}@${PR_RESET}"
-#
-#    local user_host="${color2}%n${at}${color2}%m"
-#    local vcs_cwd='${${vcs_info_msg_1_%%.}/$HOME/~}'
-#    local cwd="${color2}%B%20<..<${vcs_cwd}%<<%b"
-#    local inner="${user_host}${colon}${cwd}"
-#
-#    RPROMPT="${PR_RESET}${bracket_open}${inner}${bracket_close}${PR_RESET}"
-#}
-# }}}
-
+# 调用 lprompt 函数，初始化 PS1
+lprompt
 #lprompt '[]' $BR_BRIGHT_BLACK $PR_GREEN
-# 不使用 [] 包裹提示符
-lprompt '' $BR_BRIGHT_BLACK $PR_GREEN
-# 不调用 显示右边的 ： (ink@king:~/)
-#rprompt '()' $BR_BRIGHT_BLACK $PR_GREEN
+#lprompt '' $BR_BRIGHT_BLACK $PR_GREEN
+
+
+
 
 # }}}
 
@@ -645,12 +604,17 @@ bindkey '[1;5C' forward-word  # C-right
 
 
 
-# [ 行编辑高亮模式 ] # {{{
+# [ PS1 之后，命令行输入样式 ] # {{{
 #--------------------------------------------
+# man zshzle
+
 # Ctrl+@ 设置标记，标记和光标点之间为 region
 zle_highlight=(region:bg=magenta  #选中区域
                special:bold       #特殊字符
                isearch:underline) #搜索时使用的关键字
+
+zle_highlight+=( default:fg=green,bold )
+
 #}}}
 
 # }}}
@@ -1073,594 +1037,6 @@ _force_rehash() {
 
 
 #}}}
-
-## [ wunjo git zsh PS1 ]# {{{
-##--------------------------------------------
-## 华丽到 提示符
-## From : https://github.com/jcorbin/zsh-git
-#
-##king /home/ink on master(b31b096)
-##1127 ~:master!? %                2011-04-04 14:02:48 ink pts/2
-## ! 有文件修改，没有提交到
-## ? 含有未跟踪文件 untracked file
-## + 添加跟踪文件 git add
-#
-#setopt promptsubst
-#
-#typeset -ga preexec_functions precmd_functions chpwd_functions
-#
-## [ zgitinit 模块定义 ]# {{{
-##--------------------------------------------
-#
-### Load with `autoload -U zgitinit; zgitinit'
-#
-#typeset -gA zgit_info
-#zgit_info=()
-#
-#zgit_chpwd_hook() {
-#	zgit_info_update
-#}
-#
-#zgit_preexec_hook() {
-#	if [[ $2 == git\ * ]] || [[ $2 == *\ git\ * ]]; then
-#		zgit_precmd_do_update=1
-#	fi
-#}
-#
-#zgit_precmd_hook() {
-#	if [ $zgit_precmd_do_update ]; then
-#		unset zgit_precmd_do_update
-#		zgit_info_update
-#	fi
-#}
-#
-#zgit_info_update() {
-#	zgit_info=()
-#
-#	local gitdir="$(git rev-parse --git-dir 2>/dev/null)"
-#	if [ $? -ne 0 ] || [ -z "$gitdir" ]; then
-#		return
-#	fi
-#
-#	zgit_info[dir]=$gitdir
-#	zgit_info[bare]=$(git rev-parse --is-bare-repository)
-#	zgit_info[inwork]=$(git rev-parse --is-inside-work-tree)
-#}
-#
-#zgit_isgit() {
-#	if [ -z "$zgit_info[dir]" ]; then
-#		return 1
-#	else
-#		return 0
-#	fi
-#}
-#
-#zgit_inworktree() {
-#	zgit_isgit || return
-#	if [ "$zgit_info[inwork]" = "true" ]; then
-#		return 0
-#	else
-#		return 1
-#	fi
-#}
-#
-#zgit_isbare() {
-#	zgit_isgit || return
-#	if [ "$zgit_info[bare]" = "true" ]; then
-#		return 0
-#	else
-#		return 1
-#	fi
-#}
-#
-#zgit_head() {
-#	zgit_isgit || return 1
-#
-#	if [ -z "$zgit_info[head]" ]; then
-#		local name=''
-#		name=$(git symbolic-ref -q HEAD)
-#		if [ $? -eq 0 ]; then
-#			if [[ $name == refs/(heads|tags)/* ]]; then
-#				name=${name#refs/(heads|tags)/}
-#			fi
-#		else
-#			name=$(git name-rev --name-only --no-undefined --always HEAD)
-#			if [ $? -ne 0 ]; then
-#				return 1
-#			elif [[ $name == remotes/* ]]; then
-#				name=${name#remotes/}
-#			fi
-#		fi
-#		zgit_info[head]=$name
-#	fi
-#
-#	echo $zgit_info[head]
-#}
-#
-#zgit_branch() {
-#	zgit_isgit || return 1
-#	zgit_isbare && return 1
-#
-#	if [ -z "$zgit_info[branch]" ]; then
-#		local branch=$(git symbolic-ref HEAD 2>/dev/null)
-#		if [ $? -eq 0 ]; then
-#			branch=${branch##*/}
-#		else
-#			branch=$(git name-rev --name-only --always HEAD)
-#		fi
-#		zgit_info[branch]=$branch
-#	fi
-#
-#	echo $zgit_info[branch]
-#	return 0
-#}
-#
-#zgit_tracking_remote() {
-#	zgit_isgit || return 1
-#	zgit_isbare && return 1
-#
-#	local branch
-#	if [ -n "$1" ]; then
-#		branch=$1
-#	elif [ -z "$zgit_info[branch]" ]; then
-#		branch=$(zgit_branch)
-#		[ $? -ne 0 ] && return 1
-#	else
-#		branch=$zgit_info[branch]
-#	fi
-#
-#	local k="tracking_$branch"
-#	local remote
-#	if [ -z "$zgit_info[$k]" ]; then
-#		remote=$(git config branch.$branch.remote)
-#		zgit_info[$k]=$remote
-#	fi
-#
-#	echo $zgit_info[$k]
-#	return 0
-#}
-#
-#zgit_tracking_merge() {
-#	zgit_isgit || return 1
-#	zgit_isbare && return 1
-#
-#	local branch
-#	if [ -z "$zgit_info[branch]" ]; then
-#		branch=$(zgit_branch)
-#		[ $? -ne 0 ] && return 1
-#	else
-#		branch=$zgit_info[branch]
-#	fi
-#
-#	local remote=$(zgit_tracking_remote $branch)
-#	[ $? -ne 0 ] && return 1
-#	if [ -n "$remote" ]; then # tracking branch
-#		local merge=$(git config branch.$branch.merge)
-#		if [ $remote != "." ]; then
-#			merge=$remote/$(basename $merge)
-#		fi
-#		echo $merge
-#		return 0
-#	else
-#		return 1
-#	fi
-#}
-#
-#zgit_isindexclean() {
-#	zgit_isgit || return 1
-#	if git diff --quiet --cached 2>/dev/null; then
-#		return 0
-#	else
-#		return 1
-#	fi
-#}
-#
-#zgit_isworktreeclean() {
-#	zgit_isgit || return 1
-#	if [ -z "$(git ls-files $zgit_info[dir]:h --modified)" ]; then
-#		return 0
-#	else
-#		return 1
-#	fi
-#}
-#
-#zgit_hasuntracked() {
-#	zgit_isgit || return 1
-#	local -a flist
-#	flist=($(git ls-files --others --exclude-standard))
-#	if [ $#flist -gt 0 ]; then
-#		return 0
-#	else
-#		return 1
-#	fi
-#}
-#
-#zgit_hasunmerged() {
-#	zgit_isgit || return 1
-#	local -a flist
-#	flist=($(git ls-files -u))
-#	if [ $#flist -gt 0 ]; then
-#		return 0
-#	else
-#		return 1
-#	fi
-#}
-#
-#zgit_svnhead() {
-#	zgit_isgit || return 1
-#
-#	local commit=$1
-#	if [ -z "$commit" ]; then
-#		commit='HEAD'
-#	fi
-#
-#	git svn find-rev $commit
-#}
-#
-#zgit_rebaseinfo() {
-#	zgit_isgit || return 1
-#	if [ -d $zgit_info[dir]/rebase-merge ]; then
-#		dotest=$zgit_info[dir]/rebase-merge
-#	elif [ -d $zgit_info[dir]/.dotest-merge ]; then
-#		dotest=$zgit_info[dir]/.dotest-merge
-#	elif [ -d .dotest ]; then
-#		dotest=.dotest
-#	else
-#		return 1
-#	fi
-#
-#	zgit_info[dotest]=$dotest
-#
-#	zgit_info[rb_onto]=$(cat "$dotest/onto")
-#	if [ -f "$dotest/upstream" ]; then
-#		zgit_info[rb_upstream]=$(cat "$dotest/upstream")
-#	else
-#		zgit_info[rb_upstream]=
-#	fi
-#	if [ -f "$dotest/orig-head" ]; then
-#		zgit_info[rb_head]=$(cat "$dotest/orig-head")
-#	elif [ -f "$dotest/head" ]; then
-#		zgit_info[rb_head]=$(cat "$dotest/head")
-#	fi
-#	zgit_info[rb_head_name]=$(cat "$dotest/head-name")
-#
-#	return 0
-#}
-#
-##add-zsh-hook chpwd zgit_chpwd_hook
-##add-zsh-hook preexec zgit_preexec_hook
-##add-zsh-hook precmd zgit_precmd_hook
-#
-##typeset -ga preexec_functions precmd_functions chpwd_functions
-#
-#chpwd_functions+=zgit_chpwd_hook
-#preexec_functions+=zgit_preexec_hook
-#precmd_functions+=zgit_precmd_hook
-#
-## 调用 git prompt 更新函数
-#zgit_info_update
-#
-#
-#
-#
-## }}}
-#
-## [ wunjo prompt theme ]# {{{
-##--------------------------------------------
-#
-## XXX 若，将 zgitinit 独立放到 zgitinit function 文件
-## 使用下面命令，加载 zgitinit 自定义模块
-##autoload -U zgitinit
-##zgitinit
-#
-## 不独立到 function 文件，.zshrc 每次调用，都会执行，输出帮助。注释
-##prompt_wunjo_help () {
-##  cat <<'EOF'
-##
-##  prompt wunjo
-##
-##EOF
-##}
-#
-#revstring() {
-#	git describe --tags --always $1 2>/dev/null ||
-#	git rev-parse --short $1 2>/dev/null
-#}
-#
-#coloratom() {
-#	local off=$1 atom=$2
-#	if [[ $atom[1] == [[:upper:]] ]]; then
-#		off=$(( $off + 60 ))
-#	fi
-#	echo $(( $off + $colorcode[${(L)atom}] ))
-#}
-#colorword() {
-#	local fg=$1 bg=$2 att=$3
-#	local -a s
-#
-#	if [ -n "$fg" ]; then
-#		s+=$(coloratom 30 $fg)
-#	fi
-#	if [ -n "$bg" ]; then
-#		s+=$(coloratom 40 $bg)
-#	fi
-#	if [ -n "$att" ]; then
-#		s+=$attcode[$att]
-#	fi
-#
-#	echo "%{"$'\e['${(j:;:)s}m"%}"
-#}
-#
-#prompt_wunjo_setup() {
-#	local verbose
-#	if [[ $TERM == screen* ]] && [ -n "$STY" ]; then
-#		verbose=
-#	else
-#		verbose=1
-#	fi
-#
-#	typeset -A colorcode
-#	colorcode[black]=0
-#	colorcode[red]=1
-#	colorcode[green]=2
-#	colorcode[yellow]=3
-#	colorcode[blue]=4
-#	colorcode[magenta]=5
-#	colorcode[cyan]=6
-#	colorcode[white]=7
-#	colorcode[default]=9
-#	colorcode[k]=$colorcode[black]
-#	colorcode[r]=$colorcode[red]
-#	colorcode[g]=$colorcode[green]
-#	colorcode[y]=$colorcode[yellow]
-#	colorcode[b]=$colorcode[blue]
-#	colorcode[m]=$colorcode[magenta]
-#	colorcode[c]=$colorcode[cyan]
-#	colorcode[w]=$colorcode[white]
-#	colorcode[.]=$colorcode[default]
-#
-#	typeset -A attcode
-#	attcode[none]=00
-#	attcode[bold]=01
-#	attcode[faint]=02
-#	attcode[standout]=03
-#	attcode[underline]=04
-#	attcode[blink]=05
-#	attcode[reverse]=07
-#	attcode[conceal]=08
-#	attcode[normal]=22
-#	attcode[no-standout]=23
-#	attcode[no-underline]=24
-#	attcode[no-blink]=25
-#	attcode[no-reverse]=27
-#	attcode[no-conceal]=28
-#
-#	local -A pc
-#	pc[default]='default'
-#	pc[date]='cyan'
-#	pc[time]='Blue'
-#	pc[host]='Green'
-#	pc[user]='cyan'
-#	pc[punc]='yellow'
-#	pc[line]='magenta'
-#	pc[hist]='green'
-#	pc[path]='Cyan'
-#	pc[shortpath]='default'
-#	pc[rc]='red'
-#	pc[scm_branch]='Cyan'
-#	pc[scm_commitid]='Yellow'
-#	pc[scm_status_dirty]='Red'
-#	pc[scm_status_staged]='Green'
-#	pc[#]='Yellow'
-#	for cn in ${(k)pc}; do
-#		pc[${cn}]=$(colorword $pc[$cn])
-#	done
-#	pc[reset]=$(colorword . . 00)
-#
-#	typeset -Ag wunjo_prompt_colors
-#	wunjo_prompt_colors=(${(kv)pc})
-#
-#	local p_date p_line p_rc
-#
-#	p_date="$pc[date]%D{%Y-%m-%d} $pc[time]%D{%T}$pc[reset]"
-#
-#	p_line="$pc[line]%y$pc[reset]"
-#
-#	PROMPT=
-#	if [ $verbose ]; then
-#		PROMPT+="$pc[host]%m$pc[reset] "
-#	fi
-#	PROMPT+="$pc[path]%(2~.%~.%/)$pc[reset]"
-#	PROMPT+="\$(prompt_wunjo_scm_status)"
-#	PROMPT+="%(?.. $pc[rc]exited %1v$pc[reset])"
-#	PROMPT+="
-#"
-#	PROMPT+="$pc[hist]%h$pc[reset] "
-#	PROMPT+="$pc[shortpath]%1~$pc[reset]"
-#	PROMPT+="\$(prompt_wunjo_scm_branch)"
-#	PROMPT+=" $pc[#]%#$pc[reset] "
-#
-#	RPROMPT=
-#	if [ $verbose ]; then
-#		RPROMPT+="$p_date "
-#	fi
-#	RPROMPT+="$pc[user]%n$pc[reset]"
-#	RPROMPT+=" $p_line"
-#
-##typeset -ga preexec_functions precmd_functions chpwd_functions
-#
-#	#add-zsh-hook precmd 
-#	export PROMPT RPROMPT
-#	#add-zsh-hook precmd prompt_wunjo_precmd
-#    # add-zsh-hook 函数，不能用了
-#    precmd_functions+=prompt_wunjo_precmd
-#}
-#
-#prompt_wunjo_precmd() {
-#	local ex=$?
-#	psvar=()
-#
-#	if [[ $ex -ge 128 ]]; then
-#		sig=$signals[$ex-127]
-#		psvar[1]="sig${(L)sig}"
-#	else
-#		psvar[1]="$ex"
-#	fi
-#}
-#
-#prompt_wunjo_scm_status() {
-#	zgit_isgit || return
-#	local -A pc
-#	pc=(${(kv)wunjo_prompt_colors})
-#
-#	head=$(zgit_head)
-#	gitcommit=$(revstring $head)
-#
-#	local -a commits
-#
-#	if zgit_rebaseinfo; then
-#		orig_commit=$(revstring $zgit_info[rb_head])
-#		orig_name=$(git name-rev --name-only $zgit_info[rb_head])
-#		orig="$pc[scm_branch]$orig_name$pc[punc]($pc[scm_commitid]$orig_commit$pc[punc])"
-#		onto_commit=$(revstring $zgit_info[rb_onto])
-#		onto_name=$(git name-rev --name-only $zgit_info[rb_onto])
-#		onto="$pc[scm_branch]$onto_name$pc[punc]($pc[scm_commitid]$onto_commit$pc[punc])"
-#
-#		if [ -n "$zgit_info[rb_upstream]" ] && [ $zgit_info[rb_upstream] != $zgit_info[rb_onto] ]; then
-#			upstream_commit=$(revstring $zgit_info[rb_upstream])
-#			upstream_name=$(git name-rev --name-only $zgit_info[rb_upstream])
-#			upstream="$pc[scm_branch]$upstream_name$pc[punc]($pc[scm_commitid]$upstream_commit$pc[punc])"
-#			commits+="rebasing $upstream$pc[reset]..$orig$pc[reset] onto $onto$pc[reset]"
-#		else
-#			commits+="rebasing $onto$pc[reset]..$orig$pc[reset]"
-#		fi
-#
-#		local -a revs
-#		revs=($(git rev-list $zgit_info[rb_onto]..HEAD))
-#		if [ $#revs -gt 0 ]; then
-#			commits+="\n$#revs commits in"
-#		fi
-#
-#		if [ -f $zgit_info[dotest]/message ]; then
-#			mess=$(head -n1 $zgit_info[dotest]/message)
-#			commits+="on $mess"
-#		fi
-#	elif [ -n "$gitcommit" ]; then
-#		commits+="on $pc[scm_branch]$head$pc[punc]($pc[scm_commitid]$gitcommit$pc[punc])$pc[reset]"
-#		local track_merge=$(zgit_tracking_merge)
-#		if [ -n "$track_merge" ]; then
-#			if git rev-parse --verify -q $track_merge >/dev/null; then
-#				local track_remote=$(zgit_tracking_remote)
-#				local tracked=$(revstring $track_merge 2>/dev/null)
-#
-#				local -a revs
-#				revs=($(git rev-list --reverse $track_merge..HEAD))
-#				if [ $#revs -gt 0 ]; then
-#					local base=$(revstring $revs[1]~1)
-#					local base_name=$(git name-rev --name-only $base)
-#					local base_short=$(revstring $base)
-#					local word_commits
-#					if [ $#revs -gt 1 ]; then
-#						word_commits='commits'
-#					else
-#						word_commits='commit'
-#					fi
-#
-#					local conj="since"
-#					if [[ "$base" == "$tracked" ]]; then
-#						conj+=" tracked"
-#						tracked=
-#					fi
-#					commits+="$#revs $word_commits $conj $pc[scm_branch]$base_name$pc[punc]($pc[scm_commitid]$base_short$pc[punc])$pc[reset]"
-#				fi
-#
-#				if [ -n "$tracked" ]; then
-#					local track_name=$track_merge
-#					if [[ $track_remote == "." ]]; then
-#						track_name=${track_name##*/}
-#					fi
-#					tracked=$(revstring $tracked)
-#					commits+="tracking $pc[scm_branch]$track_name$pc[punc]"
-#					if [[ "$tracked" != "$gitcommit" ]]; then
-#						commits[$#commits]+="($pc[scm_commitid]$tracked$pc[punc])"
-#					fi
-#					commits[$#commits]+="$pc[reset]"
-#				fi
-#			fi
-#		fi
-#	fi
-#
-#	gitsvn=$(git rev-parse --verify -q --short git-svn)
-#	if [ $? -eq 0 ]; then
-#		gitsvnrev=$(zgit_svnhead $gitsvn)
-#		gitsvn=$(revstring $gitsvn)
-#		if [ -n "$gitsvnrev" ]; then
-#			local svninfo=''
-#			local -a revs
-#			svninfo+="$pc[default]svn$pc[punc]:$pc[scm_branch]r$gitsvnrev"
-#			revs=($(git rev-list git-svn..HEAD))
-#			if [ $#revs -gt 0 ]; then
-#				svninfo+="$pc[punc]@$pc[default]HEAD~$#revs"
-#				svninfo+="$pc[punc]($pc[scm_commitid]$gitsvn$pc[punc])"
-#			fi
-#			commits+=$svninfo
-#		fi
-#	fi
-#
-#	if [ $#commits -gt 0 ]; then
-#		echo -n " ${(j: :)commits}"
-#	fi
-#}
-#
-#prompt_wunjo_scm_branch() {
-#	zgit_isgit || return
-#	local -A pc
-#	pc=(${(kv)wunjo_prompt_colors})
-#
-#	echo -n "$pc[punc]:$pc[scm_branch]$(zgit_head)"
-#
-#	if zgit_inworktree; then
-#		if ! zgit_isindexclean; then
-#			echo -n "$pc[scm_status_staged]+"
-#		fi
-#
-#		local -a dirty
-#		if ! zgit_isworktreeclean; then
-#			dirty+='!'
-#		fi
-#
-#		if zgit_hasunmerged; then
-#			dirty+='*'
-#		fi
-#
-#		if zgit_hasuntracked; then
-#			dirty+='?'
-#		fi
-#
-#		if [ $#dirty -gt 0 ]; then
-#			echo -n "$pc[scm_status_dirty]${(j::)dirty}"
-#		fi
-#	fi
-#
-#	echo $pc[reset]
-#}
-#
-#prompt_wunjo_setup "$@"
-#
-## }}}
-#
-## XXX 若，将 promptinit 独立放到 function 文件
-## 使用下面命令，加载 promptinit 自定义模块
-##autoload -U promptinit
-##promptinit
-#
-## 调用 wunjo prompt theme
-##prompt wunjo
-#
-#
-#
-#
-## }}}
 
 # [  ]# {{{
 #--------------------------------------------
