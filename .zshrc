@@ -1017,8 +1017,11 @@ watch=(notme)
 # replace the default beep with a message
 #ZBEEP="\e[?5h\e[?5l"        # visual beep
 
-# 以下字符视为单词的一部分
+## 除了字母和数字之外还有哪些符号是一个单词可以包含的
+## 默认值: ?*_-.[]~=/&;!#$%^(){}<>
+## 去掉 / 在使用 C-w 删除单词时，可以逐一删除路径，而不是一次整个删除路径
 WORDCHARS='*?_-[]~=&;!#$%^(){}<>'
+
 
 #[Esc][h] man 当前命令时，显示简短说明
 alias run-help >&/dev/null && unalias run-help

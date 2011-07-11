@@ -60,11 +60,11 @@ drop default
 # 添加名为 web 的工作组，并加载导出的窗口布局
 # 窗口布局使用 dump 命令导出，细节参考 man
 #use 2
-load .firefox.musca
+load $HOME/.musca/firefox
 
 # 切换到原来第一个工作组
 use 1
-load .xterm.musca
+load $HOME/.musca/xterm
 
 # }}}
 
@@ -320,6 +320,12 @@ bind on Mod4+Control+Shift+z exec R=$(echo -e 'poweroff\nreboot\nmusca -c quit' 
 #bind on Mod4+t musca "say $(date +'%H:%M  %a %_d %b %Y')"
 
 
+## 添加一个叫web的工作组，并加载我导出的窗口布局，上网用
+#add web
+#load .mweb
+## 切换到原来第一个工作组
+#use 0
+#load .mdefault
 
 
 
