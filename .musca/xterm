@@ -1,0 +1,5 @@
+group	0	0	15	0	1
+frame	0	15	683	753	0	xterm	unknown
+frame	683	15	683	753	0	xterm	unknown
+window	0	xterm	~	unknown
+window	1	xterm	~	unknown

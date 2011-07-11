@@ -1,0 +1,7 @@
+group	0	0	15	0	3
+frame	240	15	856	753	0	gimp	gimp-image-window
+frame	0	15	240	753	0	gimp	gimp-toolbox
+frame	1096	15	270	753	0	gimp	gimp-dock
+window	0	gimp	GNU Image Manipulation Program	gimp-image-window
+window	1	gimp	Layers, Channels, Paths, Undo - Brushes, Patterns, Gradients	gimp-dock
+window	2	gimp	Toolbox	gimp-toolbox
