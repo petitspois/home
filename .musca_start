@@ -3,6 +3,9 @@
 # [ 虚拟桌面 ]# {{{
 #--------------------------------------------
 
+## [ 拉丁风格 ]# {{{
+##--------------------------------------------
+#
 #add alpha
 #add beta
 #add gamma
@@ -13,20 +16,11 @@
 #add theta
 #add iota
 #add kappa
-#use alpha
-#drop default
-
-#bind on Mod4+1 use alpha
-#bind on Mod4+2 use beta
-#bind on Mod4+3 use gamma
-#bind on Mod4+4 use delta
-#bind on Mod4+5 use epsilon
-#bind on Mod4+6 use zeta
-#bind on Mod4+7 use eta
-#bind on Mod4+8 use theta
-#bind on Mod4+9 use iota
-#bind on Mod4+9 use kappa
-
+#
+## }}}
+#
+# [ 默认风格 ]# {{{
+#--------------------------------------------
 # bindings to switch between groups
 # 切换虚拟桌面
 bind on Mod4+0 use 0
@@ -51,22 +45,67 @@ bind on Mod4+Shift+7 move 7
 bind on Mod4+Shift+8 move 8
 bind on Mod4+Shift+9 move 9
 
-drop default
-#use 1
+# }}}
 
-# [ layout ]# {{{
+# [ layout 布局 ]# {{{
 #--------------------------------------------
 
-# 添加名为 web 的工作组，并加载导出的窗口布局
+# 使用 use 添加 web 的工作组，并加载导出的窗口布局
 # 窗口布局使用 dump 命令导出，细节参考 man
-#use 2
-load $HOME/.musca/firefox
 
-# 切换到原来第一个工作组
+## XXX 在创建虚拟桌面分组后，立即加载桌面布局
+## 否则要使用 use <group.name> | load <layout>
+#use alpha
+#load .musca/xterm
+#use beta
+#load .musca/firefox
+#drop default
+
+## 需要先跳转到 0 缓冲，否则 firefox 无法载入
+use 0
+add 2
+use 2
+load .musca/www
 use 1
-load $HOME/.musca/xterm
+load .musca/xterm
+## 不能 drop 否则默认 0-default --> 0-1
+##drop default
+
+# 使用 $HOME / ~ / "$HOME" / "~" 都不是 musca 可识别的路径
+# 默认，好像就是 $HOME 了，直接使用相对路径即可
+## XXX load $HOME/.musca/xterm
+#load .musca/xterm
+
 
 # }}}
+
+## [ 拉丁风格 快捷键 ]# {{{
+##--------------------------------------------
+#
+#bind on Mod4+1 use alpha
+#bind on Mod4+2 use beta
+#bind on Mod4+3 use gamma
+#bind on Mod4+4 use delta
+#bind on Mod4+5 use epsilon
+#bind on Mod4+6 use zeta
+#bind on Mod4+7 use eta
+#bind on Mod4+8 use theta
+#bind on Mod4+9 use iota
+#bind on Mod4+9 use kappa
+#
+#bind on Mod4+Shift+0 move alpha
+#bind on Mod4+Shift+1 move beta
+#bind on Mod4+Shift+2 move gamma
+#bind on Mod4+Shift+3 move delta
+#bind on Mod4+Shift+4 move epsilon
+#bind on Mod4+Shift+5 move zeta
+#bind on Mod4+Shift+6 move eta
+#bind on Mod4+Shift+7 move theta
+#bind on Mod4+Shift+8 move iota
+#bind on Mod4+Shift+9 move kappa
+#
+## }}}
+#
 
 # }}}
 
@@ -78,6 +117,8 @@ manage off conky
 manage off fcitx
 # mplayer 支持全屏 [?]
 manage off mplayer
+# 使用 xprop 查看窗口 信息
+manage off QEMU
 manage off tint2
 manage off trayer
 manage off stalonetray
@@ -187,12 +228,26 @@ exec xmobar
 
 # }}}
 
-# 按 Mod4+q 退出 musca
-bind on Mod4+Shift+q quit
+#bind on Mod4+` shell
+## 使用 xev 查看，键盘按键对应的名称
+bind on Mod4+grave command
+
+# semicolon 分号
+bind on Mod4+semicolon shell
+bind on Mod4+Shift+semicolon command
+#bind on KP_Subtract command
+
+#bind off Mod4+r
+#bind on Mod4+r shell
+
+bind on Mod4+Return exec xterm
+#bind on Mod4+Return exec urxvt -e screen -m
 
 bind on Mod4+f only
-bind off Mod4+o
 
+# vsplit / hsplit <relative|pixel>
+# <relative> 可以是 百分比 75% 或 分数 3/4
+bind off Mod4+o
 bind on Mod4+o vsplit 1/2
 bind on Mod4+i hsplit 1/2
 
@@ -200,6 +255,7 @@ bind on Mod4+i hsplit 1/2
 bind on Mod4+comma             height 50%
 bind on Mod4+period            width 50%
 
+# Mod4+k 容易误操作，所以改为 alt-F4
 bind off Mod4+k
 bind on Mod1+F4 kill
 #bind on Mod1+Shift+k kill
@@ -207,15 +263,12 @@ bind on Mod1+F4 kill
 bind on Mod4+space stack flip
 bind on Mod4+Shift+b border flip
 
-#bind off Mod4+r
-#bind on Mod4+r shell
-
 # 切换相邻的虚拟桌面
 bind on Mod4+n use (next)
 bind on Mod4+p use (prev)
 
 #bind on Mod4+c cycle
-bind on Mod4+o cycle local
+#bind on Mod4+o cycle local
 
 # Alt + j/k/h/l 聚焦窗口
 bind on Mod1+j focus down
@@ -242,17 +295,20 @@ bind on Mod4+Control+j resize down
 # XXX 切换到另一个 "显示器"
 #bind on Mod4+Tab screen (next)
 
+# 退出 / 重启 musca
+bind on Mod4+Shift+q quit
+bind on Mod4+Control+r run ~/.musca_start
 
-bind on Mod4+` shell
+bind on Mod4+Control+Shift+z exec R=$(echo -e 'poweroff\nreboot\nmusca -c quit' | eval $(musca -c 'silent show settings' | sed -ne '/set dmenu /s///p')) && $R
 
-bind on Mod4+Return exec xterm
-#bind on Mod4+Return exec urxvt -e screen -m
+# http://ks-kb.blogspot.com/2010/03/musca-manual-tiling-x-window-manager.html
+# 下面的命令无法执行，是错误的命令格式，直接使用 dump 即可
+    # musca -c dump $HOME/.musca/6
+    # musca "dump $HOME/.musca/9"
+    # musca -c "dump $HOME/.musca/8"
+bind on Mod4+Control+7 dump .musca/7
 
-#bind on KP_Subtract command
-#bind on Mod4+c command
-
-#bind on Mod4+a dedicate flip
-#bind on Mod4+s catchall flip
+#bind on Mod4+t "say $(date +'%H:%M  %a %_d %b %Y')"
 
 # [ apps ] #--------------------------------------------
 
@@ -265,15 +321,15 @@ bind on Mod4+Return exec xterm
 
 
 
+
+
 # }}}
 
+# [ hook ]# {{{
+#--------------------------------------------
 
 ## 启动 pidgin 自动换为 stacking 模式
 #hook on pidgin stack on
-
-# vsplit / hsplit <relative|pixel>
-# <relative> 可以是 百分比 75% 或 分数 3/4
-
 
 # Musca/dzen2 tips and tricks – Part 1
 # http://aperturefever.wordpress.com/2009/06/08/musca-tips-and-tricks/
@@ -286,54 +342,44 @@ hook on ^g1mp stack on
 # 如果配置好 gimp 的布局，可以使用下面 hook 加载
 #hook on ^g1mp load gimpfoo
 
+# }}}
+
+# [ dzen2 扩展 ]# {{{
+#--------------------------------------------
 # 结合 dzen2 自定义的查看相关信息的 musca 扩展命令
 
-alias dfh exec (echo Disk Usage; df -h ; sleep 4) | dzen2 -l 17 -fg white -bg grey10 -w 400 -fn '-*-dina-medium-r-normal-*-*-*-*-*-*-*-*-*' -e 'onstart=uncollapse'
+#alias dfh exec (echo Disk Usage; df -h ; sleep 4) | dzen2 -l 17 -fg white -bg grey10 -w 400 -fn '-*-dina-medium-r-normal-*-*-*-*-*-*-*-*-*' -e 'onstart=uncollapse'
 
-alias weatherget exec (echo Weather Report; weatherget -s GRXX0004 --metric ; sleep 4) | dzen2 -l 17 -fg white -bg grey10 -w 400 -fn '-*-dina-medium-r-normal-*-*-*-*-*-*-*-*-*' -e 'onstart=uncollapse'
+#alias weatherget exec (echo Weather Report; weatherget -s GRXX0004 --metric ; sleep 4) | dzen2 -l 17 -fg white -bg grey10 -w 400 -fn '-*-dina-medium-r-normal-*-*-*-*-*-*-*-*-*' -e 'onstart=uncollapse'
 
+
+
+
+
+# }}}
+
+# [ notify ]# {{{
+#--------------------------------------------
+
+# 使用 xmessage 作为 提示 对话框，设置显示时间为 2s 之后自动关闭
+# 要使 xmessage 居中生效，XXX 需要 manage off xmessage
+set notify xmessage -center -timeout 1 -file -
+#set notify xmessage -center -file -
+
+#silent set notify echo "$(cat)" | dzen2 -p 4 -bg \#D00 -fg white -fn '-misc-fixed-medium-r-normal--15-*-*-*-*-*-iso10646'
 
 # 需要安装 notify-send 软件包 # From : man musca
 #set notify notify-send -t 3000 Musca "$(cat)"
 
-# 使用 xmessage 作为 提示 对话框，设置显示时间为 2s 之后自动关闭
-# 要使 xmessage 居中生效，XXX 需要 manage off xmessage
-set notify xmessage -center -timeout 2 -file -
-
-# http://ks-kb.blogspot.com/2010/03/musca-manual-tiling-x-window-manager.html
-bind on Mod4+Control+9 musca "dump $HOME/.musca-9"
-bind on Mod4+Control+8 musca "dump $HOME/.musca-8"
-bind on Mod4+Control+7 musca "dump $HOME/.musca-7"
-
-bind on Mod4+Shift+9 musca "load $HOME/.musca-9"
-bind on Mod4+Shift+8 musca "load $HOME/.musca-8"
-bind on Mod4+Shift+7 musca "load $HOME/.musca-7"
-
-# semicolon 分号
-bind on Mod4+Shift+semicolon command
-bind on Mod4+semicolon shell
-
-#silent set notify echo "$(cat)" | dzen2 -p 4 -bg \#D00 -fg white -fn '-misc-fixed-medium-r-normal--15-*-*-*-*-*-iso10646'
-
-bind on Mod4+Control+Shift+z exec R=$(echo -e 'poweroff\nreboot\nmusca -c quit' | eval $(musca -c 'silent show settings' | sed -ne '/set dmenu /s///p')) && $R
-
-#bind on Mod4+t musca "say $(date +'%H:%M  %a %_d %b %Y')"
-
-
-## 添加一个叫web的工作组，并加载我导出的窗口布局，上网用
-#add web
-#load .mweb
-## 切换到原来第一个工作组
-#use 0
-#load .mdefault
 
 
 
 
 
+# }}}
 
 
-
+#https://github.com/lvii/home/blob/all/.musca_start
 
 
 

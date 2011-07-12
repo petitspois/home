@@ -33,9 +33,8 @@ alias l='ls -1X'
 #alias ll='ls -lh --time-style=+%Y-%m-%d'
 #alias ll='ls -lh --time-style=long-iso'
 # XXX 注意，开头的 $ 符号转义。时间戳 颜色 格式化 From : roylez
-#alias ll=$'ls -lh --color=auto -X --time-style="+\e[33m[ \e[36m%Y-%m-%d \e[35m%k:%M\e[33m ]\e[m"'
-#alias ll=$'ls -lh --color=auto -X --time-style="+\e[35m[ \e[36m%Y-%m-%d \e[35m]\e[m"'
-alias ll=$'ls -lh --color=auto -X --time-style="+\e[36m%Y-%m-%d\e[m"'
+#alias ll=$'ls --color=auto --time-style="+\e[33m[ \e[36m%Y-%m-%d \e[35m%k:%M\e[33m ]\e[m"'
+alias ll=$'ls -lh --color=auto -X --time-style="+\e[35m| \e[36m%Y-%m-%d \e[35m|\e[m"'
 alias la='ls -A'
 alias lx='ls -xX'
 
