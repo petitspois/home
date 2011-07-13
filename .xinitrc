@@ -95,10 +95,10 @@ fvwm*)
 #	exec fvwm2
 	#exec ck-launch-session fvwm2
     # 使 pcmanfm2 使用 udisks 自动挂载
-	exec dbus-launch ck-launch-session fvwm2
+	exec ck-launch-session dbus-launch fvwm2
 	;;
 musca)
-	exec dbus-launch ck-launch-session musca
+	exec ck-launch-session dbus-launch musca
 #	exec musca
 	;;	  
 i3)
@@ -115,7 +115,7 @@ openbox)
 	exec openbox-session
 	;;	  
 awesome)
-	exec dbus-launch ck-launch-session awesome
+	exec ck-launch-session dbus-launch awesome
 #	exec awesome
 	;;	  
 *)

@@ -457,34 +457,34 @@ URxvt*colorBD: color4
 URxvt*colorIT: color3
 URxvt*colorUL: color7
 
-! https://github.com/Jorick/config/blob/master/Xdefaults
-! soft scheme ! 2011.7.7
-!*background: #151617
-!*foreground: #d6d9ba
-! Black + DarkGrey
-URxvt*color0: #111111
-URxvt*color8: #555753
-! DarkRed + Red
-URxvt*color1: #d74005
-URxvt*color9: #d76d05
-! DarkGreen + Green
-URxvt*color2: #93d44f
-URxvt*color10: #c8e7a8
-! DarkYellow + Yellow
-URxvt*color3: #d3e13b
-URxvt*color11: #dee566
-! DarkBlue + Blue
-URxvt*color4: #23abd2
-URxvt*color12: #23c8d2
-! DarkMangenta + Mangenta
-URxvt*color5: #de1629
-URxvt*color13: #dc3343
-!DarkCyan + Cyan (both not tango)
-URxvt*color6: #89b6e2
-URxvt*color14: #46a4ff
-! LightGrey + White
-URxvt*color7: #b8b8b8
-URxvt*color15: #ffffff
+!! https://github.com/Jorick/config/blob/master/Xdefaults
+!! soft scheme ! 2011.7.7
+!!*background: #151617
+!!*foreground: #d6d9ba
+!! Black + DarkGrey
+!URxvt*color0: #111111
+!URxvt*color8: #555753
+!! DarkRed + Red
+!URxvt*color1: #d74005
+!URxvt*color9: #d76d05
+!! DarkGreen + Green
+!URxvt*color2: #93d44f
+!URxvt*color10: #c8e7a8
+!! DarkYellow + Yellow
+!URxvt*color3: #d3e13b
+!URxvt*color11: #dee566
+!! DarkBlue + Blue
+!URxvt*color4: #23abd2
+!URxvt*color12: #23c8d2
+!! DarkMangenta + Mangenta
+!URxvt*color5: #de1629
+!URxvt*color13: #dc3343
+!!DarkCyan + Cyan (both not tango)
+!URxvt*color6: #89b6e2
+!URxvt*color14: #46a4ff
+!! LightGrey + White
+!URxvt*color7: #b8b8b8
+!URxvt*color15: #ffffff
 
 ! }}}
 
@@ -572,6 +572,22 @@ xmessage*font: -*-clean-*-*-*-*-*-*-*-*-*-*-iso8859-2
 
 !!}}}
 
+urxvt*color0:                  #1B1D1E
+urxvt*color8:                  #505354
+urxvt*color1:                  #F92672
+urxvt*color9:                  #FF5995
+urxvt*color2:                  #82B414
+urxvt*color10:                 #B6E354
+urxvt*color3:                  #FD971F
+urxvt*color11:                 #FEED6C
+urxvt*color4:                  #56C2D6
+urxvt*color12:                 #8CEDFF
+urxvt*color5:                  #8C54FE
+urxvt*color13:                 #9E6FFE
+urxvt*color6:                  #465457
+urxvt*color14:                 #899CA1
+urxvt*color7:                  #CCCCC6
+urxvt*color15:                 #F8F8F2
 
 
 

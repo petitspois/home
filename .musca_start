@@ -181,8 +181,8 @@ set dmenu dmenu -b -i -nb grey20 -nf '#a1b5cd' -fn "-*-snap-*-*-*-*-*-*-*-*-*-*-
 #exec conky
 #exec stalonetray
 #exec xbindkeys
-#exec feh --bg-scale ~/pic/wall/fedora.15.png
-exec feh --bg-center ~/pic/wall/Le.Corbusier.Tree.png
+#exec feh --bg-center ~/pic/wall/Le.Corbusier.Tree.png
+exec feh --bg-scale ~/pic/wall/sailor.starrynight.jpg
 exec xmobar
 
 # unclutter 用来隐藏 X 鼠标/光标
@@ -230,15 +230,15 @@ exec xmobar
 
 #bind on Mod4+` shell
 ## 使用 xev 查看，键盘按键对应的名称
-bind on Mod4+grave command
+bind on Mod4+grave shell
 
 # semicolon 分号
 bind on Mod4+semicolon shell
 bind on Mod4+Shift+semicolon command
 #bind on KP_Subtract command
 
-#bind off Mod4+r
-#bind on Mod4+r shell
+bind off Mod4+t
+bind on Mod4+t exec urxvt
 
 bind on Mod4+Return exec xterm
 #bind on Mod4+Return exec urxvt -e screen -m
