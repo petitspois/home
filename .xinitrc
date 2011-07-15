@@ -9,10 +9,26 @@
 # NetBeans java 程序 字体开启抗锯齿
 #export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
 
-# pcmanfm2 使用 gvfs 挂载设备
-if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
-	eval "$(dbus-launch --sh-syntax --exit-with-session)"
+# [ dbus-launch ]#{{{
+#--------------------------------------------
+
+## https://wiki.archlinux.org/index.php/D-Bus
+## 如果存在，载入 dbus-launch 初始化脚本
+#if [ -d /etc/X11/xinit/xinitrc.d ]; then
+#    for f in /etc/X11/xinit/xinitrc.d/*; do
+#        [ -x "$f" ] && . "$f"
+#    done
+#    unset f
+#fi
+
+# pcmanfm 使用 gvfs 挂载移动设备时需要用到
+# 依赖：dbus-launch --> 软件包 dbus
+dbuslaunch="`which dbus-launch 2>/dev/null`"
+if [ -n "$dbuslaunch" ] && [ -x "$dbuslaunch" ] && [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
+  eval `$dbuslaunch --sh-syntax --exit-with-session`
 fi
+
+#}}}
 
 # [ fcitx iput  ]# {{{
 #-------------------------------------------
@@ -50,7 +66,7 @@ fcitx &
 #--------------------------------------------
 #urxvt &
 #tilda &
-#xterm &
+xterm &
 
 # awesome 启用透明功能，依赖
 #xcompmgr &
@@ -92,35 +108,44 @@ DEFAULTSESSION=musca
 
 case $1 in
 fvwm*)
-#	exec fvwm2
-	#exec ck-launch-session fvwm2
-    # 使 pcmanfm2 使用 udisks 自动挂载
 	exec ck-launch-session dbus-launch fvwm2
+	#exec fvwm2
+	;;
+openbox)
+	exec ck-launch-session dbus-launch openbox-session
+	#exec openbox-session
 	;;
 musca)
-	exec ck-launch-session dbus-launch musca
-#	exec musca
-	;;	  
-i3)
-	exec i3
-	;;	  
-subtle)
-	exec subtle
-#    exec /usr/bin/subtle &> $HOME/.config/subtle/logs/subtle-$(date +"%F-%k-%M").log
-	;;	  
-compiz)
-	sh /usr/local/bin/start-fusion.sh
-	;;	  
-openbox)
-	exec openbox-session
-	;;	  
+	#exec ck-launch-session dbus-launch musca
+    # 在 slim 中加载 ck-launch-session 和 dbus-launch
+    # 如果不使用 slim ,使用 .xinitrc 中无法加载 ck-launch-session
+	exec musca
+	;;
 awesome)
 	exec ck-launch-session dbus-launch awesome
-#	exec awesome
-	;;	  
+	#exec awesome
+	;;
+i3)
+	exec ck-launch-session dbus-launch i3
+	#exec i3
+	;;
+subtle)
+	exec ck-launch-session dbus-launch subtle
+	#exec subtle
+    #exec /usr/bin/subtle &> $HOME/.config/subtle/logs/subtle-$(date +"%F-%k-%M").log
+	;;
+compiz)
+	#exec ck-launch-session dbus-launch $HOME/.compiz.sh
+	exec $HOME/.compiz.sh
+	#ck-launch-session dbus-launch  $HOME/.compiz.sh
+	#sh /usr/local/bin/start-fusion.sh
+    #compiz ccp &
+    #thunar &
+    #xterm
+	;;
 *)
 	exec $DEFAULTSESSION
-	;;	  
+	;;
 esac
 
 # }}}

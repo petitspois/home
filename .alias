@@ -156,8 +156,9 @@ alias b.="source ~/.bashrc"
 alias ww="wicd-curses"
 
 alias v="vim"
+alias vd="vimdiff"
 
-
+alias mykvm="qemu-kvm -hda xp.img -m 512 -boot c -vga std -localtime"
 
 
 # }}}
@@ -277,7 +278,8 @@ alias Y="yaourt"
 
 # 在 后面添加 空格，可以实现自动补全
 alias spm='sudo pacman'
-alias pac="sudo pacman -S "
+# --need 跳过已经是最新的安装包，不重新安装
+alias pac="sudo pacman -S --need"
 alias pq='pacman -Q '
 alias pi='pacman -Qi '
 alias pl='pacman -Ql '
@@ -310,7 +312,7 @@ pacsearch()
     -e 's#^.*/.* [0-9].*#\\033[0;36m&\\033[0;37m#g' )"
 }
 
-
+po() { pacman -Qo `which $1` }
 
 
 

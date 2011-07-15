@@ -92,19 +92,24 @@ function _git_prompt() {
     fi
 }
 
+## XXX 单独使用 PS1，没有通过 PROMPT_COMMAND 函数调用
+## XXX 不会时事更新 git 信息，执行 PS1
+## XXX 是否无法在 screen 中动态修改标题栏 [?]
 #PS1="`_git_prompt`"'\[\e[1;34m\]\w \n \$\[\e[0m\] '
 #PS1="`_git_prompt`"'\w \n \$ '
 
-# 命令输入加粗
-PS1="`_git_prompt`"'\[\e[1;34m\]\w \n \$\[\033[1;32m\] '
-trap 'echo -ne "\e[0m"' DEBUG
+function _prompt_command() {
 
-#function _prompt_command() {
-#    PS1="`_git_prompt`"'\w \n \$ '
-#    #PS1="`_git_prompt`"
-#    #PS1="`_git_prompt`"'${debian_chroot:+($debian_chroot)}\[\e[1;34m\]\w \n \$\[\e[0m\] '
-#}
-#PROMPT_COMMAND=_prompt_command
+    # 命令输入加粗
+    PS1="`_git_prompt`"'\[\e[1;34m\]\w \n \$\[\033[1;32m\] '
+    trap 'echo -ne "\e[0m"' DEBUG
+
+    #PS1="`_git_prompt`"'\w \n \$ '
+    #PS1="`_git_prompt`"
+    #PS1="`_git_prompt`"'${debian_chroot:+($debian_chroot)}\[\e[1;34m\]\w \n \$\[\e[0m\] '
+}
+
+PROMPT_COMMAND=_prompt_command
 
 #}}}
 
