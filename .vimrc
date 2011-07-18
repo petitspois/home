@@ -1019,33 +1019,49 @@ autocmd BufEnter *.py call SetAppDir()
 
 "}}}
 
-" [ Vim ReStructureText Macros ]"{{{
+"" [ Vim ReStructureText Macros ]"{{{
+""--------------------------------------------
+"" From: http://blog.tuxcoder.com/2008/12/vim-restructure-text-macros.html
+"
+"" Ctrl-u 1:    underline Parts w/ #'s
+"noremap  <C-u>1 yyPVr#yyjp
+"inoremap <C-u>1 <esc>yyPVr#yyjpA
+"" Ctrl-u 2:    underline Chapters w/ *'s
+"noremap  <C-u>2 yyPVr*yyjp
+"inoremap <C-u>2 <esc>yyPVr*yyjpA
+"" Ctrl-u 3:    underline Section Level 1 w/ ='s
+"noremap  <C-u>3 yypVr=
+"inoremap <C-u>3 <esc>yypVr=A
+"" Ctrl-u 4:    underline Section Level 2 w/ -'s
+"noremap  <C-u>4 yypVr-
+"inoremap <C-u>4 <esc>yypVr-A
+"" Ctrl-u 5:    underline Section Level 3 w/ ^'s
+"noremap  <C-u>5 yypVr^
+"inoremap <C-u>5 <esc>yypVr^A
+"
+""" http://www.programmerq.net/rsttricks.html
+""" 使用 @h 作为 header 宏，之后再按 - ~ = 生产 标题标记
+"let @h = "yypVr"
+"
+""}}}
+"
+
+" [ vim reST 标题标记补全函数 ]"{{{
 "--------------------------------------------
-" From: http://blog.tuxcoder.com/2008/12/vim-restructure-text-macros.html
 
-" Ctrl-u 1:    underline Parts w/ #'s
-noremap  <C-u>1 yyPVr#yyjp
-inoremap <C-u>1 <esc>yyPVr#yyjpA
-" Ctrl-u 2:    underline Chapters w/ *'s
-noremap  <C-u>2 yyPVr*yyjp
-inoremap <C-u>2 <esc>yyPVr*yyjpA
-" Ctrl-u 3:    underline Section Level 1 w/ ='s
-noremap  <C-u>3 yypVr=
-inoremap <C-u>3 <esc>yypVr=A
-" Ctrl-u 4:    underline Section Level 2 w/ -'s
-noremap  <C-u>4 yypVr-
-inoremap <C-u>4 <esc>yypVr-A
-" Ctrl-u 5:    underline Section Level 3 w/ ^'s
-noremap  <C-u>5 yypVr^
-inoremap <C-u>5 <esc>yypVr^A
+"" # vim-cn / sw 兄
+noremap <c-u>1 "ayy:let @a=repeat('#',strwidth(@a)-1)."\n"<cr>Pjp
+noremap <c-u>2 "ayy:let @a=repeat('*',strwidth(@a)-1)."\n"<cr>Pjp
+noremap <c-u>3 "ayy:let @a=repeat('=',strwidth(@a)-1)."\n"<cr>Pjp
+noremap <c-u>4 "ayy:let @a=repeat('-',strwidth(@a)-1)."\n"<cr>Pjp
+noremap <c-u>5 "ayy:let @a=repeat('^',strwidth(@a)-1)."\n"<cr>Pjp
 
-"" http://www.programmerq.net/rsttricks.html
-"" 使用 @h 作为 header 宏，之后再按 - ~ = 生产 标题标记
-let @h = "yypVr"
+inoremap <c-u>1 <esc>"ayy:let @a=repeat('#',strwidth(@a)-1)."\n"<cr>Pjp
+inoremap <c-u>2 <esc>"ayy:let @a=repeat('*',strwidth(@a)-1)."\n"<cr>Pjp
+inoremap <c-u>3 <esc>"ayy:let @a=repeat('=',strwidth(@a)-1)."\n"<cr>Pjp
+inoremap <c-u>4 <esc>"ayy:let @a=repeat('-',strwidth(@a)-1)."\n"<cr>Pjp
+inoremap <c-u>5 <esc>"ayy:let @a=repeat('^',strwidth(@a)-1)."\n"<cr>Pjp
 
 "}}}
-
-
-
 
 
