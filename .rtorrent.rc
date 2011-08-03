@@ -48,9 +48,9 @@ upload_rate = 160
 encoding_list = UTF-8
 
 # 发送缓存
-send_buffer_size = 10M
+#send_buffer_size = 10M
 # 接收缓存
-receive_buffer_size = 10M
+#receive_buffer_size = 10M
 
 # Close torrents when diskspace is low.
 schedule = low_diskspace,5,60,close_low_diskspace=100M
@@ -121,7 +121,7 @@ peer_exchange = yes
 #或者自定义值，把它设为高速率（据说是黄金值）
 #tos = default|lowdelay|throughput|reliability|mincost, tos = hex
 
-tos = throughput
+#tos = throughput
 
 # Enable the default ratio group.
 ratio.enable=
