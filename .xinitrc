@@ -66,7 +66,9 @@ fcitx &
 #--------------------------------------------
 #urxvt &
 #tilda &
-xterm &
+
+# sleep 延时解决 fcitx 无法在自启动 xterm 激活问题 [?]
+(sleep 2 && xterm) &
 
 # awesome 启用透明功能，依赖
 #xcompmgr &
@@ -75,8 +77,11 @@ xterm &
 # XXX 会导致 musca 虚拟桌面不能及时刷新 [?]
 #xcompmgr -l -5 -t -5 -r 5 -o 0.60 -c &
 
+#(sleep 40 && conky -c ~/conky/big_conky) &
+
 # wallpaper 壁纸
-feh --bg-scale ~/pic/wall/glass.jpg
+#feh --bg-scale ~/pic/wall/glass.jpg
+xsetroot -solid "#a8a8a8"
 
 # 关闭X下响铃
 xset b off
