@@ -273,6 +273,23 @@ cabbrev mg  https://www.megaproxy.com/freesurf
 
 cabbrev yd  dict.youdao.com
 
+" [ me ]"{{{
+"--------------------------------------------
+
+cabbrev db  douban.com
+cabbrev dh  douban.com/people/if_else
+cabbrev ds  delicious.com/lvii
+cabbrev dt  57lvii.deviantart.com
+cabbrev it  https://github.com/lvii
+cabbrev li  57lvii.spaces.live.com
+cabbrev rr  renren.com
+cabbrev qq  web.qq.com
+cabbrev sk  cid-9a981deb92f6e1a9.skydrive.live.com/home.aspx
+cabbrev tt  https://www.twitter.com/57lvii
+cabbrev sm  www.newsmth.net/bbsdoc.php?board=Emacs
+
+"}}}
+
 
 "}}}
 
