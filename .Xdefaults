@@ -11,8 +11,8 @@
 !-------------------------------------------
 ! fg and bg might be overwritten by an imported colorscheme
 ! 可能会被颜色主题覆盖
-*background                        : #1a1a1a
-*foreground                        : white
+!*background                        : #1a1a1a
+!*foreground                        : white
 
 !red
 *color1     :       #fe3f44
@@ -238,17 +238,17 @@
 
 ! [ 点阵 ]
 !-------------------------------------------
-!XTerm*font: -misc-fixed-medium-r-normal-*-18-120-100-100-c-90-iso10646-1
-!XTerm*wideFont: -misc-fixed-medium-r-normal-*-18-120-100-100-c-180-iso10646-1
+!xterm*font: -misc-fixed-medium-r-normal-*-18-120-100-100-c-90-iso10646-1
+!xterm*wideFont: -misc-fixed-medium-r-normal-*-18-120-100-100-c-180-iso10646-1
 
 ! [ Fts 字体 ]
 !-------------------------------------------
-!XTerm*VT100*locale: true
-!XTerm*VT100*utf8: 1
+!xterm*VT100*locale: true
+!xterm*VT100*utf8: 1
 !xterm*xftAntialias: true
 !xterm*cjkWidth:false
 ! 使中文字体间距缩小,与英文一致
-!XTerm*VT100*cjkWidth: true
+!xterm*VT100*cjkWidth: true
 
 ! 中文字体 设置
 !xterm*faceNameDoublesize: wenquanyi bitmap song:pixelsize=16:antialias=True
@@ -263,32 +263,32 @@
 ! [ Font 字体 ]
 !-------------------------------------------
 !
-XTerm*locale:       true
+xterm*locale:       true
 !!!! Warning: Cannot convert string "true" to type Int
-XTerm*utf8:         1
-XTerm*utf8Title:    true
+xterm*utf8:         1
+xterm*utf8Title:    true
 !xterm*fontMenu*fontdefault*Label:Default
-XTerm*xftAntialias: true
-Xterm.cjkWidth:     true
+xterm*xftAntialias: true
+xterm.cjkWidth:     true
 
-XTerm*faceName                          : Envy Code R:pixelsize=12.5
-XTerm*faceNameDoublesize                : WenQuanYi Micro Hei Mono:pixelsize=12.5
+xterm*faceName                          : Envy Code R:pixelsize=12.5
+xterm*faceNameDoublesize                : WenQuanYi Micro Hei Mono:pixelsize=12.5
 
 ! 等价于 xterm -fa 'Envy Code R' -fs 10
 ! XXX Fedora / Debian 下不能生效
-!XTerm*faceName                          : Envy Code R-10
-!XTerm*faceNameDoublesize                : WenQuanYi Micro Hei-10
+!xterm*faceName                          : Envy Code R-10
+!xterm*faceNameDoublesize                : WenQuanYi Micro Hei-10
 
 ! man keyword  gin-press(l/L/m/M/r/R)
 ! Scrolling on wheel mouse: half a page normally, line per line with shift
-XTerm*VT100.Translations:#override          \
+xterm*VT100.Translations:#override          \
     <Key>BackSpace: string(0x7f)            \n\
     <Key>Delete:    string(0x1b)    string("[3~")   \n\
     Meta<Key>K: scroll-back(1,halfpage)     \n\
     Meta<Key>J: scroll-forw(1,halfpage)
 
 ! 不启用改选项，vim 中 退格删除会变成 ^?
-XTerm*ttyModes: erase   ^?
+xterm*ttyModes: erase   ^?
 
 ! [ Style 样式 ]
 !--------------------------------------------
@@ -296,42 +296,42 @@ XTerm*ttyModes: erase   ^?
 ! 默认的 $TERM 变量，在 screen / tmux 中实现 256 色
 ! 也可以在 .bashrc / .zshrc 中添加 export TERM=xterm-256color
 xterm*termName                          : xterm-256color
-XTerm*saveLines                         : 5000
-XTerm*multiClickTime                    : 250
-XTerm*borderless                        : 1
-XTerm*internalBorder                    : 3
+xterm*saveLines                         : 5000
+xterm*multiClickTime                    : 250
+xterm*borderless                        : 1
+xterm*internalBorder                    : 3
 
 ! 1650X1050 刚好可以并排两个窗口
-!XTerm*geometry                          : 119x34
-XTerm*geometry                          : 115x34
-!XTerm*background                        : #1a1a1a
-!XTerm*foreground                        : white
-XTerm*cursorColor                       : LightSteelBlue1
+!xterm*geometry                          : 119x34
+xterm*geometry                          : 115x34
+xterm*background                        : #1a1a1a
+xterm*foreground                        : white
+xterm*cursorColor                       : LightSteelBlue1
 
-XTerm*scrollBar                         : False
-!XTerm*scrollBar*thickness               : 4
-!XTerm*scrollBar*background              : #1a1a1a
-!XTerm*scrollBar*foreground              : #7BA2D2
+xterm*scrollBar                         : False
+!xterm*scrollBar*thickness               : 4
+!xterm*scrollBar*background              : #1a1a1a
+!xterm*scrollBar*foreground              : #7BA2D2
 !xterm*rightScrollBar                    : True
 
-XTerm*scrollKey                          :    true
-XTerm*scrollTtyOutput:  false
-!XTerm*scrollTtyKeypress:true
-XTerm*loginShell:   true
-XTerm*jumpScroll:   true
-!XTerm*multiScroll: false
-!XTerm*toolBar:     true
+xterm*scrollKey                          :    true
+xterm*scrollTtyOutput:  false
+!xterm*scrollTtyKeypress:true
+xterm*loginShell:   true
+xterm*jumpScroll:   true
+!xterm*multiScroll: false
+!xterm*toolBar:     true
 
-XTerm*backarrowKey: false
-!XTerm*borderLess:   false
-!XTerm*cursorBlink:  true
-XTerm*deleteIsDEL:  false
+xterm*backarrowKey: false
+!xterm*borderLess:   false
+!xterm*cursorBlink:  true
+xterm*deleteIsDEL:  false
 ! 转义字符高亮
-XTerm*dynamicColors:    true
-XTerm*oldXtermFKeys:    true
-XTerm*underLine:    true
+xterm*dynamicColors:    true
+xterm*oldXtermFKeys:    true
+xterm*underLine:    true
 
-XTerm*visualBell:    false
+xterm*visualBell:    false
 
 ! [ Emacs ] {{{
 !-------------------------------------------
@@ -339,7 +339,7 @@ XTerm*visualBell:    false
 !Emacs.geometry: 100x35+0+0
 
 ! emacs 中 ^H 不能当作删除字符,用作帮助快捷键
-!XTerm*backarrowKey: false
+!xterm*backarrowKey: false
 
 !*}}}
 
@@ -347,8 +347,8 @@ XTerm*visualBell:    false
 !--------------------------------------------
 ! 修复 Alt 输入
 ! irssi alt 数字键 为上标数字，而非切换窗口
-XTerm*altSendsEscape:   true
-XTerm*eightBitInput:    false
+xterm*altSendsEscape:   true
+xterm*eightBitInput:    false
 ! 启用 Meta(Alt) 发送 Escape 选项
 ! 修正 xterm 下，irssi / alt + . 补全
 ! https://wiki.archlinux.org/index.php/Xterm
