@@ -69,6 +69,7 @@ alias gbc='git checkout'
 
 alias gp='git push'
 alias gu='git pull'
+alias gpu='git pull origin master'
 alias gpa="git push origin all:all"
 alias gpo="git push origin master"
 alias gp2="git push origin2 master"

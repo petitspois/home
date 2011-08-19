@@ -956,18 +956,6 @@ function sign ()
 
 # [ man keychain ]# {{{
 #--------------------------------------------
-## [ Keychain ssh-agent ]# {{{
-##--------------------------------------------
-## From : http://linux.chinaunix.net/bbs/archiver/tid-1132824.html
-## 在 新启动的 zsh 中，继承 / 共用 keychain 产生的 ssh-agent 进程
-#if [ -n `ps aux | grep ssh-agent | grep -v grep | awk '{print $2}'` ]
-#then
-#    if [ -z ${SSH_AGENT_PID} ];then
-#        source ~/.keychain/`hostname`-sh
-#    fi
-#fi
-#
-## }}}
 
 [ -z "$HOSTNAME" ] && HOSTNAME=`uname -n`
 [ -f $HOME/.keychain/$HOSTNAME-sh ] &&

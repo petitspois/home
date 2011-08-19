@@ -230,7 +230,7 @@ exec xmobar
 
 #bind on Mod4+` shell
 ## 使用 xev 查看，键盘按键对应的名称
-bind on Mod4+grave shell
+bind on Mod4+grave exec dmenu_run -b -i -nb grey20 -nf '#a1b5cd' -fn "-*-snap-*-*-*-*-*-*-*-*-*-*-*-*"
 
 # semicolon 分号
 bind on Mod4+semicolon shell
