@@ -63,56 +63,58 @@ export MYSQL_PS1="[\\u@\\h \\d]"
 
 # 原生的 git 分支提示
 #PS1='[\u@\h`__git_ps1` \W]\$ '
+#PS1=' \w \n $(__git_ps1 "[ %s ] ")\$ '
+PS1=' \W \n $(__git_ps1 "%s ")\$ '
 
-# [ 色块 color 标记 git 状态 ]#{{{
-#--------------------------------------------
-# Colorful bash prompt reflecting Git status
-# From : http://opinionated-programmer.com/2011/01/colorful-bash-prompt-reflecting-git-status/
-
-function _git_prompt() {
-
-    local git_status="`git status -unormal 2>&1`"
-    if ! [[ "$git_status" =~ Not\ a\ git\ repo ]]; then
-        if [[ "$git_status" =~ nothing\ to\ commit ]]; then
-            local ansi=42
-        elif [[ "$git_status" =~ nothing\ added\ to\ commit\ but\ untracked\ files\ present ]]; then
-            local ansi=43
-        else
-            local ansi=45
-        fi
-        if [[ "$git_status" =~ On\ branch\ ([^[:space:]]+) ]]; then
-            branch=${BASH_REMATCH[1]}
-            test "$branch" != master || branch=' '
-        else
-            # Detached HEAD.  (branch=HEAD is a faster alternative.)
-            branch="(`git describe --all --contains --abbrev=4 HEAD 2> /dev/null ||
-                echo HEAD`)"
-        fi
-        echo -n '\[\e[0;37;'"$ansi"';1m\]'"$branch"'\[\e[0m\] '
-    fi
-}
-
-## XXX 单独使用 PS1，没有通过 PROMPT_COMMAND 函数调用
-## XXX 不会时事更新 git 信息，执行 PS1
-## XXX 是否无法在 screen 中动态修改标题栏 [?]
-#PS1="`_git_prompt`"'\[\e[1;34m\]\w \n \$\[\e[0m\] '
-#PS1="`_git_prompt`"'\w \n \$ '
-
-function _prompt_command() {
-
-    # 命令输入加粗
-    PS1="`_git_prompt`"'\[\e[1;34m\]\w \n \$\[\033[1;32m\] '
-    trap 'echo -ne "\e[0m"' DEBUG
-
-    #PS1="`_git_prompt`"'\w \n \$ '
-    #PS1="`_git_prompt`"
-    #PS1="`_git_prompt`"'${debian_chroot:+($debian_chroot)}\[\e[1;34m\]\w \n \$\[\e[0m\] '
-}
-
-PROMPT_COMMAND=_prompt_command
-
-#}}}
-
+## [ 色块 color 标记 git 状态 ]#{{{
+##--------------------------------------------
+## Colorful bash prompt reflecting Git status
+## From : http://opinionated-programmer.com/2011/01/colorful-bash-prompt-reflecting-git-status/
+#
+#function _git_prompt() {
+#
+#    local git_status="`git status -unormal 2>&1`"
+#    if ! [[ "$git_status" =~ Not\ a\ git\ repo ]]; then
+#        if [[ "$git_status" =~ nothing\ to\ commit ]]; then
+#            local ansi=42
+#        elif [[ "$git_status" =~ nothing\ added\ to\ commit\ but\ untracked\ files\ present ]]; then
+#            local ansi=43
+#        else
+#            local ansi=45
+#        fi
+#        if [[ "$git_status" =~ On\ branch\ ([^[:space:]]+) ]]; then
+#            branch=${BASH_REMATCH[1]}
+#            test "$branch" != master || branch=' '
+#        else
+#            # Detached HEAD.  (branch=HEAD is a faster alternative.)
+#            branch="(`git describe --all --contains --abbrev=4 HEAD 2> /dev/null ||
+#                echo HEAD`)"
+#        fi
+#        echo -n '\[\e[0;37;'"$ansi"';1m\]'"$branch"'\[\e[0m\] '
+#    fi
+#}
+#
+### XXX 单独使用 PS1，没有通过 PROMPT_COMMAND 函数调用
+### XXX 不会时事更新 git 信息，执行 PS1
+### XXX 是否无法在 screen 中动态修改标题栏 [?]
+##PS1="`_git_prompt`"'\[\e[1;34m\]\w \n \$\[\e[0m\] '
+##PS1="`_git_prompt`"'\w \n \$ '
+#
+#function _prompt_command() {
+#
+#    # 命令输入加粗
+#    PS1="`_git_prompt`"'\[\e[1;34m\]\w \n \$\[\033[1;32m\] '
+#    trap 'echo -ne "\e[0m"' DEBUG
+#
+#    #PS1="`_git_prompt`"'\w \n \$ '
+#    #PS1="`_git_prompt`"
+#    #PS1="`_git_prompt`"'${debian_chroot:+($debian_chroot)}\[\e[1;34m\]\w \n \$\[\e[0m\] '
+#}
+#
+#PROMPT_COMMAND=_prompt_command
+#
+##}}}
+#
 ## [ bash git branch prompt ]#{{{
 ##--------------------------------------------
 ## http://nuts-and-bolts-of-cakephp.com/2010/11/27/show-git-branch-in-your-bash-prompt/

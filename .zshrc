@@ -904,36 +904,26 @@ function re()
     exit
 }
 
-
-# Misc
-function extract ()
-{
+extract () {
+  # if 判断可以去掉
+  if [ -f $1 ] && [ -r $1 ] ; then
     case $1 in
-        *.tar.xz)
-            tar xvJf $1;;
-        *.tar.bz2)
-            tar xvjf $1;;
-        *.tar.gz)
-            tar xvzf $1;;
-        *.xz)
-            unxz $1;;
-        *.bz2)
-            bunzip2 $1;;
-        *.gz)
-            gunzip $1;;
-        *.tar)
-            tar xvf $1;;
-        *.tbz2)
-            tar xvjf $1;;
-        *.tgz)
-            tar xvzf $1;;
-        *.Z)
-            uncompress $1;;
-        *.zip)
-            unzip $1;;
-        *)
-            echo "don't know how to extract '$1'...";;
+      (*.tar.bz2|*.tbz2)  tar xjf $1;;
+      (*.tar.gz|*.tgz)    tar xzf $1;;
+      (*.bz2)             bunzip2 $1;;
+      (*.rar)             rar x $1;;
+      (*.gz)              gunzip $1;;
+      (*.tar)             tar xf $1;;
+      (*.zip)             unzip $1;;
+      (*.Z)               uncompress $1;;
+      (*.7z)              7z x $1;;
+      (*.deb)             sudo dpkg -i $1;;
+      (*.rpm)             sudo alien -dik $1;;
+      (*)                 echo "extract: unsupported format $1" ;;
     esac
+  else
+    echo "extract: file not found or unreadable: $1"
+  fi
 }
 
 function sign ()
