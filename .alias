@@ -325,8 +325,8 @@ po() { pacman -Qo `which $1` }
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # From Nano Taboada # # some apt aliases
 
-alias apt-get='sudo apt-get'
-alias aptitude='sudo aptitude'
+#alias apt-get='sudo apt-get'
+#alias aptitude='sudo aptitude'
 
 alias clean="sudo aptitude clean"
 alias install='sudo aptitude install'
