@@ -34,51 +34,51 @@ port                "6600"
 
 # }}}
 
-# [ OSS Volume Setting ]# {{{
-#--------------------------------------------
-
-# sonata 音量控制 dsp (default sound ...?),ossinfo 参考相关信息！
-
-# lspci |grep -i audio
-# 00:1b.0 Audio device: Intel Corporation 82801I (ICH9 Family) HD Audio Controller (rev 02)
-# 01:00.1 Audio device: ATI Technologies Inc RV635 Audio device [Radeon HD 3600 Series]
-
-mixer_type          "software"
-
-audio_output {
-    type            "oss"
-    name            "My OSS Device"
-#mixer_control   "PCM"       # optional
-    #format          "44100:16:2"    # optional
-
-    # 默认配置
-    #device          "/dev/dsp"  # optional
-    #mixer_device    "/dev/mixer"    # optional
-
-    # From ArchWiki OSS
-    device          "/dev/oss/oss_hdaudio0/pcm0"
-#mixer_device    "/dev/oss/oss_hdaudio0/mix0"
-}
-
-
-
-#audio_output {
-#type "oss"
-#name "My OSS Device"
-### device "/dev/dsp" # optional
-### format "44100:16:2" # optional
-### mixer_device "/dev/mixer" # optional
-### mixer_control "PCM" # optional
-#}
-#audio_output_format "44100:16:2"
+## [ OSS Volume Setting ]# {{{
+##--------------------------------------------
+#
+## sonata 音量控制 dsp (default sound ...?),ossinfo 参考相关信息！
+#
+## lspci |grep -i audio
+## 00:1b.0 Audio device: Intel Corporation 82801I (ICH9 Family) HD Audio Controller (rev 02)
+## 01:00.1 Audio device: ATI Technologies Inc RV635 Audio device [Radeon HD 3600 Series]
+#
 #mixer_type          "software"
-
-
-
-
-
-# }}}
-
+#
+#audio_output {
+#    type            "oss"
+#    name            "My OSS Device"
+##mixer_control   "PCM"       # optional
+#    #format          "44100:16:2"    # optional
+#
+#    # 默认配置
+#    #device          "/dev/dsp"  # optional
+#    #mixer_device    "/dev/mixer"    # optional
+#
+#    # From ArchWiki OSS
+#    device          "/dev/oss/oss_hdaudio0/pcm0"
+##mixer_device    "/dev/oss/oss_hdaudio0/mix0"
+#}
+#
+#
+#
+##audio_output {
+##type "oss"
+##name "My OSS Device"
+#### device "/dev/dsp" # optional
+#### format "44100:16:2" # optional
+#### mixer_device "/dev/mixer" # optional
+#### mixer_control "PCM" # optional
+##}
+##audio_output_format "44100:16:2"
+##mixer_type          "software"
+#
+#
+#
+#
+#
+## }}}
+#
 # [ Other ]# {{{
 #--------------------------------------------
 
@@ -93,6 +93,43 @@ input {
 
 # }}}
 
+# 使用 自定义的 mpd 相关位置，省去每次更新导至的权限还原问题
+# 在 yuer 目录下面新建 ： mpd/ 和 playlist/ 目录
+# 使用 code/shell/learn/yuer.sh 创建目录
+user                "ink"
+music_directory     "~/yuer"
+playlist_directory  "~/yuer/playlist/"
+db_file             "~/yuer/mpd/mpd.db"
+pid_file            "~/yuer/mpd/mpd.pid"
+state_file          "~/yuer/mpd/mpdstate"
+log_file            "~/yuer/mpd/mpd.log"
+#error_file          "~/yuer/mpd/error.log"
 
+# XXX 可以播放，但是无法调节音量
+#audio_output {
+#	type		"alsa"
+#	name		"My ALSA Device"
+#	device		"hw:0,0"	# optional
+#	format		"44100:16:2"	# optional
+#	mixer_device	"default"	# optional
+#	mixer_control	"PCM"		# optional
+#	mixer_index	"0"		# optional
+#}
+
+# 从  /etc/mpd.conf 选择的配置
+audio_output {
+	type		"pulse"
+	name		"My Pulse Output"
+#	server		"remote_server"		# optional
+#	sink		"remote_server_sink"	# optional
+}
+
+# ncmpcpp 波谱
+audio_output {
+         type            "fifo"
+         name            "My FIFO"
+         path            "/tmp/mpd.fifo"
+         format          "44100:16:1"
+}
 
 
