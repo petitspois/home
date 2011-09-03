@@ -421,7 +421,20 @@ now_playing_suffix = "$/b"
 
 # }}}
 
+# [ visualizer 波谱 ]# {{{
+#--------------------------------------------
+
+# 波谱 曲线，依赖于 mpd 中建立的 visualizer 输出
+visualizer_fifo_path = "/tmp/mpd.fifo"
+visualizer_output_name = "My FIFO"
+visualizer_type = spectrum
+
 # }}}
+
+# }}}
+
+
+
 
 
 
