@@ -9,55 +9,77 @@
 
 ! [ mycolor ]! {{{
 !-------------------------------------------
-! fg and bg might be overwritten by an imported colorscheme
-! 可能会被颜色主题覆盖
-!*background                        : #1a1a1a
-!*foreground                        : white
 
-!red
-*color1     :       #fe3f44
-!*color9     :       #f21616
-*color9    :       #db1b1b
-
-!green
-*color2     :       #bbf73e
-!*color10   :       #a2ef00
-*color10    :       #90d112
-
-!yellow
-*color3     :       #ffe200
-*color11    :       #ff8b00
-
-!blue
-!*color4     :       #4c59d8
-*color4     :       #505ff1
-!*color12    :       #5969f7
-!*color12    :       #3a5cFF
-*color12    :       #7992ff
-!*color12: #6495ED
-
-!
-!magenta    洋红
-*color5     :       #ff427e
-*color13    :       #db003a
-
-!purple     紫
-!*color4    :       #808cff
-!*color12   :       #5462e3
-!cyan       萤光蓝
-*color6     :       #42bdff
-*color14    :       #00a8db
-
-!white
-*color7     :       #e1e1e1
-*color15    :       #f8f8f2
-!!black
-!*color0     :       #1e1e1e
-*color0     :       #171717
-*color8     :       #505354
+xterm*color1     :       #fe3f44
+xterm*color9     :       #db1b1b
+xterm*color2     :       #bbf73e
+xterm*color10    :       #90d112
+xterm*color3     :       #ffe200
+xterm*color11    :       #ff8b00
+xterm*color4     :       #505ff1
+xterm*color12    :       #7992ff
+xterm*color5     :       #ff427e
+xterm*color13    :       #db003a
+xterm*color6     :       #42bdff
+xterm*color14    :       #00a8db
+xterm*color7     :       #e1e1e1
+xterm*color15    :       #f8f8f2
+xterm*color0     :       #171717
+xterm*color8     :       #505354
 
 !*}}}
 
+!! [ mycolor ]! {{{
+!!-------------------------------------------
+!! fg and bg might be overwritten by an imported colorscheme
+!! 可能会被颜色主题覆盖
+!!*background                        : #1a1a1a
+!!*foreground                        : white
+!
+!!red
+!*color1     :       #fe3f44
+!!*color9     :       #f21616
+!*color9    :       #db1b1b
+!
+!!green
+!*color2     :       #bbf73e
+!!*color10   :       #a2ef00
+!*color10    :       #90d112
+!
+!!yellow
+!*color3     :       #ffe200
+!*color11    :       #ff8b00
+!
+!!blue
+!!*color4     :       #4c59d8
+!*color4     :       #505ff1
+!!*color12    :       #5969f7
+!!*color12    :       #3a5cFF
+!*color12    :       #7992ff
+!!*color12: #6495ED
+!
+!!
+!!magenta    洋红
+!*color5     :       #ff427e
+!*color13    :       #db003a
+!
+!!purple     紫
+!!*color4    :       #808cff
+!!*color12   :       #5462e3
+!!cyan       萤光蓝
+!*color6     :       #42bdff
+!*color14    :       #00a8db
+!
+!!white
+!*color7     :       #e1e1e1
+!*color15    :       #f8f8f2
+!!!black
+!!*color0     :       #1e1e1e
+!*color0     :       #171717
+!*color8     :       #505354
+!
+!!*}}}
+!
 !! [ bl1nk v0.2 ]!*{{{
 !!-------------------------------------------
 !! http://bl1nks.deviantart.com/art/Yes-I-m-alive-166903490
