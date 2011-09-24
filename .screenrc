@@ -129,6 +129,11 @@ bindkey -k F2 next
 
 #  06-20 11:59 | 0 su  1 irssi  2 vim  5 ~                                    0.10 0.04 0.00
 caption always "%{=b k}%{b y} %m-%d %c / %{k}%L=%-w%7>%{g}%n %t%{-}%+w%-014< %-016=%{c} %l "
+# 当前焦点 窗口 背景色高亮
+#caption always "%{=b k}%{b y} %m-%d %c | %{k}%L=%-w%7>%{= gk}%n %t%{-}%+w%-014< %-016=%{c} %l "
+# 时间 / 当前焦点 窗口 / loadavage 背景色高亮
+#caption always "%{=b k} %{= yk} %m-%d %c %{-} %{k}%L=%-w%7>%{= gk}%n %t%{-}%+w%-014< %-016=%{= ck} %l "
+
 # 背景绿色，前景 加粗 浅灰
 #caption always "%{=b k}%{b y} %m-%d %c / %{k}%L=%-w%7>%{gk}%n %t%{-}%+w%-014< %-016=%{c} %l "
 # 背景绿色，前景 正常 黑色
