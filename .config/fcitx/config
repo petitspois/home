@@ -16,14 +16,16 @@ UseDBus=False
 EnableAddons=True
 # Seconds sleep before fcitx really start
 DelayStart=0
+# It's the first time Fcitx Start.
+FirstRun=False
 
 [Output]
 # Use English Punc After a Number
 HalfPuncAfterNumber=True
 # Action after press enter
 EnterAction=Commit
-# Action after press SemiColon
-SemiColonAction=QuickPhrase
+# Disable Paging in Remind Mode
+RemindModeDisablePaging=True
 # Input English Character if you input upper case
 InputEngByCapitalChar=True
 # Convert Punc to Chinese Punc
@@ -36,6 +38,8 @@ SendTextWhenSwitchEng=False
 [Appearance]
 # Candidate Word Number
 CandidateWordNumber=5
+# Give the tips of Phrase
+PhraseTips=True
 # 主窗口，自动隐藏 默认 : Auto
 MainWindowHideMode=Hide
 # Show Input Window In the center of screen
@@ -48,6 +52,10 @@ ShowPointAfterIndex=True
 ShowInputSpeed=False
 # Show Version
 ShowVersion=False
+# Do not show input window if there is only preedit string
+HideInputWindowWhenOnlyPreeditString=False
+# Do not show input window if there is one one candidate (Hide when only preedit string must be selected)
+HideInputWindowWhenOnlyOneCandidate=False
 # Show Hint Window while ENV is not correctly configured.
 ShowHintWindow=False
 # 主题名称
@@ -57,7 +65,7 @@ SkinType=dark
 # 打开输入法
 TriggerKey=CTRL_SPACE
 # 中英 切换
-ChnEngSwitchKey=L_SHIFT
+SwitchKey=L_SHIFT
 # Double click Switch Key to Change Mode
 DoubleSwitchKey=False
 # Interval of Two Key Input
@@ -68,6 +76,8 @@ FollowCursorKey=CTRL_K
 HideMainWindowKey=CTRL_ALT_H
 # Hotkey of Switching Virtual Keyboard
 VKSwitchKey=CTRL_ALT_K
+# Hotkey of Switching Remind Mode
+RemindSwitchKey=
 # 繁体字
 TraditionalChnSwitchKey=CTRL_ALT_F
 # 联想模式，快捷键与 screen 前缀(Ctrl-L)冲突
@@ -77,7 +87,7 @@ LookupPinyinKey=CTRL_ALT_E
 # 全角
 FullWidthSwitchKey=SHIFT_SPACE
 # 切换中英标点符号
-ChnPuncSwitchKey=ALT_SPACE
+PuncSwitchKey=ALT_SPACE
 # Prev Page
 PrevPageKey=,
 # Next Page
@@ -86,6 +96,8 @@ NextPageKey=.
 SecondThirdCandWordKey=SHIFT
 # Hotkey of Saving All Config and Input History
 SaveAllKey=CTRL_ALT_S
+# Hotkey of Switch Embeded Preedit
+SwitchPreedit=CTRL_ALT_P
 # Hotkey of Switching Recording Mode
 SetRecordingKey=CTRL_ALT_J
 # Hotkey of Reseting Recording Mode
