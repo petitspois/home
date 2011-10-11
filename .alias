@@ -150,7 +150,8 @@ alias se='screen -S e'
 alias sf='screen -S f'
 
 alias mm="sudo mentohust"
-alias bb="sudo bitlbee -c ~/.bitlbee.conf"
+alias bb="bitlbee -c ~/.bitlbee.conf"
+alias sbb="sudo bitlbee -c ~/.bitlbee.conf"
 alias zz="source ~/.zshrc"
 alias b.="source ~/.bashrc"
 

@@ -67,6 +67,20 @@ fcitx &
 #urxvt &
 #tilda &
 
+# XXX 无限循环，定时提醒休息
+function notify_rest()
+{
+    while true
+    do
+        export DISPLAY=:0.0
+        notify-send -t 5000  "TAKE WATER ! 爷，喝口水吧！"
+        # XXX 每隔 45 分钟提示一次
+        sleep 45m
+    done
+}
+# XXX 调用 notify_rest 函数
+notify_rest
+
 # sleep 延时解决 fcitx 无法在自启动 xterm 激活问题 [?]
 (sleep 2 && xterm) &
 
@@ -154,5 +168,17 @@ compiz)
 esac
 
 # }}}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
