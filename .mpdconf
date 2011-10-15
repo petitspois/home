@@ -93,6 +93,13 @@ input {
 
 # }}}
 
-
+user                "ink"
+music_directory     "~/yuer"
+playlist_directory  "~/yuer/playlist/"
+db_file             "~/yuer/mpd/mpd.db"
+pid_file            "~/yuer/mpd/mpd.pid"
+state_file          "~/yuer/mpd/mpdstate"
+log_file            "~/yuer/mpd/mpd.log"
+#error_file          "~/yuer/mpd/error.log"
 
 

@@ -9,7 +9,12 @@
 #fi
 
 #(sleep 2 && adeskbar) &
-feh --bg-scale ~/pic/wall/sailor.starrynight.jpg &
+#feh --bg-scale ~/pic/wall/sailor.starrynight.jpg &
+# XXX man feh 将最近执行的桌面背景命令保存在 ~/.fehbg 文件，使用下面命令读取执行
+eval $(cat ~/.fehbg)
+xmobar &
+# 在 compiz 下不生效
+#xsetroot -solid "#a8a8a8"
 #(sleep 4 && conky -c conky/compiz_conky) &
 # 执行顺序 [?]
 exec compiz --replace ccp & emerald --replace

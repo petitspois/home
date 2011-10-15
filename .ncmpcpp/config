@@ -423,6 +423,7 @@ now_playing_suffix = "$/b"
 
 # }}}
 
+mpd_music_dir = "~/yuer/"
 
 
 
