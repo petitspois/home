@@ -1,9 +1,8 @@
-# 配置文件参数介绍
-# /usr/share/fcitx/data/config.desc
-
 [Program]
 # Font
 Font=
+# Menu Font
+MenuFont=
 # Font Locale to display
 FontLocale=zh_CN.UTF-8
 # Record File of Input
@@ -16,16 +15,14 @@ UseDBus=False
 EnableAddons=True
 # Seconds sleep before fcitx really start
 DelayStart=0
-# It's the first time Fcitx Start.
-FirstRun=False
 
 [Output]
 # Use English Punc After a Number
 HalfPuncAfterNumber=True
 # Action after press enter
 EnterAction=Commit
-# Disable Paging in Remind Mode
-RemindModeDisablePaging=True
+# Action after press SemiColon
+SemiColonAction=QuickPhrase
 # Input English Character if you input upper case
 InputEngByCapitalChar=True
 # Convert Punc to Chinese Punc
@@ -38,66 +35,56 @@ SendTextWhenSwitchEng=False
 [Appearance]
 # Candidate Word Number
 CandidateWordNumber=5
-# Give the tips of Phrase
-PhraseTips=True
-# 主窗口，自动隐藏 默认 : Auto
+# Main Window Hide Mode
 MainWindowHideMode=Hide
 # Show Input Window In the center of screen
 CenterInputWindow=False
 # Show Input Window After Trigger Input Mode
 ShowInputWindowAfterTriggering=True
-# 光标跟随 Show Point After Index
+# Show Point After Index
 ShowPointAfterIndex=True
 # Show Input Speed
 ShowInputSpeed=False
 # Show Version
 ShowVersion=False
-# Do not show input window if there is only preedit string
-HideInputWindowWhenOnlyPreeditString=False
-# Do not show input window if there is one one candidate (Hide when only preedit string must be selected)
-HideInputWindowWhenOnlyOneCandidate=False
 # Show Hint Window while ENV is not correctly configured.
 ShowHintWindow=False
-# 主题名称
+# Skin Name in use
 SkinType=dark
 
 [Hotkey]
-# 打开输入法
+# Hot key of Triggering Input Method
 TriggerKey=CTRL_SPACE
-# 中英 切换
-SwitchKey=L_SHIFT
+# Hotkey of Switching Chinese and English Mode
+ChnEngSwitchKey=L_SHIFT
 # Double click Switch Key to Change Mode
 DoubleSwitchKey=False
 # Interval of Two Key Input
 TimeInterval=250
 # Hotkey of Switching Follow Cursor Mode
-FollowCursorKey=CTRL_K
-# 隐藏 主输入窗口
+FollowCursorKey=CTRL_SHIFT_K
+# Hotkey of Hiding Main Window
 HideMainWindowKey=CTRL_ALT_H
 # Hotkey of Switching Virtual Keyboard
 VKSwitchKey=CTRL_ALT_K
-# Hotkey of Switching Remind Mode
-RemindSwitchKey=
-# 繁体字
+# Hotkey of Switching Traditional Chinese Input Mode On.
 TraditionalChnSwitchKey=CTRL_ALT_F
-# 联想模式，快捷键与 screen 前缀(Ctrl-L)冲突
+# Hotkey of Switching Legend Mode
 LegendSwitchKey=CTRL_ALT_L
 # Hotkey of Looking up the Corresponding pinyin of Word.
 LookupPinyinKey=CTRL_ALT_E
-# 全角
+# Hotkey of Switching Full Width Character Mode
 FullWidthSwitchKey=SHIFT_SPACE
-# 切换中英标点符号
-PuncSwitchKey=ALT_SPACE
-# Prev Page
+# Hotkey of Switch Chinese Punc Mode
+ChnPuncSwitchKey=ALT_SPACE
+# Hotkey of Going Prev Page
 PrevPageKey=,
-# Next Page
+# Hotkey of Going Next Page
 NextPageKey=.
 # Hotkey to Choose Second and Third Candidate Word
 SecondThirdCandWordKey=SHIFT
 # Hotkey of Saving All Config and Input History
 SaveAllKey=CTRL_ALT_S
-# Hotkey of Switch Embeded Preedit
-SwitchPreedit=CTRL_ALT_P
 # Hotkey of Switching Recording Mode
 SetRecordingKey=CTRL_ALT_J
 # Hotkey of Reseting Recording Mode

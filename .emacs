@@ -1,28 +1,37 @@
+;; Help 帮助
+;; C-h f 查看某个函数的文档
+;; C-h v 查看某个变量的文档
+;; C-h a 使用正则表达式来查找命令
+;; C-h k 描述我接下来的键入动作
+;; C-h l 显示最近的 100 个键入动作
+;; C-h m 描述当前的 mode
+;; C-h i 查看 info 文档
 
 ;; 打开文件 补全 / buffer 切换补全（buffer 补全还有 iswithb）
+
 (require 'ido)
 (ido-mode t)
 
 ;; 屏蔽 C - <Space>，启用输入法
-;(global-set-key (kbd "C-SPC") 'nil)
+(global-set-key (kbd "C-SPC") 'nil)
 
-;; 重启 emacs M-x ibus-enable即可
+;; ;; 重启 emacs M-x ibus-enable即可
+;; (require 'ibus)
 
-(require 'ibus)
-;; Turn on ibus-mode automatically after loading .emacs
-(add-hook 'after-init-hook 'ibus-mode-on)
+;; ;; Turn on ibus-mode automatically after loading .emacs
+;; (add-hook 'after-init-hook 'ibus-mode-on)
 
-;; Use C-SPC for Set Mark command
-(ibus-define-common-key ?\C-\s nil)
+;; ;; Use C-SPC for Set Mark command
+;; (ibus-define-common-key ?\C-\s nil)
 
-;; Use C-/ for Undo command
-(ibus-define-common-key ?\C-/ nil)
+;; ;; Use C-/ for Undo command
+;; (ibus-define-common-key ?\C-/ nil)
 
-;; Change cursor color depending on IBus status
-(setq ibus-cursor-color '("red" "blue" "limegreen"))
+;; ;; Change cursor color depending on IBus status
+;; (setq ibus-cursor-color '("red" "blue" "limegreen"))
 
-;; Use s-SPC to toggle input status
-(global-set-key (kbd "s-SPC") 'ibus-toggle)
+;; ;; Use s-SPC to toggle input status
+;; (global-set-key (kbd "s-SPC") 'ibus-toggle)
 
 
 ; 设置打开文件的缺省路径
@@ -150,9 +159,27 @@
 ;; 默认 mode fundamental-mode 改为：text-mode
 (setq default-major-mode 'text-mode)
 
+;; 即使 LC_CTYPE=zh_CN.UTF-8 仍定义 emacs 默认语音为 English
+;; 避免帮助文档变为 中文
+(set-language-environment 'English)
 
+;; 对于同名 buffer 引用父目录来区分
+;; http://lifegoo.pluskid.org/wiki/EmacsTip.html
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'forward)
 
+;; http://www.emacswiki.org/emacs/HideShow
+;; http://article.yeeyan.org/view/179850/185790
+;; M-x hs-minor-mode 激活之后，menu 出现 [Hide/Show] 菜单
+;; 进入下面的 mode 时自动开启自带的 hide show mode 折叠
+(add-hook 'c-mode-common-hook   'hs-minor-mode)
+(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
+(add-hook 'java-mode-hook       'hs-minor-mode)
+(add-hook 'perl-mode-hook       'hs-minor-mode)
+(add-hook 'sh-mode-hook         'hs-minor-mode)
 
+;; 定义 F1 开关折叠函数
+(global-set-key [f1] 'hs-toggle-hiding)
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
