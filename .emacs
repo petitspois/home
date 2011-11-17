@@ -1,14 +1,30 @@
+
+;; Time-stamp: "2011-11-17 20:45:12 ink"
+
+
 ;; Help 帮助
-;; C-h f 查看某个函数的文档
-;; C-h v 查看某个变量的文档
+;; C-h f 查看 函数 文档
+;; C-h v 查看 变量值 和 说明
 ;; C-h a 使用正则表达式来查找命令
 ;; C-h k 描述我接下来的键入动作
 ;; C-h l 显示最近的 100 个键入动作
 ;; C-h m 描述当前的 mode
 ;; C-h i 查看 info 文档
 
-;; 打开文件 补全 / buffer 切换补全（buffer 补全还有 iswithb）
+;; 目录后面的斜杠不能省略，不能展开子目录
+;; http://www.emacswiki.org/emacs/LoadPath
+(add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path "~/.emacs.d/plugin/")
+(add-to-list 'load-path "~/.emacs.d/theme/")
+;(add-to-list 'load-path "~/.emacs.d/auto-complete/")
 
+;; 通过 "菜单" 修改的配置 将会保存在 custom-file 里
+;(setq custom-file "~/.emacs.d/ink-custom.el")
+
+;; 默认 打开文件 缺省路径
+;(setq default-directory "~/")
+
+;; 交互式切换补全 打开文件 / buffer 切换 （buffer 交互式补全 iswithb-mode）
 (require 'ido)
 (ido-mode t)
 
@@ -17,100 +33,87 @@
 
 ;; ;; 重启 emacs M-x ibus-enable即可
 ;; (require 'ibus)
-
 ;; ;; Turn on ibus-mode automatically after loading .emacs
 ;; (add-hook 'after-init-hook 'ibus-mode-on)
-
 ;; ;; Use C-SPC for Set Mark command
 ;; (ibus-define-common-key ?\C-\s nil)
-
 ;; ;; Use C-/ for Undo command
 ;; (ibus-define-common-key ?\C-/ nil)
-
 ;; ;; Change cursor color depending on IBus status
 ;; (setq ibus-cursor-color '("red" "blue" "limegreen"))
-
 ;; ;; Use s-SPC to toggle input status
 ;; (global-set-key (kbd "s-SPC") 'ibus-toggle)
 
-
-; 设置打开文件的缺省路径
-;(setq default-directory "~/")
-
-; 关闭启动提示
-(setq inhibit-startup-message t)
-
-; 关闭 出错 提示声
+;; 操作错误 闪屏提示
 ;(setq visible-bell t)
+
+;; 关闭启动 emacs 默认页面
+(setq inhibit-startup-message t)
 
 ;; 关闭 默认 scratch buffer 提示信息
 (setq initial-scratch-message nil)
 
-; 打开图片显示功能
-;(auto-image-file-mode t)
+;; 打开图片显示功能
 (setq auto-image-file-mode t)
 
-; 自动保存模式
+;; 自动保存模式，类似版本控制 自动保存，需要定义备份文件夹路径 [可自定义]
 (setq auto-save-mode nil)
 
-; 编辑文件时，不将源文件备份为 ~filename
+;; 编辑文件时，不将源文件备份为 ~filename
 (setq-default make-backup-files 'nil)
 
-;;查找时严格区分大小写
+;; 查找时严格区分大小写
 ;;(setq case-fold-search nil)
 
-; 在行首 C-k 时，同时删除该行
+;; 在行首 C-k 时，同时删除该行
 (setq-default kill-whole-line t)
 
-; 不在鼠标点击的那个地方插入剪贴板内容
+;; (鼠标中键) 在光标处粘贴，而不是鼠标指针处
 (setq mouse-yank-at-point t)
 
-;;自动重载更改的文件
+;; 自动重载更改的文件
 (global-auto-revert-mode 1)
 
 ; 当光标在行尾上下移动的时候，始终保持在行尾
 (setq track-eol t)
 
-;;当鼠标移动的时候自动转换frame，window或者minibuffer
+;; 鼠标 自动聚焦 frame，window 或 minibuffer
 (setq mouse-autoselect-window t)
 
-; 语法高亮
+;; 语法高亮
 (global-font-lock-mode t)
 
-; 隐藏工具栏
-;(tool-bar-mode 'nil)
-; 不要menu-bar和tool-bar
+;; 隐藏工具栏 M-x tool-bar-mode
+(tool-bar-mode 'nil)
+;; 隐藏 menu-bar 和 tool-bar
 ;(menu-bar-mode -1)
+;(menu-bar-mode 0)
 
-; GUI 下显示 Toolbar 的话 select-buffer 会出问题
-(if (fboundp 'tool-bar-mode)
-    (tool-bar-mode -1))
-
-; 隐藏滚动条，可以使用鼠标滚轮
+;; 隐藏滚动条，可以使用鼠标滚轮
 (scroll-bar-mode 'nil)
 
-; 显示列号
-;(column-number-mode t)
+;; 显示列号
 (setq column-number-mode t)
 
-; 显示行号
-(setq line-number-mode t)
+;; 显示行号
+;(setq line-number-mode t)
+;; 对所有 buffer 全局开启 行号
 (global-linum-mode t)
 
 ; 取消光标闪烁
-(blink-cursor-mode -1)
+(blink-cursor-mode t)
 
 ; 光标颜色
 ;(set-cursor-color "green")
 
-; 默认显示 80列，之后换行
+; 默认显示 100 列，之后换行
 (setq default-fill-column 100)
 
 ;; 自动换行 From：sm-base
 (toggle-truncate-lines t)
 
-; 高亮选择区域
-(transient-mark-mode t)
+;; 高亮选择区域
+;(transient-mark-mode t)
 
 ;;高亮当前所在行，使用 Emacs 默认的高亮色
 ;;若要与主题一致参考 http://ann77.emacser.com/Emacs/EmacsHighlightLine.html
@@ -180,6 +183,31 @@
 
 ;; 定义 F1 开关折叠函数
 (global-set-key [f1] 'hs-toggle-hiding)
+
+;; Emacs 21+ 版本支持时间戳：http://www.emacswiki.org/emacs/TimeStamp
+;; 自动更新时间戳：在文件的开头 8 行，添加 Time-stamp: <时间戳> 标记
+;; 注意：Time-stamp 首字母必须大写，Time-stamp：后面必须有一个空格
+;; 使用命令手动更新时间戳：M-x time-stamp
+;; 中文参考：http://home.lupaworld.com/home-space-uid-28556-do-blog-id-136002.html
+(add-hook 'write-file-hooks 'time-stamp)
+
+;;;; 自定义时间戳 time-stamp 格式
+;;;; %:u，更新时用登录 Linux 的用户名替换
+;;;; %04y-%02m-%02d，年-月-日 "YYYY-MM-DD" 
+;;;; %02H:%02M:%02S，时:分:秒 "HH:MM:SS"   
+;;(setq time-stamp-format
+;;          "由 %:u 修改 时间：%04y-%02m-%02d %02H:%02M:%02S"
+;;          time-stamp-active t
+;;          time-stamp-warn-inactive t)
+;;
+
+
+
+
+
+
+
+
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
