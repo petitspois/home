@@ -179,7 +179,7 @@ alias lrct='rsync -altvz --delete -e ssh /home/ink/todo/ cjb:~/.wen/todo'
 #alias rlu=' rsync -altvz --delete -e ssh ubuntu:~/.wen/text ~'
 #alias rlc=' rsync -altvz --delete -e ssh cjb:~/.wen/text ~'
 
-alias cgfw="ssh -CNTfnq -D 7070 57wsqh@216.194.70.6"
+alias fuckgfw="ssh -CNTfnq -D 7070 57wsqh@216.194.70.6"
 
 
 
