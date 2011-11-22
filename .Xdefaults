@@ -343,6 +343,67 @@ xmessage*font: -*-clean-*-*-*-*-*-*-*-*-*-*-iso8859-2
 
 !!}}}
 
+! [  ]!!{{{
+!-------------------------------------------
+
+
+
+
+!!}}}
+
+! [ mycolor ]! {{{
+!-------------------------------------------
+! fg and bg might be overwritten by an imported colorscheme
+! 可能会被颜色主题覆盖
+!*background                        : #1a1a1a
+!*foreground                        : white
+
+!red
+*color1     :       #fe3f44
+!*color9     :       #f21616
+*color9    :       #db1b1b
+
+!green
+*color2     :       #bbf73e
+!*color10   :       #a2ef00
+*color10    :       #90d112
+
+!yellow
+*color3     :       #ffe200
+*color11    :       #ff8b00
+
+!blue
+!*color4     :       #4c59d8
+*color4     :       #505ff1
+!*color12    :       #5969f7
+!*color12    :       #3a5cFF
+*color12    :       #7992ff
+!*color12: #6495ED
+
+!magenta    洋红
+*color5     :       #ff427e
+*color13    :       #db003a
+
+!purple     紫
+!*color4    :       #808cff
+!*color12   :       #5462e3
+!cyan       萤光蓝
+*color6     :       #42bdff
+*color14    :       #00a8db
+
+!white
+*color7     :       #e1e1e1
+*color15    :       #f8f8f2
+!!black
+!*color0     :       #1e1e1e
+*color0     :       #171717
+*color8     :       #505354
+
+!*}}}
+
+! [ color theme ]!!{{{
+!-------------------------------------------
+
 !!------------------------------------------------------------------------------
 !           black   red     green   yellow  blue    magenta洋红 cyan    white
 ! normal    0       1       2       3       4       5           6       7
@@ -351,55 +412,226 @@ xmessage*font: -*-clean-*-*-*-*-*-*-*-*-*-*-iso8859-2
 !             http://www.colourlovers.com/copaso/ColorPaletteSoftware#
 !!------------------------------------------------------------------------------
 
-!! [ mycolor ]! {{{
+! [ other color ]!*{{{*
+!--------------------------------------------
+!! 在线制作 颜色主题的 js web 页
+!! From : http://theywillknow.us/termcolor/
+
+!! [ bl1nk v0.2 ]!*{{{
 !!-------------------------------------------
-!! fg and bg might be overwritten by an imported colorscheme
-!! 可能会被颜色主题覆盖
-!!*background                        : #1a1a1a
-!!*foreground                        : white
+!! http://bl1nks.deviantart.com/art/Yes-I-m-alive-166903490
 !
+!*foreground:              #a0a0a0
+!!*background:              #1B1D1E
+!*background:              #121212
+!!black
+!*color0:                  #1B1D1E
+!*color8:                  #505354
 !!red
-!*color1     :       #fe3f44
-!!*color9     :       #f21616
-!*color9    :       #db1b1b
-!
+!*color1:                  #F92672
+!*color9:                  #FF5995
 !!green
-!*color2     :       #bbf73e
-!!*color10   :       #a2ef00
-!*color10    :       #90d112
-!
+!*color2:                  #82B414
+!*color10:                 #B6E354
 !!yellow
-!*color3     :       #ffe200
-!*color11    :       #ff8b00
-!
+!*color3:                  #FD971F
+!*color11:                 #FEED6C
 !!blue
-!!*color4     :       #4c59d8
-!*color4     :       #505ff1
-!!*color12    :       #5969f7
-!!*color12    :       #3a5cFF
-!*color12    :       #7992ff
-!!*color12: #6495ED
-!
-!!magenta    洋红
-!*color5     :       #ff427e
-!*color13    :       #db003a
-!
-!!purple     紫
-!!*color4    :       #808cff
-!!*color12   :       #5462e3
-!!cyan       萤光蓝
-!*color6     :       #42bdff
-!*color14    :       #00a8db
-!
+!*color4:                  #56C2D6
+!*color12:                 #8CEDFF
+!!magenta
+!*color5:                  #8C54FE
+!*color13:                 #9E6FFE
+!!cyan
+!*color6:                  #465457
+!*color14:                 #899CA1
 !!white
-!*color7     :       #e1e1e1
-!*color15    :       #f8f8f2
-!!!black
-!!*color0     :       #1e1e1e
-!*color0     :       #171717
-!*color8     :       #505354
+!*color7:                  #CCCCC6
+!*color15:                 #F8F8F2
 !
 !!*}}}
+!
+!! [ tangoesque ] ! {{{
+!!-------------------------------------------
+!! http://v4arg.deviantart.com/art/Subtle-WM-flanker-195105799
+!
+!*background: #151617
+!*foreground: #d6d9ba
+!! Black (not tango) + DarkGrey
+!*color0:  #111111
+!*color8:  #555753
+!! DarkRed + Red
+!*color1:  #d74005
+!*color9:  #d76d05
+!! DarkGreen + Green
+!*color2:  #93d44f
+!*color10: #c8e7a8
+!! DarkYellow + Yellow
+!*color3:  #d3e13b
+!*color11: #dee566
+!! DarkBlue + Blue
+!*color4:  #23abd2
+!*color12: #23c8d2
+!! DarkMangenta + Mangenta
+!*color5:  #de1629
+!*color13: #dc3343
+!!DarkCyan + Cyan (both not tango)
+!*color6:  #89b6e2
+!*color14: #46a4ff
+!! LightGrey + White
+!*color7:  #b8b8b8
+!*color15: #ffffff
+!
+!! }}}
+!
+!! [ warm ]! {{{
+!!-------------------------------------------
+!
+!! Defaults
+!*background:             #262729
+!*foreground:             #f8f8f2
+!! Black
+!*color0:                 #262729
+!*color8:                 #554444
+!! Red
+!*color1:                 #f92671
+!*color9:                 #ff669d
+!! Green
+!*color2:                 #a6e22e
+!*color10:                #beed5f
+!! Yellow
+!*color3:                 #fd971f
+!*color11:                #e6db74
+!! Blue
+!*color4:                 #34bdef
+!*color12:                #66d9ef
+!! Magenta
+!*color5:                 #9e6ffe
+!*color13:                #df92f6
+!! Cyan
+!*color6:                 #5e7175
+!*color14:                #a3babf
+!! White
+!*color7:                 #ccccc6
+!*color15:                #f8f8f2
+!! Cursor
+!*cursorColor:            #b5d2dd
+!*cursorBlink:            true
+!
+!!*}}}
+!
+!! [ neon ]! {{{
+!!-------------------------------------------
+! roylz
+!
+!!*color0: #5A5A5A
+!*color0: #262729
+!!*color8: #554444
+!*color8: #3E3E3E
+!*color1: #FF4747
+!*color9: #FF6767
+!*color2: #AFC81C
+!*color10: #BFC81C
+!*color3: #FDD338
+!*color11: #F4D461
+!*color4: #619AF4
+!*color12: #5496FF
+!*color5: #5F5A90
+!*color13: #826AB1
+!*color6: #47E0FF
+!*color14: #2ED9FB
+!*color7: #FFFFFF
+!*color15: #DEDEDE
+!
+!
+!!*}}}
+!
+!! [ Rasi ]!*{{{
+!!-------------------------------------------
+!! https://bbs.archlinux.org/viewtopic.php?pid=967106
+!*foreground:#a0a0a0
+!*background:#1b1d1e
+!!black
+!*color0:#1b1d1e
+!*color8:#505354
+!!red
+!*color1:#f92672
+!*color9:#ff5995
+!!green
+!*color2:#82b414
+!*color10:#b6e354
+!!yellow
+!*color3:#fd971f
+!*color11:#feed6c
+!!blue
+!*color4:#56c2d6
+!*color12:#8cedff
+!!magenta
+!*color5:#8c54fe
+!*color13:#9e6ffe
+!!cyan
+!*color6:#465457
+!*color14:#899ca1
+!!white
+!*color7:#ccccc6
+!*color15:#f8f8f2
+!
+!!*}}}
+!
+!! [ sad molokai ] *{{{*
+!!--------------------------------------------
+!! https://gist.github.com/845878
+!
+!*xterm*background: #101010
+!*xterm*foreground: #d0d0d0
+!*xterm*cursorColor: #d0d0d0
+!*xterm*color0: #101010
+!*xterm*color1: #960050
+!*xterm*color2: #66aa11
+!*xterm*color3: #c47f2c
+!*xterm*color4: #30309b
+!*xterm*color5: #7e40a5
+!*xterm*color6: #3579a8
+!*xterm*color7: #9999aa
+!*xterm*color8: #303030
+!*xterm*color9: #ff0090
+!*xterm*color10: #80ff00
+!*xterm*color11: #ffba68
+!*xterm*color12: #5f5fee
+!*xterm*color13: #bb88dd
+!*xterm*color14: #4eb4fa
+!*xterm*color15: #d0d0d0
+!
+!!*}}}
+
+!! [ molokai ] *{{{*
+!!--------------------------------------------
+
+!*color0: #262729
+!*color8: #554444
+!*color1: #F92671
+!*color9: #F92671
+!!*color9: #FF669D
+!*color2: #A6E22E
+!*color10: #A6E22E
+!!*color10: #BEED5F
+!*color3: #FD971F
+!*color11: #FD971F
+!!*color11: #E6DB74
+!*color4: #66D9EF
+!*color12: #66D9EF
+!*color5: #9E6FFE
+!*color13: #9E6FFE
+!*color6: #5E7175
+!*color14: #A3BABF
+!!*color7: #CCCCC6
+!*color7: #F8F8F2
+!*color15: #F8F8F2
+
+!!*}}}*
+
+!*}}}*
+
 
 ! [ C O L O R S ]
 !-------------------------------------------
@@ -408,7 +640,12 @@ xmessage*font: -*-clean-*-*-*-*-*-*-*-*-*-*-iso8859-2
 !# include ".config/xresources/dotshare"
 !# include ".config/xresources/getfresh"
 
-! [ urxvt ]!*{{{*
+
+
+
+!!}}}
+
+! [ urxvt color ]!*{{{*
 !-------------------------------------------
 
 urxvt*color0:                  #1B1D1E
@@ -429,6 +666,7 @@ urxvt*color7:                  #CCCCC6
 urxvt*color15:                 #F8F8F2
 
 !*}}}*
+
 
 
 
