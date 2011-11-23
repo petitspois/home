@@ -428,6 +428,7 @@ nnoremap <CR> <C-f>
 " 打开 txt 文件时容易展开
 " cno     tx      $HOME/me/text/
 cno     kk      $HOME/kou/
+cno     yy      $HOME/yun/
 cno     xx      $HOME/text/
 cno     xh      $HOME/text/arch/
 cno     xs      $HOME/text/soft/

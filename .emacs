@@ -1,5 +1,5 @@
 
-;; Time-stamp: "2011-11-19 23:10:12 ink"
+;; Time-stamp: "2011-11-22 22:43:49 ink"
 
 
 ;; Help 帮助
@@ -20,10 +20,32 @@
 (require 'color-theme)
 ;; color-theme 自带主题，需要添加下面这行
 ;(color-theme-initialize)
+;; M-x color-theme-select 选择后按 d 获取主题配置信息
 ;(color-theme-charcoal-black)
 
 (load-file "~/.emacs.d/theme/color-theme-almost-monokai.el")
 (color-theme-almost-monokai)
+
+;; 取消 mode-line 状态栏 status bar 的 3d shadow 效果
+;; http://www.svenhartenstein.de/Software/Emacs
+;; http://ldc.usb.ve/docs/emacs/Optional-Mode-Line.html
+(set-face-attribute 'mode-line nil :box nil)
+
+;; minibuffer 时间显示格式
+(display-time-mode 1)
+;;; 时间使用 24小时制
+;(setq display-time-24hr-format t)
+;;; 时间显示包括日期和具体时间
+;(setq display-time-day-and-date t)
+;;;; 时间栏旁边启用邮件设置
+;;(setq display-time-use-mail-icon t)
+;;; 时间的变化频率
+;(setq display-time-interval 10)
+;;; 显示时间的格式
+;(setq display-time-format "[ %H:%M %m月%d日 ]")
+;
+
+
 
 (add-to-list 'load-path "~/.emacs.d/theme/")
 (add-to-list 'load-path "~/.emacs.d/auto-complete/")
@@ -94,7 +116,12 @@
 (global-font-lock-mode t)
 
 ;; 隐藏工具栏 M-x tool-bar-mode
-(tool-bar-mode 'nil)
+;; 使用 C-x C-e 立即执行时，结果不同
+;; 值: 一直为空
+(tool-bar-mode -1)
+;; 值: 正负切换
+;;(tool-bar-mode 'nil)
+
 ;; 隐藏 menu-bar 和 tool-bar
 ;(menu-bar-mode -1)
 ;(menu-bar-mode 0)
@@ -110,13 +137,26 @@
 ;; 对所有 buffer 全局开启 行号
 (global-linum-mode t)
 
-; 取消光标闪烁
+;; 取消光标闪烁
 (blink-cursor-mode 0)
 
-; 光标颜色
+;; 光标颜色
 ;(set-cursor-color "green")
 
-; 默认显示 100 列，之后换行
+;; FOR :: coding
+;; 高亮标记配对的括号
+(setq column-number-mode t)
+
+;; 显示 trailing whitespace 空白字符
+(setq-default show-trailing-whitespace t)
+
+;; 使用 空格 代替 Tab 缩进
+(setq indent-tabs-mode nil)
+
+;; [?] echo-keystrokdes 控制 echo area 回显延时的变量，设为0秒，就永远不回显。设为-1秒，立即回显
+(setq echo-keystrokes 0.01)
+
+;; 默认显示 100 列，之后换行
 (setq default-fill-column 100)
 
 ;; 对于长度超过窗口尺寸的文本行，自动换行
@@ -134,6 +174,9 @@
 
 ;; 光标靠近鼠标指针时，让鼠标指针自动让开
 ;(mouse-avoidance-mode 'animate)
+
+;; 滚屏时，锁定光标位置
+(scroll-lock-mode t)
 
 ;; 启用鼠标滚轮
 (mouse-wheel-mode t)
@@ -248,6 +291,21 @@
 
 
 
+;; 使用 内置 buffer-file-name 显示文件路径
+;; http://www.emacswiki.org/emacs/DotEmacsChallenge
+(setq frame-title-format '(buffer-file-name "%f" ("%b")))
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -263,3 +321,6 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  )
+
+
+
