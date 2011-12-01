@@ -1,5 +1,5 @@
 
-;; Time-stamp: "2011-11-22 22:43:49 ink"
+;; Time-stamp: "2011-12-01 22:25:33 ink"
 
 
 ;; Help 帮助
@@ -258,8 +258,8 @@
 
 ;;;; 自定义时间戳 time-stamp 格式
 ;;;; %:u，更新时用登录 Linux 的用户名替换
-;;;; %04y-%02m-%02d，年-月-日 "YYYY-MM-DD" 
-;;;; %02H:%02M:%02S，时:分:秒 "HH:MM:SS"   
+;;;; %04y-%02m-%02d，年-月-日 "YYYY-MM-DD"
+;;;; %02H:%02M:%02S，时:分:秒 "HH:MM:SS"
 ;;(setq time-stamp-format
 ;;          "由 %:u 修改 时间：%04y-%02m-%02d %02H:%02M:%02S"
 ;;          time-stamp-active t
@@ -295,15 +295,25 @@
 ;; http://www.emacswiki.org/emacs/DotEmacsChallenge
 (setq frame-title-format '(buffer-file-name "%f" ("%b")))
 
+;; 中文 字符 编码 encoding
+;; M-x revert-buffer-with-coding-system 指定编码重新读入文件
+;; M-x describe-coding-system 查看当前 文件格式 是否和 默认 UTF-8
+;; 还可以查看，读取文件使用的编码 顺序
+;; C-x <RET> c ( M-x universal-coding-system-argument ) 设置编码，保存文件
+;; http://blog.waterlin.org/articles/change-emacs-coding-for-the-current-file.html
 
+;;;; http://blog.waterlin.org/articles/set-emacs-default-coding-system.html
+;;;; 只适用于 写文件 set the default text coding system
+;;(setq default-buffer-file-coding-system 'utf-8)
+;;;; 读取文件使用编码顺序，使用 M-x prefer-coding-system 手动设置
+;;(prefer-coding-system 'utf-8)
 
-
-
-
-
-
-
-
+;; plugins
+(add-to-list 'load-path
+              "~/.emacs.d/yasnippet")
+(require 'yasnippet) ;; not yasnippet-bundle
+(yas/initialize)
+(yas/load-directory "~/.emacs.d/yasnippet/snippets")
 
 
 

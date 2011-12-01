@@ -331,15 +331,33 @@ po() { pacman -Qo `which $1` }
 #alias apt-get='sudo apt-get'
 #alias aptitude='sudo aptitude'
 
+# [ aptitude ]
+#--------------------------------------------
+
 alias clean="sudo aptitude clean"
 alias install='sudo aptitude install'
 alias reinstall='sudo aptitude reinstall'
 alias search="aptitude search"
-#alias uninstall='sudo aptitude remove'
+alias show="aptitude show"
+alias remove='sudo aptitude remove'
 alias uninstall='sudo aptitude purge'
-alias update='sudo aptitude update && sudo aptitude full-upgrade'
+# autoclean 保留最近一次缓存，用来回退/回朔
+alias update='sudo aptitude autoclean && sudo aptitude update'
+alias upgrade='sudo aptitude autoclean && sudo aptitude update && sudo aptitude upgrade && sudo aptitude autoclean -y'
+alias fullupgrade='sudo aptitude update && sudo aptitude full-upgrade && sudo aptitude autoclean -y'
 
 #alias upgrade='sudo aptitude -y update && sudo aptitude -y upgrade && sudo aptitude -y dist-upgrade && sudo aptitude -y autoclean'
+
+#alias install="sudo apt-get install"
+#alias clean="sudo apt-get autoclean"
+##alias expunge="sudo apt-get autoclean"
+##alias flush="sudo apt-get autoremove"
+#alias remove="sudo apt-get autoremove"
+#alias search="sudo apt-cache search"
+#alias show="sudo apt-cache show"
+#alias update="sudo apt-get update"
+#alias upgrade="sudo apt-get autoclean && sudo apt-get upgrade"
+
 #alias clean='dpkg -l|grep "^rc"| awk "{print \$2}" | xargs -r sudo aptitude purge -y && sudo aptitude autoclean && sudo deborphan -Z && sudo localepurge'
 
 #alias add="sudo apt-get install --allow-unauthenticated -y"
@@ -349,7 +367,6 @@ alias update='sudo aptitude update && sudo aptitude full-upgrade'
 #alias upgrade="sudo apt-get upgrade --assume-yes"
 #alias expunge="sudo apt-get autoclean --assume-yes"
 #alias flush="sudo apt-get autoremove --assume-yes"
-
 
 # }}}
 
