@@ -489,6 +489,26 @@ imap jj <esc>
 inoremap [c <S-Right>
 inoremap [d <S-Left>
 
+"" 百合: Ctrl 和 Shift 键组合在终端中无效，所以在 vim/gvim 中也无效
+"" XXX 复制要先：virual 选择，之后再执行命令，需要用 noremap 不能用 nnoremap
+noremap <C-y> "+y
+noremap <C-p> "+p
+
+""http://vim.wikia.com/wiki/In_line_copy_and_paste_to_system_clipboard
+""设置普通模式下的，键盘映射 CTRL＋C为复制到剪贴板
+"map <C-c> "+y
+""设置普通模式下的，键盘映射 CTRL+X为剪切到剪贴板
+"map <C-x> "+x
+""设置普通模式下的，键盘映射 CTRL＋V为从剪贴板粘贴
+"map <C-y> "+P
+"" 配置插入模式
+""键盘映射 CTRL＋C为复制到剪贴板
+"imap <C-c> <ESC>"+y<insert>
+""键盘映射 CTRL+X为剪切到剪贴板
+""imap <C-x> <ESC>"+x<insert>
+""键盘映射 CTRL＋V为从剪贴板粘
+"imap <C-y> <C-r>+
+"cmap <C-y> <C-r>+
 
 "}}}
 
