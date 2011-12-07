@@ -1,5 +1,5 @@
 
-;; Time-stamp: "2011-12-01 22:25:33 ink"
+;; Time-stamp: "2011-12-07 12:47:54 ink"
 
 
 ;; Help 帮助
@@ -45,7 +45,9 @@
 ;(setq display-time-format "[ %H:%M %m月%d日 ]")
 ;
 
-
+;; http://www.emacswiki.org/emacs/YesOrNoP
+;; yes / no 使用 y / n 简称
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 (add-to-list 'load-path "~/.emacs.d/theme/")
 (add-to-list 'load-path "~/.emacs.d/auto-complete/")

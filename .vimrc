@@ -936,9 +936,6 @@ if(has("gui_running"))
     set gcr=a:blinkon0
     " 去除闪屏
     set novisualbell
-    " 完全隐藏工具栏、菜单栏、左右滚动条
-    set guioptions-=Tmrl
-
     " 关闭 Alt 激活菜单
     set winaltkeys=no
 
@@ -947,7 +944,11 @@ if(has("gui_running"))
     "解决中文菜单乱码
     ""set langmenu=zh_CN.utf-8
 
-" <F2> 开关 菜单栏 / 工具栏
+    " 完全隐藏工具栏、菜单栏、左右滚动条
+    set guioptions-=T
+    set guioptions-=r
+
+" <F2> 开关 菜单栏 / 工具栏 XXX F2 已经用于 标签页切换
 "noremap <silent> <F2> :if &guioptions =~# 'T' <Bar>
 "    \set guioptions-=T <Bar>
 "    \set guioptions-=m <bar>
