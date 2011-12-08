@@ -1,5 +1,5 @@
 
-;; Time-stamp: "2011-12-07 22:49:25 ink"
+;; Time-stamp: "2011-12-08 19:24:28 ink"
 
 ;; Help 帮助
 ;; C-h f 查看 函数 文档
@@ -56,6 +56,10 @@
 ;; 默认文本模式是 fundamental-mode 改为：text-mode
 (setq default-major-mode 'text-mode)
 
+;; http://emacsworld.blogspot.com/2008/06/changing-default-mode-of-scratch-buffer.html
+;; 修改 *scratch* 草稿 默认 mode 为：text-mode
+(setq initial-major-mode 'text-mode)
+
 ;; http://www.emacswiki.org/emacs/YesOrNoP
 ;; yes / no 使用 y / n 简称
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -88,6 +92,7 @@
 ;; 保存退出文件时的当前位置，编辑比较长的文档
 ;(require 'saveplace)
 ;(setq-default save-place t)
+
 
 
 
@@ -212,22 +217,31 @@
 ;; 格式化源程序或者其他文件是用 TAB 还是 SPACE 呢?
 ;; http://emacser.com/ann77/Emacs/EmacsSpaceOrTab.html
 ;; 使用 空格 space 代替 TAB 字符作为 缩进，格式化字符
-(setq-default indent-tabs-mode nil)
+;;(setq-default indent-tabs-mode nil)
 ;;(setq indent-tabs-mode nil)
 
-(setq-default 'tab-width 4)
+;;(setq-default 'tab-width 4)
 ;; XXX 怎么使用 set 设置变量
-(set tab-width 4)
-(loop for x downfrom 40 to 1 do
-      (setq tab-stop-list (cons (* x (default-value tab-width)) tab-stop-list)))
+;;(setq tab-width 4)
+;;(loop for x downfrom 40 to 1 do
+;;      (setq tab-stop-list (cons (* x (default-value tab-width)) tab-stop-list)))
 
 ;;;; http://stackoverflow.com/questions/69934/set-4-space-indent-in-emacs-in-text-mode
-;;(setq-default indent-tabs-mode nil)
-;;(setq-default tab-width 4)
-;;(setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80))
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+(setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80))
 
 
+;; mode 模式
+;; --------------------------------------------
 
+;; Org-mode
+;; ----------------------
+;; http://www.yifeiyang.net/emacs/org-mode-for-gtd.html
+ (defun gtd ()
+   (interactive)
+   (find-file "~/text/emacs/gtd/ink.org")
+ )
 
 
 ;; Coding 代码
