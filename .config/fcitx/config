@@ -70,7 +70,7 @@ VKSwitchKey=CTRL_ALT_K
 # Hotkey of Switching Traditional Chinese Input Mode On.
 TraditionalChnSwitchKey=CTRL_ALT_F
 # Hotkey of Switching Legend Mode
-LegendSwitchKey=CTRL_ALT_L
+LegendSwitchKey=CTRL_SHIFT_L
 # Hotkey of Looking up the Corresponding pinyin of Word.
 LookupPinyinKey=CTRL_ALT_E
 # Hotkey of Switching Full Width Character Mode

@@ -428,6 +428,7 @@ nnoremap <CR> <C-f>
 " 打开 txt 文件时容易展开
 " cno     tx      $HOME/me/text/
 cno     kk      $HOME/kou/
+cno     yy      $HOME/yun/
 cno     xx      $HOME/text/
 cno     xh      $HOME/text/arch/
 cno     xs      $HOME/text/soft/
@@ -488,6 +489,26 @@ imap jj <esc>
 inoremap [c <S-Right>
 inoremap [d <S-Left>
 
+"" 百合: Ctrl 和 Shift 键组合在终端中无效，所以在 vim/gvim 中也无效
+"" XXX 复制要先：virual 选择，之后再执行命令，需要用 noremap 不能用 nnoremap
+noremap <C-y> "+y
+noremap <C-p> "+p
+
+""http://vim.wikia.com/wiki/In_line_copy_and_paste_to_system_clipboard
+""设置普通模式下的，键盘映射 CTRL＋C为复制到剪贴板
+"map <C-c> "+y
+""设置普通模式下的，键盘映射 CTRL+X为剪切到剪贴板
+"map <C-x> "+x
+""设置普通模式下的，键盘映射 CTRL＋V为从剪贴板粘贴
+"map <C-y> "+P
+"" 配置插入模式
+""键盘映射 CTRL＋C为复制到剪贴板
+"imap <C-c> <ESC>"+y<insert>
+""键盘映射 CTRL+X为剪切到剪贴板
+""imap <C-x> <ESC>"+x<insert>
+""键盘映射 CTRL＋V为从剪贴板粘
+"imap <C-y> <C-r>+
+"cmap <C-y> <C-r>+
 
 "}}}
 
@@ -915,9 +936,6 @@ if(has("gui_running"))
     set gcr=a:blinkon0
     " 去除闪屏
     set novisualbell
-    " 完全隐藏工具栏、菜单栏、左右滚动条
-    set guioptions-=Tmrl
-
     " 关闭 Alt 激活菜单
     set winaltkeys=no
 
@@ -926,7 +944,11 @@ if(has("gui_running"))
     "解决中文菜单乱码
     ""set langmenu=zh_CN.utf-8
 
-" <F2> 开关 菜单栏 / 工具栏
+    " 完全隐藏工具栏、菜单栏、左右滚动条
+    set guioptions-=T
+    set guioptions-=r
+
+" <F2> 开关 菜单栏 / 工具栏 XXX F2 已经用于 标签页切换
 "noremap <silent> <F2> :if &guioptions =~# 'T' <Bar>
 "    \set guioptions-=T <Bar>
 "    \set guioptions-=m <bar>
