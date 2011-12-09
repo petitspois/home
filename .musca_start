@@ -260,6 +260,7 @@ bind off Mod4+k
 bind on Mod1+F4 kill
 #bind on Mod1+Shift+k kill
 
+# XXX 默认快捷键 Mod4+s 切换浮动模式
 bind on Mod4+space stack flip
 bind on Mod4+Shift+b border flip
 
